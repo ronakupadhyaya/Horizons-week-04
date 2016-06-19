@@ -32,7 +32,7 @@ key things:
   $ npm install
   ```
   
-  Remember to fill in your **mLadb** url in `/models/connect.js`!
+  Remember to fill in your **mLab** url in `/models/connect.js`!
 
 1. The registration flow
 
@@ -123,7 +123,7 @@ key things:
   
   1. Setting up an authentication strategy for **Passport** - we're gonna use
   [**passport-local**](http://passportjs.org/docs/username-password)
-  1. Setting the root (`/`) to a **authenticated** route, meaning that a user 
+  1. Setting the root (`/`) to an **authenticated** route, meaning that a user 
   needs to be logged in to access it
 
   Finally, we're going to restrict users from looking at certain pages/accessing
