@@ -75,9 +75,10 @@ key things:
   
   Next, create a `POST` route for `/register` in `auth.js`. The route should do
   simple validation on the fields that have been submitted (checking to see if
-  the passwords are the same) and, if so, should create a new user with the info
-  and save it to the DB. Otherwise, it should re-render the page, showing an
-  error message.
+  the passwords are the same) and, if so, should create a new user with the
+  info, save it to the DB, and redirect the user to a `/login` (which we haven't
+  done yet, but will do soon!). Otherwise, it should re-render the page, showing
+  an error message.
 
 1. The login and logout flow
 
@@ -95,8 +96,35 @@ key things:
   two fields - a **username** and **password** field.
   
   Next, we're going to be adding the ***key*** routes to our `routes/auth.js`
-  file. Implement the `GET` route for `/login`, which should render the login
-  template.
+  file that will allow users that have previously registered to login. Implement
+  the `GET` route for `/login`, which should render the login template.
+  
+  Once you've done that, we'll be creating the `POST` route for `/login`. Here
+  is where you'll need to validate login submissions by **(1)** finding users
+  with the submitted username and **(2)** checking to see if that user's
+  password and the submitted password are one and the same. If that is indeed
+  true, you will ***log the user in*** by using:
+  
+  ```javascript
+  req.login(user, function(err) {
+    if (err) {
+      res.status(401).send(err);
+    }
+    return res.redirect('/');
+  });
+  ```
+  
+  and redirect the user to to `/`. Otherwise, render the login page again with
+  an error message
+  
+  When that's done, implement a `GET` route for `/logout`. That route should log
+  the user out by calling
+  
+  ```javascript
+  req.logout()
+  ```
+  
+  and then redirecting the user to `/login`.
 
 1. The secret page
 
