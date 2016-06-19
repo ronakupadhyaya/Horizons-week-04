@@ -34,14 +34,16 @@ key things:
 1. The registration flow
 
   First things first, we're going to work on the registration flow. A **flow**
-  can be characterized as Like before, create a simple registration form that
+  can be characterized as a *process* or *method* that performs a certain
+  action. It can be a single page or screen, in our case, or a set of them, like
+  for Robinhood or Facebook. Like before, create a simple registration form that
   has three fields:
   
 | field name | input type | description |
 | --- | --- | --- |
 | username | text | username of the user |
 | password | password | password for the user |
-| passwordConf | password | password confirmation for the user ||
+| passwordConf | password | password confirmation for the user |
 
 1. The login and logout flow
 
