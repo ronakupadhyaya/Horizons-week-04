@@ -1,8 +1,9 @@
-# HW4D1 | Individual | Passport-Form
+# W4D1 | Individual | Passport-Form
 
-Up until now, you've been creating applications that stores users and does very 
-simple authentication. Now you're going to learn how to use 
-[Passport](http://passportjs.org) to make authenticating and verifying your user much easier.
+Up until now, you've been creating applications that stores users and does very
+simple authentication. Now you're going to learn how to use
+[Passport](http://passportjs.org) to make authenticating and verifying your user
+much easier.
 
 ## Goal
 
@@ -35,7 +36,7 @@ key things:
 
 1. The registration flow
 
-  In this section, you will:
+  In this phase, you will:
   
   1. Make a `GET` route that renders the `register` template.
   1. Create a registration form in the registration template.
@@ -79,6 +80,23 @@ key things:
   error message.
 
 1. The login and logout flow
+
+  In this phase, you will:
+  
+  1. Create a login template in `/views/login.hbs`
+  1. Create a `GET` route for `/login` in `routes/auth.js` that renders the 
+  `login` template
+  1. Create a `POST` route for `/login` that will log the user in if the 
+  credentials are correct
+  1. Create a `GET` route for `/logout` that will log the user out and redirect 
+  to the `/login` route
+  
+  First, create the login template in `/views/login.hbs`. It should only have
+  two fields - a **username** and **password** field.
+  
+  Next, we're going to be adding the ***key*** routes to our `routes/auth.js`
+  file. Implement the `GET` route for `/login`, which should render the login
+  template.
 
 1. The secret page
 
