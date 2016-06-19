@@ -30,14 +30,30 @@ key things:
   ```bash
   $ npm install
   ```
+  
+  Remember to fill in your **mLadb** url in `/models/connect.js`!
 
 1. The registration flow
 
+  In this section, you will:
+  
+  1. Make a `GET` route that renders the `register` template.
+  1. Create a registration form in the registration template.
+  1. Create a `User` model (w or w/o schema) in the models.js
+  1. Make a `POST` route that saves a user model 
+
   First things first, we're going to work on the registration flow. A **flow**
   can be characterized as a *process* or *method* that performs a certain
-  action. It can be a single page or screen, in our case, or a set of them, like
-  for Robinhood or Facebook. Like before, create a simple registration form that
-  has three fields:
+  action. A **flow** can be a single page or screen that registers users, in our
+  case, or a set of them, like for Robinhood or Facebook.
+  
+  First, Add a route in `auth.js` to access this page from `/register` when a
+  `GET` request is issued to your server. You should render the
+  `views/register.hbs` template in the views folder when that GET request is
+  issued.
+  
+  In the `register.hbs`, you'll be making a simple registration form that has
+  three fields:
   
 | field name | input type | description |
 | --- | --- | --- |
@@ -45,11 +61,31 @@ key things:
 | password | password | password for the user |
 | passwordConf | password | password confirmation for the user |
 
+  **Bootstrap** has already been included in your `/public/css/` folder for
+  convenience, but it has ***not*** been linked to your `views/layout.hbs`
+  file. If you'd like to use it, please insert the necessary `<link>` tag into
+  that file.
+  
+  After you've created your page, let's make the registration page functional.
+  
+  First, create a simple `User` model in `/models/models.js`. The user should
+  only have two properties - a username and a password. Once you've completed
+  that, remember to export them using `module.exports`.
+  
+  Next, create a `POST` route for `/register` in `auth.js`. The route should do
+  simple validation on the fields that have been submitted (checking to see if
+  the passwords are the same) and, if so, should create a new user with the info
+  and save it to the DB. Otherwise, it should re-render the page, showing an
+  error message.
+
 1. The login and logout flow
 
 1. The secret page
 
   Finally, we're going to restrict users from looking at certain pages/accessing
   certain routes if they're not logged in.
+  
+  In `routes/index.js`, make the root url (`/`) an authenticated root, meaning
+  that a user must be logged in before being able to view the page.
 
 ## References
