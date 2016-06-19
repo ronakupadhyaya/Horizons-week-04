@@ -54,14 +54,8 @@ key things:
   issued.
   
   In the `register.hbs`, you'll be making a simple registration form that has
-  three fields:
+  three fields: **username**, **password** and **password repeat**.
   
-| field name | input type | description |
-| --- | --- | --- |
-| username | text | username of the user |
-| password | password | password for the user |
-| passwordConf | password | password confirmation for the user |
-
   **Bootstrap** has already been included in your `/public/css/` folder for
   convenience, but it has ***not*** been linked to your `views/layout.hbs`
   file. If you'd like to use it, please insert the necessary `<link>` tag into
@@ -129,7 +123,8 @@ key things:
   
   1. Setting up an authentication strategy for **Passport** - we're gonna use
   [**passport-local**](http://passportjs.org/docs/username-password)
-  1. 
+  1. Setting the root (`/`) to a **authenticated** route, meaning that a user 
+  needs to be logged in to access it
 
   Finally, we're going to restrict users from looking at certain pages/accessing
   certain routes if they're not logged in.
