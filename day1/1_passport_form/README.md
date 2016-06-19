@@ -100,38 +100,80 @@ key things:
   the `GET` route for `/login`, which should render the login template.
   
   Once you've done that, we'll be creating the `POST` route for `/login`. Here
-  is where you'll need to validate login submissions by **(1)** finding users
-  with the submitted username and **(2)** checking to see if that user's
-  password and the submitted password are one and the same. If that is indeed
-  true, you will ***log the user in*** by using:
+  is where we'll use passport to authenticate the user using something called an
+  ***authentication strategy*** (which you'll be creating in the next phase).
   
   ```javascript
-  req.login(user, function(err) {
-    if (err) {
-      res.status(401).send(err);
-    }
-    return res.redirect('/');
-  });
+  app.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
   ```
   
-  and redirect the user to to `/`. Otherwise, render the login page again with
-  an error message
+  What this does is use passport to authenticate the given data and redirect the
+  user to to `/` if it's correct. Otherwise, it redirects users to the login
+  page.
   
   When that's done, implement a `GET` route for `/logout`. That route should log
   the user out by calling
   
   ```javascript
-  req.logout()
+  req.logout();
   ```
   
   and then redirecting the user to `/login`.
 
 1. The secret page
 
+  In this final phase, you'll be:
+  
+  1. Setting up an authentication strategy for **Passport** - we're gonna use
+  [**passport-local**](http://passportjs.org/docs/username-password)
+  1. 
+
   Finally, we're going to restrict users from looking at certain pages/accessing
   certain routes if they're not logged in.
   
-  In `routes/index.js`, make the root url (`/`) an authenticated root, meaning
-  that a user must be logged in before being able to view the page.
+  We need to start off by defining the ***authentication strategy***. This is
+  where you'll need to validate login submissions by **(1)** finding users with
+  the submitted username and **(2)** checking to see if that user's password and
+  the submitted password are one and the same. You can use the snippet I've
+  retrieved for you below, but you will need to adapt it to your own models.
+  Please put this in `app.js`, above the error handlers.
+  
+  ```javascript
+  var passport = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
 
-## References
+  passport.use(new LocalStrategy(function(username, password, done) {
+    // Find the user with the given username
+      User.findOne({ username: username }, function (err, user) {
+        // if there's an error, finish trying to authenticate (auth failed)
+        if (err) { return done(err); }
+        // if no user present, auth failed
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        // if passwords do not match, auth failed
+        if (user.password !== password) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        // auth has has succeeded
+        return done(null, user);
+      });
+    }
+  ));
+  ```
+  
+  In `routes/index.js`, make the root url (`/`) an authenticated root, meaning
+  that a user must be logged in before being able to view the page. Change your
+  route definition to look like this:
+  
+  ```javascript
+  app.get('/', passport.authenticate('local'), function(req, res) {
+    ...
+  });
+  ```
+  
+  To test, try navigating to '/' on `localhost:3000` in your browser. You should
+  immediately be redirected to `/login` and shown the login page.
