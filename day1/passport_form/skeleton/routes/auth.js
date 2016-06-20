@@ -1,4 +1,5 @@
 // imports n' things
+var router = require('express').Router();
 
 
 // Questions:
