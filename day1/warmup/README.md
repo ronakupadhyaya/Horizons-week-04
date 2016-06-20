@@ -22,7 +22,7 @@ git, so the learning curve is not too steep.
    Account at the bottom.
 1. Look for the verification email. Tap the link in this email, then set a
    password on the form. Tap "Set password and log in."
-1. Go to https://toolbelt.heroku.com/ and download the Heroku Toolbelt for your
+1. Go to and download the Heroku Toolbelt for your
    platform. Install it.
 1. Go to command line. Type `heroku login` and enter your credentials to
    login.
