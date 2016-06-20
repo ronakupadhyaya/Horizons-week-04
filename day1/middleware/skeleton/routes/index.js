@@ -13,24 +13,21 @@ var myLogger = function (req, res, next) {
   next();
 };
 
-// router.use(myLogger);
+router.use(myLogger);
 
-router.use(myLogger, function(req,res,next){
-  console.log('Hello world');
-  // res.send("hello world"); (hello world text will be on screen)
-  next();
-});
-
-router.use('/hidden', function(req,res,next){
-  if(user) next();
-  else{ //this is a req.query
-    res.redirect('/login?redirect=hidden');
+//taking to / page and trying to login
+router.get('/', function(req, res,next){
+  var sess = req.session;
+  console.log("Session data"+ JSON.stringify(sess));
+  console.log("Cookies:" + JSON.stringify(req.cookies));
+  setHeader('Content-Type', 'text/html');
+  //check if user's been used before
+  if(req.user){
+    res.render('index',{title:"Welcome back"+req.user.name + "!"});
   }
-});
-
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-  // next();
+  else{
+    res.render('index',{title:"Hey you're new! Login!"});
+  }
 });
 
 
@@ -77,8 +74,28 @@ module.exports = router;
 //JS is stateful: it remembers whta's in the console
 //HTTP is stateLESS: p stands for protocol, has no memory
 //this will work for all users (not people individually)
-var x = 0;
-router.get('/', function(req, res, next) {
-  res.render('index', { title: x++ });
-  // next();
-});
+
+// var x = 0;
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: x++ });
+//   // next();
+// });
+
+//COOKIES AND SESSIONS
+// router.get('/', function(req, res,next){
+//   var sess = req.session;
+//   console.log("Session data"+ JSON.stringify(sess));
+//     console.log("Cookies:" + JSON.stringify(req.cookies));
+//   // res.setHeader('Content-Type', 'text/html');
+//   //check if user's been used before
+//   if(sess.count){
+//     res.render('index',{title:"I've seen you before " + sess.count + " times!"});
+//     sess.count++;
+//   }
+//   else{
+//     sess.count=1;
+//     res.render('index',{title:"Hey you're new!"});
+//   }
+//
+// });
+// module.exports = router;
