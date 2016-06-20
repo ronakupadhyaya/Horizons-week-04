@@ -16,6 +16,9 @@ var generateId = function() {
 router.use(function(req, res, next) {
   // Your middleware goes here: check for a cookie, and create one if there
   // isn't one. Use generateId() to generate a unique cookie value.
+  if(Object.keys(cookieStore).length==0){
+    cookieStore.id = generateId();
+  }
 });
 
 router.get('/', function(req, res, next) {
@@ -36,12 +39,14 @@ router.get('/login', function(req, res, next) {
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
   
+  
   res.redirect('/');
 });
 
 router.get('/logout', function(req, res, next) {
   // Your code here. Delete the user data from the session, but don't delete the
   // cookie or the session itself.
+  session.user = null;
   
   res.redirect('/');
 });
