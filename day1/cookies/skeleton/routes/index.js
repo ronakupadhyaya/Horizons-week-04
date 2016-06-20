@@ -16,6 +16,10 @@ var generateId = function() {
 router.use(function(req, res, next) {
   // Your middleware goes here: check for a cookie, and create one if there
   // isn't one. Use generateId() to generate a unique cookie value.
+  // if (!req.cookie) {
+  //   res.cookie(cookieName, cookieValue);
+  // };
+  var id = generateId();
 });
 
 router.get('/', function(req, res, next) {
@@ -35,6 +39,12 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
+  if (!req.session.user) {
+    res.write("You need to log in" + "<a href = localhost:3000/login>Login")
+  } else {
+    res.write("Welcome back " + req.session.user)
+  }
+
   
   res.redirect('/');
 });

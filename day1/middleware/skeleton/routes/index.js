@@ -7,6 +7,11 @@ var user = null;
 // Your middleware goes here.
 // CAREFUL! Order matters!
 
+router.get('/', function(req,res,next) {
+	console.log("intercepted");
+	next();
+})
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
