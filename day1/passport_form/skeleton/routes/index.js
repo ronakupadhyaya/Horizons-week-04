@@ -7,5 +7,6 @@ module.exports = function(passport) {
     res.render('index', { title: 'Express' });
   });
   
+  
   return router;
 };
