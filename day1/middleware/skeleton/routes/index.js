@@ -35,8 +35,8 @@ router.post('/login', function(req, res, next) {
   res.send("Not implemented yet");
 });
 
-// router.use(function(req, res, next){
-// 	console.log("INTERCEPTED REQUEST");
-// })
+router.use(function(req, res, next){
+	console.log("INTERCEPTED REQUEST");
+})
 
 module.exports = router;
