@@ -19,7 +19,25 @@ router.use(function(req, res, next) {
   // if (!req.cookie) {
   //   res.cookie(cookieName, cookieValue);
   // };
-  var id = generateId();
+  if (req.cookies.mySession) {
+    //could be anything, req.cookies.anything
+    if (cookieStore[req.cokies.mysession]) {
+      //if null, not actualy logged in - they've jsut gotten there
+      req.session = {user: cookieStore[req.cokies.mysession]}
+    }
+    next();
+  } else {
+    // create one if there isn't one.
+    var id = generateId();
+    res.cookie("mySession", id);
+    //this is a way of identifying EACH user by cookie. 
+    cookieStore[id] = null
+    //once we log them in, we set them equal to cookie store id
+    //cookies are not in the url, they are in the header of http
+    // after we set the cookie... 
+    next();
+  }
+  // var id = generateId();
 });
 
 router.get('/', function(req, res, next) {
@@ -39,20 +57,22 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
-  if (!req.session.user) {
-    res.write("You need to log in" + "<a href = localhost:3000/login>Login")
-  } else {
-    res.write("Welcome back " + req.session.user)
-  }
+  // if (!req.session.user) {
+  //   res.write("You need to log in" + "<a href = localhost:3000/login>Login")
+  // } else {
+  //   res.write("Welcome back " + req.session.user)
+  // }
 
   
-  res.redirect('/');
+  // res.redirect('/');
+  cookieStore[req.cookies.mySession] = req.body.username;
+  res.redirect('/')''
 });
 
 router.get('/logout', function(req, res, next) {
   // Your code here. Delete the user data from the session, but don't delete the
   // cookie or the session itself.
-  
+  cookieStore[req.cookies.mySession] = null;
   res.redirect('/');
 });
 
