@@ -2,7 +2,9 @@
 var router = require('express').Router();
 
 module.exports = function(passport) {
-  // YOUR CODE HERE
+	router.get('/register', function(req, res, next){
+		res.render('/views/register.bhs');
+	})
   
   
   
