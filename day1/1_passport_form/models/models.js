@@ -1,16 +1,11 @@
 var mongoose = require('mongoose');
+mongoose.connect(require('./connect'));
 
 var userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
+  username: String,
+  password: String
 });
 
 module.exports = {
-  user: mongoose.model('User', userSchema)
+  User: mongoose.model('User', userSchema)
 };
