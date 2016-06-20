@@ -8,6 +8,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
 var User = require('./models/models').User;
+var expressValidator = require('express-validator');
+
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
@@ -15,6 +17,8 @@ var auth = require('./routes/auth');
 var app = express();
 
 // view engine setup
+app.use(expressValidator());
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
@@ -34,6 +38,28 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
+
+// validation
+// function validate(req) {
+//   req.checkBody('username', 'Invalid username').notEmpty();
+//   req.checkBody('password', 'Invalid password').notEmpty();
+//   req.checkBody('passwordRepeat', 'Invalid password').notEmpty();
+// }
+
+// app.post('/register', function(req, res){
+//   console.log(req.body);
+//   validate(req);
+//   // Get errors from express-validator
+//   var errors = req.validationErrors();
+//   if (errors) {
+//     console.log(errors);
+//     res.render('register', {errors: errors});
+//   } else {
+//     // YOUR CODE HERE
+//     // Include the data of the profile to be rendered with this template
+//     res.render('profile', req.body);
+//   }
+// });
 
 // passport strategy
 // YOUR CODE HERE
