@@ -38,6 +38,29 @@ passport.deserializeUser(function(id, done) {
 // passport strategy
 // YOUR CODE HERE
 
+passport.use(new LocalStrategy(function(username, password, done) {
+  // Find the user with the given username
+    User.findOne({ username: username }, function (err, user) {
+      // error present (auth failed)
+      if (err) { 
+        console.log(err);
+        return done(err);
+      }
+      // incorrect username, auth failed
+      if (!user) {
+        console.log(user);
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      // incorrect pass, auth failed
+      if (user.password !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      // success
+      return done(null, user);
+    });
+  }
+));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

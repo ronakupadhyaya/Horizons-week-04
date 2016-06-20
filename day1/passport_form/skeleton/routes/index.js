@@ -1,5 +1,4 @@
 var router = require('express').Router();
-var router = express.Router();
 
 module.exports = function(passport) {
   /* GET home page. */
@@ -8,4 +7,6 @@ module.exports = function(passport) {
   });
   
   return router;
+
+  router.get
 };

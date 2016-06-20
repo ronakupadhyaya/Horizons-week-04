@@ -12,6 +12,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/hidden', function(req, res, next) {
+	res.send("Access denied");
+});
+
+router.get('/hidden', function(req, res, next) {
   res.send("You found me! Drat!");
 });
 
@@ -21,6 +25,8 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here
+  user = req.body.username;
+  console.log(req.body.username);
   res.send("Not implemented yet");
 });
 
