@@ -3,16 +3,24 @@ var router = express.Router();
 
 // Store login information here.
 var user = null;
+var page = "";
 
 // Your middleware goes here.
 // CAREFUL! Order matters!
 
+
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  if(user){
+  	res.render('index', { title: 'Express' });
+  }
+  else {
+  	res.redirect('/login');
+  	page = '/';
+  }
 });
 
 router.get('/hidden', function(req, res, next) {
-  res.send("You found me! Drat!");
+  res.send("ACCESS DENIED");
 });
 
 router.get('/login', function(req, res, next) {
@@ -20,8 +28,15 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  // Your code here
+  if (req.body.username) {
+  	user = req.body.username;
+  	res.redirect(page);
+  }
   res.send("Not implemented yet");
 });
+
+// router.use(function(req, res, next){
+// 	console.log("INTERCEPTED REQUEST");
+// })
 
 module.exports = router;
