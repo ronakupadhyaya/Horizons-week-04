@@ -19,6 +19,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
+  var sess = req.session;
   res.setHeader('Content-Type', 'text/html');
   if (req.session && req.session.user) {
     res.write("<h1>Welcome back, " + req.session.user + "!</h1><p><a href='/logout'>Click here</a> to logout.</p>");
@@ -35,8 +36,7 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
-  
-  res.redirect('/');
+
 });
 
 router.get('/logout', function(req, res, next) {
