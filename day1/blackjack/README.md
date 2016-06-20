@@ -114,6 +114,13 @@ All routes respond with a JSON object as returned by the `gameRepresentation` fu
 	- Game is over
 	- Responds with `Game state representation`
 
+
+### Templating your games list 🎛 - `views/index.hbs`
+
+We've provided you with templating and styling for gameplay, but you are responsible for creating the first screens of your application. Using the context object you passed in with your `GET /` request, write a template for listing your active games. Each active game listed should allow a user to click through and play the game. Since it's a one-player game for now, you only have to worry about whether or not the game is in progress.
+
+### Testing your game with Postman 📬 - `Postman`
+
 After writing these routes, you will be able to test your game through using HTTP requests only using Postman! Try each route and your game flow to test your functionality up to this point.
 
 1. `POST /game` will create your new game and give you an ID to use: `312314234234`
@@ -144,23 +151,29 @@ After writing these routes, you will be able to test your game through using HTT
 ```
 4. `POST /game/:id/stand` Returns the final status of the game and who has won.
 
-### Putting the front
 
-Time to build the views the routes for the views:
+### Putting the frontend together ⚡️ - `public/javascripts/game.js`
 
-1. `GET /`:
-  - Renders the html page for all games -> Renders `List games`
-  - Query parameter for filtering games by in-progress/over.
-  - Clicking on one of the links takes you to the games.
+Time to build the frontend behavior for your game. First take a look at the template you are working with at `views/viewgame.hbs`. Notice how both the bet form and gameplay buttons are displayed simultaneously - you will prevent this with jQuery and display it so that the application flow is something like the following:
 
-1. `GET /game/:id`:
-  - Renders the single game view -> `View game`
-  - This view must contain the box to place the bets.
-  - If no bet has been made, button to make bet
-  - If game is in progress: button for Hit and Stand buttons.
-  - If game is over: show winner/loser/draw
+Firstly: determine which view to display based on the response of `getData()`, which retrieves the current game information with an AJAX request upon pageload.
+
+Secondly: build out the logic for all other AJAX requests and updating the view.
+
+**For active or unplayed game:**
+
+1. Bet form is the only element shown upon page load
+2. The user submits the bet form and the form submit event is handled with AJAX (by `preventDefault`'ing!).
+3. The `play` function is called; the bet form is hidden, and both the dealer and user elements (`.dealer-area` and `.user-area`) are now shown.
+4. Event handlers are set for each button, to correspond to `hit()` and `stand()` functions.
+5. Upon calling `hit()` or `stand()`, an AJAX request is fired and the game is updated accordingly. 
+
+**For played game:** show winner/loser/draw.
+
 
 ##Phase 2: Level Up with Multiplayer
+
+Time for a challenge. Dealing with multiple users will require you to create new User models and authenticate them into your games. Using what you've learned today about Passport, add basic user login functionality to your Blackjack game. 
 
 ### Routes
 
