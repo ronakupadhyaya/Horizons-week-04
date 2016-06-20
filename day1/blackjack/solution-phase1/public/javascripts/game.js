@@ -1,11 +1,32 @@
-window.game = game || {};
+window.game = {};
 
-$(document).on("submit", "form", function(e){
+window.addEventListener("load", getData, false);
+
+function getData(){
+  $.ajax({
+    type: "GET",
+    url: $(location).attr('href') + "/json",
+    dataType: 'json',
+    cache: false,
+    success: function(game){
+      if (game.status==="Not Started"){
+        //alert("please set bet");
+        $("#betForm").show();
+        $(".dealer-area").hide();
+        $(".user-area").hide();
+      }else{
+        play(game);
+      }
+    }
+  });
+}
+
+$("#betForm").submit(function(e){
   e.preventDefault();
   $.ajax({
     type: "POST",
     url: $(location).attr('href'),
-    data: { bet: 234 },
+    data: { bet: $("#bet").val() },
     cache: false,
     success: function(game){
       play(game);
@@ -14,15 +35,49 @@ $(document).on("submit", "form", function(e){
   return false;
 });
 
-window.addEventListener("load", getData, false);
 
-function getData(){
-  // YOUR CODE HERE
-}
+function play(newGame){
+  game = newGame;
+  $("#betForm").hide();
+  $(".dealer-area").show();
+  $(".user-area").show();
+  var hitButton = $("#hit");
+  var standButton = $("#stand");
+  hitButton.on("click", hit);
+  standButton.on("click", stand);
+  var userHand = $("#user-hand");
+  var dealerHand = $("#dealer-hand");
+  var userScore = $("#user-score");
+  var dealerScore = $("#dealer-score");
+  var status = $("#game-status");
+  status.html("");
 
+  if (game.status === 'Over' ){
+    status.html('You ' + game.userStatus);
+    if (game.userStatus === "won"){
+      status.append(" "+ parseInt(game.playerBet) * 2);
+    } else if (game.userStatus === "won"){
+      status.append(" "+ parseInt(game.playeBet));
+    }
+    hitButton.css("visibility", "hidden");
+    standButton.css("visibility", "hidden");
 
-function play(game){
-  // YOUR CODE HERE
+  }
+
+  dealerHand.html("<h2>Dealer Hand</h2>");
+  userHand.html("<h2>User Hand</h2>");
+
+  for(var i = 0; i < game.currentPlayerHand.length; i++){
+    userHand.append(showCard(game.currentPlayerHand[i]));
+  }
+
+  for(var i = 0; i < game.houseHand.length; i++){
+    dealerHand.append(showCard(game.houseHand[i]));
+  }
+  userScore.html(game.userTotal);
+  dealerScore.html(game.dealerTotal);
+  var firstCard = $("#dealer-hand .card");
+  firstCard.attr("id", "hidden-card");
 }
 
 function showCard(card) {
@@ -43,10 +98,26 @@ function showCard(card) {
   return html;
 }
 
-function hit() {
-  // YOUR CODE HERE
+function hit(){
+  $.ajax({
+    type: "POST",
+    url: '/game/'+ game.id + '/hit',
+    dataType: 'json',
+    cache: false,
+    success: function(data){
+      play(data)
+    }
+  });
 }
 
-function stand() {
-  // YOUR CODE HERE
+function stand(){
+  $.ajax({
+    type: "POST",
+    url: '/game/'+ game.id + '/stand',
+    dataType: 'json',
+    cache: false,
+    success: function(data){
+      play(data)
+    }
+  });
 }

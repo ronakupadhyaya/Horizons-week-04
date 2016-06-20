@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
     res.render('index', {
       games: games.map(function(game) {
         return { id: game._id, status: game.status }
-      });
+      })
     })
   })
 });
@@ -49,6 +49,13 @@ router.get('/game/:id', function(req, res, next) {
       title: "View Game",
       game: gameRepresentation(game)
     });
+  })
+});
+
+router.get('/game/:id/json', function(req, res, next) {
+  Game.findById(req.params.id, function(err, game) {
+    if (err) return res.status(500).send(err);
+    res.json(gameRepresentation(game));
   })
 });
 

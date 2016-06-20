@@ -5,10 +5,10 @@ $(document).on("submit", "form", function(e){
   $.ajax({
     type: "POST",
     url: $(location).attr('href'),
-    data: { bet: 234 },
+    data: { /* YOUR CODE HERE */ },
     cache: false,
     success: function(game){
-      play(game);
+      // YOUR CODE HERE
     }
   });
   return false;

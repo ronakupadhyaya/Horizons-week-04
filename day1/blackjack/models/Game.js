@@ -10,26 +10,6 @@ GameSchema.statics.newGame = function(item, callback){
   game.save(callback);
 }
 
-GameSchema.statics.deal21 = function(game) {
-  // YOUR CODE HERE
-};
-
-GameSchema.statics.calcValue = function(hand){
-  // YOUR CODE HERE
-}
-
-GameSchema.statics.hit = function(game){
-  // YOUR CODE HERE
-};
-
-GameSchema.statics.stand = function stand(game){
-  // YOUR CODE HERE
-}
-
-GameSchema.statics.gameOver = function gameOver(game){
-  // YOUR CODE HERE
-}
-
 function Card(suit, val, symbol) {
   // YOUR CODE HERE
 }
@@ -46,6 +26,26 @@ Deck.prototype.createDeck = function() {
 }
 
 Deck.prototype.shuffleDeck = function() {
+  // YOUR CODE HERE
+}
+
+GameSchema.statics.calcValue = function(hand){
+  // YOUR CODE HERE
+}
+
+GameSchema.methods.dealInitial = function() {
+  // YOUR CODE HERE
+};
+
+GameSchema.methods.hit = function(){
+  // YOUR CODE HERE
+};
+
+GameSchema.methods.stand = function(){
+  // YOUR CODE HERE
+}
+
+GameSchema.methods.gameOver = function(){
   // YOUR CODE HERE
 }
 

@@ -164,9 +164,9 @@ Secondly: build out the logic for all other AJAX requests and updating the view.
 
 1. Bet form is the only element shown upon page load
 2. The user submits the bet form and the form submit event is handled with AJAX (by `preventDefault`'ing!).
-3. The `play` function is called; the bet form is hidden, and both the dealer and user elements (`.dealer-area` and `.user-area`) are now shown.
+3. The `play` function is called; the bet form is hidden, and both the dealer and user elements (`.dealer-area` and `.user-area`) are now shown. The `play` function should also be responsible for rendering cards from both hands.
 4. Event handlers are set for each button, to correspond to `hit()` and `stand()` functions.
-5. Upon calling `hit()` or `stand()`, an AJAX request is fired and the game is updated accordingly. 
+5. Upon calling `hit()` or `stand()`, an AJAX request is fired and the game is updated accordingly - `play` should be called to render the game with the new information.
 
 **For played game:** show winner/loser/draw.
 

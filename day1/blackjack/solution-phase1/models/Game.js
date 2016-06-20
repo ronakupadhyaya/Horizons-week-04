@@ -49,7 +49,7 @@ Deck.prototype.createDeck = function() {
   for(var i in suits) {
     for(var j = 2; j <= 13; j++) {
       if (j > 10) this.deck.push(new Card(suits[i], 10, faces[j]));
-      else this.deck.push(new Card(suits[i], j, String(j));
+      else this.deck.push(new Card(suits[i], j, String(j)));
     }
     this.deck.push(new Card(suits[i], 11, "A"));
   }
@@ -72,10 +72,11 @@ GameSchema.statics.newGame = function(item, callback){
   game.save(callback);
 }
 
-GameSchema.statics.calcValue = function(hand) {
-  var nonAces = hand.sort(function(a, b) {
+GameSchema.methods.calcValue = function(hand) {
+  return hand.sort(function(a, b) {
     return a.val - b.val;
   }).reduce(function(prev, cur) {
+    console.log(cur)
     if (cur.symbol !== "A") return prev + cur.val;
     else if(prev >= 11) return 1;
     else return 11;
@@ -84,8 +85,10 @@ GameSchema.statics.calcValue = function(hand) {
 
 
 GameSchema.methods.dealInitial = function() {
-  this.currentPlayerHand.push(this.deck.pop()).push(this.deck.pop());
-  this.houseHand.push(this.deck.pop()).push(this.deck.pop());
+  this.currentPlayerHand.push(this.deck.pop())
+  this.currentPlayerHand.push(this.deck.pop());
+  this.houseHand.push(this.deck.pop())
+  this.houseHand.push(this.deck.pop());
   this.userTotal = this.calcValue(this.currentPlayerHand);
   this.dealerTotal = this.calcValue(this.houseHand);
   this.status = "In Progress";
@@ -102,7 +105,7 @@ GameSchema.methods.hit = function() {
 
 GameSchema.methods.stand = function() {
   while (this.dealerTotal < 17) {
-    this.houseHand.push(game.deck.pop());
+    this.houseHand.push(this.deck.pop());
     this.dealerTotal = this.calcValue(this.houseHand);
     if (this.dealerTotal > 21) {
       this.dealerStatus = "Lost";
