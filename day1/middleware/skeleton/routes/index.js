@@ -7,7 +7,13 @@ var user = null;
 // Your middleware goes here.
 // CAREFUL! Order matters!
 
+router.use(function(req, res, next) {
+	console.log('hollo');
+	next();
+})
+
 router.get('/', function(req, res, next) {
+	console.log('going');
   res.render('index', { title: 'Express' });
 });
 
