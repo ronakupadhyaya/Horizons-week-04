@@ -98,10 +98,7 @@ key things:
   ***authentication strategy*** (which you'll be creating in the next phase).
   
   ```javascript
-  app.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }));
+  app.post('/login', );
   ```
   
   This uses passport to authenticate the given data and redirect the user to to
@@ -164,7 +161,10 @@ key things:
   route definition to look like this:
   
   ```javascript
-  app.get('/', passport.authenticate('local'), function(req, res) {
+  app.get('/', function(req, res) {
+    if (!req.isAuthenticated()) {
+      res.redirect('/login');
+    }
     ...
   });
   ```
