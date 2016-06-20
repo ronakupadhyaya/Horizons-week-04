@@ -1,5 +1,5 @@
 var router = require('express').Router();
-var router = express.Router();
+
 
 module.exports = function(passport) {
   /* GET home page. */
