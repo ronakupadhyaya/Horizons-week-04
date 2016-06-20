@@ -1,137 +1,123 @@
 # Pair programming exercise: Blackjack
 
-## Goal
+In this exercise we're going to build a card game classic: Blackjack, also known as Twenty One. We'll be building off the skills you learned last week using MongoDB, Express, and Node to structure a backend capable of handling game logic as well as using jQuery and AJAX to render gameplay on the frontend in realtime. 
 
-In this exercise we're going to build a multiplayer game of Blackjack.
+In Phase 1, you'll be building out the game with only one player against a dealer.
 
-## Rules of Blackjack
+In Phase 2, we're taking it a step further with multiplayer gameplay using Passport for authenticating your users and pitting them against each other and the dealer.
 
-We will be playing with a simplified set of rules.
-
-### Scoring hands
-
-The value of a hand is the sum of the point values of the individual cards.
-Except, a "blackjack" is the highest hand, consisting of an ace and any
-10-point card, and it outranks all other 21-point hands.
-
-Aces may be counted as 1 or 11 points, 2 to 9 according to face value, and tens
-and face cards count as 10 points.
-
-[Source](http://wizardofodds.com/games/blackjack/basics/)
-
-### Game flow
-
-1. Players decide how much they will bet.
-1. Dealer gives each player 2 cards face up.
-1. Dealer gives herself 1 card face up, 1 card face down.
-1. If the dealer has a blackjack (an Ace and any 10 point card) then players
-  who don't also have blackjacks lose their bets. Players who also have
-  blackjacks get their bets back.
-1. If the dealer doesn't have a blackjack, players decide their moves.
-  They can:
-
-  1. **Hit:** Take another card. The player can hit keep hitting until they
-  reach 21. If player goes over 21, they lose.
-  1. **Stand:** Player choses to not take a card. This ends the player's turn.
-
-1. After all players have taken their turns, the dealer reveals her face-down
-  card. The dealer than keeps drawing more cards until she has more than 16
-  points.
-1. If the dealer ends up with more than 21 points (i.e. busts), all players who
-  have not busted win and get back double their bets.
-1. Otherwise:
-
-  1. Players who have less points than the dealer lose.
-  1. Players who have the same points as the dealer get their bets back.
-  1. Players who have more points than the dealer get back double their bets.
+_**Tip:** Need a refresher on how Blackjack is played? Scroll down to **Rules of Blackjack**!_
 
 
-## Part 1: Play against the dealer
+## Phase 1: Player 1 Start!
 
-First build a Blackjack game where a single person can play against the dealer.
+You could do this in any order you'd like, but following it in order of this README might help to understand web application structure - the big picture!
 
-### Models
+### Introduction ▶️ - `app.js`
 
-These must be backed by a mongo database. Create a model with the following properties.
+First build a Blackjack game where a single person can play against the dealer. Begin by taking a look at `app.js` - the entry point of your application. Everything here is ready for you - dependencies and all - but you need to create a `config.js` file or set an environment variable to allow your application to connect to a local database or mLab instance. 
 
-- Game: a single Blackjack game. Properties:
-  - Player bet (`Number`): number of Horizons Dollars the player has bet.
-  - Deck of cards the game is being played with. Must be shuffled.
-  - Player hand `Array` of cards in the players hand.
-  - Dealer hand `Array` of cards in the dealers hand.
-  - Is game over (`Boolean`): true if game is over, false otherwise.
+### Creating your model 💾 - `models/Game.js`
 
-The game must be stored to the database on every request, because a game can be
-closed and played later. On every request that needs the game: retrieve it, make
-changes and store it back. Use config.js to specify your database.
+Define a Game model that represents a single Blackjack game and able to keep track of the following:
 
-### Part 1: Backend Section.
-
-To simplify the project, we have divided the project into separate parts. The first
-part will be the backend of the project, that will allow you to play from postman.
-
-Once the backend is build, we will move on to part 2, that will be the front-end.
+- The bet that the player has made before the game - `Number`
+- The cards in the player's hand - `Array` (**do not define a specific schema for the Card**, we'll do that later!)
+- The cards in the dealer's hand - `Array` 
+- The cards in the deck - `Array` (we will be setting this upon Game initialization, with the help of the Deck object)
+- The total value of the cards in the player's hand - `Number` (default to 0)
+- The total value of the cards in the dealer's hand - `Number` (default to 0)
+- The status of the game - could be "Not Started", "Over", or "In Progress" - `String` (default to "Not Started")
+- The status of the player - `String`
+- The status of the dealer - `String`
 
 
-#### Game state representation
+### Defining game functions 🎲 - `models/Game.js`
 
+Begin by finishing the Card constructor, which takes parameters `suit` (a string that represents the suit of the card, which could be "hearts", "diamonds", "spades", or "clubs"), `val` (a number that represents the value of the card in Blackjack - see **Rules of Blackjack**), and `symbol` (a string that represents the card's displayed value - Aces have a `symbol` of  "A", Kings have a `symbol` of "K", Queens "Q", Jacks "J", and number cards simply their number value). 
+
+**It's important to note that the Card constructor should not represent a Mongoose model - it will only be an object we use for the Deck object.**
+
+Next, fill out the prototype methods for an object representing a Deck.
+
+- `createDeck` will populate the `this.deck` array with a full set of 52 cards (each represented by a Card object). Populate aces with a `val` of 11 for now - we'll deal with its possible value of 1 in another function.
+
+- `shuffleDeck` will take `this.deck` and place the cards at random indices. You can try to implement your own shuffle, or check out [this page on the Fisher-Yates shuffle](http://www.programming-algorithms.net/article/43676/Fisher-Yates-shuffle) if you're struggling! Don't copy and paste code without understanding it - find a way to implement the pseudocode or write your own.
+ 
 When playing with the backend only, we must be able to view our game results. For
 this, we need to know the state of the game with every move. For example, if a user
 draws a card, we need to know their current cards, score, status of the game to
 be able to continue playing. This is a JSON object that is sent to the client.
 
+Finally, we'll define methods used by our Game. Because we are defining these static and instance methods as part of our *Schema*, they will be available for us to call from models in other places, such as our routes.
+
+- `GameSchema.statics.calcValue` will take a `hand` parameter (an Array, either the dealer or player's hand) and return the point value for the hand. The point value for the hand will take into account the possibility of aces in a `hand` and return the optimal value (i.e., a blackjack of a king and an ace should return 21, not 11).
+- `GameSchema.methods.dealInitial` will begin our game by dealing two cards from the deck to both the dealer and the player. Update all properties related to this action (including `status`, totals, and hands), and refer to the current Game Mongoose model using the `this` keyword!
+- `GameSchema.methods.hit` will update the user's hand with the next card from the deck and subsequently update the game's values for `userTotal` and determine if the game is over at this point. If it is, call `gameOver` (to be implemented)!
+- `GameSchema.methods.stand` is called when the user has finished drawing cards. Here, you will draw cards for the dealer until either the dealer busts or reaches a point value 17 or greater. The dealer will stop drawing cards after reaching 17 or above. Since the players will no longer draw cards after this process, call `gameOver` upon the completion of this function.
+- `GameSchema.methods.gameOver` is called when, well, the game is over. Set the `status` of the game to "Over" and determine the outcome of the game, setting `userStatus` and `dealerStatus` appropriately.
+
+### Exposing gameplay through routes 🔮 - `routes/index.js`
+
+The first function we want to write in our Router is `gameRepresentation`, which will take a `game` model as a parameter and return us an object that represents the game state we want to send back to a client. 
+
+Below is a suggested game state representation. Here you can know the cards of each
+player, whether the game has ended, if someone has lost, etc. This model is a
+suggestion and can be changed, but notice that we have not included the deck array in the object we are sending back in `gameRepresentation` - we don't want the user to be able to store the deck!
+
 ```
 {
-  id: game.id,
-  player1bet: game.player1bet,
-  status: game.status, // Can be over, in-progress or not started!
-  userTotal : game.userTotal, // Total of points the user currently has.
+  id: game._id,
+  playerBet: game.playerBet,
+  status: game.status,
+  userTotal : game.userTotal,
   dealerTotal : game.dealerTotal,
-  userStatus : game.userStatus, // Won, Lost, Tied the game
+  userStatus : game.userStatus,
   dealerStatus : game.dealerStatus,
-  currentPlayerHand : game.currentPlayerHand, // Cards the player has.
+  currentPlayerHand : game.currentPlayerHand,
   houseHand : game.houseHand
 }
 ```
 
-This is a suggested game state representation. Here you can know the cards of each
-player, whether the game has ended, if someone has lost, etc. This model is a
-suggestion and can be changed. For example: userTotal and dealerTotal can be calculated
-from the cards directly on the front-end.
-
-#### Routes
 
 These are the most important methods on the backend. They will do all the actions
 for our game. We'll start by implementing the ones that are necessary to be able
 to play with the backend only, making requests from postman.
 
-* All routes that return Game State Representation, return a JSON object.
+All routes respond with a JSON object as returned by the `gameRepresentation` function.
 
+1. `GET /`
+	- Return all games in the database, but only with its ID and current status - no need to return with the entire game state representation
+	- Take an optional query `status` and respond with only games corresponding to `?status=X`, where `X` is "Over", "In Progress", or "Waiting."
 1. `POST /game`:
-  - Creates new game
-  - Redirects to `/game/:id`
-1. `POST /game/:id/bet`:
-  - The player declares their bet for the game with :id.
-  - Error if the player has already declared their bet
-  - Responds with `Game state representation`
+	- Creates new game
+  	- Redirects to `/game/id`, with the new game's ID.
+1. `GET /game/:id`
+	- Render the `viewgame` template with a context object that has a `title` property and a `game` property. The `game` should have the `Game state representation`.
+1. `POST /game/:id`:
+	- The player declares their bet (in a field of the request body called `bet`) for the game by `:id`.
+	- Call your `dealInitial` on the game here
+	- Error if the player has already declared their bet
+	- Responds with `Game state representation`
 1. `POST /game/:id/hit`:
-  - Player draws another card
-  - Error if the player has not yet declared their bet
-  - Error if the game is not in progress
-  - If player busts, game is over, otherwise player can hit again or stand
-  - Responds with `Game state representation`
+	- Player draws another card
+	- Error if the player has not yet declared their bet
+	- Error if the game is not in progress
+	- If player busts, game is over, otherwise player can hit again or stand
+	- Responds with `Game state representation`
 1. `POST /game/:id/stand`: (renders JSON)
-  - Error if the player has not yet declared their bet
-  - Error if the game is not in progress
-  - Player stops drawing cards
-  - Dealer draws cards until they have more than 17
-  - Determine winner
-  - Game is over
-  - Responds with `Game state representation`
+	- Error if the player has not yet declared their bet
+	- Error if the game is not in progress
+	- Player stops drawing cards
+	- Dealer draws cards until they have more than 17
+	- Determine winner
+	- Game is over
+	- Responds with `Game state representation`
 
-Now, you could play by doing:
-`POST /game` returns new game with id `312314234234`
-`POST /game/312314234234/bet` body-> `{bet:123}` this returns ->
+After writing these routes, you will be able to test your game through using HTTP requests only using Postman! Try each route and your game flow to test your functionality up to this point.
+
+1. `POST /game` returns new game with id `312314234234`
+2. `POST /game/312314234234/bet` body-> `{bet:123}` this returns ->
 ```{
   id: 312314234234,
   player1bet:  123,
@@ -154,7 +140,7 @@ Now, you could play by doing:
 ```
 `POST /game/:id/stand` Returns the final status of the game and who has won.
 
-### Part 2: Front-end Section.
+### Putting the front
 
 Time to build the views the routes for the views:
 
@@ -170,7 +156,7 @@ Time to build the views the routes for the views:
   - If game is in progress: button for Hit and Stand buttons.
   - If game is over: show winner/loser/draw
 
-## (Bonus) Part 2: Multiplayer
+##Phase 2: Level Up with Multiplayer
 
 ### Routes
 
@@ -227,3 +213,45 @@ game status:
   - Player 2 bet (`Number`): number of Horizons Dollars the 2nd player has bet.
   - Player 2 hand (`Array` of `String`s): cards in the 2nd players hand.
   - Player 2 id (`ObjectId`): Mongo id of the player in the game
+
+## Rules of Blackjack
+
+We will be playing with a simplified set of rules.
+
+### Scoring hands
+
+The value of a hand is the sum of the point values of the individual cards.
+Except, a "blackjack" is the highest hand, consisting of an ace and any
+10-point card, and it outranks all other 21-point hands.
+
+Aces may be counted as 1 or 11 points, 2 to 9 according to face value, and tens
+and face cards count as 10 points.
+
+[Source](http://wizardofodds.com/games/blackjack/basics/)
+
+
+### Game flow
+
+1. Players decide how much they will bet.
+1. Dealer gives each player 2 cards face up.
+1. Dealer gives herself 1 card face up, 1 card face down.
+1. If the dealer has a blackjack (an Ace and any 10 point card) then players
+  who don't also have blackjacks lose their bets. Players who also have
+  blackjacks get their bets back.
+1. If the dealer doesn't have a blackjack, players decide their moves.
+  They can:
+
+  1. **Hit:** Take another card. The player can hit keep hitting until they
+  reach 21. If player goes over 21, they lose.
+  1. **Stand:** Player choses to not take a card. This ends the player's turn.
+
+1. After all players have taken their turns, the dealer reveals her face-down
+  card. The dealer than keeps drawing more cards until she has more than 16
+  points.
+1. If the dealer ends up with more than 21 points (i.e. busts), all players who
+  have not busted win and get back double their bets.
+1. Otherwise:
+
+  1. Players who have less points than the dealer lose.
+  1. Players who have the same points as the dealer get their bets back.
+  1. Players who have more points than the dealer get back double their bets.
