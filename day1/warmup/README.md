@@ -28,4 +28,5 @@ git, so the learning curve is not too steep.
    login.
 1. Now that your account is created and the toolbelt is installed, begin the
    tutorial at
-   https://devcenter.heroku.com/articles/getting-started-with-nodejs.
+   https://devcenter.heroku.com/articles/getting-started-with-nodejs. Don't
+   worry if you don't get very far, we'll continue this together.
