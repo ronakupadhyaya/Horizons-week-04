@@ -5,6 +5,7 @@ var passport = require('passport');
 module.exports = function(passport) {
   
   /* GET home page. */
+  // router.get('/', passport.authenticate('local'), function(req, res, next) {
   router.get('/', function(req, res, next) {
     console.log(req.isAuthenticated());
     if (!req.isAuthenticated()) {
@@ -14,4 +15,4 @@ module.exports = function(passport) {
   });
   
   return router;
-}
+};
