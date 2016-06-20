@@ -1,60 +1,129 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  deck: [],
-  status: {type: String, default: 'Not Started'},
-  player1bet: {type: Number, default: 0},
-  userTotal: {type: Number, default: 0},
-  dealerTotal: {type: Number, default: 0},
-  userStatus: {type: String, default: "waiting"},
-  dealerStatus: {type: String, default: "waiting"},
-  currentPlayerHand: [],
-  houseHand: [],
+  deck: Array,
+  status: {
+    type: String, 
+    default: "Not Started"
+  },
+  playerBet: {
+    type: Number, 
+    default: 0
+  },
+  userTotal: {
+    type: Number, 
+    default: 0
+  },
+  dealerTotal: {
+    type: Number, 
+    default: 0
+  },
+  userStatus: {
+    type: String, 
+    default: "waiting"
+  },
+  dealerStatus: {
+    type: String, 
+    default: "waiting"
+  },
+  currentPlayerHand: Array,
+  houseHand: Array
 });
 
-GameSchema.statics.newGame = function(item, callback){
+function Card(suit, val, symbol) {
+  this.suit = suit;
+  this.val = val;
+  this.symbol = symbol;
+}
+
+function Deck(){
+  this.deck = [];
+  this.createDeck();
+  this.shuffleDeck();
+  return this.deck;
+}
+
+Deck.prototype.createDeck = function() {
+  var suits = {0: "hearts", 1: "spades", 2: "clubs", 3: "diamonds"};
+  var faces = {11: "J", 12: "Q", 13: "K", 14: "A"};
+  for(var i in suits) {
+    for(var j = 2; j <= 13; j++) {
+      if (j > 10) this.deck.push(new Card(suits[i], 10, faces[j]));
+      else this.deck.push(new Card(suits[i], j, String(j));
+    }
+    this.deck.push(new Card(suits[i], 11, "A"));
+  }
+}
+
+Deck.prototype.shuffleDeck = function() {
+  var remaining = this.deck.length;
+  while(remaining > 0) {
+    var i = Math.floor(Math.random() * remaining--);
+    var j = this.deck[remaining];
+    this.deck[remaining] = this.deck[i];
+    this.deck[i] = j;
+  }
+}
+
+
+GameSchema.statics.newGame = function(item, callback){ 
   var game = new this(item)
   game.deck = new Deck();
   game.save(callback);
 }
 
-GameSchema.statics.deal21 = function(game) {
-  // YOUR CODE HERE
+GameSchema.statics.calcValue = function(hand) {
+  var nonAces = hand.sort(function(a, b) {
+    return a.val - b.val;
+  }).reduce(function(prev, cur) {
+    if (cur.symbol !== "A") return prev + cur.val;
+    else if(prev >= 11) return 1;
+    else return 11;
+  }, 0);
+}
+
+
+GameSchema.methods.dealInitial = function() {
+  this.currentPlayerHand.push(this.deck.pop()).push(this.deck.pop());
+  this.houseHand.push(this.deck.pop()).push(this.deck.pop());
+  this.userTotal = this.calcValue(this.currentPlayerHand);
+  this.dealerTotal = this.calcValue(this.houseHand);
+  this.status = "In Progress";
+}
+
+GameSchema.methods.hit = function() {
+  this.currentPlayerHand.push(this.deck.pop());
+  this.userTotal = this.calcValue(this.currentPlayerHand);
+  if (this.userTotal > 21) {
+    this.userStatus = "Lost";
+    this.gameOver();
+  }
 };
 
-GameSchema.statics.calcValue = function(hand){
-  // YOUR CODE HERE
+GameSchema.methods.stand = function() {
+  while (this.dealerTotal < 17) {
+    this.houseHand.push(game.deck.pop());
+    this.dealerTotal = this.calcValue(this.houseHand);
+    if (this.dealerTotal > 21) {
+      this.dealerStatus = "Lost";
+    }
+  }
+  this.gameOver();
 }
 
-GameSchema.statics.hit = function(game){
-  // YOUR CODE HERE
-};
-
-GameSchema.statics.stand = function stand(game){
-  // YOUR CODE HERE
-}
-
-GameSchema.statics.gameOver = function gameOver(game){
-  // YOUR CODE HERE
-}
-
-function Card(suit, val, symbol) {
-  // YOUR CODE HERE
-}
-
-function Deck(){
-  this.deck = [];
-  this.createDeck()
-  this.shuffleDeck()
-  return this.deck;
-}
-
-Deck.prototype.createDeck = function() {
-  // YOUR CODE HERE
-}
-
-Deck.prototype.shuffleDeck = function() {
-  // YOUR CODE HERE
+GameSchema.methods.gameOver = function() {
+  this.status = "Over";
+  if (this.userStatus === "Lost") {
+    this.dealerStatus = "Won";
+  } else if (this.dealerStatus === "Lost") {
+    this.userStatus = "Won";
+  } else if (this.userTotal < this.dealerTotal) {
+    this.userStatus = "Lost";
+    this.dealerStatus = "Won";
+  } else {
+    this.userStatus = "Won";
+    this.dealerStatus = "Lost";
+  }
 }
 
 module.exports = mongoose.model('Game', GameSchema);
