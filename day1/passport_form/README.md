@@ -21,7 +21,7 @@ key things:
 1. Install dependencies
 
   In this exercise, we're going to be using **Express** as our web framework,
-  **Mongoose** handling our data storage and modeling, **Handlebars** as our
+  **Mongoose** for handling our data storage and modeling, **Handlebars** as our
   templating engine, and **Passport** as our authentication middleware. There
   are a few other dependencies here and there and you can check them out in the
   `package.json`, but those are the major technologies at play here.
@@ -32,7 +32,7 @@ key things:
   $ npm install
   ```
   
-  Remember to fill in your **mLab** url in `/models/connect.js`!
+  Remember to fill in your **mLab** url in `models/connect.js`!
 
 1. The registration flow
 
@@ -49,12 +49,12 @@ key things:
   case, or a set of them, like for Robinhood or Facebook.
   
   First, Add a route in `auth.js` to access this page from `/register` when a
-  `GET` request is issued to your server. You should render the
-  `views/register.hbs` template in the views folder when that GET request is
-  issued.
+  your server receives a `GET` request. You should render the
+  `views/register.hbs` template in the views folder when handling that GET
+  request.
   
-  In the `register.hbs`, you'll be making a simple registration form that has
-  three fields: **username**, **password** and **password repeat**.
+  In `register.hbs`, you'll be making a simple registration form that has three
+  fields: **username**, **password** and **password repeat**.
   
   **Bootstrap** has already been included in your `/public/css/` folder for
   convenience, but it has ***not*** been linked to your `views/layout.hbs`
@@ -63,7 +63,7 @@ key things:
   
   After you've created your page, let's make the registration page functional.
   
-  First, create a simple `User` model in `/models/models.js`. The user should
+  First, create a simple `User` model in `models/models.js`. The user should
   only have two properties - a username and a password. Once you've completed
   that, remember to export them using `module.exports`.
   
@@ -78,7 +78,7 @@ key things:
 
   In this phase, you will:
   
-  1. Create a login template in `/views/login.hbs`
+  1. Create a login template in `views/login.hbs`
   1. Create a `GET` route for `/login` in `routes/auth.js` that renders the 
   `login` template
   1. Create a `POST` route for `/login` that will log the user in if the 
@@ -86,7 +86,7 @@ key things:
   1. Create a `GET` route for `/logout` that will log the user out and redirect 
   to the `/login` route
   
-  First, create the login template in `/views/login.hbs`. It should only have
+  First, create the login template in `views/login.hbs`. It should only have
   two fields - a **username** and **password** field.
   
   Next, we're going to be adding the ***key*** routes to our `routes/auth.js`
@@ -104,9 +104,8 @@ key things:
   }));
   ```
   
-  What this does is use passport to authenticate the given data and redirect the
-  user to to `/` if it's correct. Otherwise, it redirects users to the login
-  page.
+  This uses passport to authenticate the given data and redirect the user to to
+  `/` if it's correct. Otherwise, it redirects users to the login page.
   
   When that's done, implement a `GET` route for `/logout`. That route should log
   the user out by calling
@@ -171,4 +170,6 @@ key things:
   ```
   
   To test, try navigating to '/' on `localhost:3000` in your browser. You should
-  immediately be redirected to `/login` and shown the login page.
+  immediately be redirected to `/login` and shown the login page. Once
+  everything is working, ensure that you can view this secret page only once
+  you've logged in.
