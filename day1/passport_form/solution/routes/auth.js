@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var models = require('../models/models');
 
-// GET Registraion page
+// GET registration page
 router.get('/register', function(req, res) {
   res.render('register');
 });

@@ -32,7 +32,7 @@ key things:
   $ npm install
   ```
   
-  Remember to fill in your **mLab** url in `/models/connect.js`!
+  Remember to fill in your **mLab** url in `models/connect.js`!
 
 1. The registration flow
 
@@ -63,7 +63,7 @@ key things:
   
   After you've created your page, let's make the registration page functional.
   
-  First, create a simple `User` model in `/models/models.js`. The user should
+  First, create a simple `User` model in `models/models.js`. The user should
   only have two properties - a username and a password. Once you've completed
   that, remember to export them using `module.exports`.
   
@@ -78,7 +78,7 @@ key things:
 
   In this phase, you will:
   
-  1. Create a login template in `/views/login.hbs`
+  1. Create a login template in `views/login.hbs`
   1. Create a `GET` route for `/login` in `routes/auth.js` that renders the 
   `login` template
   1. Create a `POST` route for `/login` that will log the user in if the 
@@ -86,7 +86,7 @@ key things:
   1. Create a `GET` route for `/logout` that will log the user out and redirect 
   to the `/login` route
   
-  First, create the login template in `/views/login.hbs`. It should only have
+  First, create the login template in `views/login.hbs`. It should only have
   two fields - a **username** and **password** field.
   
   Next, we're going to be adding the ***key*** routes to our `routes/auth.js`

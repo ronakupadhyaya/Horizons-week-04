@@ -9,6 +9,10 @@
 1. [Middleware](middleware/)
 1. [Cookies and sessions](cookies/)
 
-## Pair programming exercises
+## Individual exercise
+
+1. [Passport form](passport_form/)
+
+## Pair programming exercise
 
 Coming soon!

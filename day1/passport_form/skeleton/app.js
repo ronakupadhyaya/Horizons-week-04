@@ -1,13 +1,11 @@
 var express = require('express');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
-var User = require('./models/models').User;
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
@@ -18,8 +16,6 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,24 +29,7 @@ app.use('/', routes);
 app.use('/', auth);
 
 // passport strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // Find the user with the given username
-    User.findOne({ username: username }, function (err, user) {
-      // if there's an error, finish trying to authenticate (auth failed)
-      if (err) { return done(err); }
-      // if no user present, auth failed
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      // if passwords do not match, auth failed
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      // auth has has succeeded
-      return done(null, user.username);
-    });
-  }
-));
+// YOUR CODE HERE
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
