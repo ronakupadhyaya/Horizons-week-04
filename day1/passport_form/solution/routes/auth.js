@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var passport = require('passport');
 var models = require('../models/models');
 
 module.exports = function(passport) {
@@ -45,7 +44,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/')
+    res.redirect('/');
   });
 
   // GET Logout page
