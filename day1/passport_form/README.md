@@ -98,7 +98,7 @@ key things:
   ***authentication strategy*** (which you'll be creating in the next phase).
   
   ```javascript
-  app.post('/login', passport.authenticate('local'), function(req, res) {
+  router.post('/login', passport.authenticate('local'), function(req, res) {
       ...
   });
   ```
@@ -140,22 +140,22 @@ key things:
 
   passport.use(new LocalStrategy(function(username, password, done) {
     // Find the user with the given username
-      User.findOne({ username: username }, function (err, user) {
-        // if there's an error, finish trying to authenticate (auth failed)
-        if (err) { return done(err); }
-        // if no user present, auth failed
-        if (!user) {
-          return done(null, false, { message: 'Incorrect username.' });
-        }
-        // if passwords do not match, auth failed
-        if (user.password !== password) {
-          return done(null, false, { message: 'Incorrect password.' });
-        }
-        // auth has has succeeded
-        return done(null, user);
-      });
-    }
-  ));
+    // May need to adapt this to your own model!
+    User.findOne({ username: username }, function (err, user) {
+      // if there's an error, finish trying to authenticate (auth failed)
+      if (err) { return done(err); }
+      // if no user present, auth failed
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      // if passwords do not match, auth failed
+      if (user.password !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      // auth has has succeeded
+      return done(null, user);
+    });
+  }));
   ```
   
   In `routes/index.js`, make the root url (`/`) an authenticated root, meaning
@@ -163,7 +163,7 @@ key things:
   route definition to look like this:
   
   ```javascript
-  app.get('/', function(req, res) {
+  router.get('/', function(req, res) {
     if (!req.isAuthenticated()) {
       res.redirect('/login');
     }
