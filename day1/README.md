@@ -118,7 +118,7 @@ After writing these routes, you will be able to test your game through using HTT
 
 1. `POST /game` will create your new game and give you an ID to use: `312314234234`
 2. `POST /game/312314234234/bet` with request body `{bet: 123}` will return you something like
-	- ```
+ ```javascript
 {
   id: 312314234234,
   playerBet:  123,
@@ -132,9 +132,9 @@ After writing these routes, you will be able to test your game through using HTT
 }
 ```
 
-3. `POST /game/312314234234/hit` gives the player a new card. Returns:
 
-	- ```
+3. `POST /game/312314234234/hit` gives the player a new card. Returns:
+```javascript
 {
   ...
   dealerTotal : 17,
@@ -142,7 +142,6 @@ After writing these routes, you will be able to test your game through using HTT
   ...
 }
 ```
-
 4. `POST /game/:id/stand` Returns the final status of the game and who has won.
 
 ### Putting the front
