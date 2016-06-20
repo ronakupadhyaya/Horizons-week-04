@@ -1,1 +1,19 @@
 <!-- YOUR HBS TEMPLATE HERE -->
+<h1>Welcome!</h1>
+<h2>Create an account below</h2>
+<h3>{{{error}}}</h3>
+<form role="form" method="post" name="registration">
+<div class="form-group">
+<label>Username</label>
+<input type="text" class="form-control" name="usernameReg">
+</div>
+<div class="form-group">
+<label>Password</label>
+<input type="password" class="form-control" name="passwordReg">
+</div>
+<div class="form-group">
+<label>Re-enter password</label>
+<input type="password" class="form-control" name="password2">
+</div>
+<button type="submit" class="btn btn-default">Submit</button>
+</form>

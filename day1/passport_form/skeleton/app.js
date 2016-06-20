@@ -7,7 +7,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
-var User = require('./models/models').User;
+var User = require('./models/models');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
@@ -37,6 +37,20 @@ passport.deserializeUser(function(id, done) {
 
 // passport strategy
 // YOUR CODE HERE
+var passport=require('passport');
+var LocalStrategy=require('passport-local').Strategy;
+passport.use(new LocalStrategy(function(username,password,done){
+  User.findOne({username:username, password: password}, function(err,user){
+    if(err){return done(err)}
+    if(!user){
+      return done(null, false, {message: 'Incorrect username.'});
+    }
+    if(user.password !== password){
+      return done(null, false, {message: 'Incorrect password.'});
+    }
+    return done(null,user);
+  })
+}))
 
 app.use(passport.initialize());
 app.use(passport.session());
