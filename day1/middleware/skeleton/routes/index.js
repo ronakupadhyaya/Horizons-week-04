@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 // Store login information here.
+//intercept the hidden route and check if theyre logged in
+//then proceed to next, go to login page, then redirect them to after they login
 var user = null;
 
 // Your middleware goes here.
@@ -11,15 +13,29 @@ var myLogger = function (req, res, next) {
   next();
 };
 
-router.use(myLogger);
+// router.use(myLogger);
+
+router.use(myLogger, function(req,res,next){
+  console.log('Hello world');
+  // res.send("hello world"); (hello world text will be on screen)
+  next();
+});
+
+router.use('/hidden', function(req,res,next){
+  if(user) next();
+  else{ //this is a req.query
+    res.redirect('/login?redirect=hidden');
+  }
+});
 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
   // next();
 });
 
+
 router.get('/hidden', function(req, res, next) {
-  res.send("Access Denied");
+  res.send("<h1>I hate u " + user+ "!</h1>");
   // next();
 });
 
@@ -29,14 +45,21 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  // Your code here
-  res.send("Not implemented yet");
+  // this is when we set the user variable
+  // res.send("Not implemented yet");
+  user = req.body.username;
+  if(req.query.redirect){//req.query.redirect means there is a question mark in the url, just a string that is part of the url
+    res.redirect('/'+ req.query.redirect);
+  } else{
+    res.redirect('/');
+  }
   // next();
 });
 
 module.exports = router;
 
 //NOTES from lecture
+// use -> npm install, then npm install -g nodemon
 //get only returns get
 // router.get('/', function(req,res,next){
 //   console.log('MATCHED ROOT ROUTE');

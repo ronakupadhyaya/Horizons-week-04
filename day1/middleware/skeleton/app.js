@@ -5,8 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+//this is more middleware
 var routes = require('./routes/index');
 
+//this is the entry point of the application
 var app = express();
 
 // view engine setup

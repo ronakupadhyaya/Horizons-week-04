@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+//this is how we get cookies
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
