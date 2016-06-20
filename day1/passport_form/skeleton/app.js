@@ -3,9 +3,11 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
+var User = require('./models/models').User;
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
@@ -21,15 +23,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(session({ secret: 'keyboard cat' }));
 
-app.use('/', routes);
-app.use('/', auth);
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+ 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
 
 // passport strategy
 // YOUR CODE HERE
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/', routes(passport));
+app.use('/', auth(passport));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
