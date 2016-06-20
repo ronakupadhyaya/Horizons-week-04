@@ -116,29 +116,34 @@ All routes respond with a JSON object as returned by the `gameRepresentation` fu
 
 After writing these routes, you will be able to test your game through using HTTP requests only using Postman! Try each route and your game flow to test your functionality up to this point.
 
-1. `POST /game` returns new game with id `312314234234`
-2. `POST /game/312314234234/bet` body-> `{bet:123}` this returns ->
-```{
+1. `POST /game` will create your new game and give you an ID to use: `312314234234`
+2. `POST /game/312314234234/bet` with request body `{bet: 123}` will return you something like
+	- ```
+{
   id: 312314234234,
-  player1bet:  123,
+  playerBet:  123,
   status: "Not Started",
-  userTotal : 12,
-  dealerTotal : 17,
-  userStatus : " ",
-  dealerStatus : " ",
-  currentPlayerHand : ["K Clubs", "2 Spades"]
-  houseHand :["A Hearts", "6 Spades"]
+  userTotal: 12,
+  dealerTotal: 17,
+  userStatus: "Waiting",
+  dealerStatus: "Waiting",
+  currentPlayerHand : [{"clubs", 10, "K"}, {"spades", 2, "2"}]
+  houseHand: [{"hearts", 11, "A"}, {"spades", 6, "6"}]
 }
 ```
-`POST /game/312314234234/hit` gives the player a new card. Returns:
-``{
+
+3. `POST /game/312314234234/hit` gives the player a new card. Returns:
+
+	- ```
+{
   ...
   dealerTotal : 17,
-  currentPlayerHand : ["K Clubs", "2 Spades", "6 Hearts"]
+  currentPlayerHand : [{"clubs", 10, "K"}, {"spades", 2, "2"}, {"hearts", 6, "6"}]
   ...
 }
 ```
-`POST /game/:id/stand` Returns the final status of the game and who has won.
+
+4. `POST /game/:id/stand` Returns the final status of the game and who has won.
 
 ### Putting the front
 
