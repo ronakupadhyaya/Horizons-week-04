@@ -45,6 +45,7 @@ router.use(function(req, res, next) {
     res.cookie("mySession", id);
     //this is a way of identifying each user by cookie
     cookieStore[id]=null;
+    next();
   }
 });
 
@@ -88,3 +89,5 @@ module.exports = router;
 //cookies not in url, stored in http headers
 
 //keeping track of being loffed in via cookieStore
+
+//can look up cookie id because stored someplace else (like mongodb)
