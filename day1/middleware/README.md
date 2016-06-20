@@ -4,7 +4,8 @@
 ## Instructions
 
 Let's write some basic Express middleware. Open up `skeleton/routes/index.js` to
-get started! Run the app locally using `npm start` or `nodemon`.
+get started! Install modules with `npm install`, then run the app locally using
+`npm start` or `nodemon`.
 
 1. Start by writing a simple middleware function that prints something to
    the console every time it intercepts a request.
