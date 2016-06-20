@@ -35,14 +35,14 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
-  
+  console.log(req.session);
   res.redirect('/');
 });
 
 router.get('/logout', function(req, res, next) {
   // Your code here. Delete the user data from the session, but don't delete the
   // cookie or the session itself.
-  
+
   res.redirect('/');
 });
 
