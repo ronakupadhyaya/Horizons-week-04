@@ -9,3 +9,7 @@ module.exports = function(passport) {
   
   return router;
 };
+
+
+
+var passport = require('')
