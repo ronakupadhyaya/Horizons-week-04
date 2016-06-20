@@ -14,14 +14,21 @@ module.exports = function(passport) {
 	})
 	
 	router.post('/login', function(req,res,next) {
-		console.log('!!!!!!!!!!!!!!!!!!!')
-		User.find({name: req.body.user}, function(error, cats) {
+		User.find({user: req.body.username}, function(error, cats) {
 			if (error) {
 				console.log('Error', error);
-				res.redirect('/')
+				res.render('index')
 			} else {
-				console.log('Cats', cats);
-				res.redirect('/profile',{name:req.body.user})
+				console.log('no error')
+				console.log(cats)
+				for (var i = 0; i < cats.length; i++) {
+					if (cats[i].pass===req.body.password) {
+						console.log('found the user!')
+						res.render('profile',{name:req.body.username})
+						return
+					}
+				}
+				res.render('index',{title:'a tiny site'})
 			}
 		});
 	})
