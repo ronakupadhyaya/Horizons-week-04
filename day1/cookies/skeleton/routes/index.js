@@ -16,6 +16,24 @@ var generateId = function() {
 router.use(function(req, res, next) {
   // Your middleware goes here: check for a cookie, and create one if there
   // isn't one. Use generateId() to generate a unique cookie value.
+  if (req.cookies.mySession) {
+    if(cookieStore[req.cookies.mySession]){
+      req.session = {user: cookieStore[req.cookies.mySession]};
+    }
+    next();
+  } else {
+    // this means that they are a new visitor and we dont have an ID on them yet 
+    var id = generateId();
+    res.cookie("mySession", id);
+    cookieStore[id] = null;
+    next();
+  }
+//   if(req.cookies.mySession){
+//   next(); //if this exists, we want to move on to the next step
+// }
+//   else{
+//     res.cookie("mySession", generateId());  // cookies allow us to identify each user by unique ID
+//   }
 });
 
 router.get('/', function(req, res, next) {
@@ -35,14 +53,14 @@ router.get('/login', function(req, res, next) {
 
 router.post('/login', function(req, res, next) {
   // Your code here. Set the user inside the session!
-  
+
   res.redirect('/');
 });
 
 router.get('/logout', function(req, res, next) {
   // Your code here. Delete the user data from the session, but don't delete the
   // cookie or the session itself.
-  
+
   res.redirect('/');
 });
 
