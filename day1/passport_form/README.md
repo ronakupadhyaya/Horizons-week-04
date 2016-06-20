@@ -98,7 +98,9 @@ key things:
   ***authentication strategy*** (which you'll be creating in the next phase).
   
   ```javascript
-  app.post('/login', );
+  app.post('/login', passport.authenticate('local'), function(req, res) {
+      ...
+  });
   ```
   
   This uses passport to authenticate the given data and redirect the user to to
