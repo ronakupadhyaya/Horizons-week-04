@@ -15,4 +15,4 @@
 
 ## Pair programming exercise
 
-Coming soon!
+1. [Blackjack!](blackjack/)
