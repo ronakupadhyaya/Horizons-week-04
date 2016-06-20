@@ -7,7 +7,7 @@ var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
-var User = require('./models/models').User;
+var User = require('./models/models');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
@@ -36,7 +36,27 @@ passport.deserializeUser(function(id, done) {
 });
 
 // passport strategy
-// YOUR CODE HERE
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  // Find the user with the given username
+  // May need to adapt this to your own model!
+  User.findOne({ username: username }, function (err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+    if (err) { return done(err); }
+    // if no user present, auth failed
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    // if passwords do not match, auth failed
+    if (user.password !== password) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    // auth has has succeeded
+    return done(null, user);
+  });
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

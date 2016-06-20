@@ -1,4 +1,7 @@
 var mongoose = require('mongoose');
+
+mongoose.connect(require('./connect'))
+
 var Schema = mongoose.Schema;
 var User = new Schema({
   username: {
@@ -11,4 +14,4 @@ var User = new Schema({
   }
 });
 
-module.exports = mongoose.model('UserEncrypt', User);
+module.exports = mongoose.model('userEncrypt', User);
