@@ -2,7 +2,6 @@
 var router = require('express').Router();
 var models = require('../models/models');
 
-
 module.exports = function(passport) {
 
 	router.get('/register', function(req, res, next){
