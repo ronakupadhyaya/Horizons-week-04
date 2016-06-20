@@ -16,7 +16,16 @@ var generateId = function() {
 router.use(function(req, res, next) {
   // Your middleware goes here: check for a cookie, and create one if there
   // isn't one. Use generateId() to generate a unique cookie value.
+  var sess = req.session;
+
+  if(sess.count){
+    //something
+  } else {
+    sess.count = 1;
+    //something;
+  }
 });
+
 
 router.get('/', function(req, res, next) {
   res.setHeader('Content-Type', 'text/html');
