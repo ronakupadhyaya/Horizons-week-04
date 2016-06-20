@@ -134,7 +134,7 @@ After writing these routes, you will be able to test your game through using HTT
 
 
 3. `POST /game/312314234234/hit` gives the player a new card. Returns:
-```javascript
+ ```javascript
 {
   ...
   dealerTotal : 17,
