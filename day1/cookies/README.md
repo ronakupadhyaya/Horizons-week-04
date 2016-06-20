@@ -13,7 +13,8 @@ store information about a user such as their username. It should work like this:
 
 # Instructions
 
-Use the scaffolding in the `skeleton/` folder.
+Use the scaffolding in the `skeleton/` folder. The views and some of the routes
+are filled in for you. Open up `skeleton/routes/index.js` to get started.
 
 You can read a cookie using `req.cookies`. This is an object that stores each
 cookie keyed by name, e.g., a cookie called "mySession" would be stored at
@@ -24,5 +25,4 @@ You can set a cookie like this:
 ````javascript
 res.cookie(cookieName, cookieValue);
 ````
-
 
