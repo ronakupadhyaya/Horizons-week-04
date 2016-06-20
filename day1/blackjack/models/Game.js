@@ -1,7 +1,33 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  // YOUR CODE HERE
+  playerBet: {
+    type: Number, 
+    default: 0
+  },
+  currentPlayerHand: Array,
+  currentDealerHand: Array,
+  deck: Array,
+  userHandTotal: {
+    type: Number, 
+    default: 0
+  },
+  dealerHandTotal: {
+    type: Number, 
+    default: 0
+  },
+  status: {
+    type: String, 
+    default: "Not Started"
+  },
+  userStatus: {
+    type: String, 
+    default: "waiting"
+  },
+  dealerStatus: {
+    type: String, 
+    default: "waiting"
+  }  
 });
 
 GameSchema.statics.newGame = function(item, callback){
