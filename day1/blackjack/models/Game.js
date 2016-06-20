@@ -29,7 +29,7 @@ Deck.prototype.shuffleDeck = function() {
   // YOUR CODE HERE
 }
 
-GameSchema.statics.calcValue = function(hand){
+GameSchema.methods.calcValue = function(hand){
   // YOUR CODE HERE
 }
 
