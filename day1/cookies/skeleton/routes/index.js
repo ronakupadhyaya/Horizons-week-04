@@ -13,16 +13,23 @@ var generateId = function() {
     chunk() + '-' + chunk() + chunk() + chunk();
 };
 
+//res.cookie sets, req.cookies gets
+
 router.use(function(req, res, next) {
   // Your middleware goes here: check for a cookie, and create one if there
   // isn't one. Use generateId() to generate a unique cookie value.
-  var sess = req.session;
-
-  if(sess.count){
-    //something
+  if(req.cookies.sugarCookie){
+    //this means that we have an id on them
+    if(cookieStore[req.cookies.sugarCookie]) {
+      req.session = {user: cookieStore[req.cookies.sugarCookie]};
+    }
+    next();
   } else {
-    sess.count = 1;
-    //something;
+    //this means they are a new visitor
+    var id = generateId();
+    res.cookie("sugarCookie", id);
+    cookieStore[id] = null;
+    next();
   }
 });
 
@@ -43,15 +50,13 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login', function(req, res, next) {
-  // Your code here. Set the user inside the session!
   
+  cookieStore[req.cookies.sugarCookie] = req.body.username;
   res.redirect('/');
 });
 
 router.get('/logout', function(req, res, next) {
-  // Your code here. Delete the user data from the session, but don't delete the
-  // cookie or the session itself.
-  
+  cookieStore[req.cookies.sugarCookie] = null;
   res.redirect('/');
 });
 
