@@ -1,17 +1,15 @@
 {
-  "name": "sendgrid_demo",
+  "name": "twilio_demo",
   "version": "1.0.0",
-  "description": "sendgrid demo",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "sendgrid": "^3.0.5",
-    "sendgrid-nodejs": "0.1.0-2",
-    "sendgrid-rest": "^2.2.1"
+    "twilio": "^2.9.1"
   }
 }
