@@ -37,7 +37,9 @@ GameSchema.statics.newGame = function(item, callback){
 }
 
 function Card(suit, val, symbol) {
-  // YOUR CODE HERE
+  this.suit = suit;
+  this.val = val;
+  this.symbol = symbol;
 }
 
 function Deck(){
@@ -49,14 +51,27 @@ function Deck(){
 
 Deck.prototype.createDeck = function() {
   // YOUR CODE HERE
+  var suits = {0: "hearts", 1: "spades", 2: "clubs", 3: "diamonds"};
+  var faces = {11: "J", 12: "Q", 13: "K", 14: "A"};
+  for(var i in suits) {
+    for(var j = 2; j <= 13; j++) {
+      if (j > 10) this.deck.push(new Card(suits[i], 10, faces[j]));
+      else this.deck.push(new Card(suits[i], j, String(j)));
+    }
+    this.deck.push(new Card(suits[i], 11, "A"));
+  }
 }
 
 Deck.prototype.shuffleDeck = function() {
-  // YOUR CODE HERE
+  _.shuffle(this.deck);
 }
 
 GameSchema.methods.calcValue = function(hand){
-  // YOUR CODE HERE
+  var count = 0;
+  for (var i = 0; i < hand.length; i++) {
+    count += hand[i].val;
+  }
+  return count;
 }
 
 GameSchema.methods.dealInitial = function() {
