@@ -19,14 +19,14 @@ module.exports = function(passport) {
 			});
 
 			newUser.save(function(err, success){
-			if (err) {
-				console.log(err);
-			}
-			else {
-				console.log(success);
-				res.redirect('/login');
-			}
-		})
+				if (err) {
+					console.log(err);
+				}
+				else {
+					console.log(success);
+					res.redirect('/login');
+				}
+			})
 		}
 	});
 
