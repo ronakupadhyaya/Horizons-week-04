@@ -12,6 +12,13 @@ router.use(function(req, res, next) {
 	next();
 })
 
+router.use('hidden', function(req,res,next) {
+	if(user) next();
+	else {
+		res.redirect('/login?request=hidden')
+	}
+})
+
 router.get('/', function(req, res, next) {
 	console.log('going');
   res.render('index', { title: 'Express' });
