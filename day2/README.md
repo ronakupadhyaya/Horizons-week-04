@@ -6,12 +6,8 @@
 
 ## Inline exercises
 
-1. [Middleware](middleware/)
-1. [Cookies and sessions](cookies/)
-
-## Individual exercise
-
-Coming soon!
+1. [Sendgrid](sendgrid/)
+1. [Twilio](twilio/)
 
 ## Pair programming exercise
 
