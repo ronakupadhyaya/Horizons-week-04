@@ -8,5 +8,4 @@ module.exports = function(passport) {
   
   return router;
 
-  router.get
 };
