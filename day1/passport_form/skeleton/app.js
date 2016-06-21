@@ -42,10 +42,14 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(function(username, password, done) {
+  console.log(username);
+  console.log(password);
     // Find the user with the given username
     User.findOne({ username: username }, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
-      if (err) { return done(err); }
+      if (err) {
+        return done(err);
+      }
       // if no user present, auth failed
       if (!user) {
         return done(null, false, { message: 'Incorrect username.' });

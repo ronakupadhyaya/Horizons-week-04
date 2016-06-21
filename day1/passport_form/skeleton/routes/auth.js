@@ -52,9 +52,9 @@ module.exports = function(passport) {
       res.render('login');
     }
   });
-  router.post('/login',passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-  });
+  router.post('/login',passport.authenticate('local',{successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: false }));
   router.get('/logout',function(req,res,next) {
     req.logout();
     res.redirect('/login');
