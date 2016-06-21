@@ -66,6 +66,7 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+//add error for passwords that do not match and for missing fields
 
 // development error handler
 // will print stacktrace

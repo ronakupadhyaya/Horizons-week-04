@@ -10,7 +10,6 @@ module.exports = function(passport) {
   })
 
  router.post('/register',function(req,res){
- 	console.log('x')
  	if(req.body.password!==req.body.password2){
  		//NEED TO FIX THIS PART
  		var error="Passwords must match";
@@ -39,9 +38,10 @@ module.exports = function(passport) {
  	res.redirect('/')
  });
 
+//INCLUDE FAILURE FLASH TO GET THE CUSTOM MESSAGES 
  router.get('/logout', function(req,res){
  	req.logout();
- 	res.redirect('/login'
+ 	res.redirect('/login')
  })
 
   return router;
