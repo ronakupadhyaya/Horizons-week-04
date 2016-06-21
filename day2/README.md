@@ -11,4 +11,4 @@
 
 ## Pair programming exercise
 
-1. [Double Message](https://github.com/horizons-school-of-technology/double-message/tree/master)
+Coming soon!
