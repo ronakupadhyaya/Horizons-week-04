@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat' }));
-
+var passport = require('passport');
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
@@ -37,6 +37,30 @@ passport.deserializeUser(function(id, done) {
 
 // passport strategy
 // YOUR CODE HERE
+
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  // Find the user with the given username
+  // May need to adapt this to your own model!
+  User.findOne({ user: username }, function (err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+	  console.log(err, user);
+    if (err) { return done(err); }
+    // if no user present, auth failed
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    // if passwords do not match, auth failed
+    if (user.password !== password) {
+		console.log(user.password, password);
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    // auth has has succeeded
+	  console.log(user, "asdf");
+    return done(null, user);
+  });
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -51,27 +75,14 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
+	console.log(err);
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: err
   });
 });
 
