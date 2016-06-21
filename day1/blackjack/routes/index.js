@@ -4,11 +4,35 @@ var router = express.Router({ mergeParams: true });
 var GameModel = require('../models/Game.js');
 
 var gameRepresentation = function(game) {
-  // YOUR CODE HERE
+  id: game.id;
+  playerBet: game.bet;
+  status: game.status;
+  userTotal : game.playerHandValue;
+  dealerTotal : game.dealerHandValue;
+  userStatus : game.playerStatus;
+  dealerStatus : game.dealerStatus;
+  currentPlayerHand : game.playerHand;
+  houseHand : game.dealerHand;
 }
 
 router.get('/', function (req, res, next) {
-  // YOUR CODE HERE
+  GameModel.find(function(err, games) {
+    if (req.query.status) {
+      games = games.filter(function(game) {
+        if (game.status == req.query.status) {
+          return game;
+        }
+      });
+    }
+    res.render('index', {
+      games: games.map(function(game) {
+        return {
+          id: game.id,
+          status: game.status,
+        };
+      }),
+    });
+  });
 });
 
 router.post('/game', function(req, res, next) {
