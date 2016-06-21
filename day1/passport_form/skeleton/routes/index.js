@@ -10,5 +10,12 @@ module.exports = function(passport) {
 };
 
 
+router.get('/', function(req, res) {
+  if (!req.isAuthenticated()) {
+    res.redirect('/login');
+  }
+  res.render('index', {title: 'Express'})
+});
 
-var passport = require('')
+
+var passport = require('passport')

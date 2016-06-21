@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 
-
-
-
-<form role="form">
+<form role="form" method="POST">
   <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email">
+    <label  for="email">Email address:</label>
+    <input name="username" type="email" class="form-control" id="email">
   </div>
-  <div class="form-group">
+  <div name="password" class="form-group">
     <label for="pwd">Password:</label>
+    <input name="password" type="password" class="form-control" id="pwd">
+  </div>
+   <div name="repeatPassword" class="form-group">
+    <label Name="repeatPassword" for="pwd">repeat Password:</label>
     <input type="password" class="form-control" id="pwd">
   </div>
   <div class="checkbox">
