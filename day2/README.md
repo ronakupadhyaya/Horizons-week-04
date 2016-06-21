@@ -1,4 +1,4 @@
-# Day 1 Exercises
+# Day 2 Exercises
 
 ## Warmup
 
