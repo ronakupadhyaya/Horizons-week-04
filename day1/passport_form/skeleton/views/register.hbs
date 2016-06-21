@@ -1,1 +1,24 @@
-<!-- YOUR HBS TEMPLATE HERE -->
+<form method="post">
+  {{#each errors}}
+  <div class="alert alert-danger">{{msg}}</div>
+  {{/each}}
+  <!-- username -->
+  <div>
+    <label>Username:</label>
+    <input type="text" name="username"/>
+  </div>
+  <!-- password -->
+  <div>
+    <label>Password:</label>
+    <input type="password" name="password"/>
+  </div>
+  <!-- repeat password -->
+  <div>
+    <label>Password repeats:</label>
+    <input type="password" name="passwordRepeat"/>
+  </div>
+  <!-- submit -->
+  <div>
+    <input type="submit" value="Log In"/>
+  </div>
+</form>

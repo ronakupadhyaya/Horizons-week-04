@@ -1,1 +1,41 @@
-<!-- YOUR TEMPLATE HERE -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+<!--   panel body -->
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <h1 style="text-align: center;">LOGIN</h1>
+    <!--       start form -->
+          <form class="form-horizontal" method="post">
+            {{#if errors}}
+              {{#each errors}}
+                <div class="alert alert-danger">{{msg}}</div>
+              {{/each}}
+            {{/if}}
+<!--               first name -->
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Username</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="username" placeholder="Username" required>
+              </div>
+            </div>
+    <!--         pw -->
+            <div class="form-group">
+              <label class="col-sm-3 control-label">Password</label>
+              <div class="col-sm-9">
+                <input type="password" class="form-control" placeholder="Password" name="password" required>
+              </div>
+            </div>
+  <!--               submit -->
+            <div class="text-right">
+              <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+
+          </form>
+<!--           form end -->
+        </div>
+      </div>
+<!--       panel end -->
+    </div>
+  </div>
+</div>
