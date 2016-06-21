@@ -22,7 +22,8 @@ router.use(function(req, res, next) {
     }
     next();
   } else {
-    // this means that they are a new visitor and we dont have an ID on them yet 
+    // this means that they are a new visitor and we dont have an ID on them yet
+    // so we have to make a new id and cookie id 
     var id = generateId();
     res.cookie("mySession", id);
     cookieStore[id] = null;
