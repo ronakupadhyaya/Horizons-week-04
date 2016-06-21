@@ -8,23 +8,18 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var mongoose = require('mongoose');
 var User = require('./models/models');
-
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'keyboard cat' }));
-
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
@@ -34,40 +29,39 @@ passport.deserializeUser(function(id, done) {
     done(err, user);
   });
 });
-
 // passport strategy
 // YOUR CODE HERE
-var passport=require('passport');
-var LocalStrategy=require('passport-local').Strategy;
-passport.use(new LocalStrategy(function(username,password,done){
-  User.findOne({username:username, password: password}, function(err,user){
-    if(err){return done(err)}
-    if(!user){
-      return done(null, false, {message: 'Incorrect username.'});
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy(function(username, password, done) {
+  // Find the user with the given username
+  // May need to adapt this to your own model!
+  User.findOne({ username: username }, function (err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+    if (err) { return done(err); }
+    // if no user present, auth failed
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
     }
-    if(user.password !== password){
-      return done(null, false, {message: 'Incorrect password.'});
+    // if passwords do not match, auth failed
+    if (user.password !== password) {
+      return done(null, false, { message: 'Incorrect password.' });
     }
-    return done(null,user);
-  })
-}))
-
+    // auth has has succeeded
+    return done(null, user);
+  });
+}));
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use('/', routes(passport));
 app.use('/', auth(passport));
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-
 // error handlers
-//add error for passwords that do not match and for missing fields
-
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
@@ -79,7 +73,6 @@ if (app.get('env') === 'development') {
     });
   });
 }
-
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -89,6 +82,4 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
-
 module.exports = app;
