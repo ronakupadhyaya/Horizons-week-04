@@ -9,5 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "sendgrid": "^3.0.5",
+    "twilio": "^2.9.1"
   }
 }

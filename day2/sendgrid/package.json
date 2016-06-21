@@ -1,0 +1,14 @@
+{
+  "name": "sendgrid",
+  "version": "1.0.0",
+  "description": "Twilio and Sendgrid are two powerful tools that we can use to integrate\r telephone (voice calls, SMS) and email into our applications, respectively. You\r saw how to send outgoing SMS messages using Twilio's API. Your goal in this\r exercise is to send an outgoing email using the Sendgrid API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "twilio": "^2.9.1"
+  }
+}
