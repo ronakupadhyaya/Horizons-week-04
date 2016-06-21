@@ -78,8 +78,8 @@ GameSchema.methods.calcValue = function(hand) {
   }).reduce(function(prev, cur) {
     console.log(cur)
     if (cur.symbol !== "A") return prev + cur.val;
-    else if(prev >= 11) return 1;
-    else return 11;
+    else if(prev >= 11) return prev + 1;
+    else return prev + 11;
   }, 0);
 }
 
