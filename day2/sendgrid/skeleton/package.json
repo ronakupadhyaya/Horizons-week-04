@@ -9,5 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "sendgrid-nodejs": "0.1.0-2"
   }
 }
