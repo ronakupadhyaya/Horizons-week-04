@@ -1,13 +1,17 @@
 // Your code here!
-  
+
   var helper = require('sendgrid').mail
   from_email = new helper.Email("test@example.com")
   to_email = new helper.Email("tylerscott.sullivan@outlookS.com")
+var key = process.env.SENDGRID_API_KEY;
+
   subject = "Hello World from the SendGrid Node.js Library"
   content = new helper.Content("text/plain", "some text here")
   mail = new helper.Mail(from_email, subject, to_email, content)
 
-  var sg = require('sendgrid').SendGrid(process.env.SENDGRID_API_KEY)
+
+  var sg = require('sendgrid').SendGrid(key)
+
   var requestBody = mail.toJSON()
   var request = sg.emptyRequest()
   request.method = 'POST'
