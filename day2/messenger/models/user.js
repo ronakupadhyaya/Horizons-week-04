@@ -4,6 +4,7 @@ var findOrCreate = require('mongoose-findorcreate')
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
+		fullName         : String,
         email        : String,
         password     : String,
         facebookId   : String,

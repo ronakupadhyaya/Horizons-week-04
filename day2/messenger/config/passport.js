@@ -61,6 +61,7 @@ module.exports = function(passport) {
                 var newUser            = new User();
 
                 // set the user's local credentials
+                newUser.fullName = req.body['full-name'];
                 newUser.email    = email;
                 newUser.password = newUser.generateHash(password);
 
@@ -123,9 +124,12 @@ module.exports = function(passport) {
         callbackURL: "http://localhost:3000/auth/facebook/callback"
       },
       function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({facebookId: profile.id}, function(err, user) {
-          if (err) { return done(err); }
-          done(null, user);
+        console.log(profile);
+        User.findOrCreate({facebookId: profile.id, fullName: profile.displayName}, function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            done(null, user);
         });
       }
     ));

@@ -33,11 +33,19 @@ module.exports = function(app, passport) {
     app.get('/auth/facebook', passport.authenticate('facebook'));
 
     // handle the callback after facebook has authenticated the user
+    // app.get('/auth/facebook/callback',
+    //     passport.authenticate('facebook', {
+    //         successRedirect : '/dashboard',
+    //         failureRedirect : '/'
+    //     }));
     app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect : '/dashboard',
-            failureRedirect : '/'
-        }));
+        passport.authenticate('facebook', {scope: ['email']}), function(req, res) {
+            if(req.isAuthenticated()) {
+                res.redirect('/dashboard');
+            } else {
+                res.redirect('/');
+            }
+        });
 
     // =====================================
     // SIGNUP ==============================
@@ -110,7 +118,6 @@ module.exports = function(app, passport) {
 
         var twilio = require('twilio');
         var client = new twilio.RestClient(accountSid, authToken);
-        console.log(req.body);
         client.messages.create({
             body: req.body.message,
             to: '+1'+req.body['contact[phone]'],  // Text this number
