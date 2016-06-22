@@ -1,0 +1,65 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="javascript:void(0);">Messenger</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="javascript:void(0);">Dashboard</a></li>
+      <li><a href="javascript:void(0);">History</a></li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</div>
+</nav>
+
+
+<div class="page-header text-center">
+    <h1>Dashboard</h1>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="well">
+            <h3><span class="fa fa-user"></span> User</h3>
+                <p>
+                    <strong>id</strong>: {{user._id}}<br>
+                    <strong>email</strong>: {{user.email}}<br>
+                    <!--<strong>password</strong>: {{user.password}}-->
+                </p>
+                <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+        </div>
+        <div class="well">
+                <form id="new-contact-form">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone #</label>
+                        <input type="text" class="form-control" name="phone">
+                    </div>
+
+                    <button class="btn btn-warning btn-lg" id="new-contact-button">Add New Contact</button>
+                </form>
+        </div>
+    </div>
+    <div class="col-sm-8">
+    <div class="text-center">
+    <h2>Contacts</h2>
+    </div>
+    <div id="contacts-column"></div>
+    </div>
+</div>
+
+
+<script src="/js/dashboard.js"></script>
