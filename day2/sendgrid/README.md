@@ -14,7 +14,7 @@ exercise is to send an outgoing email using the Sendgrid API.
 1. Take a look at the `skeleton/` directory, which has some very basic
    scaffolding. You'll be writing your code in `skeleton/index.js`, but you'll
    need to run some commands from the commandline too.
-1. Install the [sendgrid-nodejs](https://github.com/sendgrid/sendgrid-nodejs)
+1. Install the [sendgrid](https://github.com/sendgrid/sendgrid)
    npm module.
 1. Follow the instructions on that page to get your Sendgrid API key, then copy
    it into the `skeleton/sendgrid.env` file. Run `source sendgrid.env` at the
