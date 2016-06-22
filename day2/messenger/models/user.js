@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+var findOrCreate = require('mongoose-findorcreate')
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -8,6 +9,8 @@ var userSchema = mongoose.Schema({
         facebookId   : String,
         contacts     : []
 });
+
+userSchema.plugin(findOrCreate);
 
 // methods ======================
 // generating a hash

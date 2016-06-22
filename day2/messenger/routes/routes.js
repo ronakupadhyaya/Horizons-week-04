@@ -108,23 +108,37 @@ module.exports = function(app, passport) {
         var accountSid = 'ACe47555a4e931127d04aa5b4b8384b4c9'; // Your Account SID from www.twilio.com/console
         var authToken = '28ee0b4d9b8126b2f7cfd241a6346992';   // Your Auth Token from www.twilio.com/console
 
-        // var twilio = require('twilio');
-        // var client = new twilio.RestClient(accountSid, authToken);
-        var client = require('twilio')(accountSid, authToken);
-
+        var twilio = require('twilio');
+        var client = new twilio.RestClient(accountSid, authToken);
+        console.log(req.body);
         client.messages.create({
             body: req.body.message,
-            to: '+1'+req.body.contact.phone,  // Text this number
-            from: '+18562889331' // From a valid Twilio number
+            to: '+1'+req.body['contact[phone]'],  // Text this number
+            from: '+18562889331' // twilio number
         }, function(err, message) {
             if(err) {
                 console.log(err);
             } else {
                 console.log(message.sid);
+
+                var newMessage = new Message();
+                newMessage.userId = req.body['contact[ownerId]'];
+                newMessage.contactId = req.body['contact[_id]'];
+                newMessage.direction = 'out';
+                newMessage.type = 'sms';
+                newMessage.createdAt = new Date();
+                newMessage.text = req.body.message;
+
+                // save message to database
+                newMessage.save(function(err) {
+                    if(err) {
+                        res.json(err);
+                    } else {
+                        res.json(newMessage);
+                    }
+                })
             }
         });
-
-        res.json(req.body);
     });
 
     // =====================================
