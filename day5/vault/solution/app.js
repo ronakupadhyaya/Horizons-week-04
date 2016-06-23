@@ -6,11 +6,11 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var crypto = require('crypto');
 
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var models = require('./models/models');
+var hashPassword = require('./hashPassword');
 
 var app = express();
 
@@ -85,9 +85,7 @@ passport.serializeUser(function(user, done) {
 //
 // passport.use(new LocalStrategy(function(username, password, done) {
 //   var found = false;
-//   var hash = crypto.createHash('sha256');
-//   hash.update(password);
-//   hash = hash.digest('hex');
+//   var hash = hashPassword(password);
 //   passdict.forEach(function(entry) {
 //     if (entry.username===username && entry.password===hash) {
 //       // Found a match
@@ -113,9 +111,35 @@ passport.deserializeUser(function(id, done) {
 });
 
 // Unhashed mongo
-passport.use(new LocalStrategy(function(username, password, done) {
+// passport.use(new LocalStrategy(function(username, password, done) {
+//     // Find the user with the given username
+//     models.User.findOne({ username: username }, function (err, user) {
+//       // if there's an error, finish trying to authenticate (auth failed)
+//       if (err) {
+//         console.error(err);
+//         return done(err);
+//       }
+//       // if no user present, auth failed
+//       if (!user) {
+//         console.log(user);
+//         return done(null, false, { message: 'Incorrect username.' });
+//       }
+//       // if passwords do not match, auth failed
+//       if (user.password !== password) {
+//         return done(null, false, { message: 'Incorrect password.' });
+//       }
+//       // auth has has succeeded
+//       return done(null, user);
+//     });
+//   }
+// ));
+
+// Hashed mongo
+passport.use(new LocalStrategy(function (username, password, done) {
+    var hash = hashPassword(password);
+
     // Find the user with the given username
-    models.User.findOne({ username: username }, function (err, user) {
+    models.User.findOne({username: username}, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
       if (err) {
         console.error(err);
@@ -124,19 +148,17 @@ passport.use(new LocalStrategy(function(username, password, done) {
       // if no user present, auth failed
       if (!user) {
         console.log(user);
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false, {message: 'Incorrect username.'});
       }
       // if passwords do not match, auth failed
-      if (user.password !== password) {
-        return done(null, false, { message: 'Incorrect password.' });
+      if (user.password !== hash) {
+        return done(null, false, {message: 'Incorrect password.'});
       }
       // auth has has succeeded
       return done(null, user);
     });
   }
 ));
-
-// Hashed mongo
 
 app.use('/', auth(passport));
 app.use('/', routes);

@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/models');
+var hashPassword = require('../hashPassword');
 
 module.exports = function(passport) {
 
@@ -30,9 +31,15 @@ module.exports = function(passport) {
   });
 
   router.post('/signup', function(req, res) {
+    var password;
+    // Unhashed version
+    // password = req.body.password;
+    // Hashed version
+    password = hashPassword(req.body.password);
+
     var u = new models.User({
       username: req.body.username,
-      password: req.body.password
+      password: password
     });
     u.save(function(err, user) {
       if (err) {
