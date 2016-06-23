@@ -17,7 +17,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  console.log("got request");
   if (!req.body || !req.body.message) {
     res.status(400).send("bad request");
   }
@@ -25,16 +24,12 @@ router.post('/', function(req, res, next) {
     res.status(500).send("no session data!");
   }
   else {
-    console.log("looks okay");
     if (req.session.messages) {
-      console.log("adding to session");
       req.session.messages.push(req.body.message);
     }
     else {
-      console.log("creating new messages");
       req.session.messages = [req.body.message];
     }
-    console.log("redirecting");
     res.redirect('/');
   }
 });
