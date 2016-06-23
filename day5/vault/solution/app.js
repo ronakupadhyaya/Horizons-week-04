@@ -1,9 +1,9 @@
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var routes = require('./routes/index');
@@ -19,13 +19,27 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Mongoose stuff here
+
+var mongoose = require('mongoose');
+var connect = process.env.MONGODB_URI || require('./models/connect');
+mongoose.connect(connect);
 
 // Passport stuff here
 // YOUR CODE HERE
 
-app.use(session({secret: process.env.SECRET}));
+app.use(session({
+  secret: process.env.SECRET,
+  cookie: {
+    // In milliseconds, i.e., five minutes
+    maxAge: 1000 * 60 * 5
+  },
+  resave: false,
+  saveUninitialized: false,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -70,7 +84,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
   var hash = crypto.createHash('sha256');
   hash.update(password);
   hash = hash.digest('hex');
-  console.log("Hashed password " + password + " to " + hash);
   passdict.forEach(function(entry) {
     if (entry.username===username && entry.password===hash) {
       // Found a match
