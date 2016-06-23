@@ -1,10 +1,16 @@
 # The Vault (pair exercise)
 
+## Contents
+
+
 ## Goal
 
-Your goal is to build a backend webapp that stores sensitive data. You'll start
-by building a basic authentication system, then make it more robust over the
-course of the project.
+Your goal is to build a backend webapp that stores top secret sensitive data.
+You'll start by building a basic authentication system, then make it more robust
+over the course of the project.
+
+
+## Instructions
 
 
 ## Phase 1. Sessions
