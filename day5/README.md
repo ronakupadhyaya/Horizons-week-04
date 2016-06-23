@@ -10,5 +10,5 @@
 
 ## Pair programming exercise
 
-Coming soon!
+1. [The Vault](vault/README.md)
 
