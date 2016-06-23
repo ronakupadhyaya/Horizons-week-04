@@ -1,0 +1,35 @@
+<style> 
+
+body{
+    margin: 20px;
+}
+div{
+    margin: 10px;
+}
+</style>
+<h1> Contacts </h1>
+<ul>
+{{#each contact}}
+    <div>
+        <span>
+            {{contact.name}} aaa
+        </span>
+        <span>
+            <button action="/message" class="btn btn-default" name = "text{{contact.name}}"> Send Text 
+            </button>
+        </span>
+        <span>
+            <button action="/message" class="btn btn-default" name = "text{{contact.name}}"> View Messages 
+            </button>
+        </span>
+        <span>
+            <button class="btn btn-default" name = "text{{contact.name}}"> Edit Contact
+            </button>
+        </span>
+    </div>
+{{/each}}
+    <div>
+    <button href ="/contacts/new" class="btn btn-primary" name = "text{{contact.name}}"> Add Contact
+            </button>
+    </div>
+</ul>
