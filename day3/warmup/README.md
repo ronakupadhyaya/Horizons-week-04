@@ -9,7 +9,8 @@ statements, called "recipes," linking those apps and services. These statements
 are called "recipes." For example, IFTTT can be used to create a recipe that
 automatically posts your Instagram photos to Twitter, or automatically sends you
 an SMS (via Twilio) when you receive an email from a specific person, or
-notifies you [every time an astronaut exits the International Space Station](https://ifttt.com/recipes/193916-did-an-astronaut-exit-space-get-a-notification).
+notifies you [every time an astronaut exits the International Space Station]
+(https://ifttt.com/recipes/193916-did-an-astronaut-exit-space-get-a-notification).
 
 Read more about the [background of IFTTT](https://en.wikipedia.org/wiki/IFTTT),
 and check out the thousands of suggested recipes listed at
