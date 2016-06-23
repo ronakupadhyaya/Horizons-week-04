@@ -6,7 +6,8 @@
 
 ## Inline exercises
 
-1. [Encryption](warmup/encryption/README.md)
+1. [Encryption](encryption/README.md)
+1. [Hashing](hashing/README.md)
 
 ## Pair programming exercise
 
