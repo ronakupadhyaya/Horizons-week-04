@@ -1,8 +1,11 @@
 var mongoose = require('mongoose');
 
 // Create all of your models/schemas here, as properties.
-var models = {
-    // YOUR CODE HERE
-};
+var userSchema = mongoose.Schema({
+  username: String,
+  password: String
+});
 
-module.exports = models;
+module.exports = {
+  User: mongoose.model('User', userSchema)
+};

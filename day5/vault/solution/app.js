@@ -6,9 +6,11 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var crypto = require('crypto');
+
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-var crypto = require('crypto');
+var models = require('./models/models');
 
 var app = express();
 
@@ -47,13 +49,15 @@ passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
 
-passport.deserializeUser(function(id, done) {
-  passdict.forEach(function(entry) {
-    if (entry._id===id) {
-      done(null, entry);
-    }
-  });
-});
+// Used for both password file strategies
+
+// passport.deserializeUser(function(id, done) {
+//   passdict.forEach(function(entry) {
+//     if (entry._id===id) {
+//       done(null, entry);
+//     }
+//   });
+// });
 
 // Unhashed password file
 // var passdict = require('../passwords.plain.json').passwords;
@@ -77,53 +81,60 @@ passport.deserializeUser(function(id, done) {
 // }));
 
 // Hashed password file
-var passdict = require('../passwords.hashed.json').passwords;
+// var passdict = require('../passwords.hashed.json').passwords;
+//
+// passport.use(new LocalStrategy(function(username, password, done) {
+//   var found = false;
+//   var hash = crypto.createHash('sha256');
+//   hash.update(password);
+//   hash = hash.digest('hex');
+//   passdict.forEach(function(entry) {
+//     if (entry.username===username && entry.password===hash) {
+//       // Found a match
+//       console.log("Found matching user: " + JSON.stringify(entry));
+//       found = true;
+//       done(null, entry);
+//     }
+//   });
+//
+//   if (!found) {
+//     // No match
+//     console.log("No matching user found");
+//     return done(null, false, {message: 'No match'});
+//   }
+// }));
 
-passport.use(new LocalStrategy(function(username, password, done) {
-  var found = false;
-  var hash = crypto.createHash('sha256');
-  hash.update(password);
-  hash = hash.digest('hex');
-  passdict.forEach(function(entry) {
-    if (entry.username===username && entry.password===hash) {
-      // Found a match
-      console.log("Found matching user: " + JSON.stringify(entry));
-      found = true;
-      done(null, entry);
-    }
+// Used for both mongo strategies
+
+passport.deserializeUser(function(id, done) {
+  models.User.findById(id, function(err, user) {
+    done(err, user);
   });
-
-  if (!found) {
-    // No match
-    console.log("No matching user found");
-    return done(null, false, {message: 'No match'});
-  }
-}));
-
+});
 
 // Unhashed mongo
-// passport.use(new LocalStrategy(function(username, password, done) {
-//     // Find the user with the given username
-//     models.User.findOne({ username: username }, function (err, user) {
-//       // if there's an error, finish trying to authenticate (auth failed)
-//       if (err) {
-//         console.error(err);
-//         return done(err);
-//       }
-//       // if no user present, auth failed
-//       if (!user) {
-//         console.log(user);
-//         return done(null, false, { message: 'Incorrect username.' });
-//       }
-//       // if passwords do not match, auth failed
-//       if (user.password !== password) {
-//         return done(null, false, { message: 'Incorrect password.' });
-//       }
-//       // auth has has succeeded
-//       return done(null, user);
-//     });
-//   }
-// ));
+passport.use(new LocalStrategy(function(username, password, done) {
+    // Find the user with the given username
+    models.User.findOne({ username: username }, function (err, user) {
+      // if there's an error, finish trying to authenticate (auth failed)
+      if (err) {
+        console.error(err);
+        return done(err);
+      }
+      // if no user present, auth failed
+      if (!user) {
+        console.log(user);
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      // if passwords do not match, auth failed
+      if (user.password !== password) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      // auth has has succeeded
+      return done(null, user);
+    });
+  }
+));
 
 // Hashed mongo
 
