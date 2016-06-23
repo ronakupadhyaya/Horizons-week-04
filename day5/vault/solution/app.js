@@ -8,6 +8,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
+var crypto = require('crypto');
 
 var app = express();
 
@@ -28,13 +29,50 @@ app.use(session({secret: process.env.SECRET}));
 app.use(passport.initialize());
 app.use(passport.session());
 
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+
+passport.deserializeUser(function(id, done) {
+  passdict.forEach(function(entry) {
+    if (entry._id===id) {
+      done(null, entry);
+    }
+  });
+});
+
 // Unhashed password file
-var passdict = require('../passwords.plain.json').passwords;
+// var passdict = require('../passwords.plain.json').passwords;
+//
+// passport.use(new LocalStrategy(function(username, password, done) {
+//   var found = false;
+//   passdict.forEach(function(entry) {
+//     if (entry.username===username && entry.password===password) {
+//       // Found a match
+//       console.log("Found matching user: " + JSON.stringify(entry));
+//       found = true;
+//       done(null, entry);
+//     }
+//   });
+//
+//   if (!found) {
+//     // No match
+//     console.log("No matching user found");
+//     return done(null, false, {message: 'No match'});
+//   }
+// }));
+
+// Hashed password file
+var passdict = require('../passwords.hashed.json').passwords;
 
 passport.use(new LocalStrategy(function(username, password, done) {
   var found = false;
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  hash = hash.digest('hex');
+  console.log("Hashed password " + password + " to " + hash);
   passdict.forEach(function(entry) {
-    if (entry.username===username && entry.password===password) {
+    if (entry.username===username && entry.password===hash) {
       // Found a match
       console.log("Found matching user: " + JSON.stringify(entry));
       found = true;
@@ -48,22 +86,6 @@ passport.use(new LocalStrategy(function(username, password, done) {
     return done(null, false, {message: 'No match'});
   }
 }));
-
-passport.serializeUser(function(user, done) {
-  done(null, user._id);
-});
-
-passport.deserializeUser(function(id, done) {
-  passdict.forEach(function(entry) {
-    if (entry._id===id) {
-      done(null, entry);
-    }
-  });
-});
-
-
-
-// Hashed password file
 
 
 // Unhashed mongo
