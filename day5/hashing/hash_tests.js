@@ -3,11 +3,14 @@
 // Pre-fill this array so we don't have to run the hash function
 // multiple times.
 var table = {};
+var lengths = {};
 var total = 0;
 wordlist.forEach(function(word) {
   var hashed = hashIt(word);
   if (table.hasOwnProperty(hashed)) table[hashed]++;
   else table[hashed] = 0;
+  if (lengths.hasOwnProperty(hashed.length)) lengths[hashed.length]++;
+  else lengths[hashed.length] = 1;
   total++;
 });
 var sum = Object.values(table).reduce(function(a, b) { return a+b }, 0);
@@ -28,6 +31,9 @@ describe("Your hashIt function", function() {
     });
     // We need this to have at least one expectation.
     expect(true).toBe(true);
+  });
+  it("always produces the same size output", function() {
+    expect(Object.values(lengths).length).toBe(1);
   });
   it("achieves a collision rate <10% for a very long list", function() {
     expect(sum/total).toBeLessThan(0.1);
