@@ -14,6 +14,5 @@ function hashIt(word) {
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
   for (var i = 0 ; i < word.length ; i++){
-	return word[i].toString();
-	}
+	return word[i]	}
 }
