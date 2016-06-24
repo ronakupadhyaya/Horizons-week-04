@@ -34,13 +34,14 @@ Take a look at `passwords.plain.json`. This file includes a set of user accounts
 and passwords. We're going to allow user logins based on information stored here.
 
 Here are the steps to follow:
-0. Setup your connect.js :). You know the drill. Your connect.js file should go into your `models` folder. 
+
+1. Setup your connect.js :). You know the drill. Your connect.js file should go into your `models` folder. 
 1. Install `passport` and the `passport-local` modules. 
     - In the past, we gave you an Express application with passport and passport-local already installed. But it's now your turn! 
     - Use `npm install passport --save` and `npm install passport-local --save`
     - Make sure to require passport towards the top your app.js file. Passport should be required before local strategy is
     required and before any of your routes. 
-2. Write a local strategy 
+1. Write a `LocalStrategy`
     - Authenticate users using `passwords.plain.json`.
       Your strategy will read this file into a variable, and check to see the the user who 
       is trying to login is in your local password file. You can read this file with
@@ -62,7 +63,7 @@ Here are the steps to follow:
 3. Create routes for login and logout. 
     - Put all your routes in `app.js`. This will keep your app simple. So, you only need to use `app.get/use/post()` no need for
       `Router` and `require('routes/index')`
-    - Your `POST /login` route should use `passport.authenticate('local') as we have done before.
+    - Your `POST /login` route should use `passport.authenticate('local')` as we have done before.
       
       ![](img/login.png)
     
@@ -75,7 +76,7 @@ Here are the steps to follow:
     - You cannot login with an incorrect password
     - You cannot login with an invalid (or nonexistent) username
 
-***Notice, that after you login, if you refresh the page, you are logged out. Why is this? Read on to find out. ***
+:warning: Notice, that after you login, if you refresh the page, you are logged out. Why is this? Read on to find out. :warning:
 
 ## Phase 2. Sessions with Cookie Session
 
