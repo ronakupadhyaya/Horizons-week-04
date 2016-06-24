@@ -60,7 +60,8 @@ functions with passport.
 
 The`index.hbs` view contains a form that lets the user add a message to the
 session, and it displays all of the messages they've previously added to the
-session. Add a route that makes this possible.
+session. Add a route that makes this possible. You can access the current
+session through `req.session` and the messages through `req.session.messages`.
 
 Use the `cookie` argument when configuring the session to make the cookie expire
 after a specified period of time. Once you get sessions working, experiment with
