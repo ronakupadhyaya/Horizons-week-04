@@ -1,33 +1,38 @@
+var crypto = require('crypto');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var auth = require('./routes/auth');
-var models = require('./models/models');
-
 var app = express();
 
-// view engine setup
+// Express setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Mongoose stuff here
+// This is the function we're going to use in Phases 4 and 5 to hash
+// user passwords.
+function hashPassword(password) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  return hash.digest('hex');
+}
 
-var mongoose = require('mongoose');
-var connect = process.env.MONGODB_URI || require('./models/connect');
-mongoose.connect(connect);
+// Models are defined in models/models.js
+var models = require('./models/models');
 
-// Passport stuff here
-// YOUR CODE HERE
+// SET UP PASSPORT HERE
 
-app.use('/', routes);
+// GET /: This route should only be accessible to logged in users.
+router.get('/', function(req, res, next) {
+  // Your code here.
+  res.render('index');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
