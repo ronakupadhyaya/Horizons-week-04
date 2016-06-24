@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var passport = require('passport');                              // what i added
+var LocalStrategy = require('passport-local').Strategy;          // what i added
+var userPasswords = require('./passwords.plain.json').passwords  // what i added
+var models = require('./models/models');
 
 var app = express();
 
@@ -26,12 +30,36 @@ function hashPassword(password) {
 var models = require('./models/models');
 
 // SET UP PASSPORT HERE
+passport.use(new LocalStrategy(function(username, password, done) {
+  for (var i = 0; i < userPasswords.length; i ++) {
+    if (userPasswords[i].username === username && userPasswords[i].password === password) {
+      done(null, user);
+    } else {
+      done(null, false);
+    }
+  }
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // GET /: This route should only be accessible to logged in users.
-router.get('/', function(req, res, next) {
+app.get('/', function(req, res, next) {
   // Your code here.
+  if (!req.user) {
+    res.redirect('/login')
+  }
   res.render('index');
 });
+
+app.get('/login', function(req, res, next) {
+  res.render('login');
+})
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}))
 
 
 // catch 404 and forward to error handler
