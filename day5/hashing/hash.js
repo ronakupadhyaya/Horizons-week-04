@@ -11,8 +11,21 @@
 // as a starting point.
 
 function hashIt(word) {
+	for(var i = 0; i < word.length; i++){
+		
+	}
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
   return word.length.toString();
 }
 
+
+// var hash = 0;
+//    if (word.length == 0) return hash;
+//    for (var i = 0; i < word.length; i++) {
+//        var char = word.charCodeAt(i);
+//        console.log(char);
+//        hash = ((hash<<5)-hash)+char;
+//        hash = hash & hash; // Convert to 32bit integer
+//    }
+//    return String(hash);
