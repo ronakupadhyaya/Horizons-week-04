@@ -19,8 +19,8 @@ function hashIt(word) {
     for (var i = 0; i < word.length; i++) {
         var char = word.charCodeAt(i);
         console.log(char);
-        hash = ((hash<<5)-hash)+char;
-        hash = hash & hash; // Convert to 32bit integer
+		hash = ((hash << 5) + hash) + char;        
+		hash = hash & hash; // Convert to 32bit integer
     }
     return String(hash);
   // return word.length.toString();
