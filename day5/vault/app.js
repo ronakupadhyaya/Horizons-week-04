@@ -6,10 +6,16 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var userPasswords = require('./passwords.plain.json').passwords;
+var userHashedPasswords = require('./passwords.hashed.json').passwords;
 // var cookieSession = require('cookie-session');
-var session=require('express-session');
-
 var app = express();
+var session=require('express-session');
+var MongoStore=require('connect-mongo')(session);
+
+app.use(session({
+  secret: 'your secret here',
+  store: new MongoStore({mongooseConnection: require('mongoose').connection})
+}))
 
 // app.use(cookieSession({keys: ['my secret for signing cookies']}))
 //var user={};
@@ -25,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // This is the function we're going to use in Phases 4 and 5 to hash
 // user passwords.
+var crypto=require('crypto')
 function hashPassword(password) {
   var hash = crypto.createHash('sha256');
   hash.update(password);
@@ -33,15 +40,24 @@ function hashPassword(password) {
 
 // Models are defined in models/models.js
 var models = require('./models/models');
+var User = models.User;
 //var connect= reqquire('./models/connect')
 
 // SET UP PASSPORT HERE
 passport.use(new LocalStrategy(
   function(username, password, done){
-    console.log(userPasswords.length)
-    for(var i=0; i<userPasswords.length; i++){
-      if(userPasswords[i].username===username && userPasswords[i].password===password){
-        var user=userPasswords[i];
+    // console.log(userPasswords.length)
+    // for(var i=0; i<userPasswords.length; i++){
+    //   if(userPasswords[i].username===username && userPasswords[i].password===password){
+    //     var user=userPasswords[i];
+    //     return done(null, user)
+    //   }
+    // }
+    // return done(null, false)
+    var hashedPassword=hashPassword(password)
+    for(var i=0; i<userHashedPasswords.length; i++){
+      if(userHashedPasswords[i].username===username && userHashedPasswords[i].password===hashedPassword){
+        var user=userHashedPasswords[i];
         return done(null, user)
       }
     }
@@ -98,6 +114,15 @@ app.get('/', function(req,res){
   res.render('index')
 })
 
+app.get('/signup', function(req,res){
+  res.render('signup')
+})
+
+app.post('/signup', function(req,res){
+  var u = new User({"username": req.body.username, "password": req.body.password})
+  u.save()
+  res.redirect('/')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
