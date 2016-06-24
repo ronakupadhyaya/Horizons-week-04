@@ -1,3 +1,4 @@
+var crypto = require('crypto');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
@@ -12,6 +13,14 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// This is the function we're going to use in Phases 4 and 5 to hash
+// user passwords.
+function hashPassword(password) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  return hash.digest('hex');
+}
 
 // Models are defined in models/models.js
 var models = require('./models/models');
