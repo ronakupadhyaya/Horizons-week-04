@@ -13,6 +13,11 @@
 function hashIt(word) {
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
-  return word.length.toString();
+  //return word.length.toString();
+  var val=0;
+  for(var i=0; i<word.length; i++){
+  	val+=word.charCodeAt(i)
+  }
+  var x = val+ word.charCode(0)
 }
 
