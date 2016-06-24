@@ -18,6 +18,7 @@ function hashIt(word) {
   for(var i=0; i<word.length; i++){
   	val+=word.charCodeAt(i)
   }
-  var x = val+ word.charCode(0)
+  var x = val+ word.charCodeAt(0)
+  return x.toString()
 }
 
