@@ -1,7 +1,8 @@
+XXX
+
 # The Vault (pair exercise)
 
 ## Contents
-
 
 ## Goal
 
