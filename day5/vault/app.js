@@ -54,14 +54,22 @@ passport.use(new LocalStrategy(
     //   }
     // }
     // return done(null, false)
-    var hashedPassword=hashPassword(password)
-    for(var i=0; i<userHashedPasswords.length; i++){
-      if(userHashedPasswords[i].username===username && userHashedPasswords[i].password===hashedPassword){
-        var user=userHashedPasswords[i];
-        return done(null, user)
+    // var hashedPassword=hashPassword(password)
+    // for(var i=0; i<userHashedPasswords.length; i++){
+    //   if(userHashedPasswords[i].username===username && userHashedPasswords[i].password===hashedPassword){
+    //     var user=userHashedPasswords[i];
+    //     return done(null, user)
+    //   }
+    // }
+    // return done(null, false)
+    User.findOne({"username": username, "hashedpassword": hashPassword(password)}, function(err,user){
+      if(err){
+        return err
       }
-    }
-    return done(null, false)
+      else{
+        return done(null,user)
+      }
+    })
   }))
 
 passport.serializeUser(function(user,done){
@@ -70,12 +78,18 @@ passport.serializeUser(function(user,done){
 })
 
 passport.deserializeUser(function(userid,done){
-  for(var i=0; i<userPasswords.length; i++){
-    var user=userPasswords[i];
-    if(user._id===userid){
-      return done(null,user)
+  // for(var i=0; i<userPasswords.length; i++){
+  //   var user=userPasswords[i];
+  //   if(user._id===userid){
+  //     return done(null,user)
+  //   }
+  // }
+  var user = User.findById(userid, function(err){
+    if(err){
+    return err
     }
-  }
+  })
+  done(null,user)
 })
 
 // app.use(function (req, res, next) {
@@ -119,9 +133,11 @@ app.get('/signup', function(req,res){
 })
 
 app.post('/signup', function(req,res){
-  var u = new User({"username": req.body.username, "password": req.body.password})
-  u.save()
-  res.redirect('/')
+  var u = new User({"username": req.body.username, "hashedpassword": hashPassword(req.body.password)})
+  u.save(function(err,user){
+    res.redirect('/')
+  })
+  
 })
 
 // catch 404 and forward to error handler

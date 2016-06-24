@@ -6,21 +6,12 @@ mongoose.connect(connect);
 
 module.exports = {
   // YOUR MODELS HERE
-  Session: {username: {
-  	type: String,
-  	required: true
-  },
-  password: {
-  	type: String,
-  	required: true
-  } 
-},
-User: {username: {
+User: mongoose.model("User",{username: {
 	type: String,
 	required: true
 	},
-	password: {type: String,
+	hashedpassword: {type: String,
 	required: true
 	}
-}
+})
 };
