@@ -67,8 +67,7 @@ Here are the steps to follow:
   ![](img/passportInit.png)
 
 3. Create routes for login and logout.
-    - Put all your routes in `app.js`. This will keep your app simple. So, you only need to use `app.get/use/post()` no need for
-      `Router` and `require('routes/index')`
+    - Put all your routes in `app.js`. This will keep your app simple. So, you can directly use `app.get()` and `app.post()`. There is  no need for `Router` and `require('routes/index')`
     - Your `POST /login` route should use `passport.authenticate('local')` as we have done before.
 
       ![](img/login.png)
