@@ -13,6 +13,6 @@
 function hashIt(word) {
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
-  return word.length.toString();
+  return (word.length + word.charAt(2) + word.charAt(1) + word.charAt(0) + word.charAt(word.length % 2) + Math.random()).toString();
 }
 
