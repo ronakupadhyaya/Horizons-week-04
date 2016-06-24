@@ -14,9 +14,10 @@ function hashIt(word) {
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
   var string = "";
+  var hashLength = 16;
 
-  for (var i=0; i<word.length; i++) {
-  	string += word[i];
+  for (var j=0; j<hashLength; j++) {
+  	string += word.charCodeAt(j);
   }
   console.log(string);
   return string;
