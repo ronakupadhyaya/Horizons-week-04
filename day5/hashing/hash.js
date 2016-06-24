@@ -9,10 +9,21 @@
 //
 // We've filled in a very simple, naive (and pretty bad) hash function for you
 // as a starting point.
-
 function hashIt(word) {
+
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
-  return word.length.toString();
+  // return word.length.toString();
+
+  var hashed = [];
+  var string = word.toString();
+  for (var i = 0; i<string.length; i++) {
+  	  var chr = word.charCodeAt(i);
+  	  hashed.push(chr)
+  	}
+  var joined = hashed.join("");
+  console.log(joined)
+
+
 }
 
