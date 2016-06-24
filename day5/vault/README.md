@@ -20,7 +20,7 @@ over the course of the project.
 
 ## Instructions
 
-Work in the `skeleton/` directory. You'll need to add code to the `app.js`,
+Work in `week04/day5/vault` directory. You'll need to add code to the `app.js`,
 `routes/`, and `models/` files.
 
 
