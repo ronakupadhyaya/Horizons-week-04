@@ -20,7 +20,7 @@ var hash = 0;
        hash = hash & hash; // Convert to 32bit integer
    }
    return String(hash);
-
+}
   // This hash function returns a string, and it's fast, but it's pretty
   // crummy since it produces tons of collisions!
   // return word.length.toString();
