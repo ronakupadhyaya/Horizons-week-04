@@ -15,9 +15,11 @@ function hashIt(word) {
   // crummy since it produces tons of collisions!
   var hashed = '';
   for (var i = 0; i < word.length; i++) {
-  	hashed+=word[i].charCodeAt() + 1;
+  	hashed+=word[i].charCodeAt();
+
   }
   //return word.length.toString();
-  return hashed;
+  //hash = hash.toString():
+  return hashed.slice(0,100);
 }
 
