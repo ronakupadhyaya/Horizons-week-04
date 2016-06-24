@@ -44,8 +44,21 @@ using the hashed version. Use the hash function provided in `hashPassword.js`.
 ## Phase 2. Sessions
 
 Once you've got the local strategy working, let's get sessions working as well.
-Install the `express-session` module and configure it in `app.js`. The
-`index.hbs` view contains a form that lets the user add a message to the
+Why do we need sessions? Why are sessions useful? Good questions, champ! 
+In a typical web application, the credentials used to authenticate a user
+will only be transmitted during the login request. If authentication succeeds,
+a session will be established and maintained via a cookie set in the user's browser.
+Each subsequent request will not contain credentials, but rather the unique 
+cookie that identifies the session.
+
+Install the `express-session` module and configure it in `app.js`. Do you remember
+how to do this? No? Fear not, we have some hints for you. Make sure to first require
+the `express-session` module in your `app.js` file. Make sure to then appropriately
+add `app.use` with your new session module (look up Double Message again if you 
+need a more robust hint). Make sure to also use the `serializeUser` and `deserializeUser`
+functions with passport. 
+
+The`index.hbs` view contains a form that lets the user add a message to the
 session, and it displays all of the messages they've previously added to the
 session. Add a route that makes this possible.
 
