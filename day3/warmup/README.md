@@ -37,7 +37,9 @@ try to figure out how IFTTT works under the hood.
 1. Add this recipe: [Share your Instagrams to
    Facebook](https://ifttt.com/recipes/507-share-your-instagrams-to-facebook).
    **Pay close attention to what happens when you connect the Instagram and
-   Facebook channels** (there's going to be a quiz later!).
+   Facebook channels** (there's going to be a quiz later!). Also, notice that
+   your web browser may block popups when you try to authenticate with Facebook
+   and Instagram. Make sure to allow popups from ifttt.com.
 1. Take a photo of the person to your right, post it to Instagram, and make sure
    it shows up on Facebook too 📸✌️🙆🙄
 1. Try adding a couple more recipes from the [recommended
