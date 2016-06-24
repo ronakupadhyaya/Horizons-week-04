@@ -22,8 +22,13 @@ Take a look at the `passwords.plain.json` and `passwords.hashed.json` files.
 These files include a set of user accounts in cleartext and hashed format,
 respectively.
 
-Start by installing passport and the passport-local strategy. Then build your
-own strategy to authenticate users using the accounts in these files. You should
+Start by installing passport and the passport-local strategy. In the past, we gave
+you an Express application with passport and passport-local already installed.
+Well...now you are all grown up. Time to install them on your own!
+(Hint: Try `npm install passport` and `npm install passport-local`. Make sure to then
+require both in your `app.js` file appropriately. 
+
+Then build your own strategy to authenticate users using the accounts in these files. You should
 also add the necessary routes to allow users to login, and to ensure that only
 authenticated users can access the `/` (root) route. The views have been filled
 in for you.
