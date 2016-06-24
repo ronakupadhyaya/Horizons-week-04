@@ -211,9 +211,16 @@ database.
 
 1. Create a new `User` model in `models/models.js`
 1. Create `GET /signup` and `POST /signup` endpoints for registering new users.
-1. Rewrite your `LocalStrategy` to use the new `User` model. Refer to
-  your code from earlier in the week to see how we use `User.findOne()` in
-  conjunction `done()` to do logins.
+1. Rewrite your `deserializeUser()` to use the new `User` model.
+  Use `User.findById()`.
+
+  ![](img/mongoDeserialize.png)
+
+1. Rewrite your `LocalStrategy` to use the new `User` model.
+  Use `User.findOne()` in conjunction `done()` to do logins.
+
+  ![](img/mongoStrategy.png)
+
 1. Verify that logins and logouts work as before.
 
 ## Phase 5.2 Hashed passwords in MongoDb
