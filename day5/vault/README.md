@@ -2,7 +2,14 @@
 
 ## Contents
 
-XXX
+1. [Goal](#goal)
+1. [Instructions](#instructions)
+1. [Phase 1. Local Strategy](#phase-1-local-strategy)
+1. [Phase 2. Sessions with Cookie Session](#phase-2-sessions-with-cookie-session)
+1. [Phase 3. Make sessions persistent](#phase-3-make-sessions-persistent)
+1. [Phase 4: Hashed Passwords](#phase-4-hashed-passwords)
+1. [Phase 5.1 Storing users in MongoDb](#phase-51-storing-users-in-mongodb)
+1. [Phase 5.2 Hashed passwords in MongoDb](#phase-52-hashed-passwords-in-mongodb)
 
 ## Goal
 
@@ -35,22 +42,22 @@ and passwords. We're going to allow user logins based on information stored here
 
 Here are the steps to follow:
 
-1. Setup your connect.js :). You know the drill. Your connect.js file should go into your `models` folder. 
-1. Install `passport` and the `passport-local` modules. 
-    - In the past, we gave you an Express application with passport and passport-local already installed. But it's now your turn! 
+1. Setup your connect.js :). You know the drill. Your connect.js file should go into your `models` folder.
+1. Install `passport` and the `passport-local` modules.
+    - In the past, we gave you an Express application with passport and passport-local already installed. But it's now your turn!
     - Use `npm install passport --save` and `npm install passport-local --save`
     - Make sure to require passport towards the top your app.js file. Passport should be required before local strategy is
-    required and before any of your routes. 
+    required and before any of your routes.
 1. Write a `LocalStrategy`
     - Authenticate users using `passwords.plain.json`.
-      Your strategy will read this file into a variable, and check to see the the user who 
+      Your strategy will read this file into a variable, and check to see the the user who
       is trying to login is in your local password file. You can read this file with
       `require()`:
-      
+
       ```javascript
       var userPasswords = require('./passwords.plain.json').passwords;
       ```
-    
+
     - A `LocalStrategy` takes a `function(username, password, done) {}`.
       This function should read passwords from json, check them and signal to passport success or failure
       using the `done()` function. Like so:
@@ -60,14 +67,14 @@ Here are the steps to follow:
 
   ![](img/passportInit.png)
 
-3. Create routes for login and logout. 
+3. Create routes for login and logout.
     - Put all your routes in `app.js`. This will keep your app simple. So, you only need to use `app.get/use/post()` no need for
       `Router` and `require('routes/index')`
     - Your `POST /login` route should use `passport.authenticate('local')` as we have done before.
-      
+
       ![](img/login.png)
-    
-    - The views have been created for you! Don't reinvent the wheel :). 
+
+    - The views have been created for you! Don't reinvent the wheel :).
     - Note that you do *not* need routes to sign up new users at this stage. Only users in `passwords.plain.json`
       will be allowed to log in.
 4. Add middle-ware to require logins for routes other than `/login` and `/logout`.
@@ -81,36 +88,36 @@ Here are the steps to follow:
 ## Phase 2. Sessions with Cookie Session
 
 Once you've got the local strategy working, let's get sessions working as well.
-Why do we need sessions? Why are sessions useful? Good questions, champ! 
+Why do we need sessions? Why are sessions useful? Good questions, champ!
 In a typical web application, the credentials used to authenticate a user
 will only be transmitted during the login request. If authentication succeeds,
 a session will be established and maintained via a cookie set in the user's browser.
-Each subsequent request will not contain credentials, but rather the unique 
-cookie that identifies the session. This is why you can login and stay logged in! 
+Each subsequent request will not contain credentials, but rather the unique
+cookie that identifies the session. This is why you can login and stay logged in!
 
 
 1. Install `cookie-session` with `npm` remember to `--save`
 1. Add the session to your app
 
   ![](img/cookieSession.png)
-  
+
   - Until now we have configured the cookie-session module, only specifying the keys to sign our cookies with. However, there
     are many other ways to configure the cookie-session module.
-    [Check them out here!](https://github.com/expressjs/cookie-session#cookie-options) 
-  - For this exercise, we are going to also play around with the `maxAge` option. This will allow us to specify how long a 
+    [Check them out here!](https://github.com/expressjs/cookie-session#cookie-options)
+  - For this exercise, we are going to also play around with the `maxAge` option. This will allow us to specify how long a
     cookie should be valid for. By specifying how long a cookie should last, we can control how much we want a user to relogin.
     Some sites will set this cookie to last for a very long time, this is why you are always logged in. By default, maxAge is set
     to expire when the session ends (close all tabs with the current domain). Set max age to be 2 minutes from now
-    (`maxAge:1000*60*2` milliseconds). 
-  
+    (`maxAge:1000*60*2` milliseconds).
+
 1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
   `serializeUser` takes a `function(user, done){}`. We use `done()` to send
   back to passport what part of our user we want to store in the session. In our case,
   this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
-  is updated. We write serialize(), but trust passport to use it properly. 
+  is updated. We write serialize(), but trust passport to use it properly.
 
   ![](img/serialize.png)
-  
+
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
   `deserializeUser` takes a `function(id, done){}`. We need to look up our user
   based on its id in `passwords.plain.json` and return it.
@@ -119,12 +126,12 @@ cookie that identifies the session. This is why you can login and stay logged in
 
   ![](img/deserialize.png)
 
-1. Verify that your session is working by checking that you stay logged in. 
+1. Verify that your session is working by checking that you stay logged in.
     - Now you should see two new cookies in your browser: `session` and `session.sig`. `session` stores all the information about your session and `session.sig` is a cryptographic signature of your session that proves to the server that you have not tampered with your session. The cryptographic signature is created using the secret key in the server.
-    - After 2 minutes, do you have to log in again? 
-    
+    - After 2 minutes, do you have to log in again?
 
-Awesome, we now have sessions that last more than just a page load. But we can actually get even more fine grained control of our strategy. Read on! 
+
+Awesome, we now have sessions that last more than just a page load. But we can actually get even more fine grained control of our strategy. Read on!
 
 
 # Phase 3. Make sessions persistent
@@ -157,7 +164,7 @@ using our database, MognoDb.
 
 1. Verify that your sessions don't die by logging in and restarting `node`. You should
   stay logged in!
-1. You should now see a new Collection in mLab names `sessions`. This is where your 
+1. You should now see a new Collection in mLab names `sessions`. This is where your
   sessions are stored now. Try deleting these and see if you get logged out as a result.
 
 ## Phase 4: Hashed Passwords
@@ -166,38 +173,41 @@ Use the `passwords.hashed.json` instead of the plain text passwords. Plain-text 
 
 Let's rewrite our `LocalStrategy` to use hashed passwords:
 
-1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.bopassword`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database. 
+1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.bopassword`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database.
 1. Before you look up a username and password in the JSON file, hash your password with the included
    `hashPassword()` function.
 
   ![](img/hashStrategy.png)
 
 
-### Playing around with hashed password
+### Playing around with hashing
 
-Here's something that's already stored in `app.js`:
+To gain some familiarity with hashing, open your terminal up and type `node`.
+Remember this is a playground for you to now write javascript.
 
-```javascript
-var crypto = require('crypto');
-function hashPassword(password) {
-  var hash = crypto.createHash('sha256');
-  hash.update(password);
-  return hash.digest('hex');
-}
-```
+- Copy paste this snippet. `sha256` is the hashing algorithm we are using. The
+  crypto library supports many other ones as well.
 
-- To gain some familiarity with hashing, open your terminal up and type `node`. To open a node environment. Remember this is a playground for you to now write javascript. 
-- Inside your node terminal, require crypto. Use `var crypto = require('crypto');`.
-- Then type type the code snippet above. `sha256` is the hashing algorithm we are using. The crypto library supports many other ones as well. 
-- Have your partner do the same thing in their terminal. Call hashPassword("Darwish"). Notice how you both get the same string? 
-- Change "darwish" to another word. Try this again with your partner. 
-- Does this remind you of [this](https://www.youtube.com/watch?v=S5CjKEFb-sM). It should. This is cryptography. You are cool now. 
+  ```javascript
+  var crypto = require('crypto');
+  function hashPassword(password) {
+    var hash = crypto.createHash('sha256');
+    hash.update(password);
+    return hash.digest('hex');
+  }
+  ```
+
+- Have your partner do the same thing in their terminal.
+  Call hashPassword("Darwish"). Notice how you both get the same string?
+- Change "darwish" to another word. Try this again with your partner.
+- Does this remind you of [this](https://www.youtube.com/watch?v=S5CjKEFb-sM).
+  It should. This is cryptography. You are cool now.
 
 
 ## Phase 5.1 Storing users in MongoDb
 
 Let's improve our passport strategy even more! Try storing user accounts in the
-database. 
+database.
 
 1. Create a new `User` model in `models/models.js`
 1. Create `GET /signup` and `POST /signup` endpoints for registering new users.
