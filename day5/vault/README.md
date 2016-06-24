@@ -12,27 +12,72 @@ over the course of the project.
 
 ## Instructions
 
-
-## Phase 1. Sessions
-
-We need sessions before we can do anything else. Configure these to be secure.
+Work in the `skeleton/` directory. You'll need to add code to the `app.js`,
+`routes/`, and `models/` files.
 
 
-## Phase 2. Local Strategy
+## Phase 1. Local Strategy
 
-Use the `passwords.json` file. Finish filling out the LocalStrategy passport
-strategy so that only authorized users in this file identified by the specified
-passwords can login.
+Take a look at the `passwords.plain.json` and `passwords.hashed.json` files.
+These files include a set of user accounts in cleartext and hashed format,
+respectively.
+
+Start by installing passport and the passport-local strategy. Then build your
+own strategy to authenticate users using the accounts in these files. You should
+also add the necessary routes to allow users to login, and to ensure that only
+authenticated users can access the `/` (root) route. The views have been filled
+in for you.
+
+Note that you do *not* need routes to register new users at this stage--you
+should not be modifying these files, and you should only allow users identified
+in these files to login.
+
+Once you've got this working using the cleartext file, try getting it to work
+using the hashed version. Use the hash function provided in `hashPassword.js`.
+
+
+## Phase 2. Sessions
+
+Once you've got the local strategy working, let's get sessions working as well.
+Install the `express-session` module and configure it in `app.js`. The
+`index.hbs` view contains a form that lets the user add a message to the
+session, and it displays all of the messages they've previously added to the
+session. Add a route that makes this possible.
+
+Use the `cookie` argument when configuring the session to make the cookie expire
+after a specified period of time. Once you get sessions working, experiment with
+different expiration times and see what effect it has when you log in, and
+reload.
 
 
 ## Phase 3. Make sessions persistent
 
-Awesome! It's working! Now let's start making it more robust. Make your sessions
-persistent in the database.
+Up to now all of the sessions you've seen have existed only in memory. Let's
+persist the sessions to the database, so that you can stop and restart the
+server, and the session--and your active login--won't go away. You'll need to
+use the `store` argument and the
+[connect-mongo](https://github.com/kcbanner/connect-mongo) module when
+configuring the session in `app.js.` See also the
+[express-session](https://github.com/expressjs/session) module documentation.
 
 
 ## Phase 4. A better strategy
 
-Let's store our users in the database instead, and hash their passwords.
+Let's improve our passport strategy, and try storing user accounts in the
+database. Rewrite your `LocalStrategy` to store users in the database, and
+create the necessary models in `models/models.js`. Get this working using
+plaintext passwords first, as before, then switch to hashing them, using the
+hash function mentioned above. Note that when you turn hashing on, you may need
+to delete the unhashed documents from your user collection in order to
+authenticate.
 
 
+## BONUS
+
+- Add OAuth authentication using Facebook, Twitter, Instagram or another OAuth
+  provider. Allow users to link accounts.
+- Try encrypting and decrypting the contents of the session using a key such as
+  the user ID, hashed password, or something else.
+- Structure your data so that users can only view their own messages, or can
+  send messages to other users. How do you transfer the data from one user's
+  session to another's?
