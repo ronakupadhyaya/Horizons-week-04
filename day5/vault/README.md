@@ -71,13 +71,19 @@ reload.
 
 ## Phase 3. Make sessions persistent
 
-Up to now all of the sessions you've seen have existed only in memory. Let's
-persist the sessions to the database, so that you can stop and restart the
-server, and the session--and your active login--won't go away. You'll need to
-use the `store` argument and the
-[connect-mongo](https://github.com/kcbanner/connect-mongo) module when
-configuring the session in `app.js.` See also the
+Up to now all of the sessions you've seen have existed only in memory. Your memory
+might be great, but your application's is not. Let's persist the sessions to the 
+database, so that you can stop and restart the server, and the session--and your 
+active login--won't go away. You'll need to use the `store` argument (part of `app.use` for
+the sesssion) as well as the [connect-mongo](https://github.com/kcbanner/connect-mongo) 
+module when configuring the session in `app.js.` See also the
 [express-session](https://github.com/expressjs/session) module documentation.
+
+This example from the `connect-mongo` docs should be of help:
+
+`const session = require('express-session');`
+`const MongoStore = require('connect-mongo')(session);`
+`app.use(session({ secret: 'foo', store: new MongoStore(options)}));`
 
 
 ## Phase 4. A better strategy
