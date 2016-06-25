@@ -6,4 +6,14 @@ mongoose.connect(connect);
 
 module.exports = {
   // YOUR MODELS HERE
+  User: mongoose.model('User', {
+  	username: {
+  		type: String,
+  		required: true
+  	},
+  	password: {
+  		type: String,
+  		required: true
+  	}
+  })
 };
