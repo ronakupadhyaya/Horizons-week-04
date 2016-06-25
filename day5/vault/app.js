@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var userPasswords = require('./passwords.plain.json').passwords;
 
 var app = express();
 
@@ -26,6 +29,39 @@ function hashPassword(password) {
 var models = require('./models/models');
 
 // SET UP PASSPORT HERE
+passport.use(LocalStrategy(
+  function(username, password, done) {
+    for(var i = 0; i < userPasswords.length; i++){
+      if(username === userPasswords[i].username &&
+         password === userPasswords[i].password){
+        done(null, userPasswords[i]);
+      }
+    }
+    done(null, false);
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//login routes
+app.get('/login', function(req, res, next){
+  res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+}));
+
+//check if logged in
+router.use(function(req, res, next){
+        if(req.user){
+            res.redirect('/contacts');
+        } else {
+            res.redirect('/login');
+        }
+    });
 
 // GET /: This route should only be accessible to logged in users.
 router.get('/', function(req, res, next) {
