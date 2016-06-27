@@ -26,10 +26,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-var mongoose = require('mongoose');
-var connect = process.env.MONGODB_URI || require('./models/connect');
-mongoose.connect(connect);
-
 // This is the function we're going to use in Phases 4 and 5 to hash
 // user passwords.
 function hashPassword(password) {
