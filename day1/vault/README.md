@@ -63,7 +63,6 @@ Here are the steps to follow:
 
       ![](img/logout.png)
 
-    - TODO middleware
     - Note that you do *not* need routes to sign up new users at this stage. Only users in `passwords.plain.json`
       will be allowed to log in.
 5. You can verify that your code is working correctly by:
