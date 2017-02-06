@@ -62,6 +62,15 @@ Here are the steps to follow:
 
    ![](img/login.png)
 
+1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
+
+  `serializeUser` takes a `function(user, done){}`. We use `done()` to send
+  back to passport what part of our user we want to store in the session. In our case,
+  this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
+  is updated. We write serialize(), but trust passport to use it properly.
+
+  ![](img/serialize.png)
+
 5. You can verify that your code is working correctly by:
     - Go to http://localhost:3000/login and try to log in using
       usernames and passwords from `passwords.plain.json`
@@ -96,15 +105,6 @@ logged in!
    Set max age to be 2 minutes from now (`maxAge:1000*60*2` milliseconds).
  
    ![](img/cookieSession.png)
-
-1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
-
-  `serializeUser` takes a `function(user, done){}`. We use `done()` to send
-  back to passport what part of our user we want to store in the session. In our case,
-  this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
-  is updated. We write serialize(), but trust passport to use it properly.
-
-  ![](img/serialize.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
 
