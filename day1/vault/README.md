@@ -46,32 +46,24 @@ Here are the steps to follow:
 
   ![](img/passportInit.png)
 
-3. Create initial routes in `app.js`:
-    - `GET /` should render `index.hbs` (`index.hbs` is already provided)
-    - `GET /login` should render `login.hbs` (`login.hbs` is already provided)
-    - POST /login` route should call `passport.authenticate('local')`.
+1. Create the route `GET /` and render `index.hbs` (`index.hbs` is already provided)
+1. Create the route `GET /login` and render `login.hbs` (`login.hbs` is already provided)
+1. Create the route `POST /login` and call `passport.authenticate('local')`.
 
-      When a user successfully logs in they should be sent to '/' so set 
-      `successRedirect` to `'/'`.
+   When a user successfully logs in they should be sent to '/' so set 
+   `successRedirect` to `'/'`.
 
-      If a user fails to log in they should be sent back to '/login' to retry,
-      so set `failureRedirect` to `'/login'`.
+   If a user fails to log in they should be sent back to '/login' to retry,
+   so set `failureRedirect` to `'/login'`.
 
-      ![](img/login.png)
+   ![](img/login.png)
 
-    - `GET /logout` whould call `req.logout()` and then redirect to `/`:
-
-      ![](img/logout.png)
-
-    - Note that you do *not* need routes to sign up new users at this stage. Only users in `passwords.plain.json`
-      will be allowed to log in.
 5. You can verify that your code is working correctly by:
-    - Try usernames and passwords from `passwords.plain.json`
+    - Go to http://localhost:3000/login and try to log in using
+      usernames and passwords from `passwords.plain.json`
     - Successful login should take you to http://localhost:3000/
-      
-      :warning:Your username won't show up yet. We'll fix this in Exercise
-      2.:warning:
-
+      (:warning:Your username won't show up yet. We'll fix this in Exercise
+      2.:warning:)
     - Unsuccessful login should take you to http://localhost:3000/login
 
 ## Exercise 2. Sessions with Cookie Session
@@ -86,8 +78,14 @@ unique cookie that identifies the session. This is why you can login and stay
 logged in!
 
 
+TODO
+  - `GET /logout` whould call `req.logout()` and then redirect to `/`:
+
+    ![](img/logout.png)
+TODO
+
+
 1. Install `cookie-session` with `npm` remember to `--save`
-4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
 1. Add `cookie-session` to your app as middleware with `app.use()`.
 
    Use `keys` to pick a secret string to protect your cookies by generating
@@ -118,6 +116,9 @@ logged in!
 
   ![](img/deserialize.png)
 
+1. Update `GET /` to pass `{user: req.user}` to `res.render()` when rendering
+  `index.hbs`.
+4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
 1. Verify that your session is working by checking that you stay logged in.
     - Now you should see two new cookies in your browser: `session` and
       `session.sig`. `session` stores all the information about your session and
