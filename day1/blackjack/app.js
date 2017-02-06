@@ -8,6 +8,9 @@ var exphbs = require('express-handlebars');
 var app = express();
 var port = '3000'
 var expressValidator = require('express-validator');
+var passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+
 
 // Set your MongoDB connect string through a file called
 // config.js or through setting a new environment variable
@@ -31,3 +34,28 @@ app.use('/', routes);
 
 app.set('port', port);
 app.listen(port);
+
+
+//Check password in password.hashed.json
+var passwordhash = require('./passwords.hashed.json');
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    passwordhash.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true
+  function(req,res){
+    res.redirect();
+  }
+}))
