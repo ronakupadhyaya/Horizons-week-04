@@ -20,7 +20,7 @@ over the course of the project.
 
 ## Instructions
 
-Work in `week04/day5/vault` directory. You'll need to add code to the `app.js` and `models/` files.
+Work in `week04/day1/vault` directory. You'll need to add code to the `app.js` and `models/` files.
 
 
 ## Phase 1. Local Strategy
