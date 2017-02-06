@@ -1,16 +1,5 @@
 # The Vault (pair exercise)
 
-## Contents
-
-1. [Goal](#goal)
-1. [Instructions](#instructions)
-1. [Phase 1. Local Strategy](#phase-1-local-strategy)
-1. [Phase 2. Sessions with Cookie Session](#phase-2-sessions-with-cookie-session)
-1. [Phase 3. Make sessions persistent](#phase-3-make-sessions-persistent)
-1. [Phase 4: Hashed Passwords](#phase-4-hashed-passwords)
-1. [Phase 5.1 Storing users in MongoDb](#phase-51-storing-users-in-mongodb)
-1. [Phase 5.2 Hashed passwords in MongoDb](#phase-52-hashed-passwords-in-mongodb)
-
 ## Goal
 
 Your goal is to build a backend webapp that stores top secret sensitive data.
@@ -23,7 +12,7 @@ over the course of the project.
 Work in `week04/day1/vault` directory. You'll need to add code to the `app.js` and `models/` files.
 
 
-## Phase 1. Local Strategy
+## Exercise 1. Local Strategy
 
 Passport is a very flexible login system. You can store user login information
 yourself or delegate that responsibility to someone else, like Facebook with OAuth.
@@ -83,7 +72,7 @@ Here are the steps to follow:
 
 :warning: Notice, that after you login, if you refresh the page, you are logged out. Why is this? Read on to find out. :warning:
 
-## Phase 2. Sessions with Cookie Session
+## Exercise 2. Sessions with Cookie Session
 
 Once you've got the local strategy working, let's get sessions working as well.
 Why do we need sessions? Why are sessions useful? Good questions, champ!
@@ -132,7 +121,7 @@ cookie that identifies the session. This is why you can login and stay logged in
 Awesome, we now have sessions that last more than just a page load. But we can actually get even more fine grained control of our strategy. Read on!
 
 
-# Phase 3. Make sessions persistent
+# Exercise 3. Make sessions persistent
 
 If you want to keep your sessions completely confidential, `cookie-session` isn't for you.
 You can read the contents of your session using the builtin `atob()` function.
@@ -165,7 +154,7 @@ using our database, MognoDb.
 1. You should now see a new Collection in mLab names `sessions`. This is where your
   sessions are stored now. Try deleting these and see if you get logged out as a result.
 
-## Phase 4: Hashed Passwords
+## Exercise 4: Hashed Passwords
 
 Use the `passwords.hashed.json` instead of the plain text passwords. Plain-text passwords are not safe!
 
@@ -202,7 +191,7 @@ Remember this is a playground for you to now write javascript.
   It should. This is cryptography. You are cool now.
 
 
-## Phase 5.1 Storing users in MongoDb
+## Exercise 5.1 Storing users in MongoDb
 
 Let's improve our passport strategy even more! Try storing user accounts in the
 database.
@@ -221,7 +210,7 @@ database.
 
 1. Verify that logins and logouts work as before.
 
-## Phase 5.2 Hashed passwords in MongoDb
+## Exercise 5.2 Hashed passwords in MongoDb
 
 Now let's do hashed passwords in MongoDb.
 
@@ -233,6 +222,6 @@ Now let's do hashed passwords in MongoDb.
   ![](img/mongoHash.png)
 
 1. Update your `LocalStrategy` to convert the input password into
-  a hashed password as you did in Phase 4. Then compare this
+  a hashed password as you did in Exercise 4. Then compare this
   value with teh `hashedPassword` property of your users.
 1. Verify that logins and logouts work as before.
