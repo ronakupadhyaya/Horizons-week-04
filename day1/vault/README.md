@@ -69,6 +69,10 @@ Here are the steps to follow:
 5. You can verify that your code is working correctly by:
     - Try usernames and passwords from `passwords.plain.json`
     - Successful login should take you to http://localhost:3000/
+      
+      :warning:Your username won't show up yet. We'll fix this in Exercise
+      2.:warning:
+
     - Unsuccessful login should take you to http://localhost:3000/login
 
 ## Exercise 2. Sessions with Cookie Session
