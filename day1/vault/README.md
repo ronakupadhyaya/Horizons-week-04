@@ -143,32 +143,34 @@ logged in!
 
 # Exercise 3.1: Setup MongoDb
 
-Create a database in mLab. Connect to it in your `app.js`
+Create a database in mLab. Connect to it in your `app.js` TODO
 
 # Exercise 3.2: Make sessions persistent
 
-If you want to keep your sessions completely confidential, `cookie-session` isn't for you.
-You can read the contents of your session using the builtin `atob()` function.
-Try this in your DevTools console: copy the value of your `session` cookie then call
-`atob('cookie value here')`. We can move all session information to the server, where it's
-hidden from the user, with `express-session`.
+If you want to keep your sessions completely confidential, `cookie-session`
+isn't for you.  You can read the contents of your session using the builtin
+`atob()` function.  Try this in your DevTools console: copy the value of your
+`session` cookie then call `atob('cookie value here')`.
 
-1. Remove the old `session` and `app.use(session...` code. You don't
-  need it anymore.
+We can store session information in MongoDb, where it's hidden from the user,
+with `express-session`.
+
+1. Remove the old `session` and `app.use(session...` code. You don't need it
+  anymore.
 1. Install `express-session` with npm.
-1. Add `express-session to your app.
+1. Add `express-session` to your app.
 
   ![](img/expressSession.png)
 
 1. Verify that your logins still work. But now, when you restart `node` you should be
   logged out.
 
-These sessions are now stored in `node`. But everytime `node` restarts it forgets
-everything, so you're logged out. Now let's make sessions stick around i.e. persist
-using our database, MognoDb.
+  These sessions are now stored in `node`. But everytime `node` restarts it forgets
+  everything, so you're logged out. Now let's make sessions stick around i.e. persist
+  using our database, MognoDb.
 
-1. Install the `connect-mongo` npm package, this is how we will connect our sessions
-  to MongoDb.
+1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo) 
+  npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
   ![](img/mongoSession.png)
@@ -187,14 +189,15 @@ mitigate this problem we `hash` passwords before storing them. Hashing is like
 encrypting, but irreversible. In other words, given the hashed version of
 password, it's nearly impossible to get the original password back.
 
-1. Implement the `hashPassword()` using the `sha256` algorithm. (`sha256` is not
-   the most secure password hash function, we're going to learn better ones
-   later this week)
+1. Implement the `hashPassword()` `app.js` using the `sha256` algorithm.
+   (`sha256` is not the most secure password hash function, we're going to learn
+   better ones later this week):
 
   ![](img/hashPassword.png)
 
 1. Copy paste your `hashPassword()` functions to a Node console and try
-  hashing a couple passwords from `passwords.plain.json` TODO
+  hashing a couple passwords from `passwords.plain.json` note how
+  these match up with `passwords.hashed.json`.
 
 ## Exercise 4.2: Hashed Passwords
 
