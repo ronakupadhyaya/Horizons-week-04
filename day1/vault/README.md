@@ -53,7 +53,7 @@ Here are the steps to follow:
     - The views have been created for you! Don't reinvent the wheel :).
     - Note that you do *not* need routes to sign up new users at this stage. Only users in `passwords.plain.json`
       will be allowed to log in.
-4. Add middle-ware to require logins for routes other than `/login` and `/logout`.
+4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
 5. You can verify that your code is working correctly by:
     - You can login in with a user and the correct password from your password file
     - You cannot login with an incorrect password
@@ -65,6 +65,7 @@ out. We'll fix that in Exercise 2! :warning:
 ## Exercise 2. Sessions with Cookie Session
 
 Once you've got the local strategy working, let's get sessions working as well.
+
 In a typical web application, the credentials used to authenticate a user will
 only be transmitted during the login request. If authentication succeeds, a
 session will be established and maintained via a cookie set in the user's
@@ -74,15 +75,19 @@ logged in!
 
 
 1. Install `cookie-session` with `npm` remember to `--save`
-1. Add the session to your app
+1. Add `cookie-session` to your app as middleware with `app.use()`.
 
-  ![](img/cookieSession.png)
-
-  For this exercise, we are going to also play around with the `maxAge` option. This will allow us to specify how long a
-  cookie should be valid for. By specifying how long a cookie should last, we can control how much we want a user to relogin.
-  Some sites will set this cookie to last for a very long time, this is why you are always logged in. By default, maxAge is set
-  to expire when the session ends (close all tabs with the current domain). Set max age to be 2 minutes from now
-  (`maxAge:1000*60*2` milliseconds).
+   Use `keys` to pick a secret string to protect your cookies by generating
+   cryptographic signatures.
+ 
+   Use `maxAge` to specify how long a cookie should be valid for. By
+   specifying how long a cookie should last, we can control how much we want a
+   user to relogin.  Some sites will set this cookie to last for a very long
+   time, this is why you are always logged in. By default, maxAge is set to
+   expire when the session ends (when all tabs with the current domain are closed).
+   Set max age to be 2 minutes from now (`maxAge:1000*60*2` milliseconds).
+ 
+   ![](img/cookieSession.png)
 
 1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
   `serializeUser` takes a `function(user, done){}`. We use `done()` to send
@@ -93,18 +98,23 @@ logged in!
   ![](img/serialize.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
-  `deserializeUser` takes a `function(id, done){}`. We need to look up our user
-  based on its id in `passwords.plain.json` and return it.
+  `deserializeUser` takes a `function(id, done){}`.
   Passport calls this function every time a logged-in user arrives to populate
   `req.user` with all the information about the user.
+  We the call `done()` with the user we get back from `passwords.plain.json`.
 
   ![](img/deserialize.png)
 
-  Inside the callback we call `done()` to indicate
-
 1. Verify that your session is working by checking that you stay logged in.
-    - Now you should see two new cookies in your browser: `session` and `session.sig`. `session` stores all the information about your session and `session.sig` is a cryptographic signature of your session that proves to the server that you have not tampered with your session. The cryptographic signature is created using the secret key in the server.
-    - After 2 minutes, do you have to log in again?
+    - Now you should see two new cookies in your browser: `session` and
+      `session.sig`. `session` stores all the information about your session and
+      `session.sig` is a cryptographic signature of your session that proves to
+      the server that you have not tampered with your session. The cryptographic
+      signature is created using the secret key in the server.
+
+      TODO application tab
+    - Change `maxAge` for cookie session to 10 seconds, make sure your login
+      expires after 10 seconds.
 
 
 Awesome, we now have sessions that last more than just a page load. But we can actually get even more fine grained control of our strategy. Read on!
