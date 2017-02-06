@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-
+var app = require('/')
 var port = 3000;
 
 app.use('/assets', express.static(__dirname + '/public'));
