@@ -143,7 +143,9 @@ logged in!
 
 # Exercise 3.1: Setup MongoDb
 
-Create a database in mLab. Connect to it in your `app.js` TODO
+Create a database in mLab. Connect to it in your `app.js`:
+
+![](img/mongoSetup.png)
 
 # Exercise 3.2: Make sessions persistent
 
