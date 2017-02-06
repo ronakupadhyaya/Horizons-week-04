@@ -78,13 +78,6 @@ unique cookie that identifies the session. This is why you can login and stay
 logged in!
 
 
-TODO
-  - `GET /logout` whould call `req.logout()` and then redirect to `/`:
-
-    ![](img/logout.png)
-TODO
-
-
 1. Install `cookie-session` with `npm` remember to `--save`
 1. Add `cookie-session` to your app as middleware with `app.use()`.
 
@@ -112,26 +105,42 @@ TODO
   `deserializeUser` takes a `function(id, done){}`.
   Passport calls this function every time a logged-in user arrives to populate
   `req.user` with all the information about the user.
-  We the call `done()` with the user we get back from `passwords.plain.json`.
+  We call `done()` with the user we get back from `passwords.plain.json`.
 
   ![](img/deserialize.png)
 
-1. Update `GET /` to pass `{user: req.user}` to `res.render()` when rendering
-  `index.hbs`.
-4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
-1. Verify that your session is working by checking that you stay logged in.
-    - Now you should see two new cookies in your browser: `session` and
-      `session.sig`. `session` stores all the information about your session and
-      `session.sig` is a cryptographic signature of your session that proves to
-      the server that you have not tampered with your session. The cryptographic
-      signature is created using the secret key in the server.
+1. Update the `GET /` route
+  1. If `req.user` is falsy, it means the user has not yet logged in.
+     `res.redirect()` to `/login` so they can login
+  1. If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
+     rendering `index.hbs`. Now you should see the username after login:
 
-      TODO application tab
-    - Change `maxAge` for cookie session to 10 seconds, make sure your login
-      expires after 10 seconds.
+     ![](img/indexUsername.png)
 
+1. Create the route `GET /logout` which should call `req.logout()` and then
+   redirect to `/`:
 
-Awesome, we now have sessions that last more than just a page load. But we can actually get even more fine grained control of our strategy. Read on!
+  ![](img/logout.png)
+
+1. Verify that you've completed this step with:
+  1. Login then click the logout link, it should take you to `/login`
+  1. Try to visit `/` when you're not logged in it should take you to
+    `/login`.
+  1. Now you should see two new cookies in your browser: `session` and
+    `session.sig`. `session` stores all the information about your session and
+    `session.sig` is a cryptographic signature of your session that proves to
+    the server that you have not tampered with your session. The cryptographic
+    signature is created using the secret key in the server.
+
+    You can view cookies in the Application tab of Chrome Developer tools.
+
+    ![](img/cookies.png)
+
+  1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
+    refresh you page, it should take you to `/login`.
+
+Awesome, we now have sessions that last more than just a page load. But we can
+actually get even more fine grained control of our strategy. Read on!
 
 
 # Exercise 3.1: Setup MongoDb
