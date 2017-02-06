@@ -25,7 +25,8 @@ Here are the steps to follow:
 1. Install `passport` and the `passport-local` modules.
     - Use `npm install --save`
     - `require()` `passport` and `passport-local` in `app.js`
-1. Write a `LocalStrategy`
+1. Write a `LocalStrategy` similar to the one in [Passport docs](http://passportjs.org/docs#strategies)
+
     - Authenticate users using `passwords.plain.json`.
       Your strategy will read this file into a variable, and check to see the the user who
       is trying to login is in your local password file. You can read json files with
@@ -41,26 +42,34 @@ Here are the steps to follow:
 
       ![](img/local.png)
 
-1. Add passport into your application with `passport.initialize()` and `passport.session()`:
+1. Add passport into your application with [`passport.initialize()` and `passport.session()`](http://passportjs.org/docs#middleware):
 
   ![](img/passportInit.png)
 
-3. Create routes for login and logout in `app.js`:
-    - Your `POST /login` route should use `passport.authenticate('local')`:
+3. Create initial routes in `app.js`:
+    - `GET /` should render `index.hbs` (`index.hbs` is already provided)
+    - `GET /login` should render `login.hbs` (`login.hbs` is already provided)
+    - POST /login` route should call `passport.authenticate('local')`.
+
+      When a user successfully logs in they should be sent to '/' so set 
+      `successRedirect` to `'/'`.
+
+      If a user fails to log in they should be sent back to '/login' to retry,
+      so set `failureRedirect` to `'/login'`.
 
       ![](img/login.png)
 
-    - The views have been created for you! Don't reinvent the wheel :).
+    - `GET /logout` whould call `req.logout()` and then redirect to `/`:
+
+      ![](img/logout.png)
+
+    - TODO middleware
     - Note that you do *not* need routes to sign up new users at this stage. Only users in `passwords.plain.json`
       will be allowed to log in.
-4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
 5. You can verify that your code is working correctly by:
-    - You can login in with a user and the correct password from your password file
-    - You cannot login with an incorrect password
-    - You cannot login with an invalid (or nonexistent) username
-
-:warning: Notice, that after you login, if you refresh the page, you are logged
-out. We'll fix that in Exercise 2! :warning:
+    - Try usernames and passwords from `passwords.plain.json`
+    - Successful login should take you to http://localhost:3000/
+    - Unsuccessful login should take you to http://localhost:3000/login
 
 ## Exercise 2. Sessions with Cookie Session
 
@@ -75,6 +84,7 @@ logged in!
 
 
 1. Install `cookie-session` with `npm` remember to `--save`
+4. Add middleware to require logins for routes other than `/login` and `/logout` TODO
 1. Add `cookie-session` to your app as middleware with `app.use()`.
 
    Use `keys` to pick a secret string to protect your cookies by generating
