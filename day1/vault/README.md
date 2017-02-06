@@ -187,9 +187,6 @@ Remember this is a playground for you to now write javascript.
 - Have your partner do the same thing in their terminal.
   Call hashPassword("Darwish"). Notice how you both get the same string?
 - Change "darwish" to another word. Try this again with your partner.
-- Does this remind you of [this](https://www.youtube.com/watch?v=S5CjKEFb-sM).
-  It should. This is cryptography. You are cool now.
-
 
 ## Exercise 5.1 Storing users in MongoDb
 
