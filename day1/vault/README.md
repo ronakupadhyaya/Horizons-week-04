@@ -238,7 +238,12 @@ Let's improve our passport strategy even more! Try storing user accounts in the
 database.
 
 1. Create a new `User` model in `models/models.js`
-1. Create `GET /signup` and `POST /signup` endpoints for registering new users.
+1. Create a new `GET /signup` route. Inside the route:
+  1. `res.render()` `signup.hbs`
+1. Create a new `POST /signup` route. Inside the route:
+  1. Validates username and password fields from `req.body`
+  1. If validation passes, create a new user object and `.save()` it to MongoDb
+  1. After the user is successfully saved to MongoDb, redirect to `/login`
 1. Rewrite your `deserializeUser()` to use the new `User` model.
   Use `User.findById()`.
 
