@@ -11,6 +11,10 @@ in progressively more secure ways.
 
 Work in `week04/day1/vault` directory. You'll need to add code to `app.js`.
 
+:warning:The order of middleware functions in `app.js` matters.  We've given you
+place markers for setup steps in `app.js`. Make sure to use these markers when
+inserting code.:warning:
+
 ## Exercise 1. Local Strategy
 
 [Passport](http://passportjs.org/) is an NPM package that makes it easy to
