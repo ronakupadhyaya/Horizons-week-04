@@ -14,11 +14,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Models are defined in models/models.js
-var models = require('./models/models');
+// MONGODB SETUP HERE
 
-// SET UP PASSPORT HERE
+// SESSION SETUP HERE
 
-// DEFINE YOUR ROUTES HERE
+// PASSPORT LOCALSTRATEGY HERE
+
+// PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
+
+// PASSPORT MIDDLEWARE HERE
+
+// YOUR ROUTES HERE
 
 module.exports = app;
