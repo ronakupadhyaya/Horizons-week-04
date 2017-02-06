@@ -113,7 +113,7 @@ logged in!
 
 1. Update the `GET /` route
   1. If `req.user` is falsy, it means the user has not yet logged in.
-     `res.redirect()` to `/login` so they can login
+     `res.redirect()` them to `/login` so they can log in.
   1. If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
      rendering `index.hbs`. Now you should see the username after login:
 
@@ -136,18 +136,14 @@ logged in!
 
     You can view cookies in the Application tab of Chrome Developer tools.
 
-    ![](img/cookies.png)
+    ![](img/cookie.png)
 
   1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
     refresh you page, it should take you to `/login`.
 
-Awesome, we now have sessions that last more than just a page load. But we can
-actually get even more fine grained control of our strategy. Read on!
-
-
 # Exercise 3.1: Setup MongoDb
 
-TODO mongo setup 
+Create a database in mLab. Connect to it in your `app.js`
 
 # Exercise 3.2: Make sessions persistent
 
@@ -157,7 +153,7 @@ Try this in your DevTools console: copy the value of your `session` cookie then 
 `atob('cookie value here')`. We can move all session information to the server, where it's
 hidden from the user, with `express-session`.
 
-1. Remove the old `cookieSession` and `app.use(cookieSession...` code. You don't
+1. Remove the old `session` and `app.use(session...` code. You don't
   need it anymore.
 1. Install `express-session` with npm.
 1. Add `express-session to your app.
