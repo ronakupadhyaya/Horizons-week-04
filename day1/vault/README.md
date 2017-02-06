@@ -94,6 +94,7 @@ logged in!
    ![](img/cookieSession.png)
 
 1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
+
   `serializeUser` takes a `function(user, done){}`. We use `done()` to send
   back to passport what part of our user we want to store in the session. In our case,
   this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
@@ -102,6 +103,7 @@ logged in!
   ![](img/serialize.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
+
   `deserializeUser` takes a `function(id, done){}`.
   Passport calls this function every time a logged-in user arrives to populate
   `req.user` with all the information about the user.
