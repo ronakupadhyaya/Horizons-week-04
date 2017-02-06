@@ -4,6 +4,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var passport-local = require('passport-local');
 
 // Express setup
 var app = express();
