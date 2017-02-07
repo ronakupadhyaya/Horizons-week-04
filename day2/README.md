@@ -2,12 +2,13 @@
 
 ## Warmup
 
-1. [Setting up Sendgrid](warmup/)
+1. [Set up Heroku](warmup.md)
 
 ## Inline exercises
 
-1. [Sendgrid](sendgrid/)
-1. [Twilio](twilio/)
+1. [My first Heroku deploy](heroku.md)
+1. [Heroku & MongoDb](heroku-mongodb.md)
+1. [Twilio](twilio.md)
 
 ## Pair programming exercise
 
