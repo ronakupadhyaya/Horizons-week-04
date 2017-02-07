@@ -225,7 +225,7 @@ if (hashPassword(passwordAttempt) === storedPasswordHash) {
 
 Let's rewrite our `LocalStrategy` to use hashed passwords:
 
-1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.bopassword`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database.
+1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.body.password`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database.
 1. Before you look up a username and password in the JSON file, hash your password with the included
    `hashPassword()` function.
 
