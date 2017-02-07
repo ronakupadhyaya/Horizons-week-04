@@ -38,5 +38,5 @@ The goal of this exercise is to deploy our first app to Heroku.
   ```
 
 1. Connect to Heroku from your laptop and check that it works.
-
+1. Post a link to your Heroku app on Slack so your friends can check it out too! Welcome to the Cloud!
 
