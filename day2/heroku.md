@@ -19,7 +19,7 @@ The goal of this exercise is to deploy our first app to Heroku.
 1. `npm init` to create your `package.json`
 1. Install `express` with `npm install --save`
 1. Create an `app.js` file, `app.js` should:
-  1. `require('expres')`
+  1. `require('express')`
   1. Create `app` using `express()`
   1. Create a `GET /` route `res.send()`s a string of your choice
   1. Listen on a port
