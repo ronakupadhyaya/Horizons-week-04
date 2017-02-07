@@ -4,8 +4,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var passwords= require('./passwords.plain.json').passwords;
 var hashPasswords = require('./passwords.hashed.json').passwords;
 var session = require('express-session');
@@ -40,44 +40,48 @@ app.use(session({
   store: new MongoStore({mongooseConnection: require('mongoose').connection})
 }));
 
-// PASSPORT LOCALSTRATEGY HERE
-passport.use(new LocalStrategy(
-  function(username,password, done){
-    User.findOne({username: username}, function(err,user){
-      if(err) req.status(500).json(err);
-      if(!user) {
-        console.log('Username not found')
-      }
-      else{
-        if(user.password === hashPassword(password))done(null,user);
-        else{
-          done(null, false);
-        }
-      }
-    })
-    hashPasswords.forEach(function(user){
-      if(user.username === username && user.password === hashPassword(password)){
-        return done(null, user);
-      }
-    })
-    return done(null, false, { meassage: 'username or password incorrect'})
-  }));
-// PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user,done){
   done(null, user._id);
-})
+});
 passport.deserializeUser(function(id, done) {
   User.findById( id,function(err,user){
     if(err) throw err;
     else{
       done(null, user);
     }
-  })
- // passwords.forEach(function(user){
- //    if(user._id === id) done(null, user);
- //  });
-
+  });
 });
+// PASSPORT LOCALSTRATEGY HERE
+passport.use(new LocalStrategy(
+  function(username,password, done){
+    User.findOne({username: username}, function(err,user){
+      if(err) {
+        console.error(err)
+        return done(err);
+      }
+      if(!user) {
+        console.log('Username not found');
+          return done(null, false, {message: 'Incorrect username.'});
+      }
+      else{
+        if(user.password === hashPassword(password)){
+          console.log('passwords matched');
+          return done(null, false, {message: 'Incorrect password.'});
+        }
+        else{
+          console.log('no password matched');
+          //done(null, false);
+        }
+      }
+    });
+    hashPasswords.forEach(function(user){
+      if(user.username === username && user.password === hashPassword(password)){
+        return done(null, user);
+      }
+    });
+    return done(null, false, { message: 'username or password incorrect'})
+  }));
+// PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 // PASSPORT MIDDLEWARE HERE
 app.use(passport.initialize());
 app.use(passport.session());
@@ -105,9 +109,8 @@ app.get('/logout', function(req,res){
 });
 
 app.get('/signup', function(req,res){
-
   res.render('signup.hbs');
-})
+});
 
 app.post('/signup', function(req,res){
   var user = new User({
@@ -120,14 +123,14 @@ app.post('/signup', function(req,res){
       console.log('username ' + user.username + ' already taken');
       res.redirect('/signup');
     }
-  })
+  });
   user.save(function(err){
     if(err) req.status(500).json(err)
     else{
       res.redirect('/login');
     }
-  })
-})
+  });
+});
 
 
 
