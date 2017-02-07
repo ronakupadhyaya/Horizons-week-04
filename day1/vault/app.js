@@ -8,9 +8,20 @@ var passport = require("passport");
 var passportLocal = require("passport-local");
 var passwords = require('./passwords.plain.json')
 var LocalStrategy = require('passport-local').Strategy;
-var session = require('cookie-session');
+// var session = require('cookie-session');
+var session = require('express-session');
+var mongoose = require('mongoose');
+var MongoStore = require('connect-mongo')(session);
 
 
+mongoose.connection.on('connected', function() {
+	console.log("connected to mongodb");
+});
+
+
+
+
+mongoose.connect("mongodb://db-user:8g(T0+w!d6qD=/bLtI@ds139969.mlab.com:39969/snuupy-horizons");
 
 // Express setup
 var app = express();
@@ -22,10 +33,17 @@ app.use(bodyParser.urlencoded({
 	extended: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(session({
+// 	keys: ['password'],
+// 	maxAge: 1000 * 60 * 2
+// 	// maxAge: 1000
+// }));
+
 app.use(session({
-	keys: ['password'],
-	maxAge: 1000 * 60 * 2
-	// maxAge: 1000
+	secret: 'secret',
+	store: new MongoStore({
+		mongooseConnection: require('mongoose').connection
+	})
 }));
 
 // MONGODB SETUP HERE
