@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var gameRepresentation = function(game) {
   return {
     id: game._id,
-    preGameBet: game.preGameBet,
+    bet: game.bet,
     gameStatus: game.gameStatus,
     playerTotalValue : game.playerTotalValue,
     dealerTotalValue : game.dealerTotalValue,
@@ -44,26 +44,21 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/game', function(req, res, next) {
-  var game = new Game ({
-    // preGameBet: req.body.bet,
-    gameStatus: "Not Started",
-    // playerTotalValue : 0,
-    // dealerTotalValue : 0,
-    playerStatus : "Pending",
-    dealerStatus : "Pending",
-    playerHand : [],
-    dealerHand : []
-  })
-  // res.json({
-  //   success: true,
-  //   response: game
-  // });
-  var gameId = game._id;
-  game.save(function(err){
-    if(err){
-      res.json(err);
+  // YOUR CODE HERE
+  Game.newGame({
+    playerCards: [],
+    dealerCards: [],
+    deck: [],
+    // playerTotal: 0,
+    // dealerTotal: 0,
+    // gameStatus: "Not Started",
+    playerStatus: "Pending",
+    dealerStatus: "Pending"
+  }, function(err, newGame) {
+    if(err) {
+      res.json({error: "Could not save game"})
     } else {
-      res.redirect('/game/' + gameId);
+      res.redirect('/game/' + newGame._id)
     }
   });
 });
@@ -88,12 +83,11 @@ router.post('/game/:id', function(req, res, next) {
     if(err) {
       res.json({error: "Could not find game"})
     } else {
-      if(found.preGameBet === 0) {
-        Game.findOneAndUpdate({_id:req.params.id}, {preGameBet:req.body.bet}, {new:true}, function(err, updated) {
+      if(found.bet) {
+        Game.findOneAndUpdate({_id:req.params.id}, {bet:req.body.bet}, {new:true}, function(err, updated) {
           if(err) {
-            res.json({error: "Could not find game"})
+            res.json({error: "Could not find game2"})
           } else {
-            console.log(updated);
             updated.dealInitial();
             res.json({ game: gameRepresentation(updated) });
           }

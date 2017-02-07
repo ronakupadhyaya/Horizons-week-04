@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  preGameBet: {
+  bet: {
     type: Number,
     default: 0
   },
@@ -68,7 +68,7 @@ Deck.prototype.createDeck = function() {
 
 Deck.prototype.shuffleDeck = function() {
   var curDeck = this.deck;
-  for (var i = array.length - 1; i > 0; i--) {
+  for (var i = this.deck.length - 1; i > 0; i--) {
     var index = Math.floor(Math.random() * i);
     //swap
     var tmp = curDeck[index];
@@ -106,8 +106,10 @@ GameSchema.methods.dealInitial = function() {
   this.playerHand.push(playerCardTwo);
   this.dealerHand.push(dealerCardOne);
   this.dealerHand.push(dealerCardTwo);
-  this.playerTotalValue = calcValue(this.playerHand);
-  this.dealerTotalValue = calcValue(this.dealerHand);
+  console.log(this.dealerHand);
+  console.log(this.playerHand);
+  this.playerTotalValue = this.calcValue(this.playerHand);
+  this.dealerTotalValue = this.calcValue(this.dealerHand);
   if(this.playerTotalValue === 21 || this.dealerTotalValue === 21) {
     this.gameOver();
   }
