@@ -19,7 +19,7 @@ inside our app). It's a lot like Twilio, but for email instead of telephony.
 ## Instructions
 
 1. Head to https://app.sendgrid.com/signup in your browser.
-1. Fill out the form. Make sure "Free 12k" is selected at the top right corner.
+1. Fill out the form. Make sure "40k 0.0/mo" is selected at the top right corner.
 1. Check your email for the confirmation, and tap on the Confirm Email Address
    button.
 1. Fill out the second form. Feel free to use the following values:
