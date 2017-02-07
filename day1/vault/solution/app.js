@@ -20,7 +20,9 @@ app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Mongoose stuff here
@@ -40,7 +42,9 @@ app.use(session({
   },
   resave: false,
   saveUninitialized: false,
-  store: new MongoStore({mongooseConnection: mongoose.connection})
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -105,7 +109,7 @@ passport.serializeUser(function(user, done) {
 // Used for both mongo strategies
 
 passport.deserializeUser(function(id, done) {
-  models.User.findById(id, function(err, user) {
+  Users.User.findById(id, function(err, user) {
     done(err, user);
   });
 });
@@ -135,30 +139,35 @@ passport.deserializeUser(function(id, done) {
 // ));
 
 // Hashed mongo
-passport.use(new LocalStrategy(function (username, password, done) {
-    var hash = hashPassword(password);
+passport.use(new LocalStrategy(function(username, password, done) {
+  var hash = hashPassword(password);
 
-    // Find the user with the given username
-    models.User.findOne({username: username}, function (err, user) {
-      // if there's an error, finish trying to authenticate (auth failed)
-      if (err) {
-        console.error(err);
-        return done(err);
-      }
-      // if no user present, auth failed
-      if (!user) {
-        console.log(user);
-        return done(null, false, {message: 'Incorrect username.'});
-      }
-      // if passwords do not match, auth failed
-      if (user.password !== hash) {
-        return done(null, false, {message: 'Incorrect password.'});
-      }
-      // auth has has succeeded
-      return done(null, user);
-    });
-  }
-));
+  // Find the user with the given username
+  Users.User.findOne({
+    username: username
+  }, function(err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+    if (err) {
+      console.error(err);
+      return done(err);
+    }
+    // if no user present, auth failed
+    if (!user) {
+      console.log(user);
+      return done(null, false, {
+        message: 'Incorrect username.'
+      });
+    }
+    // if passwords do not match, auth failed
+    if (user.password !== hash) {
+      return done(null, false, {
+        message: 'Incorrect password.'
+      });
+    }
+    // auth has has succeeded
+    return done(null, user);
+  });
+}));
 
 app.use('/', auth(passport));
 app.use('/', routes);

@@ -1,0 +1,17 @@
+{
+  "name": "twilio",
+  "version": "1.0.0",
+  "description": "You've already seen how to use Twilio to send outgoing SMS messages, as part of\r the [TwilioShoutout](https://github.com/horizons-school-of-technology/week02/tree/master/day4/1_twilio)\r exercise. In this exercise, you're going to set a voice message that plays when\r someone calls your Twilio phone number.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
