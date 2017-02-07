@@ -12,10 +12,25 @@ var expressValidator = require('express-validator');
 // Set your MongoDB connect string through a file called
 // config.js or through setting a new environment variable
 // called MONGODB_URI!
-var db = process.env.MONGODB_URI || require('./config').db;
 
 var mongoose = require('mongoose');
-mongoose.connect(db);
+var fs = require('fs');
+
+if (! fs.existsSync('./config.js')) {
+  throw new Error('config.js file is missing');
+}
+var config = require('./config');
+if (! config.MONGODB_URI) {
+  throw new Error('MONGODB_URI is missing in file config.js');
+}
+mongoose.connection.on('connected', function() {
+  console.log('Success: connected to MongoDb!');
+});
+mongoose.connection.on('error', function() {
+  console.log('Error connecting to MongoDb. Check MONGODB_URI in config.js');
+  process.exit(1);
+});
+mongoose.connect(config.MONGODB_URI);
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.hbs'}));

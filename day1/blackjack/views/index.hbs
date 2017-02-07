@@ -1,3 +1,19 @@
 <h1>Games</h1>
 
+<a href="/?status=In Progress">View in-progress</a>
+<a href="/?status=Over">View finished games</a>
+
 <!-- YOUR CODE HERE -->
+<form action="/game" method="post">
+  <button type=submit>Start New Game</button>
+</form>
+
+{{#each games}}
+<div>
+<a href="/game/{{id}}">
+  <h2>{{id}}</h2>
+</a>
+  <p>{{status}}</p>
+</div>
+<hr />
+{{/each}}

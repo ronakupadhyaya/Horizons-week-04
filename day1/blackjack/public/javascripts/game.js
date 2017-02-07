@@ -5,10 +5,11 @@ $(document).on("submit", "form", function(e){
   $.ajax({
     type: "POST",
     url: $(location).attr('href'),
-    data: { /* YOUR CODE HERE */ },
+    data: { bet: $('#betAmount').val() },
     cache: false,
     success: function(game){
       // YOUR CODE HERE
+      play(game);
     }
   });
   return false;
@@ -22,7 +23,9 @@ function getData(){
 
 
 function play(game){
-  // YOUR CODE HERE
+  $('#betForm').hide();
+  $('.user-area').show();
+  $('.dealer-area').show();
 }
 
 function showCard(card) {
