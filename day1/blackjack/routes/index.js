@@ -83,28 +83,24 @@ router.get('/game/:id', function(req, res, next) {
 });
 
 router.post('/game/:id', function(req, res, next) {
-  var gameId = req.params.id;
-  var bet = req.body.bet;
-  Game.findOne({_id: gameId}, function(err, game) {
+  // YOUR CODE HERE
+  Game.findOne({_id:req.params.id}, function(err, found) {
     if(err) {
-      res.json(err);
-    } else if(game.preGameBet === 0){
-      console.log('inside')
-      Game.findOneAndUpdate({_id: gameId}, {preGameBet: bet}, function(err, foundGame) {
-        console.log(foundGame)
-        if(err) {
-          res.json(err);
-        } else {
-          foundGame.dealInitial();
-          res.json({
-            game: gameRepresentation(foundGame),
-            response: foundGame
-          })
-        }
-      })
-    }
-    else {
-      res.json('bet already exists');
+      res.json({error: "Could not find game"})
+    } else {
+      if(found.preGameBet === 0) {
+        Game.findOneAndUpdate({_id:req.params.id}, {preGameBet:req.body.bet}, {new:true}, function(err, updated) {
+          if(err) {
+            res.json({error: "Could not find game"})
+          } else {
+            console.log(updated);
+            updated.dealInitial();
+            res.json({ game: gameRepresentation(updated) });
+          }
+        })
+      } else {
+        res.json({error: "Bet already exists"});
+      }
     }
   })
 });

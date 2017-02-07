@@ -9,10 +9,10 @@ var GameSchema = new mongoose.Schema({
     type: Array
   },
   dealerHand: {
-    type: Array // ******
+    type: Array
   },
   deck: {
-    type: Array // ******
+    type: Array
   },
   playerTotalValue: {
     type: Number,
@@ -64,7 +64,6 @@ Deck.prototype.createDeck = function() {
       this.deck.push(card);
     }
   }
-  return this.deck;
 }
 
 Deck.prototype.shuffleDeck = function() {
@@ -76,10 +75,11 @@ Deck.prototype.shuffleDeck = function() {
     curDeck[index] = curDeck[i];
     curDeck[i] = tmp;
   }
-  return curDeck;
+  this.deck = curDeck;
 }
 
 GameSchema.methods.calcValue = function(hand){
+  console.log('inside calc value')
   var total = 0;
   // SORTED
   hand.sort(function(a, b) {
@@ -117,7 +117,7 @@ GameSchema.methods.hit = function(){
   var playerHit = this.deck.shift();
   this.playerHand.push(playerHit);
   this.playerTotalValue = calcValue(this.playerHand);
-  if(this.playerTotalValue === 21 || this.playerTotalValue > 21) {
+  if(this.playerTotalValue > 21) {
     // this.gameStatus = "Over";
     // this.playerStatus = "Win";
     // this.dealerStatus = "Loss";
