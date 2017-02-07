@@ -40,6 +40,7 @@ app.listen(port);
 var passwordhash = require('./passwords.hashed.json');
 
 passport.use(new LocalStrategy(
+
   function(username, password, done) {
     passwordhash.findOne({ username: username }, function (err, user) {
       if (err) { return done(err); }
@@ -53,6 +54,8 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+var password
 
 app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true
   function(req,res){
