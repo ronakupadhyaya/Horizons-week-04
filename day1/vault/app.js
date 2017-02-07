@@ -12,7 +12,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
-
+var Users = require('./models/models.js');
 var crypto = require('crypto');
 
 mongoose.connection.on('connected', function() {
@@ -56,24 +56,52 @@ app.use(session({
 passport.use(new LocalStrategy(function(username, password, done) {
 	// Find the user with the given username
 	// May need to adapt this to your own model!
-	var hashedPassword = hashPassword(password);
-	console.log("hash", hashedPassword);
-	var found;
-	var user;
-	for (var i = 0; i < passwords.passwords.length; i++) {
-		if (username === passwords.passwords[i].username) {
-			found = true;
-			user = passwords.passwords[i];
+	// var hashedPassword = hashPassword(password);
+	// console.log("hash", hashedPassword);
+	// var found;
+	// var user;
+	// for (var i = 0; i < passwords.passwords.length; i++) {
+	// 	if (username === passwords.passwords[i].username) {
+	// 		found = true;
+	// 		user = passwords.passwords[i];
+	// 	}
+	// }
+
+	// if (found && (hashedPassword === user.password)) {
+	// 	console.log("logging in");
+	// 	return done(null, user);
+	// }
+
+	// console.log("nope");
+	// return done(null, false);
+
+	var hash = hashPassword(password);
+
+	// Find the user with the given username
+	Users.User.findOne({
+		username: username
+	}, function(err, user) {
+		// if there's an error, finish trying to authenticate (auth failed)
+		if (err) {
+			console.error(err);
+			return done(err);
 		}
-	}
-
-	if (found && (hashedPassword === user.password)) {
-		console.log("logging in");
+		// if no user present, auth failed
+		if (!user) {
+			console.log(user);
+			return done(null, false, {
+				message: 'Incorrect username.'
+			});
+		}
+		// if passwords do not match, auth failed
+		if (user.password !== hash) {
+			return done(null, false, {
+				message: 'Incorrect password.'
+			});
+		}
+		// auth has has succeeded
 		return done(null, user);
-	}
-
-	console.log("nope");
-	return done(null, false);
+	});
 
 }));
 
@@ -82,8 +110,10 @@ passport.serializeUser(function(user, done) {
 	done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
-	done(null, user);
+passport.deserializeUser(function(id, done) {
+	Users.User.findById(id, function(err, user) {
+		done(err, user);
+	});
 });
 
 // PASSPORT MIDDLEWARE HERE
@@ -117,13 +147,40 @@ app.post('/login', passport.authenticate('local', {
 app.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
-})
+});
 
 function hashPassword(password) {
 	var hash = crypto.createHash('sha256');
 	hash.update(password);
 	return hash.digest('hex');
-}
+};
+
+
+app.get('/signup', function(req, res) {
+	res.render("signup");
+});
+
+app.post('/signup', function(req, res) {
+	// res.render("signup");
+	console.log(req.body.username);
+	console.log(req.body.password);
+	var u = new Users.User({
+		username: req.body.username,
+		hashedPassword: hashPassword(req.body.password)
+	});
+
+	u.save(function(error) {
+		if (error) {
+			console.log("Error", error);
+		} else {
+			console.log("added to db");
+		}
+		console.log("closing connection to db");
+		mongoose.connection.close();
+		res.redirect("/login");
+
+	});
+});
 
 var port = '3000'
 app.listen(port);
