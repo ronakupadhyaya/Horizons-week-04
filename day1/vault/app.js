@@ -118,8 +118,9 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
-  User.findOne({username: user.username}, function(err, found) {
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, found) {
+    console.log(found);
     if (err) {
       console.log('Error', err);
     } else {
@@ -164,7 +165,6 @@ app.get('/signup', function(req, res) {
 
 app.post('/signup', function(req, res) {
   validate(req);
-  console.log(req.body);
   var newUser = new User({
     username: req.body.username,
     hashedPassword: hashPassword(req.body.password)
