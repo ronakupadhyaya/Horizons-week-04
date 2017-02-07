@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
   preGameBet: {
-    type: Number
+    type: Number,
+    default: 0
   },
   playerHand: {
     type: Array
@@ -10,7 +11,7 @@ var GameSchema = new mongoose.Schema({
   dealerHand: {
     type: Array // ******
   },
-  cardsInDeck: {
+  deck: {
     type: Array // ******
   },
   playerTotalValue: {
@@ -102,36 +103,12 @@ GameSchema.methods.dealInitial = function() {
   var playerCardTwo = this.deck.shift();
   var dealerCardTwo = this.deck.shift();
   this.playerHand.push(playerCardOne);
-  this.playerHand.push(playerCardOne);
+  this.playerHand.push(playerCardTwo);
   this.dealerHand.push(dealerCardOne);
   this.dealerHand.push(dealerCardTwo);
-  this.playerTotalValue = calcValue(playerHand);
-  this.dealerTotalValue = calcValue(dealerHand);
-  if(playerTotalValue === 21 && dealerTotalValue < 21) {
-    this.gameStatus = "Over";
-    this.playerStatus = "Win";
-    this.dealerStatus = "Loss";
-    this.gameOver();
-  } else if (playerTotalValue < 21 && dealerTotalValue === 21){
-    this.gameStatus = "Over";
-    this.playerStatus = "Loss";
-    this.dealerStatus = "Win";
-    this.gameOver();
-  } else if (playerTotalValue === 21 && dealerTotalValue === 21){
-    this.gameStatus = "Over";
-    this.playerStatus = "Tied";
-    this.dealerStatus = "Tied";
-    this.gameOver();
-  } else if (playerTotalValue < dealerTotalValue) {
-    this.playerStatus = "Losing";
-    this.dealerStatus = "Winning";
-  } else if (playerTotalValue > dealerTotalValue){
-    this.playerStatus = "Winning";
-    this.dealerStatus = "Losing";
-  } else {
-    this.gameStatus = "Over--Tie";
-    this.playerStatus = "Tied";
-    this.dealerStatus = "Tied";
+  this.playerTotalValue = calcValue(this.playerHand);
+  this.dealerTotalValue = calcValue(this.dealerHand);
+  if(this.playerTotalValue === 21 || this.dealerTotalValue === 21) {
     this.gameOver();
   }
 };
@@ -139,33 +116,58 @@ GameSchema.methods.dealInitial = function() {
 GameSchema.methods.hit = function(){
   var playerHit = this.deck.shift();
   this.playerHand.push(playerHit);
-  this.playerTotalValue = calcValue(playerHand);
-  if(this.playerTotalValue === 21) {
-    this.gameStatus = "Over";
-    this.playerStatus = "Win";
-    this.dealerStatus = "Loss";
+  this.playerTotalValue = calcValue(this.playerHand);
+  if(this.playerTotalValue === 21 || this.playerTotalValue > 21) {
+    // this.gameStatus = "Over";
+    // this.playerStatus = "Win";
+    // this.dealerStatus = "Loss";
     this.gameOver();
-  } else {
-    this.gameStatus = "In Progress";
   }
+  // else {
+  //   this.gameStatus = "In Progress";
+  // }
 };
 
 GameSchema.methods.stand = function(){
-  var dealerHit = this.deck.shift();
-  this.dealerHand.push(dealerHit);
-  this.dealerTotalValue = calcValue(dealerHand);
+  this.dealerTotalValue = calcValue(this.dealerHand);
   while(this.dealerTotalValue < 17) {
     dealerHit = this.deck.shift();
     this.dealerHand.push(dealerHit);
-    this.dealerTotalValue = calcValue(dealerHand);
+    this.dealerTotalValue = calcValue(this.dealerHand);
   }
-  this.gameStatus = "Over";
   this.gameOver();
 }
 
 GameSchema.methods.gameOver = function(){
   this.gameStatus = "Over";
-  
+  this.playerTotalValue = calcValue(this.playerHand);
+  this.dealerTotalValue = calcValue(this.dealerHand);
+  if(this.playerTotalValue > 21) {
+    this.playerStatus = "Loss";
+    this.dealerStatus = "Win";
+  } else if (this.dealerTotalStatus > 21){
+    this.dealerStatus = "Loss";
+    this.playerStatus = "Win";
+  } else if(this.playerTotalValue === 21 && this.dealerTotalValue !== 21) {
+    this.playerStatus = "Win";
+    this.dealerStatus = "Loss";
+  } else if (this.playerTotalValue !== 21 && this.dealerTotalValue === 21){
+    this.playerStatus = "Loss";
+    this.dealerStatus = "Win";
+  } else if (this.playerTotalValue === 21 && this.dealerTotalValue === 21){
+    this.playerStatus = "Tied";
+    this.dealerStatus = "Tied";
+  } else if (this.playerTotalValue < this.dealerTotalValue) {
+    this.playerStatus = "Loss";
+    this.dealerStatus = "Win";
+  } else if (this.playerTotalValue > this.dealerTotalValue){
+    this.playerStatus = "Win";
+    this.dealerStatus = "Loss";
+  } else {
+    this.gameStatus = "Over--Tie";
+    this.playerStatus = "Tied";
+    this.dealerStatus = "Tied";
+  }
 }
 
 module.exports = mongoose.model('Game', GameSchema);
