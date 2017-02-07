@@ -7,7 +7,8 @@
 ## Inline exercises
 
 1. [My first Heroku deploy](heroku.md)
-1. [Twilio](twilio/)
+1. [Heroku & MongoDb](heroku-mongodb.md)
+1. [Twilio](twilio.md)
 
 ## Pair programming exercise
 
