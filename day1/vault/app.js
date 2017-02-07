@@ -6,18 +6,18 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require("passport");
 var passportLocal = require("passport-local");
-var passwords = require('./passwords.plain.json')
+var passwords = require('./passwords.hashed.json')
 var LocalStrategy = require('passport-local').Strategy;
 // var session = require('cookie-session');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
 
+var crypto = require('crypto');
 
 mongoose.connection.on('connected', function() {
 	console.log("connected to mongodb");
 });
-
 
 
 
@@ -56,19 +56,25 @@ app.use(session({
 passport.use(new LocalStrategy(function(username, password, done) {
 	// Find the user with the given username
 	// May need to adapt this to your own model!
-
+	var hashedPassword = hashPassword(password);
+	console.log("hash", hashedPassword);
 	var found;
 	var user;
 	for (var i = 0; i < passwords.passwords.length; i++) {
 		if (username === passwords.passwords[i].username) {
-			// console.log("FOUND", username, passwords.passwords[i].username);
-			console.log(passwords.passwords[i]);
 			found = true;
 			user = passwords.passwords[i];
 		}
 	}
-	console.log(username, password);
-	return done(null, user);
+
+	if (found && (hashedPassword === user.password)) {
+		console.log("logging in");
+		return done(null, user);
+	}
+
+	console.log("nope");
+	return done(null, false);
+
 }));
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
@@ -112,6 +118,12 @@ app.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
 })
+
+function hashPassword(password) {
+	var hash = crypto.createHash('sha256');
+	hash.update(password);
+	return hash.digest('hex');
+}
 
 var port = '3000'
 app.listen(port);
