@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var routes = require('./routes/index');
 var exphbs = require('express-handlebars');
 var app = express();
-var port = '3000'
+var port = '8000'
 var expressValidator = require('express-validator');
 
 // Set your MongoDB connect string through a file called
@@ -31,3 +31,4 @@ app.use('/', routes);
 
 app.set('port', port);
 app.listen(port);
+console.log('Express started. Listening on port', process.env.PORT || port);
