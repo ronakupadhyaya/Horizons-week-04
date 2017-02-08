@@ -13,4 +13,10 @@ router.get('/private', function(req, res) {
   });
 });
 
+router.get('/secret', function(req, res) {
+  res.render('index', {
+    user: req.user
+  });
+});
+
 module.exports = router;
