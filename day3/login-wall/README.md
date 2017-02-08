@@ -20,12 +20,11 @@ Rules:
 
 1. You can only add **one** middleware function to your application in either
   `passport.js` or `routes.js`
-1. If a user is not logged in redirect them to `/login` in your
-  middleware function.
+1. If a user attempts to view `/`, `/private` or `/secret` without being logged
+  in redirect them to `/login`.
 1. If is a user is logged in `req.user` will be an object like
    `{ username: 'moose' }`. If a user is **not** logged in
    `req.user` will be a falsy value.
-1. If a user attempts to view `/` `/private` `/secret` without loggin in
 1. If you see this message your code is **not** working yet:
 
    ![](img/error.png)
