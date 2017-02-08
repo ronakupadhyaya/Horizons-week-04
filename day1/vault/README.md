@@ -62,6 +62,15 @@ Here are the steps to follow:
 
    ![](img/login.png)
 
+1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
+
+  `serializeUser` takes a `function(user, done){}`. We use `done()` to send
+  back to passport what part of our user we want to store in the session. In our case,
+  this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
+  is updated. We write serialize(), but trust passport to use it properly.
+
+  ![](img/serialize.png)
+
 5. You can verify that your code is working correctly by:
     - Go to http://localhost:3000/login and try to log in using
       usernames and passwords from `passwords.plain.json`
@@ -96,15 +105,6 @@ logged in!
    Set max age to be 2 minutes from now (`maxAge:1000*60*2` milliseconds).
  
    ![](img/cookieSession.png)
-
-1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
-
-  `serializeUser` takes a `function(user, done){}`. We use `done()` to send
-  back to passport what part of our user we want to store in the session. In our case,
-  this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
-  is updated. We write serialize(), but trust passport to use it properly.
-
-  ![](img/serialize.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
 
@@ -225,7 +225,7 @@ if (hashPassword(passwordAttempt) === storedPasswordHash) {
 
 Let's rewrite our `LocalStrategy` to use hashed passwords:
 
-1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.bopassword`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database.
+1. Read `passwords.hashed.json` instead of `passwords.plain.json`. Notice that you can't just compare the password sent to you from the browser (`req.body.password`) with a password in your local file. Instead, you will need to hash the password you receive to compare it with the hashed passwords in the database.
 1. Before you look up a username and password in the JSON file, hash your password with the included
    `hashPassword()` function.
 
@@ -238,7 +238,12 @@ Let's improve our passport strategy even more! Try storing user accounts in the
 database.
 
 1. Create a new `User` model in `models/models.js`
-1. Create `GET /signup` and `POST /signup` endpoints for registering new users.
+1. Create a new `GET /signup` route. Inside the route:
+  1. `res.render()` `signup.hbs`
+1. Create a new `POST /signup` route. Inside the route:
+  1. Validates username and password fields from `req.body`
+  1. If validation passes, create a new user object and `.save()` it to MongoDb
+  1. After the user is successfully saved to MongoDb, redirect to `/login`
 1. Rewrite your `deserializeUser()` to use the new `User` model.
   Use `User.findById()`.
 
