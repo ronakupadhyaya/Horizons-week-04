@@ -18,6 +18,7 @@ var router = express.Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
+
 router.get('/login', function(req, res) {
   res.render('login');
 });
@@ -32,4 +33,11 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
 }));
 
+router.use(function(req,res,next){
+  if(req.user){
+    next();
+  } else {
+    res.redirect('/login');
+  }
+})
 module.exports = router;
