@@ -1,5 +1,4 @@
 # Warmup exercise: Heroku
-## Time limit: 15 minutes
 
 ## Goal
 
