@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Contacts</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Contacts</h2>
+    <p>View your wonderful contacts (;</p>
+    <table class="table">
+      {{#each contact}}
+      <tbody>
+        <tr>
+          <td>{{this.name}}</td>
+          <td>
+            <a href="/messages/send/{{this.id}}"><button type = "submit">Send Text</button></a>
+          </td>
+          <td>
+            <a href="/messages/{{this.id}}"><button type = "submit">View Messages</button></a>
+          </td>
+          <td>
+            <a href="/contacts/{{this.id}}"><button type = "submit">Edit Contact</button></a>
+          </td>
+        </tr>
+      </tbody>
+      {{/each}}
+    </table>
+    <div class="addContactButton">
+      <a href = "/contacts/new"><button type="submit">ADD CONTACT</button></a>
+    </div>
+  </div>
+
+
+
+</body>
+</html>

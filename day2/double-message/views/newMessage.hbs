@@ -1,0 +1,18 @@
+<style type = "text/css">
+.container{
+ height:800px;
+ display:flex;
+ justify-content: center;
+ align-items: center;
+ }
+
+</style>
+
+<div class = "container">
+ <form method = "post" action ="/messages/send/{{contactId}}">
+<textarea type = "text" name = "content"></textarea>
+</br>
+</br>
+<input type = "submit" value = "Send (add handlebars)">
+</form>
+</div>
