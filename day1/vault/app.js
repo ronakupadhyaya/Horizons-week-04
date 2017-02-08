@@ -63,16 +63,14 @@ passport.use(new LocalStrategy(
         console.log('Username not found');
           return done(null, false, {message: 'Incorrect username.'});
       }
-      else{
         if(user.password === hashPassword(password)){
           console.log('passwords matched');
           return done(null, false, {message: 'Incorrect password.'});
         }
-        else{
+        if(){
           console.log('no password matched');
           //done(null, false);
         }
-      }
     });
     hashPasswords.forEach(function(user){
       if(user.username === username && user.password === hashPassword(password)){
