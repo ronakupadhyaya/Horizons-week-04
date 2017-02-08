@@ -112,8 +112,8 @@ app.get('/', function(req, res){
   if(!req.user){
     res.redirect('/login');
   } else{
-  res.render('index', {user: req.user});
-}
+      res.render('index', {user: req.user});
+    }
 });
 
 app.get('/login', function(req, res){

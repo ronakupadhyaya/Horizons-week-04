@@ -116,17 +116,18 @@ GameSchema.methods.calcValue = function(hand){
 }
 
 GameSchema.methods.dealInitial = function() {
-  this.currentPlayerHand.push(this.deck.pop());
-  this.currentPlayerHand.push(this.deck.pop());
-  this.houseHand.push(this.deck.pop());
-  this.houseHand.push(this.deck.pop());
-  this.userTotal = this.calcValue(this.currentPlayerHand);
-  this.dealerTotal = this.calcValue(this.houseHand);
   this.status = "In Progress";
+  this.dealerTotal = this.calcValue(this.houseHand);
+  this.userTotal = this.calcValue(this.currentPlayerHand);
+  this.currentPlayerHand.push(this.deck.pop());
+  this.currentPlayerHand.push(this.deck.pop());
+  this.houseHand.push(this.deck.pop());
+  this.houseHand.push(this.deck.pop());
   // YOUR CODE HERE
 };
 
 GameSchema.methods.hit = function(){
+
   // YOUR CODE HERE
 };
 
