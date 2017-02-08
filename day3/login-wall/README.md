@@ -5,8 +5,8 @@
 We're given an Express application in `week04/day3/login-wall`. This
 application has a passwordless login system.
 
-To log in, provide any username and you will be logged in. No
-passwords necessary.
+To log in, type any username then click `Log in`. No passwords are
+necessary.
 
 Your task is to add a single Express middleware function to this application
 in the right place so that the following endpoints are only accessible
