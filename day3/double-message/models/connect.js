@@ -1,0 +1,1 @@
+module.exports = "mongodb://db-user:8g(T0+w!d6qD=/bLtI@ds139969.mlab.com:39969/snuupy-horizons";
