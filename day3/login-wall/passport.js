@@ -27,9 +27,19 @@ router.get('/logout', function(req, res) {
   res.redirect('/');
 });
 
+//if there is no URL then this applies to all routes!!!
+
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
 }));
+
+router.use(function(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login')
+  }
+})
 
 module.exports = router;

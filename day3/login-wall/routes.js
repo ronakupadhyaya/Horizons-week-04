@@ -13,6 +13,12 @@ router.get('/private', function(req, res) {
   });
 });
 
+// router.get('/private', function(req, res) {
+//   res.render('login', {
+//     user: req.user
+//   });
+// });
+
 router.get('/secret', function(req, res) {
   res.render('index', {
     user: req.user
