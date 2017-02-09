@@ -4,28 +4,26 @@ var request = require('request')
 var passport = require('passport');
 
 // YOUR GITHUB STRATEGY HERE
-var FacebookStrategy = require('passport-facebook').Strategy;
+var GitHubStrategy = require('passport-github').Strategy;
 
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:3000/auth/facebook/callback",
-    profileFields: ['id', 'displayName', 'email', 'about'],
-    scope: ['email','user_about_me']
+passport.use(new GitHubStrategy({
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/github/callback"
   },
   function(accessToken, refreshToken, profile, cb) {
-    console.log("=================")
-    console.log(profile);
-    // User.find({ facebookId: profile.id }, function (err, user) {
-    //   return cb(err, user);
+    cb(null, {
+      token: refreshToken,
+      username: profile.username
+    })
+    // User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    //   return cb(null, profile);
     // });
-    return cb(null,profile);
   }
 ));
 
-
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.username);
 });
 passport.deserializeUser(function(username, done) {
   done(null, {username: username});
@@ -33,13 +31,13 @@ passport.deserializeUser(function(username, done) {
 router.use(passport.initialize());
 router.use(passport.session());
 
-// YOUR GET /auth/facebook ENDPOINT HERE
-router.get('/auth/facebook',
-  passport.authenticate('facebook'));
+// YOUR GET /auth/github ENDPOINT HERE
+router.get('/auth/github',
+  passport.authenticate('github'));
 
-// YOUR GET /auth/facebook/callback ENDPOINT HERE
-router.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+// YOUR GET /auth/github/callback ENDPOINT HERE
+router.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
@@ -56,8 +54,6 @@ router.get('/logout', function(req, res) {
 
 
 router.get('/', function(req, res) {
-  console.log(`++++++++++++++++++++++=`)
-  console.log(req.user)
   if (req.user) {
     res.render('index', {
       user: req.user
@@ -68,7 +64,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/repos', function(req,res){
-  request('https://api.facebook.com/user/repos', {
+  request('https://api.github.com/user/repos', {
     headers: {
       'User-Agent': 'request'
     },
