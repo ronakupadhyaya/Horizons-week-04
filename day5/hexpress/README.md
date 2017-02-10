@@ -78,7 +78,7 @@ You will need to implement the `hexpress` function which creates a new `hexpress
   1. `res.send(string)` is a function that sets the header `Content-Type` to `text/plain`, the status code to `200`, and sends a `string` back as the response body.
 
     **Use:** `res.writeHead()` and `res.end()`
-  1. `res.send(obj)` is a function that sets the header `Content-Type` to
+  1. `res.json(obj)` is a function that sets the header `Content-Type` to
     `application/json`, the status code to `200`, and sends
     `JSON.stringify(obj)` back as the response body.
 
