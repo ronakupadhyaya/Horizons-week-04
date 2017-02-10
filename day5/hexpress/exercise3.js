@@ -1,10 +1,12 @@
 var hexpress = require('./hexpress');
 var app = hexpress();
-var route = hexpress();
 
-route.get('/', function(req, res) {
+app.use('/', function (req, res, next) {
+  console.log('Time: %d', Date.now());
 });
 
-app.use('/api', route);
+app.get('/', function(req, res) {
+  res.send('Success!')
+});
 
 app.listen(3000);

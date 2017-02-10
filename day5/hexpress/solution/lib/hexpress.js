@@ -54,6 +54,11 @@ function createApplication () {
   };
 
   app.use = function(routePrefix, callback) {
+    if (typeof routePrefix === 'function') {
+      callback = routePrefix;
+      routePrefix = '/';
+    }
+
     routes.push({
       method: () => (true),
       route: routePrefix,
