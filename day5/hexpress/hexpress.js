@@ -1,4 +1,4 @@
-exports.functionName = function () {
+module.exports = function () {
   // YOUR CODE HERE
 
   return {
