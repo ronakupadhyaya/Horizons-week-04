@@ -17,4 +17,28 @@
 1. Implement `req.params`
 1. Express with `next()`
   1. Callback has third parameter `next` function
-1. `res.render()`
+1. Bonus: `res.render()`
+1. Double bonus: `res.render()` with layouts
+
+## [`http`](https://nodejs.org/api/http.html)
+
+The primary purpose of Express is to listen for and respond to incoming HTTP
+requests. We're going to use the Node built-in library `http` to assist
+us in this task.
+
+The `http` library can be accessed via, `require('http')`. You **do not** need
+to `npm install` it.
+
+Here are the things we'll need to use from the `http` library to build our
+server:
+
+1. 
+
+
+## Exercise 1: `.listen()` and `.get()`
+
+### Verification
+
+To verify your code run `node exercise1.js`. Read the instruction
+
+## Exercise 2:

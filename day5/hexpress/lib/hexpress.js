@@ -26,7 +26,7 @@ function createApplication () {
     for (var i = 0; i < routes.length; i++) {
       var route = routes[i];
       var locOfQ = req.url.indexOf('?');
-      if (req.method === route.method && (locOfQ !== -1 ? req.url.substr(0,locOfQ) : req.url) === route.route) {
+      if (route.method(req.method) && (locOfQ !== -1 ? req.url.substr(0,locOfQ) : req.url) === route.route) {
         req.query = queryString.parse(req.url.substr(locOfQ));
 
         if (req.method === "POST") {
@@ -47,12 +47,17 @@ function createApplication () {
 
   app.use = function(routePrefix, callback) {
     // TODO
+    routes.push({
+      method: () => (true),
+      route: route,
+      callback: callback
+    });
   };
 
   app.get = function(route, callback) {
-    if (!routes.find((item) => {return (item.route === route && item.method === 'GET');})) {
+    if (!routes.find((item) => (item.route === route && item.method === 'GET'))) {
       routes.push({
-        method: 'GET',
+        method: (method) => (method === 'GET'),
         route: route,
         callback: callback
       });
@@ -62,7 +67,7 @@ function createApplication () {
   app.post = function(route, callback) {
     if (!routes.find((item) => {return (item.route === route && item.method === 'POST');})) {
       routes.push({
-        method: 'POST',
+        method: (method) => (method === 'POST'),
         route: route,
         callback: callback
       });
@@ -77,3 +82,6 @@ function createApplication () {
 
   return app;
 };
+app = createApplication();
+app()
+app.get()
