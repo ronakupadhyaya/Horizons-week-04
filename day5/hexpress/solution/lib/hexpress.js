@@ -17,41 +17,42 @@ function createApplication () {
   app.handle = function(req, res, next) {
     // req is an http.IncomingMessage, which is a Readable Stream
     // res is an http.ServerResponse, which is a Writable Stream
-    for (var i = 0; i < routes.length; i++) {
-      let route = {};
-      Object.assign(route, routes[i]);
-      var locOfQ = req.url.indexOf('?');
+    var url = req.url.split('/');
+    for (let j = 0; j < url.length; j++) {
 
-      // handle params
-      req.params = {};
-      if(route.route.indexOf(':') !== -1) {
-        route.route = route.route.split('/');
-        route.route.forEach((item, i) => {
-          if(!item.indexOf(':')) req.params[item.substr(1)] = req.url.split('/')[i];
-          route.route[i] = item.replace(/:.*/ig, req.url.split('/')[i]);
-        });
-        route.route = route.route.join('/');
-      }
+      var currentURL = url.slice(0, j+1).join('/');
+      for (let i = 0; i < routes.length; i++) {
+        let route = {};
+        Object.assign(route, routes[i]);
+        var locOfQ = currentURL.indexOf('?');
 
-      if (route.method(req.method) &&
-          ((locOfQ !== -1 ? req.url.substr(0,locOfQ) : req.url) === route.route ||
-            // hacky solution - does not work for multiple cases - need to fix
-            route.method() && req.url.indexOf(route.route) !== -1)
-         ) {
-        req.query = queryString.parse(req.url.substr(locOfQ));
-
-        if (req.method === "POST") {
-          let body = '';
-          req.on('readable', function() {
-            var chunk = req.read();
-            if (chunk) body += chunk;
+        // handle params
+        req.params = {};
+        if(route.route.indexOf(':') !== -1) {
+          route.route = route.route.split('/');
+          route.route.forEach((item, i) => {
+            if(!item.indexOf(':')) req.params[item.substr(1)] = currentURL.split('/')[i];
+            route.route[i] = item.replace(/:.*/ig, currentURL.split('/')[i]);
           });
-          req.on('end', function() {
-            req.body = queryString.parse(body);
+          route.route = route.route.join('/');
+        }
+
+        if (route.method(req.method) && (locOfQ !== -1 ? currentURL.substr(0,locOfQ) : currentURL) === route.route) {
+          req.query = queryString.parse(currentURL.substr(locOfQ));
+
+          if (req.method === "POST") {
+            let body = '';
+            req.on('readable', function() {
+              var chunk = req.read();
+              if (chunk) body += chunk;
+            });
+            req.on('end', function() {
+              req.body = queryString.parse(body);
+              route.callback(req, res);
+            });
+          } else {
             route.callback(req, res);
-          });
-        } else {
-          route.callback(req, res);
+          }
         }
       }
     }
