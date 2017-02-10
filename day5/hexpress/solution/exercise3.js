@@ -1,6 +1,5 @@
 var hexpress = require('./lib/hexpress');
 var app = hexpress();
-var route = hexpress();
 
 // this console logs Logging Version Number whenever
 // an endpoint following /api/version is hit
