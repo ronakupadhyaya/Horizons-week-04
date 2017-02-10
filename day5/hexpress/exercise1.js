@@ -1,4 +1,4 @@
-var hexpress = require('./hexpress');
+var hexpress = require('./lib/hexpress');
 var app = hexpress();
 
 // Simple route should send the text 'First endpoint!'
@@ -19,6 +19,10 @@ app.get('/', function(req, res) {
 // Response type should be application/json
 app.get('/query', function(req, res) {
   res.json(req.query);
+});
+
+app.post('/login', function(req, res) {
+  res.json({success: true})
 });
 
 app.listen(3000);
