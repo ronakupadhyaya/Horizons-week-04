@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="page-header">
+      <h1>Stage 1: Insecure login form</h1>
+    </div>
+    <p>
+      Welcome to Steal This App! This app will teach you how to exploit common
+      web security bugs so you can avoid making these mistakes in your own
+      code.
+    </p>
+    <p>
+      For the first stage we present you an insecure login form. Bypass
+      security by either:
+      <ul>
+        <li>Finding out the password or</li>
+        <li>Bypassing the login form</li>
+      </ul>
+    </p>
+    <button class="btn btn-default" onclick="$('.hint').show()">Reveal hint</button>
+    <p class="hint">
+      View source code of the page.
+    </p>
+    <form id="login" action="/" style="margin-top: 10px;" method="POST">
+      Password: <input id="password" name="password" type="password">
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</div>
+
+<script>
+// $('#login').on('click', function(e) {
+  var password = $('#password').val();
+  // if (password !== 'gingerbread') {
+  //   alert('Wrong password!');
+  //   e.preventDefault();
+  // }
+  // e.preventDefault();
+//   console.log("post", password)
+//   $.ajax({
+//     "url": "http://localhost:3000/",
+//     "method": "POST",
+//     "data": {
+//       "password": "password"
+//     }
+//   });
+// });
+</script>
