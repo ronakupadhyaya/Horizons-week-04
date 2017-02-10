@@ -1,16 +1,19 @@
 # Hexpress
 You have been learning express over the past few weeks, but we have no idea what's behind the curtain. This exercise will walk you through building your own, **very minimal** version of express (called **Hexpress**). The following is a list of features we will implement in this tutorial (in no particular order):
 
-- `app.listen(port)`
-- `app.get(route, callback)`
-- `app.post(route, callback)`
-- `app.user(routePrefix, callback)`
-- `req.query`
-- `req.params`
-- `req.body`
-- `res.json`
-- `res.send`
-- `res.render`
+- `hexpress()` returns an `app` object
+  - `app.listen(port)`
+  - `app.get(route, callback)`
+  - `app.post(route, callback)`
+  - `app.user(routePrefix, callback)`
+- `req` inside a route
+  - `req.query`
+  - `req.params`
+  - `req.body`
+- `res` inside a route
+  - `res.json()`
+  - `res.send()`
+  - `res.render()`
 
 Additionally, we will use `handlebars` for templating (when we use `res.render`). Let's get started!
 
