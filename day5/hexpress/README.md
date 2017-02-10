@@ -38,10 +38,10 @@ Here are the parts of the `http` library we need:
       - `req.method`: the HTTP method of the request.
     1. `res` is an
   [`http.ServerResponse`](https://nodejs.org/api/http.html#http_class_http_serverresponse) object. It has:
-
+  
       - `res.writeHead(statusCode, headersObject)`: Sets the status code and headers
-    for the response. The `headersObject` is an object where header names are
-    keys and header values are values.
+      for the response. The `headersObject` is an object where header names are
+      keys and header values are values.
 
       - `res.end(body)`: Send the response body and terminate the request. `body` is a string that contains the whole response body.
 1. [`http.Server.listen(port)`](https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback)
