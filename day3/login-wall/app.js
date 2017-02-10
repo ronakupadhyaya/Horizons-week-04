@@ -7,6 +7,7 @@ var hbs = require('express-handlebars')({
   extname: '.hbs'
 });
 
+
 app.engine('hbs', hbs);
 app.set('view engine', 'hbs');
 
