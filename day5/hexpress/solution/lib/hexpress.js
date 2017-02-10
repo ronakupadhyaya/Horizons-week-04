@@ -33,7 +33,11 @@ function createApplication () {
         route.route = route.route.join('/');
       }
 
-      if (route.method(req.method) && (locOfQ !== -1 ? req.url.substr(0,locOfQ) : req.url) === route.route) {
+      if (route.method(req.method) &&
+          ((locOfQ !== -1 ? req.url.substr(0,locOfQ) : req.url) === route.route ||
+            // hacky solution - does not work for multiple cases - need to fix
+            route.method() && req.url.indexOf(route.route) !== -1)
+         ) {
         req.query = queryString.parse(req.url.substr(locOfQ));
 
         if (req.method === "POST") {
