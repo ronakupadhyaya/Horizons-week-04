@@ -183,6 +183,9 @@ app.post('/login',
 );
 
 app.get('/logout', function(req, res){
+  console.log(req.hey)
+  req.hey = {hey: 'hey'}
+  console.log(req.hey)
   req.logout();
   res.redirect('/');
 });
