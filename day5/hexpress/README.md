@@ -130,8 +130,12 @@ Run `node exercise2.js` and verify that all routes in `exercise2.js` work correc
 
 Continue work on `week04/day5/lib/hexpress.js`. Add the `.use()` method to `app`:
 
-1. `.use(routePrefix, callback)`: mounts the specified middleware function or functions at the specified path: the middleware function is executed when the base of the requested path matches path. A route will match any path that follows its path immediately with a `/`. For example: `app.use('/apple', ...)` will match `/apple`, `/apple/images`, `/apple/images/news`, and so on.
-  - If no path is specified the callback function should run for every request.
+1. `.use(routePrefix, callback)`: Add a route that matches any request method with the given `routePrefix`. 
+  The route will match any incoming request where the URL starts with `routePrefix`.
+
+  For example: `app.use('/apple', ...)` will match `/apple`, `/apple/images`, `/apple/images/news`, and so on.
+  
+  If no path is specified the callback function should run for every request.
 
 ### Verification
 
