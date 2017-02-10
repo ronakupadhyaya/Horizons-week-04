@@ -66,10 +66,40 @@ two methods:
 1. `.get(url, callback)`: add a new endpoint that listens to `GET`
   requests where the URL is exactly `url` (excluding the query string).
 
+  If multiple endpoints have the same method and URL, **only** call the one
+  that is registered first. The rest should be ignored.
+
+  When a `GET` request with a matching URL is received, call `callback`
+  with `req` and `res`:
+
+  1. `req.query` is an object that maps query parameters to values.
+
+    **Use:** `req.url` and the Node built-in
+    [`querystring`](https://nodejs.org/api/querystring.html)
+    library to parse the part of the URL after the question mark `?`.
+
+  1. `res.send(string)` is a function that sets the header `Content-Type` to
+    `text/plain`, the status code to `200`, and sends `string` back as the
+    response body.
+
+    **Use:** `res.writeHead()` and `res.end()`
+  1. `res.send(obj)` is a function that sets the header `Content-Type` to
+    `application/json`, the status code to `200`, and sends
+    `JSON.stringify(obj)` back as the response body.
+
+    **Use:** `res.writeHead()` and `res.end()`
+1. `.listen(port)`: begin accepting connections on the specified port.
+
+  **Use:** `http.Server.listen()`
+
 ### Verification
 
 Run `node exercise1.js` and verify that all routes in `exercise1.js` work
 correctly. Read the comments in `exercise1.js`, they specify the expected
 behavior of all routes.
+
+`GET /query` should parse the whole query string:
+
+TODO
 
 ## Exercise 2:
