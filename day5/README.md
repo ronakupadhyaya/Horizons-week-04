@@ -1,11 +1,5 @@
 # Day 5 Exercises
 
-## Warmup
+## Pair Programming
 
-1. [Cryptogram](warmup/README.md)
-
-## Inline exercises
-
-1. [Encryption](encryption/README.md)
-1. [Hashing](hashing/README.md)
-
+1. [Hexpress](hexpress/README.md)
