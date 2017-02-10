@@ -1,11 +1,11 @@
 # Hexpress
-You have been learning express over the past few weeks, but we have no idea what's behind the curtain. This exercise will walk you through building your own, **very minimal** version of express (called **Hexpress**). The following is a list of features we will implement in this tutorial (in no particular order):
+You have been learning express over the past few weeks, but we have no idea what's behind the curtain. This exercise will walk you through building your own, **very minimal** version of express (called **Hexpress**).
 
 - `hexpress()` returns an `app` object
   - `app.listen(port)`
   - `app.get(route, callback)`
   - `app.post(route, callback)`
-  - `app.user(routePrefix, callback)`
+  - `app.use(routePrefix, callback)`
 - `req` inside a route
   - `req.query`
   - `req.params`
@@ -15,7 +15,7 @@ You have been learning express over the past few weeks, but we have no idea what
   - `res.send()`
   - `res.render()`
 
-Additionally, we will use `handlebars` for templating (when we use `res.render`). Let's get started!
+Additionally, we will use [`handlebars`](https://www.npmjs.com/package/handlebars) for templating (when we build `res.render()`). Let's get started!
 
 ## [`http`](https://nodejs.org/api/http.html)
 
@@ -150,7 +150,7 @@ Continue work on `week04/day5/lib/hexpress.js`. Add the `.render()` method to `r
 
 Run `node exercise4.js` and verify that all routes in `exercise4.js` work correctly. Read the comments in `exercise4.js`, they specify the expected behavior of all routes.
 
-## Exercise 5: `res.params`
+## Exercise 5: `req.params`
 
 Continue work on `week04/day5/lib/hexpress.js`. Add compatibility for using params to `req`:
 
