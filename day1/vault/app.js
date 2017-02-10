@@ -131,7 +131,7 @@ function(username, password, done){
 //PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user, done){
   // user is a variable passed into a function
-  done(null, user._id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done){

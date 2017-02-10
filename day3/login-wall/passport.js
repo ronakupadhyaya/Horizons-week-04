@@ -18,10 +18,13 @@ var router = express.Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
+<<<<<<< HEAD
 router.use(function(req,res){
   res.render('Caught you')
 })
 
+=======
+>>>>>>> master
 router.get('/login', function(req, res) {
   res.render('login');
 });
