@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request')
 
 var passport = require('passport');
 
@@ -65,6 +64,7 @@ router.get('/', function(req, res) {
   }
 });
 
+<<<<<<< HEAD
 router.get('/repos', function(req,res){
   request('https://api.github.com/user/repos', {
     headers: {
@@ -83,4 +83,6 @@ router.get('/repos', function(req,res){
   })
 })
 
+=======
+>>>>>>> master
 module.exports = router;
