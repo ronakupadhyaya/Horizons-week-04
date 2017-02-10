@@ -22,6 +22,7 @@ router.get('/login', function(req, res) {
   res.render('login');
 });
 
+
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
@@ -31,5 +32,14 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
 }));
+
+router.use(function(req,res, next){
+  if(req.user){
+    next();
+  }else{
+    res.redirect('/login');
+  }
+
+});
 
 module.exports = router;

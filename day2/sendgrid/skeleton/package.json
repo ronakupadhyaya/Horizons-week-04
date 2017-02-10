@@ -9,5 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "sendgrid": "^4.7.1"
   }
 }
