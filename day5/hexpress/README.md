@@ -1,19 +1,24 @@
-# Hexpress
-You have been learning express over the past few weeks, but we have no idea what's behind the curtain. This exercise will walk you through building your own, **very minimal** version of express (called **Hexpress**).
+# Hexpress :rocket:
 
-- `hexpress()` returns an `app` object
-  - `app.listen(port)`
-  - `app.get(route, callback)`
-  - `app.post(route, callback)`
-  - `app.use(routePrefix, callback)`
-- `req` inside a route
-  - `req.query`
-  - `req.params`
-  - `req.body`
-- `res` inside a route
-  - `res.json()`
-  - `res.send()`
-  - `res.render()`
+Meet *Hexpess*, your very own, *very minimal* version of Express.
+
+We have using Express to build many apps, now it's time to pull aside the curtain
+and understand what Express is doing behind the scenes. :star2:
+
+## Outline
+
+1. Exercise 1: `app.listen(port)` and `app.get(url, callback)`
+  
+  Also support `req` and `res` inside route `callback` with 
+  1. `req.query`
+  1. `res.send()`
+  1. `res.json`
+1. Exercise 2: `app.post(url, callback)`
+1. Exercise 3: `app.use(routePrefix, callback)`
+1. Exercise 4: `res.render(name, options)`
+1. Exercise 5: `req.params`
+1. (Bonus) Exercise 6: `next()` inside route
+1. (Double Bonus) Exercise 7: `res.render()` with Layouts
 
 Additionally, we will use [`handlebars`](https://www.npmjs.com/package/handlebars) for templating (when we build `res.render()`). Let's get started!
 
@@ -160,7 +165,7 @@ Continue work on `week04/day5/lib/hexpress.js`. Add compatibility for using para
 
 Run `node exercise5.js` and verify that all routes in `exercise5.js` work correctly. Read the comments in `exercise5.js`, they specify the expected behavior of all routes.
 
-## Bonus: `.next()`
+## Bonus Exercise 6: `next()` inside route
 The `next` method passes control to the next **matching** route. Implement functionality for the use of the `next()` function. To see a working example of how the `next()` function works try the following:
 
 ```javascript
@@ -179,5 +184,5 @@ app.get("/", function(req, res, next){
 app.listen(8080);
 ```
 
-## Double Bonus: `res.render()` with Layouts
+## Double Bonus Exercise 7: `res.render()` with Layouts
 Edit your `res.render()` to account for the use of layouts.
