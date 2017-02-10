@@ -59,48 +59,48 @@ passport.serializeUser(function(user, done) {
 //   });
 // });
 
-// Unhashed password file
-// var passdict = require('../passwords.plain.json').passwords;
-//
-// passport.use(new LocalStrategy(function(username, password, done) {
-//   var found = false;
-//   passdict.forEach(function(entry) {
-//     if (entry.username===username && entry.password===password) {
-//       // Found a match
-//       console.log("Found matching user: " + JSON.stringify(entry));
-//       found = true;
-//       done(null, entry);
-//     }
-//   });
-//
-//   if (!found) {
-//     // No match
-//     console.log("No matching user found");
-//     return done(null, false, {message: 'No match'});
-//   }
-// }));
+Unhashed password file
+var passdict = require('../passwords.plain.json').passwords;
 
-// Hashed password file
-// var passdict = require('../passwords.hashed.json').passwords;
-//
-// passport.use(new LocalStrategy(function(username, password, done) {
-//   var found = false;
-//   var hash = hashPassword(password);
-//   passdict.forEach(function(entry) {
-//     if (entry.username===username && entry.password===hash) {
-//       // Found a match
-//       console.log("Found matching user: " + JSON.stringify(entry));
-//       found = true;
-//       done(null, entry);
-//     }
-//   });
-//
-//   if (!found) {
-//     // No match
-//     console.log("No matching user found");
-//     return done(null, false, {message: 'No match'});
-//   }
-// }));
+passport.use(new LocalStrategy(function(username, password, done) {
+  var found = false;
+  passdict.forEach(function(entry) {
+    if (entry.username===username && entry.password===password) {
+      // Found a match
+      console.log("Found matching user: " + JSON.stringify(entry));
+      found = true;
+      done(null, entry);
+    }
+  });
+
+  if (!found) {
+    // No match
+    console.log("No matching user found");
+    return done(null, false, {message: 'No match'});
+  }
+}));
+
+Hashed password file
+var passdict = require('../passwords.hashed.json').passwords;
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  var found = false;
+  var hash = hashPassword(password);
+  passdict.forEach(function(entry) {
+    if (entry.username===username && entry.password===hash) {
+      // Found a match
+      console.log("Found matching user: " + JSON.stringify(entry));
+      found = true;
+      done(null, entry);
+    }
+  });
+
+  if (!found) {
+    // No match
+    console.log("No matching user found");
+    return done(null, false, {message: 'No match'});
+  }
+}));
 
 // Used for both mongo strategies
 
