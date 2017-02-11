@@ -11,7 +11,7 @@ app.use('/api/version/2', function (req, res) {
     res.send('Hexpress v2.0');
 });
 
-// thie endpoint responds to GET /api with "API is online"
+// this endpoint responds to GET /api with "API is online"
 app.get('/api', function (req, res) {
   res.send('API is online');
 });

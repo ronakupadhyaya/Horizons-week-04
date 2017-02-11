@@ -5,6 +5,8 @@ var app = hexpress();
 // as the response. The content type header should be
 // set to text/plain.
 app.get('/', function(req, res) {
+  console.log('here')
+  // how does res.send work out of the box?
   res.send('First endpoint! #works :)');
 });
 
