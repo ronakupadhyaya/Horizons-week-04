@@ -4,6 +4,8 @@ var app = hexpress();
 // Simple route '/' that should replace the :fname and :lname
 // params with alternative words and place them in req.params
 app.get('/:fname/and/:lname', function(req, res) {
+  console.log('params')
+  console.log(req.params)
   res.json(req.params);
 });
 

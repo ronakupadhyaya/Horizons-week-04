@@ -1,6 +1,8 @@
 var http = require('http');
 var queryString = require('querystring');
 var bodyParser = require('body-parser');
+var fs = require('fs');
+var handlebars = require('handlebars');
 
 module.exports = function () {
   var routes = [];
@@ -26,10 +28,30 @@ module.exports = function () {
             // this.write('hello')
             this.end(JSON.stringify(data))
           }
+        }; {
+          res.render = function(name, options) {
+            this.writeHead(200, {'Content-Type': 'text/html'});
+            var source = fs.readFileSync(name) + '';
+            var newSource = handlebars.compile(source);
+            var result = newSource(options);
+            this.end(result);
+            // USE FS, AND REPLACE FUNCTION using THIS.END
+          }
         }
         var url = req.url.split('?');
         req.query = queryString.parse(url[1]);
-        console.log(routes)
+
+        var secUrl = req.url.split('/');
+        console.log('SECURL')
+        console.log(secUrl);
+        // for(var i = 0; i < secUrl.length; i++) {
+        //   if(secUrl[i])
+        // }
+        req.params = {
+          fname: secUrl[1],
+          lname: secUrl[3]
+        }
+
 
         // req and res are built into HTML
         // rules of the game: first matching route gets the callback
@@ -37,8 +59,7 @@ module.exports = function () {
           var route = routes[i];
           // var url = req.url.split('/');
           var currentRoute = route.route;
-
-          // check if we actually have a route. if we do, add a slash
+          // check if we actually have a route. if we do, make it end in a slash (for consistency)
           if(currentRoute) {
             if(!(currentRoute.endsWith('/'))) {
               currentRoute = currentRoute + "/";
@@ -49,6 +70,10 @@ module.exports = function () {
               console.log(url[0]);
             }
           }
+
+          // PART FOR PARAMS
+
+
           if(currentRoute === url[0] && req.method === 'GET' && route.method === 'GET') {
             console.log('here')
             console.log(currentRoute)
@@ -83,7 +108,8 @@ module.exports = function () {
             route.callback(req, res);
             return;
           } else {
-            console.log('none')
+            console.log('none');
+            throw 'error: no matches'
           }
         }
         // TODO: If no route matches, display error
@@ -114,7 +140,6 @@ module.exports = function () {
           method: 'USE'
         })
       }
-
     }
   }
 }
