@@ -3,26 +3,32 @@ var app = hexpress();
 
 // this endpoint sends back "Hexpress v1.0" to every request method
 app.use('/api/version', function (req, res) {
+  console.log('rendering 1 now')
   res.send('Hexpress v1.0');
 });
 
 // this endpoint should not be reachable because it shares a prefix with the previous URL
 app.use('/api/version/2', function (req, res) {
-    res.send('Hexpress v2.0');
+  console.log('rendering 2 now')
+  res.send('Hexpress v2.0');
 });
 
 // this endpoint responds to GET /api with "API is online"
 app.get('/api', function (req, res) {
+  console.log('rendering 3 now')
   res.send('API is online');
 });
 
 // thie endpoint responds to GET/POST /api with the current time
 app.use('/api', function (req, res) {
+  console.log('rendering 4 now')
+  console.log('THIS SHOULD BE TIME')
   res.send('Current time is ' + new Date());
 });
 
 // catch-all endpoint that responds all requests that do not match previous requests.
 app.use(function(req, res) {
+  console.log('rendering 5 now')
   res.send('Not found');
 });
 

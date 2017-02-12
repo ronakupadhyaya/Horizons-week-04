@@ -27,20 +27,36 @@ module.exports = function () {
             this.end(JSON.stringify(data))
           }
         }
-        // var url = req.url.split('?');
-        // req.query = queryString.parse(url[1]);
+        var url = req.url.split('?');
+        req.query = queryString.parse(url[1]);
+        console.log(routes)
 
         // req and res are built into HTML
         // rules of the game: first matching route gets the callback
         for(var i = 0; i < routes.length; i++) {
           var route = routes[i];
-          var url = req.url.split('/');
-          console.log(route.route)
-          console.log(url)
-          if((route.route + "/") === url[0] && req.method === 'GET' && route.method === 'GET') {
+          // var url = req.url.split('/');
+          var currentRoute = route.route;
+
+          // check if we actually have a route. if we do, add a slash
+          if(currentRoute) {
+            if(!(currentRoute.endsWith('/'))) {
+              currentRoute = currentRoute + "/";
+              console.log(currentRoute);
+            }
+            if(!(url[0].endsWith('/'))) {
+              url[0] = url[0] + "/";
+              console.log(url[0]);
+            }
+          }
+          if(currentRoute === url[0] && req.method === 'GET' && route.method === 'GET') {
+            console.log('here')
+            console.log(currentRoute)
+            console.log(url[0])
             route.callback(req, res);
             return;
-          } else if ((route.route + "/") === url[0] && req.method === 'POST' && route.method === 'POST'){
+          } else if (currentRoute === url[0] && req.method === 'POST' && route.method === 'POST'){
+            console.log('here1')
             var body = '';
             req.on('readable', function() {
               var chunk = req.read();
@@ -52,18 +68,22 @@ module.exports = function () {
               route.callback(req, res);
             });
             return; // why does this have to be outside?
-          } else if((route.route + "/") === url[0] && route.method === 'USE' && req.method ==='GET'){
-            url = req.url.split('/');
-            console.log(url)
+
+            //!(url[0].indexOf(currentRoute))
+          } else if(url[0].startsWith(currentRoute) && route.method === 'USE' && req.method ==='GET'){
+            console.log('here2')
             route.callback(req, res);
             return;
-          } else if((route.route + "/") === url[0] && route.method === 'USE' && req.method ==='POST'){
-            url = req.url.split('/');
+
+            // !(url[0].indexOf(currentRoute))
+          } else if(url[0].startsWith(currentRoute) && route.method === 'USE' && req.method ==='POST'){
+            console.log('here3')
+            console.log(url[0]);
+            console.log(currentRoute)
             route.callback(req, res);
             return;
           } else {
             console.log('none')
-            // need an else for when there are no route arguments
           }
         }
         // TODO: If no route matches, display error
@@ -80,11 +100,21 @@ module.exports = function () {
       })
     },
     use: function(routePrefix, callback) {
-      routes.push({
-        route: routePrefix,
-        callback: callback,
-        method: 'USE'
-      })
+      // sometimes, callback will be seen as routePrefix
+      if(typeof routePrefix === "string") {
+        routes.push({
+          route: routePrefix,
+          callback: callback,
+          method: 'USE'
+        })
+      } else {
+        routes.push({
+          route: '/',
+          callback: routePrefix,
+          method: 'USE'
+        })
+      }
+
     }
   }
 }
