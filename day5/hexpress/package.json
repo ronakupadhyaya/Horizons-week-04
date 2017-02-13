@@ -1,0 +1,15 @@
+{
+  "name": "hexpress",
+  "version": "1.0.0",
+  "description": "Meet *Hexpess*, your very own, *very minimal* version of Express.",
+  "main": "hexpress.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "handlebars": "^4.0.6",
+    "querystring": "^0.2.0"
+  }
+}
