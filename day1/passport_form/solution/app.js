@@ -28,7 +28,7 @@ app.use(session({ secret: 'keyboard cat' }));
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
- 
+
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
@@ -40,7 +40,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
   // Find the user with the given username
     User.findOne({ username: username }, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
-      if (err) { 
+      if (err) {
         console.log(err);
         return done(err);
       }
