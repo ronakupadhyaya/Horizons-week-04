@@ -1,14 +1,8 @@
 # Day 2 Exercises
 
-## Warmup
+## Individual Examples
 
-1. [Set up Heroku](warmup.md)
-
-## Inline exercises
-
-1. [My first Heroku deploy](heroku.md)
-1. [Heroku & MongoDb](heroku-mongodb.md)
-1. [Twilio](twilio.md)
+1. [Heroku Examples](examples/README.md)
 
 ## Pair programming exercise
 
