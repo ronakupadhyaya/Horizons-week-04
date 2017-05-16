@@ -2,7 +2,7 @@
 
 - **All videos have the password `horizonites`**
 - Before you jump in
-- Keep [lesson slides](http://lessons.horizonsbootcamp.com/lessons/week03/day2.html)
+- Keep [lesson slides](https://lessons.horizonsbootcamp.com/lessons/week04/day2.html)
   open in your browser. Lesson slides contain code samples and links to
   essential documentation.
 - You can write all your solutions in the same project. You don't need to
