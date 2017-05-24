@@ -265,7 +265,7 @@ Now let's do hashed passwords in MongoDb.
 1. Update your `POST /signup` endpoint to apply the `hashPassword()`
   function to `req.body.password` before storing it in the model:
 
-  ![](img/mongoHash.png)
+    ![](img/mongoHash.png)
 
 1. Update your `LocalStrategy` to convert the input password into
   a hashed password as you did in Exercise 4. Then compare this
