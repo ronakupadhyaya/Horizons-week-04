@@ -171,7 +171,7 @@ Secondly: build out the logic for all other AJAX requests and updating the view.
 **For played game:** show winner/loser/draw.
 
 
-##Phase 2: Level Up with Multiplayer
+## Phase 2: Level Up with Multiplayer
 
 Time for a challenge. Dealing with multiple users will require you to create new User models and authenticate them into your games. Using what you've learned today about Passport, add basic user login functionality to your Blackjack game. 
 
