@@ -199,11 +199,11 @@ password, it's nearly impossible to get the original password back.
    (`sha256` is not the most secure password hash function, we're going to learn
    better ones later this week):
 
-  ![](img/hashPassword.png)
+    ![](img/hashPassword.png)
 
-1. Copy paste your `hashPassword()` functions to a Node console and try
-  hashing a couple passwords from `passwords.plain.json` note how
-  these match up with `passwords.hashed.json`.
+1. Type in your `hashPassword()` functions to a Node console (just type `node` to start) and try
+  hashing a couple passwords from `passwords.plain.json` - note how
+  these match up with `passwords.hashed.json`. (Hint: type the require statement first, then type the whole function in one line - the console doesn't support multiline expressions well)
 
 ## Exercise 4.2: Hashed Passwords
 
@@ -231,6 +231,7 @@ Let's rewrite our `LocalStrategy` to use hashed passwords:
 
   ![](img/hashStrategy.png)
 
+**Checkpoint** - Test your site by logging in and out again - there should be no problems if you followed the above steps correctly.
 
 ## Exercise 5.1: Storing users in MongoDb
 
@@ -239,20 +240,24 @@ database.
 
 1. Create a new `User` model in `models/models.js`
 1. Create a new `GET /signup` route. Inside the route:
-  1. `res.render()` `signup.hbs`
-1. Create a new `POST /signup` route. Inside the route:
-  1. Validates username and password fields from `req.body`
-  1. If validation passes, create a new user object and `.save()` it to MongoDb
-  1. After the user is successfully saved to MongoDb, redirect to `/login`
-1. Rewrite your `deserializeUser()` to use the new `User` model.
-  Use `User.findById()`.
 
-  ![](img/mongoDeserialize.png)
+    - `res.render()` `signup.hbs`
+    
+1. Create a new `POST /signup` route. Inside the route:
+
+    - Validates username and password fields from `req.body`
+    - If validation passes, create a new user object and `.save()` it to MongoDb
+    - After the user is successfully saved to MongoDb, redirect to `/login`
+
+1. Rewrite your `deserializeUser()` to use the new `User` model.
+    Use `User.findById()`.
+
+    ![](img/mongoDeserialize.png)
 
 1. Rewrite your `LocalStrategy` to use the new `User` model.
   Use `User.findOne()` in conjunction `done()` to do logins.
 
-  ![](img/mongoStrategy.png)
+    ![](img/mongoStrategy.png)
 
 1. Verify that logins and logouts work as before.
 
@@ -269,5 +274,7 @@ Now let's do hashed passwords in MongoDb.
 
 1. Update your `LocalStrategy` to convert the input password into
   a hashed password as you did in Exercise 4. Then compare this
-  value with teh `hashedPassword` property of your users.
+  value with the `hashedPassword` property of your users.
 1. Verify that logins and logouts work as before.
+
+Congrats! You have successfully built a (robust) login system!
