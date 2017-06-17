@@ -2,7 +2,7 @@
 
 ## Goal
 
-Your goal is to create a Heroku account, and to install the Heroku toolbelt on
+Your goal is to create a Heroku account, and to install the Heroku CLI (Command Line Interface) on
 your computer. This will allow you to follow along with today's inline
 exercises, and to quickly deploy your project apps to the Heroku cloud.
 
@@ -21,7 +21,7 @@ git, so the learning curve is not too steep.
    Account at the bottom.
 1. Look for the verification email. Tap the link in this email, then set a
    password on the form. Tap "Set password and log in."
-1. Go to https://toolbelt.heroku.com/ and download the Heroku Toolbelt for your
+1. Go to https://devcenter.heroku.com/articles/heroku-cli and download the Heroku CLI for your
    platform. Install it.
 1. Go to command line. Type `heroku login` and enter your credentials to
    login.
