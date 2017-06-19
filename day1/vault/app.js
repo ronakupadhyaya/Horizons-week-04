@@ -4,7 +4,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 // Express setup
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
