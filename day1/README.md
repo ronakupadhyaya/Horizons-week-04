@@ -3,13 +3,13 @@
 ## Pair programming exercise
 
 1. **Set up your `week04` repository**
-    
+
     Make sure you are in your `horizons` folder:
-    
+
     ```
     pwd
     ```
-    
+
     Clone this repository and create your own branch:
 
     ```
@@ -19,4 +19,4 @@
     ```
 
 1. [The Vault](vault/)
-1. [Blackjack!](blackjack/)
+1. [(Bonus) Blackjack!](blackjack/)

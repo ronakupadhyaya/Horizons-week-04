@@ -15,7 +15,7 @@ Work in `week04/day1/vault` directory. You'll need to add code to `app.js`.
 place markers for setup steps in `app.js`. Make sure to use these markers when
 inserting code.:warning:
 
-## Exercise 1. Local Strategy
+## Part 1. Local Strategy
 
 [Passport](http://passportjs.org/) is an NPM package that makes it easy to
 implement authentication (i.e. user logins) in your app.
@@ -26,9 +26,11 @@ to allow user logins based on information stored here.
 
 Here are the steps to follow:
 
+1. Install required dependencies for the project - we've listed those in the `package.json` file. (In general, you'll want to do this for all npm-based exercises)
+    - Use `npm install`
 1. Install `passport` and the `passport-local` modules.
     - Use `npm install --save`
-    - `require()` `passport` and `passport-local` in `app.js`
+    - `require()` `passport` and `passport-local` in `app.js` (refer to Passport docs on properly doing this)
 1. Write a `LocalStrategy` similar to the one in [Passport docs](http://passportjs.org/docs#strategies)
 
     - Authenticate users using `passwords.plain.json`.
@@ -75,11 +77,11 @@ Here are the steps to follow:
     - Go to http://localhost:3000/login and try to log in using
       usernames and passwords from `passwords.plain.json`
     - Successful login should take you to http://localhost:3000/
-      (:warning:Your username won't show up yet. We'll fix this in Exercise
+      (:warning:Your username won't show up yet. We'll fix this in Part
       2.:warning:)
     - Unsuccessful login should take you to http://localhost:3000/login
 
-## Exercise 2. Sessions with Cookie Session
+## Part 2. Sessions with Cookie Session
 
 Once you've got the local strategy working, let's get sessions working as well.
 
@@ -91,7 +93,7 @@ unique cookie that identifies the session. This is why you can login and stay
 logged in!
 
 
-1. Install `cookie-session` with `npm` remember to `--save`
+1. Install `cookie-session` with `npm` - remember to `--save`!
 1. Add `cookie-session` to your app as middleware with `app.use()`.
 
    Use `keys` to pick a secret string to protect your cookies by generating
@@ -142,16 +144,16 @@ redirect to `/`:
 
         ![](img/cookie.png)
 
-  1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
+    1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
     refresh you page, it should take you to `/login`.
 
-# Exercise 3.1: Setup MongoDb
+# Part 3.1: Setup MongoDb
 
 Create a database in mLab. Connect to it in your `app.js`:
 
 ![](img/mongoSetup.png)
 
-# Exercise 3.2: Make sessions persistent
+# Part 3.2: Make sessions persistent
 
 If you want to keep your sessions completely confidential, `cookie-session`
 isn't for you.  You can read the contents of your session using the builtin
@@ -177,6 +179,8 @@ with `express-session`.
 
 1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
   npm package, this is how we will connect our sessions to MongoDb.
+1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
+  npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
     ![](img/mongoSession.png)
@@ -186,7 +190,7 @@ with `express-session`.
 1. You should now see a new Collection in mLab names `sessions`. This is where your
   sessions are stored now. Try deleting these and see if you get logged out as a result.
 
-## Exercise 4.1: Hashing
+## Part 4.1: Hashing
 
 Storing passwords in your database in plain text (i.e. unencrypted) is not
 secure. Your users probably reuse their passwords accross many websites. If your
@@ -205,7 +209,7 @@ password, it's nearly impossible to get the original password back.
   hashing a couple passwords from `passwords.plain.json` - note how
   these match up with `passwords.hashed.json`. (Hint: type the require statement first, then type the whole function in one line - the console doesn't support multiline expressions well)
 
-## Exercise 4.2: Hashed Passwords
+## Part 4.2: Hashed Passwords
 
 Since hashing is irreversible, when a user tries to log in we `hash` the
 the password they attempted to use, then we compare the hashed password we
@@ -233,7 +237,7 @@ Let's rewrite our `LocalStrategy` to use hashed passwords:
 
 **Checkpoint** - Test your site by logging in and out again - there should be no problems if you followed the above steps correctly.
 
-## Exercise 5.1: Storing users in MongoDb
+## Part 5.1: Storing users in MongoDb
 
 Let's improve our passport strategy even more! Try storing user accounts in the
 database.
@@ -261,7 +265,7 @@ database.
 
 1. Verify that logins and logouts work as before.
 
-## Exercise 5.2: Hashed passwords in MongoDb
+## Part 5.2: Hashed passwords in MongoDb
 
 Now let's do hashed passwords in MongoDb.
 
