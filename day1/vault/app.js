@@ -26,6 +26,9 @@ function hashPassword(password){
 }
 
 var passwords_plain = require('./passwords.plain.json');
+var passwords_hashed = require('./passwords.hashed.json');
+
+var User = require('./models/models').User;
 
 // Express setup
 var app = express();
@@ -54,19 +57,58 @@ app.use(session({
   store: new MongoStore({mongooseConnection: mongoose.connection})
 }));
 
-// PASSPORT LOCALSTRATEGY HERE
+// OLD PASSPORT LOCALSTRATEGY HERE
+// passport.use(new LocalStrategy(
+//   function(username, password, done){
+//     passwords_plain.passwords.forEach(function(user){
+//       if(user.username === username){
+//         if(user.password === password){
+//           return done(null, user);
+//         }else{
+//           return done(null, false, { message: "Incorrect password."});
+//         }
+//       }
+//     });
+//     return done(null, false, {message: 'Incorrect username.'});
+//   }
+// ));
+
+// NEW PASSPORT LOCALSTRATEGY HERE
+// passport.use(new LocalStrategy(
+//   function(username, password, done){
+//     var hashedPassword = hashPassword(password);
+//     var passwords = passwords_hashed.passwords;
+//     for(var i = 0 ; i < passwords.length; i++){
+//       var user = passwords[i];
+//       if(user.username === username){
+//         if(user.password === hashedPassword){
+//           return done(null, user);
+//         }else{
+//           return done(null, false, {message: "No homie. (password was wrong)"});
+//         }
+//       }
+//     }
+//     return done(null, false, {message: "Incorrect username"});
+//   }
+// ));
+
+// Part 5.1.5 NEWER PASSPORT LOCALSTRATEGY HERE
 passport.use(new LocalStrategy(
   function(username, password, done){
-    passwords_plain.passwords.forEach(function(user){
-      if(user.username === username){
-        if(user.password === password){
-          return done(null, user);
+    var hashedPassword = hashPassword(password);
+    User.findOne({username: username}, function(err, foundUser){
+      if(err){
+        console.log("server error");
+      }else if(!foundUser){
+        console.log("user error");
+      }else{
+        if(foundUser.password === hashedPassword){
+          done(null, foundUser);
         }else{
-          return done(null, false, { message: "Incorrect password."});
+          done(null, false, {message: "Invalid password"});
         }
       }
     });
-    return done(null, false, {message: 'Incorrect username.'});
   }
 ));
 
@@ -75,16 +117,31 @@ passport.serializeUser(function(user, done){
   done(null, user._id);
 });
 
+// OLD DESERIALIZER
+// passport.deserializeUser(function(id, done){
+//   for(var i = 0 ; i < passwords_plain.passwords.length ; i++){
+//     var user = passwords_plain.passwords[i];
+//     if(user._id === id){
+//       done(null, user);
+//       return;
+//     }
+//   }
+//   done(null, false, {message: "Incorrect id"});
+// });
+
+// NEW DESERIALIZER
 passport.deserializeUser(function(id, done){
-  for(var i = 0 ; i < passwords_plain.passwords.length ; i++){
-    var user = passwords_plain.passwords[i];
-    if(user._id === id){
-      done(null, user);
-      return;
+  User.findById(id, function(err, foundUser){
+    if(err){
+      res.status(500).send("Error in server");
+      console.log("Error in server");
+    }else{
+      if(foundUser){
+        done(null, foundUser);
+      }
     }
-  }
-  done(null, false, {message: "Incorrect id"});
-});
+  })
+})
 
 // PASSPORT MIDDLEWARE HERE
 app.use(passport.initialize());
@@ -116,6 +173,26 @@ app.post('/login', passport.authenticate('local', {
   app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
+  });
+
+  app.get('/signup', function(req, res){
+    res.render('signup');
+  });
+
+  app.post('/signup', function(req, res){
+    var username = req.body.username;
+    var password = req.body.password;
+    if(username && password){
+      var newUser = new User({username: username, password: hashPassword(password)});
+      newUser.save(function(err, savedUser){
+        if(err){
+          res.status(500);
+          console.log("ERROR saving");
+        }else{
+          res.redirect('/login');
+        }
+      });
+    }
   });
 
 app.listen(3000);
