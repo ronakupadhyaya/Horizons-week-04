@@ -35,7 +35,6 @@ $("#betForm").submit(function(e){
   return false;
 });
 
-
 function play(newGame){
   game = newGame;
   $("#betForm").hide();
@@ -52,18 +51,6 @@ function play(newGame){
   var status = $("#game-status");
   status.html("");
 
-  if (game.status === 'Over' ){
-    status.html('You ' + game.userStatus);
-    if (game.userStatus === "won"){
-      status.append(" "+ parseInt(game.playerBet) * 2);
-    } else if (game.userStatus === "won"){
-      status.append(" "+ parseInt(game.playeBet));
-    }
-    hitButton.css("visibility", "hidden");
-    standButton.css("visibility", "hidden");
-
-  }
-
   dealerHand.html("<h2>Dealer Hand</h2>");
   userHand.html("<h2>User Hand</h2>");
 
@@ -74,10 +61,29 @@ function play(newGame){
   for(var i = 0; i < game.houseHand.length; i++){
     dealerHand.append(showCard(game.houseHand[i]));
   }
+
   userScore.html(game.userTotal);
-  dealerScore.html(game.dealerTotal);
-  var firstCard = $("#dealer-hand .card");
-  firstCard.attr("id", "hidden-card");
+
+  if (game.status === 'Over' ){
+    dealerScore.html(game.dealerTotal);
+    status.html('You ' + game.userStatus);
+    if (game.userStatus === "Won" && game.userTotal > game.dealerTotal){
+      status.append(" "+ parseInt(game.playerBet) * 2);
+    } else if (game.userStatus === "Won"){
+      status.append(" "+ parseInt(game.playerBet));
+    }
+    else{
+      status.append(" "+ parseInt(game.playerBet));
+    }
+    hitButton.css("visibility", "hidden");
+    standButton.css("visibility", "hidden");
+
+  }
+  else {
+    dealerScore.html("??");
+    var firstCard = $("#dealer-hand .card:first");
+    firstCard.attr("id", "hidden-card");
+  }
 }
 
 function showCard(card) {

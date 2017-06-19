@@ -1,7 +1,7 @@
 "use strict";
 var express = require('express');
 var router = express.Router({ mergeParams: true });
-var Game = require('../models/Game.js');
+var GameModel = require('../models/Game.js');
 
 var gameRepresentation = function(game) {
   return {
@@ -18,7 +18,7 @@ var gameRepresentation = function(game) {
 }
 
 router.get('/', function (req, res, next) {
-  Game.find(function(err, games) {
+  GameModel.find(function(err, games) {
     if (err) return res.status(500).send(err);
     if (req.query.status) {
       games = games.filter(function(game) {
@@ -36,31 +36,31 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/game', function(req, res, next) {
-  Game.newGame({}, function (err, game) {
+  GameModel.newGame({}, function (err, game) {
     if (err) return res.status(500).send(err);
     res.redirect('/game/' + game._id);
   });
 });
 
 router.get('/game/:id', function(req, res, next) {
-  Game.findById(req.params.id, function(err, game) {
+  GameModel.findById(req.params.id, function(err, game) {
     if (err) return res.status(500).send(err);
     res.render('viewgame', {
-      title: "View Game",
+      title: "View GameModel",
       game: gameRepresentation(game)
     });
   })
 });
 
 router.get('/game/:id/json', function(req, res, next) {
-  Game.findById(req.params.id, function(err, game) {
+  GameModel.findById(req.params.id, function(err, game) {
     if (err) return res.status(500).send(err);
     res.json(gameRepresentation(game));
   })
 });
 
 router.post('/game/:id', function(req, res, next) {
-  Game.findById(req.params.id, function (err, game) {
+  GameModel.findById(req.params.id, function (err, game) {
     if (err) return res.status(500).send(err);
     if (game.status === "In Progress") return next(new Error("Bet already set"))
     game.playerBet = req.body.bet;
@@ -72,7 +72,7 @@ router.post('/game/:id', function(req, res, next) {
 });
 
 router.post('/game/:id/hit', function(req, res, next) {
-  Game.findById(req.params.id, function (err, game) {
+  GameModel.findById(req.params.id, function (err, game) {
     if (err) return res.status(500).send(err);
     if (game.status !== "In Progress" 
         || game.playerBet === 0) return next(new Error("Start game and set bet"));
@@ -84,7 +84,7 @@ router.post('/game/:id/hit', function(req, res, next) {
 });
 
 router.post('/game/:id/stand', function(req, res, next) {
-  Game.findById(req.params.id, function (err, game) {
+  GameModel.findById(req.params.id, function (err, game) {
     if (err) return res.status(500).send(err);
     if (game.status !== "In Progress" 
         || game.playerBet === 0) return next(new Error("Start game and set bet"));
