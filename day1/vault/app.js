@@ -1,9 +1,12 @@
 "use strict";
 
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
+var express       = require('express'),
+    path          = require('path'),
+    logger        = require('morgan'),
+    bodyParser    = require('body-parser'),
+    passport      = require('passport'),
+    LocalStrategy = require('passport-local').Strategy,
+    localDB       = require('./passwords.plain.json').passwords;
 
 // Express setup
 var app = express();
@@ -19,6 +22,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 // SESSION SETUP HERE
 
 // PASSPORT LOCALSTRATEGY HERE
+
+console.log(localDB);
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 
