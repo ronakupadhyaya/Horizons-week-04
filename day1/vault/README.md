@@ -48,13 +48,13 @@ Here are the steps to follow:
 
 1. Add passport into your application with [`passport.initialize()` and `passport.session()`](http://passportjs.org/docs#middleware):
 
-  ![](img/passportInit.png)
+    ![](img/passportInit.png)
 
 1. Create the route `GET /` and render `index.hbs` (`index.hbs` is already provided)
 1. Create the route `GET /login` and render `login.hbs` (`login.hbs` is already provided)
 1. Create the route `POST /login` and call `passport.authenticate('local')`.
 
-   When a user successfully logs in they should be sent to '/' so set 
+   When a user successfully logs in they should be sent to '/' so set
    `successRedirect` to `'/'`.
 
    If a user fails to log in they should be sent back to '/login' to retry,
@@ -64,12 +64,12 @@ Here are the steps to follow:
 
 1. Tell `passport` how to store users in the session with `passport.serializeUser()`.
 
-  `serializeUser` takes a `function(user, done){}`. We use `done()` to send
-  back to passport what part of our user we want to store in the session. In our case,
-  this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
-  is updated. We write serialize(), but trust passport to use it properly.
+    `serializeUser` takes a `function(user, done){}`. We use `done()` to send
+    back to passport what part of our user we want to store in the session. In our case,
+    this is `user._id`. Passport calls the serialize function the first time a user logs in, before the session
+    is updated. We write serialize(), but trust passport to use it properly.
 
-  ![](img/serialize.png)
+    ![](img/serialize.png)
 
 5. You can verify that your code is working correctly by:
     - Go to http://localhost:3000/login and try to log in using
@@ -96,51 +96,51 @@ logged in!
 
    Use `keys` to pick a secret string to protect your cookies by generating
    cryptographic signatures.
- 
+
    Use `maxAge` to specify how long a cookie should be valid for. By
    specifying how long a cookie should last, we can control how much we want a
    user to relogin.  Some sites will set this cookie to last for a very long
    time, this is why you are always logged in. By default, maxAge is set to
    expire when the session ends (when all tabs with the current domain are closed).
    Set max age to be 2 minutes from now (`maxAge:1000*60*2` milliseconds).
- 
+
    ![](img/cookieSession.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
 
-  `deserializeUser` takes a `function(id, done){}`.
-  Passport calls this function every time a logged-in user arrives to populate
-  `req.user` with all the information about the user.
-  We call `done()` with the user we get back from `passwords.plain.json`.
+    `deserializeUser` takes a `function(id, done){}`.
+    Passport calls this function every time a logged-in user arrives to populate
+    `req.user` with all the information about the user.
+    We call `done()` with the user we get back from `passwords.plain.json`.
 
-  ![](img/deserialize.png)
+    ![](img/deserialize.png)
 
 1. Update the `GET /` route
-  1. If `req.user` is falsy, it means the user has not yet logged in.
-     `res.redirect()` them to `/login` so they can log in.
-  1. If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
-     rendering `index.hbs`. Now you should see the username after login:
+    1. If `req.user` is falsy, it means the user has not yet logged in.
+   `res.redirect()` them to `/login` so they can log in.
+    1. If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
+   rendering `index.hbs`. Now you should see the username after login:
 
-     ![](img/indexUsername.png)
+        ![](img/indexUsername.png)
 
 1. Create the route `GET /logout` which should call `req.logout()` and then
-   redirect to `/`:
+redirect to `/`:
 
-  ![](img/logout.png)
+    ![](img/logout.png)
 
 1. Verify that you've completed this step with:
-  1. Login then click the logout link, it should take you to `/login`
-  1. Try to visit `/` when you're not logged in it should take you to
-    `/login`.
-  1. Now you should see two new cookies in your browser: `session` and
-    `session.sig`. `session` stores all the information about your session and
-    `session.sig` is a cryptographic signature of your session that proves to
-    the server that you have not tampered with your session. The cryptographic
-    signature is created using the secret key in the server.
+    1. Login then click the logout link, it should take you to `/login`
+    1. Try to visit `/` when you're not logged in it should take you to
+      `/login`.
+    1. Now you should see two new cookies in your browser: `session` and
+      `session.sig`. `session` stores all the information about your session and
+      `session.sig` is a cryptographic signature of your session that proves to
+      the server that you have not tampered with your session. The cryptographic
+      signature is created using the secret key in the server.
 
-    You can view cookies in the Application tab of Chrome Developer tools.
+        You can view cookies in the Application tab of Chrome Developer tools.
 
-    ![](img/cookie.png)
+        ![](img/cookie.png)
 
   1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
     refresh you page, it should take you to `/login`.
@@ -166,20 +166,20 @@ with `express-session`.
 1. Install `express-session` with npm.
 1. Add `express-session` to your app.
 
-  ![](img/expressSession.png)
+    ![](img/expressSession.png)
 
 1. Verify that your logins still work. But now, when you restart `node` you should be
   logged out.
 
-  These sessions are now stored in `node`. But everytime `node` restarts it forgets
-  everything, so you're logged out. Now let's make sessions stick around i.e. persist
-  using our database, MognoDb.
+    These sessions are now stored in `node`. But everytime `node` restarts it forgets
+    everything, so you're logged out. Now let's make sessions stick around i.e. persist
+    using our database, MognoDb.
 
-1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo) 
+1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
   npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
-  ![](img/mongoSession.png)
+    ![](img/mongoSession.png)
 
 1. Verify that your sessions don't die by logging in and restarting `node`. You should
   stay logged in!
@@ -229,7 +229,7 @@ Let's rewrite our `LocalStrategy` to use hashed passwords:
 1. Before you look up a username and password in the JSON file, hash your password with the included
    `hashPassword()` function.
 
-  ![](img/hashStrategy.png)
+    ![](img/hashStrategy.png)
 
 **Checkpoint** - Test your site by logging in and out again - there should be no problems if you followed the above steps correctly.
 
@@ -242,7 +242,7 @@ database.
 1. Create a new `GET /signup` route. Inside the route:
 
     - `res.render()` `signup.hbs`
-    
+
 1. Create a new `POST /signup` route. Inside the route:
 
     - Validates username and password fields from `req.body`
