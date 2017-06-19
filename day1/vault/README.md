@@ -118,32 +118,33 @@ logged in!
     ![](img/deserialize.png)
 
 1. Update the `GET /` route
-    - If `req.user` is falsy, it means the user has not yet logged in.
-     `res.redirect()` them to `/login` so they can log in.
-    - If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
-     rendering `index.hbs`. Now you should see the username after login:
+    1. If `req.user` is falsy, it means the user has not yet logged in.
+   `res.redirect()` them to `/login` so they can log in.
+    1. If `req.user` is truthy, pass `{user: req.user}` to `res.render()` when
+   rendering `index.hbs`. Now you should see the username after login:
 
-     ![](img/indexUsername.png)
+        ![](img/indexUsername.png)
 
 1. Create the route `GET /logout` which should call `req.logout()` and then
-   redirect to `/`:
+redirect to `/`:
 
     ![](img/logout.png)
 
 1. Verify that you've completed this step with:
-    - Login then click the logout link, it should take you to `/login`
-    - Try to visit `/` when you're not logged in it should take you to
-    `/login`.
-    - Now you should see two new cookies in your browser: `session` and
-    `session.sig`. `session` stores all the information about your session and
-    `session.sig` is a cryptographic signature of your session that proves to
-    the server that you have not tampered with your session. The cryptographic
-    signature is created using the secret key in the server.
+    1. Login then click the logout link, it should take you to `/login`
+    1. Try to visit `/` when you're not logged in it should take you to
+      `/login`.
+    1. Now you should see two new cookies in your browser: `session` and
+      `session.sig`. `session` stores all the information about your session and
+      `session.sig` is a cryptographic signature of your session that proves to
+      the server that you have not tampered with your session. The cryptographic
+      signature is created using the secret key in the server.
 
         You can view cookies in the Application tab of Chrome Developer tools.
+
         ![](img/cookie.png)
 
-    - Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
+    1. Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
     refresh you page, it should take you to `/login`.
 
 # Part 3.1: Setup MongoDb
@@ -177,7 +178,9 @@ with `express-session`.
     using our database, MognoDb.
 
 1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
-    npm package, this is how we will connect our sessions to MongoDb.
+  npm package, this is how we will connect our sessions to MongoDb.
+1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
+  npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
     ![](img/mongoSession.png)
@@ -200,11 +203,11 @@ password, it's nearly impossible to get the original password back.
    (`sha256` is not the most secure password hash function, we're going to learn
    better ones later this week):
 
-  ![](img/hashPassword.png)
+    ![](img/hashPassword.png)
 
-1. Copy paste your `hashPassword()` functions to a Node console and try
-  hashing a couple passwords from `passwords.plain.json` note how
-  these match up with `passwords.hashed.json`.
+1. Type in your `hashPassword()` functions to a Node console (just type `node` to start) and try
+  hashing a couple passwords from `passwords.plain.json` - note how
+  these match up with `passwords.hashed.json`. (Hint: type the require statement first, then type the whole function in one line - the console doesn't support multiline expressions well)
 
 ## Part 4.2: Hashed Passwords
 
@@ -230,8 +233,9 @@ Let's rewrite our `LocalStrategy` to use hashed passwords:
 1. Before you look up a username and password in the JSON file, hash your password with the included
    `hashPassword()` function.
 
-  ![](img/hashStrategy.png)
+    ![](img/hashStrategy.png)
 
+**Checkpoint** - Test your site by logging in and out again - there should be no problems if you followed the above steps correctly.
 
 ## Part 5.1: Storing users in MongoDb
 
@@ -240,20 +244,24 @@ database.
 
 1. Create a new `User` model in `models/models.js`
 1. Create a new `GET /signup` route. Inside the route:
-  1. `res.render()` `signup.hbs`
-1. Create a new `POST /signup` route. Inside the route:
-  1. Validates username and password fields from `req.body`
-  1. If validation passes, create a new user object and `.save()` it to MongoDb
-  1. After the user is successfully saved to MongoDb, redirect to `/login`
-1. Rewrite your `deserializeUser()` to use the new `User` model.
-  Use `User.findById()`.
 
-  ![](img/mongoDeserialize.png)
+    - `res.render()` `signup.hbs`
+
+1. Create a new `POST /signup` route. Inside the route:
+
+    - Validates username and password fields from `req.body`
+    - If validation passes, create a new user object and `.save()` it to MongoDb
+    - After the user is successfully saved to MongoDb, redirect to `/login`
+
+1. Rewrite your `deserializeUser()` to use the new `User` model.
+    Use `User.findById()`.
+
+    ![](img/mongoDeserialize.png)
 
 1. Rewrite your `LocalStrategy` to use the new `User` model.
   Use `User.findOne()` in conjunction `done()` to do logins.
 
-  ![](img/mongoStrategy.png)
+    ![](img/mongoStrategy.png)
 
 1. Verify that logins and logouts work as before.
 
@@ -269,6 +277,8 @@ Now let's do hashed passwords in MongoDb.
     ![](img/mongoHash.png)
 
 1. Update your `LocalStrategy` to convert the input password into
-  a hashed password as you did in Part 4. Then compare this
-  value with teh `hashedPassword` property of your users.
+  a hashed password as you did in Exercise 4. Then compare this
+  value with the `hashedPassword` property of your users.
 1. Verify that logins and logouts work as before.
+
+Congrats! You have successfully built a (robust) login system!
