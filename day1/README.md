@@ -1,6 +1,6 @@
 # Day 1 Exercises
 
-## Pair programming exercise
+## Pair programming exercises
 
 1. **Set up your `week04` repository**
 
