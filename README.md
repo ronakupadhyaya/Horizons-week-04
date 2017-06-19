@@ -1,6 +1,8 @@
 # Week 4 exercises
 
 1. [Day 1](day1/)
+    1. The Vault
+    1. (Bonus) Blackjack
 1. [Day 2](day2/)
 1. [Day 3](day3/)
 1. [Day 4](day4/)
