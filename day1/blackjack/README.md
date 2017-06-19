@@ -1,6 +1,6 @@
-# Pair programming exercise: Blackjack
+# (Bonus) Pair programming exercise: Blackjack
 
-In this exercise we're going to build a card game classic: Blackjack, also known as Twenty One. We'll be building off the skills you learned last week using MongoDB, Express, and Node to structure a backend capable of handling game logic as well as using jQuery and AJAX to render gameplay on the frontend in realtime. 
+In this exercise we're going to build a card game classic: Blackjack, also known as Twenty One. We'll be building off the skills you learned last week using MongoDB, Express, and Node to structure a backend capable of handling game logic as well as using jQuery and AJAX to render gameplay on the frontend in realtime.
 
 In Phase 1, you'll be building out the game with only one player against a dealer.
 
@@ -15,7 +15,7 @@ You could do this in any order you'd like, but following it in order of this REA
 
 ### Introduction ▶️ - `app.js`
 
-First build a Blackjack game where a single person can play against the dealer. Begin by taking a look at `app.js` - the entry point of your application. Everything here is ready for you - dependencies and all - but you need to create a `config.js` file or set an environment variable to allow your application to connect to a local database or mLab instance. 
+First build a Blackjack game where a single person can play against the dealer. Begin by taking a look at `app.js` - the entry point of your application. Everything here is ready for you - dependencies and all - but you need to create a `config.js` file or set an environment variable to allow your application to connect to a local database or mLab instance.
 
 ### Creating your model 💾 - `models/Game.js`
 
@@ -23,7 +23,7 @@ Define a Game model that represents a single Blackjack game and able to keep tra
 
 - The bet that the player has made before the game - `Number`
 - The cards in the player's hand - `Array` (**do not define a specific schema for the Card**, we'll do that later!)
-- The cards in the dealer's hand - `Array` 
+- The cards in the dealer's hand - `Array`
 - The cards in the deck - `Array` (we will be setting this upon Game initialization, with the help of the Deck object)
 - The total value of the cards in the player's hand - `Number` (default to 0)
 - The total value of the cards in the dealer's hand - `Number` (default to 0)
@@ -34,7 +34,7 @@ Define a Game model that represents a single Blackjack game and able to keep tra
 
 ### Defining game functions 🎲 - `models/Game.js`
 
-Begin by finishing the Card constructor, which takes parameters `suit` (a string that represents the suit of the card, which could be "hearts", "diamonds", "spades", or "clubs"), `val` (a number that represents the value of the card in Blackjack - see **Rules of Blackjack**), and `symbol` (a string that represents the card's displayed value - Aces have a `symbol` of  "A", Kings have a `symbol` of "K", Queens "Q", Jacks "J", and number cards simply their number value). 
+Begin by finishing the Card constructor, which takes parameters `suit` (a string that represents the suit of the card, which could be "hearts", "diamonds", "spades", or "clubs"), `val` (a number that represents the value of the card in Blackjack - see **Rules of Blackjack**), and `symbol` (a string that represents the card's displayed value - Aces have a `symbol` of  "A", Kings have a `symbol` of "K", Queens "Q", Jacks "J", and number cards simply their number value).
 
 **It's important to note that the Card constructor should not represent a Mongoose model - it will only be an object we use for the Deck object.**
 
@@ -43,7 +43,7 @@ Next, fill out the prototype methods for an object representing a Deck.
 - `createDeck` will populate the `this.deck` array with a full set of 52 cards (each represented by a Card object). Populate aces with a `val` of 11 for now - we'll deal with its possible value of 1 in another function.
 
 - `shuffleDeck` will take `this.deck` and place the cards at random indices. You can try to implement your own shuffle, or check out [this page on the Fisher-Yates shuffle](http://www.programming-algorithms.net/article/43676/Fisher-Yates-shuffle) if you're struggling! Don't copy and paste code without understanding it - find a way to implement the pseudocode or write your own.
- 
+
 When playing with the backend only, we must be able to view our game results. For
 this, we need to know the state of the game with every move. For example, if a user
 draws a card, we need to know their current cards, score, status of the game to
@@ -59,7 +59,7 @@ Finally, we'll define methods used by our Game. Because we are defining these st
 
 ### Exposing gameplay through routes 🔮 - `routes/index.js`
 
-The first function we want to write in our Router is `gameRepresentation`, which will take a `game` model as a parameter and return us an object that represents the game state we want to send back to a client. 
+The first function we want to write in our Router is `gameRepresentation`, which will take a `game` model as a parameter and return us an object that represents the game state we want to send back to a client.
 
 Below is a suggested game state representation. Here you can know the cards of each
 player, whether the game has ended, if someone has lost, etc. This model is a
@@ -173,7 +173,7 @@ Secondly: build out the logic for all other AJAX requests and updating the view.
 
 ## Phase 2: Level Up with Multiplayer
 
-Time for a challenge. Dealing with multiple users will require you to create new User models and authenticate them into your games. Using what you've learned today about Passport, add basic user login functionality to your Blackjack game. 
+Time for a challenge. Dealing with multiple users will require you to create new User models and authenticate them into your games. Using what you've learned today about Passport, add basic user login functionality to your Blackjack game.
 
 ### Routes
 
