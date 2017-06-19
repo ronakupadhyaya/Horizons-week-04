@@ -15,7 +15,7 @@ Work in `week04/day1/vault` directory. You'll need to add code to `app.js`.
 place markers for setup steps in `app.js`. Make sure to use these markers when
 inserting code.:warning:
 
-## Exercise 1. Local Strategy
+## Part 1. Local Strategy
 
 [Passport](http://passportjs.org/) is an NPM package that makes it easy to
 implement authentication (i.e. user logins) in your app.
@@ -56,7 +56,7 @@ Here are the steps to follow:
 1. Create the route `GET /login` and render `login.hbs` (`login.hbs` is already provided)
 1. Create the route `POST /login` and call `passport.authenticate('local')`.
 
-   When a user successfully logs in they should be sent to '/' so set 
+   When a user successfully logs in they should be sent to '/' so set
    `successRedirect` to `'/'`.
 
    If a user fails to log in they should be sent back to '/login' to retry,
@@ -77,11 +77,11 @@ Here are the steps to follow:
     - Go to http://localhost:3000/login and try to log in using
       usernames and passwords from `passwords.plain.json`
     - Successful login should take you to http://localhost:3000/
-      (:warning:Your username won't show up yet. We'll fix this in Exercise
+      (:warning:Your username won't show up yet. We'll fix this in Part
       2.:warning:)
     - Unsuccessful login should take you to http://localhost:3000/login
 
-## Exercise 2. Sessions with Cookie Session
+## Part 2. Sessions with Cookie Session
 
 Once you've got the local strategy working, let's get sessions working as well.
 
@@ -98,14 +98,14 @@ logged in!
 
    Use `keys` to pick a secret string to protect your cookies by generating
    cryptographic signatures.
- 
+
    Use `maxAge` to specify how long a cookie should be valid for. By
    specifying how long a cookie should last, we can control how much we want a
    user to relogin.  Some sites will set this cookie to last for a very long
    time, this is why you are always logged in. By default, maxAge is set to
    expire when the session ends (when all tabs with the current domain are closed).
    Set max age to be 2 minutes from now (`maxAge:1000*60*2` milliseconds).
- 
+
    ![](img/cookieSession.png)
 
 1. Tell `passport` how to read users from the session with `passport.deserializeUser()`.
@@ -146,13 +146,13 @@ logged in!
     - Change `maxAge` for cookie session to 10 seconds. Login, wait 10 seconds,
     refresh you page, it should take you to `/login`.
 
-# Exercise 3.1: Setup MongoDb
+# Part 3.1: Setup MongoDb
 
 Create a database in mLab. Connect to it in your `app.js`:
 
 ![](img/mongoSetup.png)
 
-# Exercise 3.2: Make sessions persistent
+# Part 3.2: Make sessions persistent
 
 If you want to keep your sessions completely confidential, `cookie-session`
 isn't for you.  You can read the contents of your session using the builtin
@@ -176,7 +176,7 @@ with `express-session`.
     everything, so you're logged out. Now let's make sessions stick around i.e. persist
     using our database, MognoDb.
 
-1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo) 
+1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
     npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
@@ -187,7 +187,7 @@ with `express-session`.
 1. You should now see a new Collection in mLab names `sessions`. This is where your
   sessions are stored now. Try deleting these and see if you get logged out as a result.
 
-## Exercise 4.1: Hashing
+## Part 4.1: Hashing
 
 Storing passwords in your database in plain text (i.e. unencrypted) is not
 secure. Your users probably reuse their passwords accross many websites. If your
@@ -206,7 +206,7 @@ password, it's nearly impossible to get the original password back.
   hashing a couple passwords from `passwords.plain.json` note how
   these match up with `passwords.hashed.json`.
 
-## Exercise 4.2: Hashed Passwords
+## Part 4.2: Hashed Passwords
 
 Since hashing is irreversible, when a user tries to log in we `hash` the
 the password they attempted to use, then we compare the hashed password we
@@ -233,7 +233,7 @@ Let's rewrite our `LocalStrategy` to use hashed passwords:
   ![](img/hashStrategy.png)
 
 
-## Exercise 5.1: Storing users in MongoDb
+## Part 5.1: Storing users in MongoDb
 
 Let's improve our passport strategy even more! Try storing user accounts in the
 database.
@@ -257,7 +257,7 @@ database.
 
 1. Verify that logins and logouts work as before.
 
-## Exercise 5.2: Hashed passwords in MongoDb
+## Part 5.2: Hashed passwords in MongoDb
 
 Now let's do hashed passwords in MongoDb.
 
@@ -269,6 +269,6 @@ Now let's do hashed passwords in MongoDb.
     ![](img/mongoHash.png)
 
 1. Update your `LocalStrategy` to convert the input password into
-  a hashed password as you did in Exercise 4. Then compare this
+  a hashed password as you did in Part 4. Then compare this
   value with teh `hashedPassword` property of your users.
 1. Verify that logins and logouts work as before.
