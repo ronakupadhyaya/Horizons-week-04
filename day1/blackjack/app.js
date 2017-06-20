@@ -15,7 +15,10 @@ var expressValidator = require('express-validator');
 var db = process.env.MONGODB_URI || require('./config').db;
 
 var mongoose = require('mongoose');
-mongoose.connect(db);
+mongoose.connection.on("connected", function() {
+  console.log("connected to mongoDB!");
+})
+mongoose.connect("mongodb://test:test@ds133162.mlab.com:33162/poker-caroline");
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.hbs'}));
