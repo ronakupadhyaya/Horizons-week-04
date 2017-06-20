@@ -18,7 +18,7 @@ var Pet = require('./pet');
 
 //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 app.get('/pets', function(req,res,next) {
-  Pet.find(function(err, pets){
+  Pet.find().populate('owner').exec(function(err, pets){
     res.render('pets', {
       pets: pets
     });
@@ -69,4 +69,5 @@ app.get('/users/:name', function(req, res, next) {
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('listening on port ' + port);
+  console.log('Connected to server')
 });
