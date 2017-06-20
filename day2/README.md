@@ -2,7 +2,8 @@
 
 ## Morning Videos & Individual Exercises
 
-1. [Videos and Exercises](#)
+1. [Advanced Mongoose Videos and Exercises Part 1](examples/part1/)
+1. [Advanced Mongoose Videos and Exercises Part 2](examples/part2/)
 
 ## Pair programming exercise
 
