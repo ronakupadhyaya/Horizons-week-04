@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<head>
+  <script src="/static/jquery.js"> </script>
+  <script src="/static/boot.js"> </script>
+  <link rel="stylesheet" href="/static/boostrap.css">
+  <!-- <script src="/static/toggle.js"> </script> -->
+  <script>
+    $(document).ready(function() {
+      $('.table').on('click', '.btn', function(evt) {
+        console.log(evt);
+        $(this).toggleClass('btn-warning')
+        $(this).toggleClass('btn-success')
+        $(this).text() === 'todo' ? $(this).text('done') : $(this).text('todo')
+      })
+    })
+  </script>
+</head>
+<div class="container">
+  <h2>Dependent table </h2>
+  <p>Sometimes we don't want to rely on a third party to deliver our libraries/frameworks for us. It would also be nice to not need the internet while we develop code.</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Problem number</th>
+        <th>Description</th>
+        <th>ToDo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          1
+        </td>
+        <td>
+          Codepen
+        </td>
+        <td><button id="task1" type="button" class="btn btn-warning">todo</button></td>
+      </tr>
+      <tr class="success">
+        <td>
+          2
+        </td>
+        <td>
+          HTML
+        </td>
+        <td><button id="task2" type="button" class="btn btn-warning">todo</button></td>      </tr>
+      <tr class="danger">
+              <td>
+          3
+        </td>
+        <td>
+          CSS
+        </td>
+        <td><button id="task3" type="button" class="btn btn-warning">todo</button></td>
+      </tr>
+      <tr class="info">
+              <td>
+          4
+        </td>
+        <td>
+          JavaScript files
+        </td>
+        <td><button id="task4" type="button" class="btn btn-warning">todo</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
