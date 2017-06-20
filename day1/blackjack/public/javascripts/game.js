@@ -1,10 +1,32 @@
 // window.game = game || {};
+// $(document).ready(function(){
+//
+// })
 
 $(document).on("submit", "form", function(e){
   e.preventDefault();
   var betval = $('#betForm input[name="bet"]').val();
-  console.log(betval);
-  console.log("submit function");
+  // 
+  //
+  // $('#contact_form').bootstrapValidator({
+  //      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+  //      feedbackIcons: {
+  //          invalid: 'glyphicon glyphicon-remove'
+  //      },
+  //      fields: {
+  //          bet: {
+  //              validators: {
+  //                      stringLength: {
+  //                      min: 1,
+  //                  },
+  //                      notEmpty: {
+  //                      message: 'Please supply your first name'
+  //                  }
+  //              }
+  //          }
+  //
+  //
+
   $.ajax({
     type: "POST",
     url: $(location).attr('href'),
@@ -13,17 +35,8 @@ $(document).on("submit", "form", function(e){
     },
     cache: false,
     success: function(resp){
-      // resp.game.status = "In Progress";
-      // console.log(resp);
-      // resp.game.bet = betval; //DO I EVEN NEED THIS
-      console.log(resp);
-
       $('#bet').text(`Bet is: ${betval}`)
       play(resp);
-      // YOUR CODE HERE
-      // var gamedata = getData();
-
-
     }
   });
   return false;
@@ -32,23 +45,15 @@ $(document).on("submit", "form", function(e){
 window.addEventListener("load", getData, false);
 
 function getData(){
-
+  $('.user-area').hide();
+  $('.dealer-area').hide();
   $.ajax({
-    // url: $(location).attr('href') + "?json=true",
     url: $(location).attr('href') + "/json",
     method: 'GET',
     success: function(resp){
       var game = resp;
-      if(game.status === "Not Started"){
-        $('.user-area').hide();
-        $('.dealer-area').hide();
-      }
-      else if(game.status === "In Progress"){
+      if(game.status !== "Not Started"){
         play(game);
-      } else{
-        //game is Over
-        play(game);
-        console.log(game.status);
       }
 
 
@@ -58,9 +63,6 @@ function getData(){
 
 
 function play(game){
-  // var betval = $('#user-buttons').hide();
-  // YOUR CODE HERE
-  console.log("play game called",game);
   $('#betForm').hide();
   $('.user-area').show();
   $('.dealer-area').show();
@@ -81,11 +83,11 @@ function play(game){
     // cardhtml.attr('id','hidden-card');
     $('#dealer-hand').append(cardhtml);
   });
-  $('#dealer-hand .card:first').attr("id","hidden-card");
   if(game.status === "Over"){
     $('#user-buttons').hide();
     $('#game-status').text(`${game.status} User:${game.userStatus} Dealer:${game.dealerStatus}`)
-
+  } else{
+    $('#dealer-hand .card:first').attr("id","hidden-card");
   }
 }
 
@@ -118,12 +120,8 @@ function hit() {
     // url: $(location).attr('href') + "?json=true",
     url: $(location).attr('href') + "/hit",
     method: 'post',
-    data:{
-
-    },
     success: function(game){
       console.log(game);
-      // game.hit();
       play(game);
     }
   })
@@ -134,15 +132,9 @@ function stand() {
   // YOUR CODE HERE
   event.preventDefault();
   $.ajax({
-    // url: $(location).attr('href') + "?json=true",
     url: $(location).attr('href') + "/stand",
     method: 'post',
-    data:{
-
-    },
     success: function(resp){
-      console.log(resp.game);
-      // game.hit();
       play(resp.game);
     }
   })

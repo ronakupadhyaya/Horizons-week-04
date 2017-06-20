@@ -2,6 +2,8 @@
 var express = require('express');
 var router = express.Router({ mergeParams: true });
 var GameModel = require('../models/Game.js');
+var validator = require('express-validator');
+router.use(validator());
 
 var gameRepresentation = function(game) {
   // YOUR CODE HERE
@@ -45,9 +47,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/game', function(req, res, next) {
-  // YOUR CODE HERE
-  // var newgame = new GameModel();
-  console.log("Creating a new game");
   var newgame = GameModel.newGame({}, function(error,savedGame){
 
     if(!error){
@@ -81,8 +80,11 @@ router.use('/game/:id',function(req,res,next){
 
 
 router.get('/game/:id', function(req, res, next) {
-  console.log("testing that i am here");
   var game = req.game;
+  // var isOver = false;
+  // if(game.status ==="Over"){
+  //   isOver = true;
+  // }
   // if(req.query.indexOf("json=true") > -1){
   //
   // } else {
@@ -95,6 +97,7 @@ router.get('/game/:id', function(req, res, next) {
     res.render('viewgame', {
       title: "Game",
       game: gameRepresentation(game)
+      // isOver: isOver
     })
 
   // res.json(gameRepresentation(game))
@@ -114,13 +117,17 @@ router.post('/game/:id', function(req, res, next) {
   // YOUR CODE HERE
   var game = req.game;
   var bet = req.body.bet;
-  console.log("bet from router.post", bet);
+  req.checkBody('bet','Must enter a number for bet').notEmpty().isInt();
+  var errors = req.validationErrors();
+  if(errors){
+    res.json(gameRepresentation(game))
+  }
+
   game.dealInitial();
   if(game.playerBet){
     res.json({"error":"already declared bet"})
   }
   game.playerBet= req.body.bet;
-  //save here?
   game.save(function(error){
 
     if(error){
@@ -177,9 +184,7 @@ router.post('/game/:id/stand', function(req, res, next) {
   if(!game.playerBet || game.gameStatus!=='In Progress'){
     res.json({"error":"must declare bet or start game"})
   }
-  console.log("abotu to call game stand");
   game.stand();
-  console.log("returned from stand");
   game.save(function(error){
     if(error){
 
