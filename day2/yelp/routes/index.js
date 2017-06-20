@@ -24,6 +24,33 @@ router.use(function(req, res, next){
   }
 });
 
+router.get('/', function(req,res) {
+  res.send('Home Page');
+})
+
+router.get('/users/:userId', function(req,res) {
+  var userId = req.params.userId;
+
+  User.findById(userId, function(error, user) {
+    if (error || !user) {
+      res.status(404).send("no user");
+    } else {
+      user.getFollows(function(error, result) {   //callback
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollowers;
+
+      res.render('singleProfile', {
+        user: user,   //user in handlebars become user in function
+        following: allFollowing,
+        followers: allFollowers
+      })
+        })
+    }
+  })
+
+
+})
+
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!
@@ -31,7 +58,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
