@@ -120,7 +120,11 @@ name and birthday are properly displayed
     When called `toggleGender` should set the `gender` property of the current
     user to be `male` if the current user is `female` and vice versa.
 
+<<<<<<< HEAD
     You do **not** to `.save()` the user after modifying it.
+=======
+    You do **not** need to `.save()` the user after modifying it.
+>>>>>>> d4dda4eb58738df5f2db921fa2719c338ddb34ab
 
     You can see how this static is called in `week04/day2/examples/part2/server.js` in the
     `GET /toggle` route
