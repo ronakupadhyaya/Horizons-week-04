@@ -1,7 +1,19 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  // YOUR CODE HERE
+  bet: Number,
+  player_hand: Array,
+  dealer_hand: Array,
+  deck: Array,
+  player_hand_value: {type:Number, default: 0},
+  dealer_hand_value: {type:Number, default: 0},
+  status: {
+    type: String,
+    enum: ["Not Started", "Over", "In Progress"],
+    default: "Not Started"
+  },
+  player_status: String,
+  dealer_status: String
 });
 
 GameSchema.statics.newGame = function(item, callback){
@@ -11,7 +23,7 @@ GameSchema.statics.newGame = function(item, callback){
 }
 
 function Card(suit, val, symbol) {
-  // YOUR CODE HERE
+  return {suit: suit, val: val, symbol: symbol};
 }
 
 function Deck(){
@@ -22,7 +34,24 @@ function Deck(){
 }
 
 Deck.prototype.createDeck = function() {
-  // YOUR CODE HERE
+
+  var suits = ["hearts", "diamonds", "spades", "clubs"];
+  for (var i = 0; i < 4; i++) {
+    for (var j = 1; j <= 14; j++) {
+      if (j > 10) {
+        this.deck.push(new Card(suits[i], j, j));
+      } else if (j === 11) {
+        this.deck.push(new Card(suits[i], 10, j));
+      } else if (j === 12) {
+        this.deck.push(new Card(suits[i], 10, j));
+      } else if (j === 13) {
+        
+      } else if (j === 14) {
+        
+      } 
+      
+    }
+  }
 }
 
 Deck.prototype.shuffleDeck = function() {
