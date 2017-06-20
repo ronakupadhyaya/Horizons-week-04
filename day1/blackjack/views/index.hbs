@@ -1,3 +1,14 @@
 <h1>Games</h1>
 
+<!-- <ul> -->
+  {{#each games}}
+  <div class="gameobj" id="{{this.id}}" style = "border: 1px solid">
+    <p>{{this.id}}</p>
+    <p>{{this.status}}</p>
+    <a href="/game/{{this.id}}">Go to game</a>
+  </div>
+
+  {{/each}}
+
+<!-- </ul> -->
 <!-- YOUR CODE HERE -->

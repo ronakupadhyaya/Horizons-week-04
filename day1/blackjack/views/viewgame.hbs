@@ -1,4 +1,4 @@
-<h2>Bet:</h2>
+<h2>Bet:{{game.playerBet}}</h2>
 <form id="betForm" action="" method="POST">
   <input type="number" name="bet" placeholder="bet amount" />
   <input type="submit" value="Submit" />
@@ -12,7 +12,7 @@
     <input type="button" id="stand" value="Stand">
   </div>
   <div id="user-hand" class="hand">
-    <h2>User Hand</h2>
+    <h2>User Hand {{game.currentPlayerHand}}</h2>
   </div>
   <div class="score-parent">
     <p>Score</p>
