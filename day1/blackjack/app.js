@@ -12,7 +12,7 @@ var expressValidator = require('express-validator');
 // Set your MongoDB connect string through a file called
 // config.js or through setting a new environment variable
 // called MONGODB_URI!
-var db = process.env.MONGODB_URI || require('./config').db;
+var db = 'mongodb://sarkarpm:Smiliepants101@ds131782.mlab.com:31782/blackjack-priya' || require('./config').db;
 
 var mongoose = require('mongoose');
 mongoose.connect(db);
