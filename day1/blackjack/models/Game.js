@@ -1,7 +1,45 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  // YOUR CODE HERE
+  bet: {
+    type: Number,
+    required:true
+  },
+  playerHand:{
+    type:Array,
+    required:true
+  },
+  dealerHand:{
+    type:Array,
+    required:true
+  },
+  deck:{
+    type:Array,
+    required:true
+  },
+  playerScore:{
+    type:Number,
+    default:0
+  },
+  dealerScore:{
+    type:Number,
+    default:0
+  },
+  gameStatus:{
+    type:String,
+    enum:[
+      "Not Started",
+      "Over",
+      "In Progress"
+    ],
+    default:"Not Started"
+  },
+  playerStatus:{
+    type:String
+  },
+  dealerStatus:{
+    type:String
+  }
 });
 
 GameSchema.statics.newGame = function(item, callback){
@@ -11,7 +49,9 @@ GameSchema.statics.newGame = function(item, callback){
 }
 
 function Card(suit, val, symbol) {
-  // YOUR CODE HERE
+  this.suit = suit;
+  this.val = val;
+  this.symbol = symbol;
 }
 
 function Deck(){
@@ -22,11 +62,35 @@ function Deck(){
 }
 
 Deck.prototype.createDeck = function() {
-  // YOUR CODE HERE
+  var suits = ["hearts", "diamonds", "spades", "clubs"];
+  var symbols = ["J","Q","K","A"];
+  suits.forEach(function(suit){
+    for(var num = 2; num < 11; num++){
+      this.deck.push(new Card(suit,num,num));
+    };
+    symbols.forEach(function(sym){
+      if(sym==="A"){
+        this.deck.push(new Card(suit,11,sym));
+      }else{
+        this.deck.push(new Card(suit,10,sym));
+      }
+    })
+
+  })
 }
 
 Deck.prototype.shuffleDeck = function() {
-  // YOUR CODE HERE
+  var shuffleDeck = [];
+  for(var i = 51; i >=0 ;i--){
+    function getRandomIntInclusive(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
+    }
+    var card = this.deck.splice(getRandomIntInclusive(0,i),1);
+    shuffleDeck.push(card);
+    this.deck = shuffleDeck.slice();
+  }
 }
 
 GameSchema.methods.calcValue = function(hand){
