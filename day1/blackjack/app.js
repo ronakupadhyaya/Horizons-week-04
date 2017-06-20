@@ -6,14 +6,13 @@ var cookieParser = require('cookie-parser');
 var routes = require('./routes/index');
 var exphbs = require('express-handlebars');
 var app = express();
-var port = '3000'
+var port = '3000';
 var expressValidator = require('express-validator');
 
 // Set your MongoDB connect string through a file called
 // config.js or through setting a new environment variable
 // called MONGODB_URI!
 var db = process.env.MONGODB_URI || require('./config').db;
-
 var mongoose = require('mongoose');
 mongoose.connect(db);
 
