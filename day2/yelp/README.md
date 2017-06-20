@@ -339,7 +339,9 @@ Hooray! You've just built the fundamentals of a social network! Now it's time to
 
 
 ## Step 2: Creating and Viewing Restaurants 🍔
-###Restaurant Models 🍚 - `models/models.js (RestaurantSchema)`
+
+### Restaurant Models 🍚 - `models/models.js (RestaurantSchema)`
+
 To start off the basics of the Restaurants model, let's create some fundamental properties for _what make a restaurant a restaraunt_. The ones we thought of are as follows:
 
 - **Name** (`String`) - the name of the Restaurant
