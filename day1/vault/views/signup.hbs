@@ -1,5 +1,10 @@
 <form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
   <h3>Register</h3>
+  {{#each error}}
+  <div class="alert alert-danger">
+    <strong>{{this.msg}}</strong>
+  </div>
+  {{/each}}
   <div class="form-group">
     <label>Username</label>
     <input type="text" name="username" class="form-control">
