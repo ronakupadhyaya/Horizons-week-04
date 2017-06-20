@@ -47,6 +47,7 @@ router.get('/', function (req, res, next) {
 router.post('/game', function(req, res, next) {
   // YOUR CODE HERE
   // var newgame = new GameModel();
+  console.log("Creating a new game");
   var newgame = GameModel.newGame({}, function(error,savedGame){
 
     if(!error){
@@ -80,11 +81,22 @@ router.use('/game/:id',function(req,res,next){
 
 
 router.get('/game/:id', function(req, res, next) {
+  console.log("testing that i am here");
   var game = req.game;
-  res.render('viewgame', {
-    title: "Game",
-    game: gameRepresentation(game)
-  })
+  // if(req.query.indexOf("json=true") > -1){
+  //
+  // } else {
+  //   res.render('viewgame', {
+  //     title: "Game",
+  //     game: gameRepresentation(game)
+  //   })
+  // }
+
+    res.render('viewgame', {
+      title: "Game",
+      game: gameRepresentation(game)
+    })
+
   // res.json(gameRepresentation(game))
   // res.json({title: "Game", game: gameRepresentation(game)})
 
@@ -102,6 +114,7 @@ router.post('/game/:id', function(req, res, next) {
   // YOUR CODE HERE
   var game = req.game;
   var bet = req.body.bet;
+  console.log("bet from router.post", bet);
   game.dealInitial();
   if(game.playerBet){
     res.json({"error":"already declared bet"})
@@ -113,7 +126,7 @@ router.post('/game/:id', function(req, res, next) {
     if(error){
       console.log("Error saving game");
     }else{
-      res.json({"game": gameRepresentation(game)})
+      res.json(gameRepresentation(game))
 
     }
   });
@@ -134,7 +147,7 @@ router.post('/game/:id/hit', function(req, res, next) {
     if(error){
 
     }else{
-      res.json({"game": gameRepresentation(game)})
+      res.json(gameRepresentation(game))
 
     }
   });

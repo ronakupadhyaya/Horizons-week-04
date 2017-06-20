@@ -136,6 +136,9 @@ GameSchema.methods.gameOver = function(){
     if(this.playerTotal <=21 ){
       this.playerStatus = "win";
       this.dealerStatus = "lose";
+    }else{
+      this.playerStatus = "draw";
+      this.dealerStatus = "draw";
     }
   }else if(this.playerTotal <=21){
     if(this.dealerTotal < this.playerTotal){
@@ -144,13 +147,18 @@ GameSchema.methods.gameOver = function(){
     }else if(this.dealerTotal > this.playerTotal){
       this.playerStatus = "lose";
       this.dealerStatus = "win";
-    }else{
-      this.playerStatus = "idk";
-      this.dealerStatus = "idk";
+    }else{ //if they have same total
+      if(this.dealerTotal === 21){
+        var dealers = _.pluck(this.dealerTotal,"symbol");
+        var users = _.pluck(this.playerTotal,"symbol");
+        console.log(dealers,users);
+      }
+      this.playerStatus = "draw";
+      this.dealerStatus = "draw";
     }
-  } else{
-    this.playerStatus = "idk";
-    this.dealerStatus = "idk";
+  } else{ //if dealer has<=21 and player has>21
+    this.playerStatus = "lose";
+    this.dealerStatus = "win";
   }
 
   // this.save(function(error){})

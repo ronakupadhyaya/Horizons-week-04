@@ -1,14 +1,22 @@
 <h1>Games</h1>
+<form action="/game" method="POST">
+  <!-- <input type="number" name="bet" placeholder="bet amount" /> -->
+  <input type="submit" value="New Game" />
+</form>
 
+<!-- <button type="Submit" name="button">New Game</button> -->
 <!-- <ul> -->
   {{#each games}}
-  <div class="gameobj" id="{{this.id}}" style = "border: 1px solid">
-    <p>{{this.id}}</p>
+  <a class="btn btn-primary" href="/game/{{this.id}}" role="button">{{this.status}}</a>
+  <!-- <div class="gameobj" id="{{this.id}}" style = "border: 1px solid">
+
     <p>{{this.status}}</p>
-    <a href="/game/{{this.id}}">Go to game</a>
-  </div>
+    <a href="/game/{{this.id}}">{{this.status}}</a>
+  </div> -->
 
   {{/each}}
+
+  <!-- <a class="btn btn-primary" href="/game" role="button">New Game</a> -->
 
 <!-- </ul> -->
 <!-- YOUR CODE HERE -->
