@@ -111,7 +111,7 @@ passport.deserializeUser(function(id, done) {
 });
 
 // Unhashed mongo
-// passport.use(new LocalStrategy(function(username, password, done) {
+// passpo2rt.use(new LocalStrategy(function(username, password, done) {
 //     // Find the user with the given username
 //     models.User.findOne({ username: username }, function (err, user) {
 //       // if there's an error, finish trying to authenticate (auth failed)
