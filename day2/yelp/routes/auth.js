@@ -5,6 +5,14 @@ var router = express.Router();
 var models = require('../models/models');
 
 
+function loggedIn(req,res,next) {
+  if (req.user) {
+    res.redirect('/restaurants');
+  } else {
+    next();
+  }
+}
+
 module.exports = function(passport) {
 
   // GET registration page
@@ -24,10 +32,10 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
+      displayName:req.body.displayName,
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
     });
-
     u.save(function(err, user) {
       if (err) {
         console.log(err);
@@ -40,14 +48,15 @@ module.exports = function(passport) {
   });
 
   // GET Login page
-  router.get('/login', function(req, res) {
+  router.get('/login', loggedIn, function(req, res) {
     res.render('login');
   });
 
   // POST Login page
-  router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-  });
+  router.post('/login', passport.authenticate('local', {
+    successRedirect:'/restaurants',
+    failureRedirect:'/login'
+  }));
 
   // GET Logout page
   router.get('/logout', function(req, res) {

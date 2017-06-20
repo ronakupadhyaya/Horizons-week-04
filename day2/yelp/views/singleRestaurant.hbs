@@ -1,1 +1,34 @@
 {{! YOUR CODE HERE }}
+<h4>Name:</h4>
+<p>{{restaurant.name}}</p>
+
+<h4>Price:</h4>
+<p>{{restaurant.price}}</p>
+
+<h4>Category:</h4>
+<p>{{restaurant.category}}</p>
+
+<h4>Stars:</h4>
+<p>{{restaurant.stars}}</p>
+
+<h4>Open Time:</h4>
+<p>{{restaurant.openTime}}</p>
+
+<h4>Closing Time:</h4>
+<p>{{restaurant.closingTime}}</p>
+
+<h4>Map:</h4>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap">
+
+<br />
+<h2>Reviews</h2>
+
+{{#each reviews}}
+<a href="/users/{{userId._id}}">{{userId.displayName}}</a>
+<p>{{star}}</p>
+<p>{{content}}</p>
+<hr />
+{{/each}}
+<form>
+  <a href="/review/{{restaurant._id}}">Add Review</button>
+</form>
