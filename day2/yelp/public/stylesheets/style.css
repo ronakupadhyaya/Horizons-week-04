@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+.directoryContainer {
+  /*display: flex;*/
+  /*justify-content: center;*/
+  /*display: block;*/
+  text-align: center;
+  /*align-items: center;*/
+}
+.element {
+  flex: 1;
+}
+.eachUser {
+  margin: 10px 20px;
+}

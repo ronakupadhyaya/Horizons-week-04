@@ -27,12 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport stuff here
 
 app.use(session({
-    secret: process.env.SECRET,
-    name: 'Catscoookie',
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    proxy: true,
-    resave: true,
-    saveUninitialized: true
+  secret: process.env.SECRET,
+  name: 'Catscoookie',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
 }));
 
 app.use(passport.initialize());
@@ -49,6 +49,10 @@ passport.deserializeUser(function(id, done) {
 });
 
 // passport strategy
+//the authentication method has been set to use a LocalStrategy with Passport to
+//identify users by an email address and check their password (which is stored
+//as a hash in your MongoDB database). Remember: your currently logged-in users
+//are accessible through your Passport-created req.user object.
 passport.use(new LocalStrategy(function(username, password, done) {
     // Find the user with the given username
     models.User.findOne({ email: username }, function (err, user) {

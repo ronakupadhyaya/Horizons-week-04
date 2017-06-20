@@ -1,1 +1,22 @@
 {{! YOUR CODE HERE }}
+<div class="directoryContainer">
+  <div class="element">
+    <h3>User Directory</h3>
+  </div>
+
+  <div class="element">
+    <h4 style="color: pink"><strong>Users ({{users.length}})</strong></h4>
+  </div>
+
+  <div class="element">
+    {{#each users}}
+    <div class="eachUser">
+      <h4>{{this.displayName}}</h4>
+      <h4>{{this.location}}</h4>
+      <button type="submit" name="follow">Follow</button>
+    </div>
+    {{/each}}
+  </div>
+
+
+</div>
