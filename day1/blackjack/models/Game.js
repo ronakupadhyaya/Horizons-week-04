@@ -1,7 +1,36 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  // YOUR CODE HERE
+  playerBet:{
+    type: Number
+  },
+  playerHand: {
+    type:Array
+  },
+  dealerHand:{
+    type:Array
+  },
+  deck: {
+    type: Array
+  },
+  playerHandValue: {
+    type: Number,
+    default: 0
+  },
+  dealerHandValue: {
+    type: Number,
+    default: 0
+  },
+  gameStatus:{
+    type:String,
+    default: "Not Started"
+  },
+  playerStatus: {
+    type:String
+  },
+  dealerStatus: {
+    type:String
+  }
 });
 
 GameSchema.statics.newGame = function(item, callback){
@@ -11,7 +40,9 @@ GameSchema.statics.newGame = function(item, callback){
 }
 
 function Card(suit, val, symbol) {
-  // YOUR CODE HERE
+  this.suit = suit;
+  this.value = val;
+  this.symbol = symbol;
 }
 
 function Deck(){
@@ -22,31 +53,119 @@ function Deck(){
 }
 
 Deck.prototype.createDeck = function() {
-  // YOUR CODE HERE
+  var symbols = ["A", "K", "Q", "J"];
+  var suits = ["hearts", "diamonds", "spades", "clubs"];
+  var self = this;
+  suits.forEach(function(suit){
+
+    for (var i = 2; i < 12; i++) {
+      if (i ===11){
+        symbols.forEach(function(sym){
+          if (sym === "A"){
+            self.deck.push(new Card(suit, 11, sym))
+          }else{
+            self.deck.push(new Card(suit, 10, sym))
+          }
+        })
+      }else{
+        self.deck.push(new Card(suit, i, i.toString()))
+      }
+    }
+  })
 }
 
+
 Deck.prototype.shuffleDeck = function() {
-  // YOUR CODE HERE
+  for (var i = this.deck.length - 1; i > 0; i--) {
+    var index = Math.floor(Math.random() * i);
+    var tmp = this.deck[index];
+    this.deck[index] = this.deck[i];
+    this.deck[i] = tmp;
+  }
 }
 
 GameSchema.methods.calcValue = function(hand){
-  // YOUR CODE HERE
+  var sum = 0;
+  hand.forEach(function(card){
+    sum = sum + card.value
+  })
+  if (this.isBlackjack(hand)){
+    sum = 21;
+  }
+  return sum;
+}
+
+GameSchema.methods.isBlackjack = function(hand){
+  if (hand.length ===2){
+    if ((hand[0].symbol ==="A" && hand[1].symbol ==="K") || (hand[0].symbol ==="K" && hand[1].symbol ==="A")){
+      return true;
+    }
+  }else{
+    return false;
+  }
 }
 
 GameSchema.methods.dealInitial = function() {
-  // YOUR CODE HERE
+  this.gameStatus = "In Progress"
+  this.playerHand.push(this.deck.pop());
+  this.playerHand.push(this.deck.pop());
+  this.dealerHand.push(this.deck.pop());
+  this.dealerHand.push(this.deck.pop());
+  this.playerStatus = "Waiting";
+  this.dealerStatus = "Waiting";
+  this.playerHandValue = this.calcValue(this.playerHand);
+  this.dealerHandValue = this.calcValue(this.dealerHand);
 };
 
 GameSchema.methods.hit = function(){
-  // YOUR CODE HERE
+  this.playerHand.push(this.deck.pop());
+  this.playerHandValue = this.calcValue(this.playerHand);
+  if (this.playerHandValue > 21){
+    this.gameOver();
+  }
 };
 
 GameSchema.methods.stand = function(){
-  // YOUR CODE HERE
+  var dealer = true;
+  while (dealer){
+    if (this.dealerHandValue > 16){
+      dealer = false;
+      this.gameOver();
+    }else{
+      this.dealerHand.push(this.deck.pop());
+      this.dealerHandValue = this.calcValue(this.dealerHand);
+    }
+  }
 }
 
 GameSchema.methods.gameOver = function(){
-  // YOUR CODE HERE
+  this.gameStatus = "Over";
+  if (this.dealerHandValue > 21 && this.playerHandValue<21){
+    this.dealerStatus = "Lose";
+    this.playerStatus = "Win";
+  }else if (this.playerHandValue > 21 && this.dealerHandValue<21){
+    this.dealerStatus = "Win";
+    this.playerStatus = "Lose";
+  }else if (this.dealerHandValue > this.playerHandValue){
+    this.dealerStatus = "Win";
+    this.playerStatus = "Lose";
+  }else if (this.dealerHandValue < this.playerHandValue){
+    this.dealerStatus = "Lose";
+    this.playerStatus = "Win";
+  }else if (this.dealerHandValue === this.playerHandValue){
+    if (this.isBlackjack(this.dealerHand)){
+      if (this.isBlackjack(this.playerHand)){
+          this.dealerStatus = "Draw";
+          this.playerStatus = "Draw";
+      }else{
+        this.dealerStatus = "Win";
+        this.playerStatus = "Lose";
+      }
+    }
+  }else if (this.isBlackjack(this.playerHand)){
+      this.dealerStatus = "Lose";
+      this.playerStatus = "Win";
+  }
 }
 
 module.exports = mongoose.model('Game', GameSchema);

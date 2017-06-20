@@ -29,5 +29,16 @@ app.use(expressValidator());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
+if (! process.env.MONGODB_URI) {//check if source env.sh has been run
+  throw new Error("MONGODB_URI is not in the environmental variables. Try running 'source env.sh'");
+}
+mongoose.connection.on('connected', function() { //prints when connected
+  console.log('Success: connected to MongoDb!');
+});
+mongoose.connection.on('error', function() {//error connecting
+  console.log('Error connecting to MongoDb. Check MONGODB_URI in env.sh');
+  process.exit(1);
+});
+
 app.set('port', port);
 app.listen(port);

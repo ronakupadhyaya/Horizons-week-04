@@ -1,52 +1,121 @@
-window.game = game || {};
+window.game = {};
+$(document).ready(function(){
 
-$(document).on("submit", "form", function(e){
-  e.preventDefault();
-  $.ajax({
-    type: "POST",
-    url: $(location).attr('href'),
-    data: { /* YOUR CODE HERE */ },
-    cache: false,
-    success: function(game){
-      // YOUR CODE HERE
-    }
-  });
-  return false;
-});
+  window.addEventListener("load", getData, false);
 
-window.addEventListener("load", getData, false);
-
-function getData(){
-  // YOUR CODE HERE
-}
-
-
-function play(game){
-  // YOUR CODE HERE
-}
-
-function showCard(card) {
-  var html="";
-  switch(card.suit) {
-    case "hearts": suit_text = "&hearts;"; break;
-    case "diamonds": suit_text = "&diams;"; break;
-    case "spades": suit_text = "&spades;"; break;
-    case "clubs": suit_text = "&clubs;"; break;
+  function getData(){
+    $.ajax({
+      type: "GET",
+      url: $(location).attr('href') + "/json",
+      cache: false,
+      success: function(game){
+        console.log(game);
+        if (game.playerBet === "Not Started"){
+          $('.user-area').hide();
+          $('.dealer-area').hide();
+          $('#betForm').show();
+          // game.dealerHand.forEach(function(item)){
+          //   $('#dealer-hand').append(`<div>${item.suit}${item.val}${item.symbol}</div>`)
+          // }
+          // game.playerHand.forEach(function(item)){
+          //   $('#user-hand').append(`<div>${item.suit}${item.val}${item.symbol}</div>`)
+          // }
+          // $('#dealer-score').val(game.dealerTotal);
+          // $('#user-score').val(game.userTotal);
+        }else{
+          console.log("HERE");
+          play(game);
+        }
+      }
+    });
   }
-  html = "<div class='card " + card.suit + "'>\
-            <div class='card-value'>" + card.symbol + "</div>\
-            <div class='suit'>" + suit_text + "</div>\
-            <div class='main-number'>"+card.symbol +"</div>\
-            <div class='invert card-value'>"+card.symbol+"</div>\
-            <div class='invert suit'>"+suit_text+"</div>\
-          </div>";
-  return html;
-}
+  $("#betForm").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: $(location).attr('href') + '/bet',
+      data: {
+        bet: $("#bet").val()
+      },
+      cache: false,
+      success: function(game){
+        play(game);
+      }
+    });
+    return false;
+  });
 
-function hit() {
-  // YOUR CODE HERE
-}
+  function play(game){
+    var status = game.status;
+    $("#betForm").hide();
+    $(".dealer-area").show();
+    $(".user-area").show();
+    $('#hit').on('click',hit);
+    $('#stand').on('click',stand);
+    $("#user-score").html(game.userTotal);
+    $("#dealer-score").html(game.dealerTotal);
+    console.log(game);
+    console.log(game.currentPlayerHand);
+    for(var i = 0; i < game.currentPlayerHand.length; i++){
+      $('#user-hand').append(showCard(game.currentPlayerHand[i]));
+    }
+    for(var i = 0; i < game.houseHand.length; i++){
+      $('#dealer-hand').append(showCard(game.houseHand[i]));
+    }
 
-function stand() {
-  // YOUR CODE HERE
-}
+    if (game.status === 'Over' ){
+
+      $('#game-status').after('<div>You ' + game.userStatus + '!' + '</div>');
+      $('#hit').hide()
+      $('#stand').hide();
+    }
+    else {
+      var firstCard = $("#dealer-hand .card:first");
+      firstCard.attr("id", "hidden-card");
+    }
+
+  }
+
+  function showCard(card) {
+    var html="";
+    switch(card.suit) {
+      case "hearts": suit_text = "&hearts;"; break;
+      case "diamonds": suit_text = "&diams;"; break;
+      case "spades": suit_text = "&spades;"; break;
+      case "clubs": suit_text = "&clubs;"; break;
+    }
+    html = "<div class='card " + card.suit + "'>\
+    <div class='card-value'>" + card.symbol + "</div>\
+    <div class='suit'>" + suit_text + "</div>\
+    <div class='main-number'>"+card.symbol +"</div>\
+    <div class='invert card-value'>"+card.symbol+"</div>\
+    <div class='invert suit'>"+suit_text+"</div>\
+    </div>";
+    return html;
+  }
+
+  function hit() {
+    $.ajax({
+      type: "POST",
+      url: '/game/'+ game.id + '/hit',
+      dataType: 'json',
+      cache: false,
+      success: function(data){
+        console.log(data);
+        play(data)
+      }
+    });
+  }
+
+  function stand() {
+    $.ajax({
+      type: "POST",
+      url: '/game/'+ game.id + '/stand',
+      dataType: 'json',
+      cache: false,
+      success: function(data){
+        play(data)
+      }
+    });
+  }
+})
