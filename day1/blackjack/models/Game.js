@@ -1,7 +1,15 @@
 var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
-  // YOUR CODE HERE
+  playerBet: Number,
+  playerCard: Array,
+  dealerCard: Array,
+  cardsInDeck: Array,
+  playerValue: Number,
+  dealerValue: Number,
+  gameStatus: 'Not Started',
+  playerStatus: String,
+  dealerStatus: String,
 });
 
 GameSchema.statics.newGame = function(item, callback){
