@@ -139,33 +139,58 @@ GameSchema.methods.stand = function(){
 }
 
 GameSchema.methods.gameOver = function(){
-  this.gameStatus = "Over";
-  if (this.dealerHandValue > 21 && this.playerHandValue<21){
-    this.dealerStatus = "Lose";
-    this.playerStatus = "Win";
-  }else if (this.playerHandValue > 21 && this.dealerHandValue<21){
-    this.dealerStatus = "Win";
-    this.playerStatus = "Lose";
-  }else if (this.dealerHandValue > this.playerHandValue){
-    this.dealerStatus = "Win";
-    this.playerStatus = "Lose";
-  }else if (this.dealerHandValue < this.playerHandValue){
-    this.dealerStatus = "Lose";
-    this.playerStatus = "Win";
-  }else if (this.dealerHandValue === this.playerHandValue){
-    if (this.isBlackjack(this.dealerHand)){
-      if (this.isBlackjack(this.playerHand)){
-          this.dealerStatus = "Draw";
-          this.playerStatus = "Draw";
-      }else{
-        this.dealerStatus = "Win";
-        this.playerStatus = "Lose";
-      }
-    }
-  }else if (this.isBlackjack(this.playerHand)){
+  if (this.dealerHandValue < 22 && this.playerHandValue<22){
+    if (this.dealerHandValue > this.playerHandValue){
+      console.log('1');
+      this.dealerStatus = "Win";
+      this.playerStatus = "Lose";
+    }else if (this.playerHandValue===21 && this.dealerHandValue < 21){
+      console.log('2');
       this.dealerStatus = "Lose";
       this.playerStatus = "Win";
+    }else if (this.dealerHandValue===21 && this.playerHandValue < 21){
+      console.log('3');
+        this.dealerStatus = "Lose";
+        this.playerStatus = "Win";
+    }else{
+      console.log('4');
+      this.dealerStatus = "Lose";
+      this.playerStatus = "Win";
+    }
   }
+  if (this.playerHandValue > 21 || this.dealerHandValue > 21){
+    if (this.playerHandValue > 21){
+      console.log('5');
+      this.dealerStatus = "Win";
+      this.playerStatus = "Lose";
+    }else if (this.dealerHandValue > 21){
+      console.log('6');
+      this.dealerStatus = "Lose";
+      this.playerStatus = "Win";
+    }
+  }
+  if (this.dealerHandValue === this.playerHandValue){
+    if (this.isBlackjack(this.dealerHand) || this.isBlackjack(this.playerHand)){
+      if (this.isBlackjack(this.dealerHand) && this.isBlackjack(this.playerHand)){
+        console.log('7');
+          this.dealerStatus = "Draw";
+          this.playerStatus = "Draw";
+      }else if (this.isBlackjack(this.dealerHand)){
+        console.log('8');
+        this.dealerStatus = "Win";
+        this.playerStatus = "Lose";
+      }else if (this.isBlackjack(this.playerHand)){
+        console.log('9');
+        this.dealerStatus = "Lose";
+        this.playerStatus = "Win";
+      }
+    }else{
+      console.log('10');
+      this.dealerStatus = "Draw";
+      this.playerStatus = "Draw";
+    }
+  }
+  this.gameStatus = "Over";
 }
 
 module.exports = mongoose.model('Game', GameSchema);

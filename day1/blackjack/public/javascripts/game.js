@@ -10,7 +10,8 @@ $(document).ready(function(){
       cache: false,
       success: function(game){
         console.log(game);
-        if (game.playerBet === "Not Started"){
+        if (game.status === "Not Started"){
+          $('.newGameBtn').hide();
           $('.user-area').hide();
           $('.dealer-area').hide();
           $('#betForm').show();
@@ -35,39 +36,42 @@ $(document).ready(function(){
       type: "POST",
       url: $(location).attr('href') + '/bet',
       data: {
-        bet: $("#bet").val()
+        bet: $("#betInput").val()
       },
       cache: false,
       success: function(game){
+        console.log(game);
+        console.log($("#betInput").val());
         play(game);
       }
     });
     return false;
   });
-
+  $('#hit').on('click',hit);
+  $('#stand').on('click',stand);
   function play(game){
     var status = game.status;
+    $('.newGameBtn').hide();
     $("#betForm").hide();
     $(".dealer-area").show();
     $(".user-area").show();
-    $('#hit').on('click',hit);
-    $('#stand').on('click',stand);
     $("#user-score").html(game.userTotal);
-    $("#dealer-score").html(game.dealerTotal);
-    console.log(game);
-    console.log(game.currentPlayerHand);
+    $('#user-hand').empty()
+    $('#dealer-hand').empty();
+
     for(var i = 0; i < game.currentPlayerHand.length; i++){
       $('#user-hand').append(showCard(game.currentPlayerHand[i]));
     }
     for(var i = 0; i < game.houseHand.length; i++){
       $('#dealer-hand').append(showCard(game.houseHand[i]));
     }
-
     if (game.status === 'Over' ){
-
-      $('#game-status').after('<div>You ' + game.userStatus + '!' + '</div>');
+      $("#dealer-score").html(game.dealerTotal);
+      if (game.userStatus === 'Draw' ){$('.blkJ').after('<div style="font-size:large; color:red;">' + game.userStatus + '!</div>');}
+      else{$('.blkJ').after('<div style="font-size:large; color:red;">You ' + game.userStatus + '!' + '</div>');}
       $('#hit').hide()
       $('#stand').hide();
+      $('.newGameBtn').show()
     }
     else {
       var firstCard = $("#dealer-hand .card:first");
@@ -97,7 +101,7 @@ $(document).ready(function(){
   function hit() {
     $.ajax({
       type: "POST",
-      url: '/game/'+ game.id + '/hit',
+      url: $(location).attr('href') +'/hit',
       dataType: 'json',
       cache: false,
       success: function(data){
@@ -110,10 +114,11 @@ $(document).ready(function(){
   function stand() {
     $.ajax({
       type: "POST",
-      url: '/game/'+ game.id + '/stand',
+      url:  $(location).attr('href') +'/stand',
       dataType: 'json',
       cache: false,
       success: function(data){
+        console.log(data);
         play(data)
       }
     });

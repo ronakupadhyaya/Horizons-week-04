@@ -91,6 +91,8 @@ router.post('/game/:id/bet', function(req, res, next) {
   })
 });
 
+
+
 router.post('/game/:id/hit', function(req, res, next) {
   var id = req.params.id;
   Game.findById({_id:id},function(err,item){
@@ -107,6 +109,7 @@ router.post('/game/:id/hit', function(req, res, next) {
           if (err){
             res.json({error:err})
           }else{
+            console.log(gameRepresentation(item));
             res.json(gameRepresentation(item))
           }
         })
@@ -114,6 +117,7 @@ router.post('/game/:id/hit', function(req, res, next) {
     }
   })
 });
+
 
 router.post('/game/:id/stand', function(req, res, next) {
   var id = req.params.id;
@@ -129,6 +133,7 @@ router.post('/game/:id/stand', function(req, res, next) {
           if (err){
             res.json({error:err});
           }else{
+            console.log(gameRepresentation(item));
             res.json(gameRepresentation(item))
           }
         })
@@ -136,5 +141,6 @@ router.post('/game/:id/stand', function(req, res, next) {
     }
   })
 });
+
 
 module.exports = router;
