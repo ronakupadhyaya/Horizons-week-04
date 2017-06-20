@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 var user = mongoose.model('User', {
   username: String,
-  password: String,
+  hashedPassword: String,
 })
 
 module.exports = {

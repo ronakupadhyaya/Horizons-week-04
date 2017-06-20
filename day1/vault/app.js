@@ -25,7 +25,7 @@ var mongoose = require('mongoose');
 mongoose.connection.on('connected', function() {
   console.log('Connected to MongoDb!');
 })
-mongoose.connect('mongodb://tiffany:password@ds131492.mlab.com:31492/vault-tiffany');
+mongoose.connect('mongodb://cyrusbehr:Cyrus1996!@ds131512.mlab.com:31512/week04day1');
 
 // SESSION SETUP HERE
 var session = require('express-session');
@@ -64,7 +64,7 @@ passport.use(new LocalStrategy (
   function(username, password, done) {
     User.findOne({username: username}, function(err, user) {
       if (user.username === username) {
-        if (user.password === password) {
+        if (user.hashedPassword === hashPassword(password)) {
           return done(null, user);
         } else {
           return done(null, false, {message: "incorrect password"});
@@ -123,7 +123,7 @@ app.post('/signup', function(req, res) {
   } else {
     var newUser = new User({
       username: req.body.username,
-      password: req.body.password
+      hashedPassword: hashPassword(req.body.password)
     })
     newUser.save(function(err) {
       if (err) {
