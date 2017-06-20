@@ -52,22 +52,28 @@ function hashPassword(password){
 //     }
 // ));
 
-passport.use(new LocalStrategy(
-  function(username, password, done){
-    var hpass = hashPassword(password)
-    for(var i = 0; i < hPasswords.passwords.length; i++){
-      if((username === hPasswords.passwords[i].username) && (hpass === hPasswords.passwords[i].password)){
-          return done(null,  hPasswords.passwords[i])
-        } else{console.log("NOPE")}
-      }
-    }
-));
-
 // passport.use(new LocalStrategy(
-//   function(username, password, done) {
-//     User.findOne({username: username})
-//   }
-// ))
+//   function(username, password, done){
+//     var hpass = hashPassword(password)
+//     for(var i = 0; i < hPasswords.passwords.length; i++){
+//       if((username === hPasswords.passwords[i].username) && (hpass === hPasswords.passwords[i].password)){
+//           return done(null,  hPasswords.passwords[i])
+//         } else{console.log("NOPE")}
+//       }
+//     }
+// ));
+
+
+// This isn't finished but it starts
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({username: username, password: password}, function(err, doc){
+      if(err){console.log("CAN'T EVEN BEGIN TO FIND BECAUSE: " + err)}
+      //if doc is found it'll be truthy
+      else if(doc){}
+    })
+  }
+))
 
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
