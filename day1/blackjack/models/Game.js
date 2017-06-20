@@ -2,6 +2,19 @@ var mongoose = require('mongoose');
 
 var GameSchema = new mongoose.Schema({
   // YOUR CODE HERE
+  bet: Number,
+  playerCards: Array,
+  dealerCards: Array,
+  deckCards: Array,
+  playerValue: Number,
+  dealerValue: Number,
+  gameState: {
+    type: String,
+    enum: ["Not Started", "Over", "In Progress"],
+    default: "Not Started"
+  },
+  playerStatus: String,
+  dealerStatus: String
 });
 
 GameSchema.statics.newGame = function(item, callback){
@@ -12,6 +25,11 @@ GameSchema.statics.newGame = function(item, callback){
 
 function Card(suit, val, symbol) {
   // YOUR CODE HERE
+  return {
+    suit: suit,
+    val: val,
+    symbol: symbol
+  }
 }
 
 function Deck(){
@@ -23,6 +41,7 @@ function Deck(){
 
 Deck.prototype.createDeck = function() {
   // YOUR CODE HERE
+  this.deck
 }
 
 Deck.prototype.shuffleDeck = function() {
