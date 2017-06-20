@@ -72,17 +72,6 @@ passport.use(new LocalStrategy (
         return done(null, false, {message: "incorrect username"});
       }
     })
-
-    // hashed.passwords.forEach(function(user) {
-    //   if (username === user.username) {
-    //     if (user.password === hashPassword(password)) {
-    //       return done(null, user);
-    //     } else {
-    //       return done(null, false, {message: "incorrect password"});
-    //     }
-    //     return done(null, false, {message: "incorrect username"});
-    //   }
-    // })
   }
 ));
 
