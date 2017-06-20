@@ -1,3 +1,8 @@
-<h1>Games</h1>
+<h1>All Games</h1>
 
 <!-- YOUR CODE HERE -->
+<ul>
+  {{#each games}}
+    <b><a href="/game/{{id}}">Game </a>ID:</b> {{id}} <b>Status:</b> {{currentStatus}}<br>
+  {{/each}}
+</ul>

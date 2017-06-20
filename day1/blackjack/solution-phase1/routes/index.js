@@ -4,7 +4,7 @@ var router = express.Router({ mergeParams: true });
 var GameModel = require('../models/Game.js');
 
 var gameRepresentation = function(game) {
-  return {
+  return { 
     id: game.id,
     playerBet: game.playerBet,
     status: game.status,
@@ -74,7 +74,7 @@ router.post('/game/:id', function(req, res, next) {
 router.post('/game/:id/hit', function(req, res, next) {
   GameModel.findById(req.params.id, function (err, game) {
     if (err) return res.status(500).send(err);
-    if (game.status !== "In Progress" 
+    if (game.status !== "In Progress"
         || game.playerBet === 0) return next(new Error("Start game and set bet"));
     game.hit();
     game.save(function(err) {
@@ -86,7 +86,7 @@ router.post('/game/:id/hit', function(req, res, next) {
 router.post('/game/:id/stand', function(req, res, next) {
   GameModel.findById(req.params.id, function (err, game) {
     if (err) return res.status(500).send(err);
-    if (game.status !== "In Progress" 
+    if (game.status !== "In Progress"
         || game.playerBet === 0) return next(new Error("Start game and set bet"));
     game.stand();
     game.save(function(err) {
