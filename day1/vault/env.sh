@@ -1,0 +1,1 @@
+export MONGO_URI=mongodb://ben:ben@ds115411.mlab.com:15411/vault_ben
