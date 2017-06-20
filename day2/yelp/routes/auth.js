@@ -24,10 +24,12 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
+      name: req.body.displayName,
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      location: req.body.location
     });
-
+    console.log("new user register to be saved", u)
     u.save(function(err, user) {
       if (err) {
         console.log(err);
