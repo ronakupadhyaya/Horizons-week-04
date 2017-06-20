@@ -13,7 +13,6 @@ var expressValidator = require('express-validator');
 // config.js or through setting a new environment variable
 // called MONGODB_URI!
 var db = process.env.MONGODB_URI || require('./config').db;
-
 var mongoose = require('mongoose');
 mongoose.connect(db);
 
@@ -31,3 +30,4 @@ app.use('/', routes);
 
 app.set('port', port);
 app.listen(port);
+console.log("Listening on port 3000!");

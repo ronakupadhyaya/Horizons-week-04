@@ -1,3 +1,6 @@
 <h1>Games</h1>
 
-<!-- YOUR CODE HERE -->
+{{#each games}}
+    <a href="http://localhost:3000/game/{{this._id}}">Game: {{this._id}}</a>
+    <br>
+{{/each}}
