@@ -1,0 +1,1 @@
+export MONGODB_URI=mongodb://neil:perr@ds131432.mlab.com:31432/blackjack
