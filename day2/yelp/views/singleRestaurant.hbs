@@ -1,1 +1,15 @@
 {{! YOUR CODE HERE }}
+<h3>{{restaurant.name}}</h3>
+<div>Relative price: {{restaurant.price}}</div>
+<div>Category: {{restaurant.category}}</div>
+
+<h5>Hours Today: {{restaurant.openingTime}}am-{{restaurant.closingTime}}pm</h5>
+
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap">
+
+<div class="form-group">
+  <button class="btn btn-success">Add Review</button>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOa6_XxT1SdAMDZCdksU2DHGrkG_v3Dgs&callback=initMap"
+type="text/javascript"></script>
