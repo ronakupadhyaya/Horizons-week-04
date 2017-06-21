@@ -1,25 +1,39 @@
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
+{{#if doesFollow}}
+  {{#if notSelf}}
+    <form action="/unfollow/{{user._id}}" method="post">
+        <input style="display: inline;" type="submit" value="Unfollow">
+    </form>
+  {{/if}}
+{{else}}
+  {{#if notSelf}}
+    <form action="/follow/{{user._id}}" method="post">
+        <input style="display: inline;" type="submit" value="Follow">
+    </form>
+  {{/if}}
+{{/if}}
+
 <h4>Email:</h4>
-<p>{{user.username}}</p>
+<p>{{user.email}}</p>
 
 <h4>Address:</h4>
-<p>{{user.address}}</p>
+<p>{{user.location}}</p>
 
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
-</div>
+  <h5>{{this.toId.displayName}}</h5>
+  <a href="/user/{{this.toId._id}}">View profile</a>
 {{/each}}
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{uid1.displayName}}</p>
+  <div>
+    <h5>{{this.fromId.displayName}}</h5>
+    <a href="/user/{{this.fromId._id}}">View profile</a>
+  </div>
 {{/each}}

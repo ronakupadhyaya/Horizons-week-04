@@ -10,7 +10,13 @@ var models = require('./models/models')
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
+
 var mongoose = require('mongoose');
+mongoose.connection.on('connected', function() {
+    console.log('CONNECTED TO DATABASE');
+});
+mongoose.connect(process.env.MONGODB_URI);
+
 var app = express();
 
 // view engine setup
@@ -105,6 +111,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;
