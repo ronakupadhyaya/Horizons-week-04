@@ -1,1 +1,27 @@
-{{! YOUR CODE HERE }}
+{{#each restaurant}}
+<div>
+  <label>Name:</label>
+  <p>{{name}}</p>
+
+  <label>Category:</label>
+  <p>{{category}}</p>
+
+  <label>Address:</label>
+  <p>{{address}}</p>
+
+  <label>Price range:</label>
+  <p>{{price}}</p>
+
+  <label>Open Time:</label>
+  <p>{{openTime}}</p>
+
+  <label>Closing Time:</label>
+  <p>{{closingTime}}</p>
+
+  <label>Average rating:</label>
+  <p>{{averageRating}}</p>
+
+  <a href="/restaurants/{{_id}}" button>View this restaurant</a>
+  <hr>
+</div>
+{{/each}}

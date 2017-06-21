@@ -19,11 +19,16 @@ app.get('/', function(req, res) {
   var pageNumber = getPageNumber(Number(req.query.page));
   var prev = (pageNumber <= 1 ? 1 : pageNumber - 1);
   var next = pageNumber + 1;
-  var limit = Number(req.query.limit) || 10;
+  var limit = Number(req.query.limit) || 15;
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
-
-  User.find(function(err,users){
+  console.log(pageNumber, limit);
+  User
+  .find()
+  .sort({'name.first': 1})
+  .skip((pageNumber - 1) * limit)
+  .limit(limit)
+  .exec(function(err,users){
     res.render('index', {
       listItems: users,
       prev: prev,

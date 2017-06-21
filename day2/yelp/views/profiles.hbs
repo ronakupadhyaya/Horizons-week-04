@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+{{#each user}}
+<div>
+  <label>Name:</label>
+  <p>{{displayName}}</p>
+
+  <label>Email:</label>
+  <p>{{email}}</p>
+
+  <label>Location:</label>
+  <p>{{location}}</p>
+
+  <a href="/users/{{_id}}" button>View this profile</a>
+  <hr>
+</div>
+{{/each}}
