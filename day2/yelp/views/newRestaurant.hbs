@@ -1,1 +1,41 @@
-{{! YOUR CODE HERE }}
+{{!-- {{#if error}}
+  <div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    {{error}}
+  </div>
+{{/if}} --}}
+<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+<h3>New Restaurant</h3>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Price</label>
+    <input type="text" name="price" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    <input type="text" name="category" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Latitude</label>
+    <input type="text" name="latitude" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Longitude</label>
+    <input type="text" name="longitude" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Opening Hour</label>
+    <input type="number" name="openTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Closing Hour</label>
+    <input type="text" name="closeTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success">Register</button>
+  </div>
+</form>

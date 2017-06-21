@@ -1,1 +1,29 @@
-{{! YOUR CODE HERE }}
+<h3>{{restaurant.name}}</h3>
+
+<h4>Price:</h4>
+<p>{{restaurant.price}}</p>
+
+<h4>Category:</h4>
+<p>{{restaurant.category}}</p>
+
+<h4>Latitude:</h4>
+<p>{{restaurant.latitude}}</p>
+
+<h4>Longitude:</h4>
+<p>{{restaurant.longtitude}}</p>
+
+<h4>Hours: </h4>
+<p>{{restaurant.openTime}} - {{restaurant.closeTime}}</p>
+
+<h4>Total Score:</h4>
+<p>{{restaurant.totalScore}}</p>
+
+<h3>Reviews: {{restaurant.reviewCount}} total</h3>
+{{#each reviews}}
+<h4>User: {{this.user.displayName}}</h4>
+<h5>Stars: {{this.stars}}</h5>
+<p>{{this.content}}</p>
+
+{{/each}}
+
+<a href="/restaurants/writereview/{{restaurant._id}}">Write a Review</a>

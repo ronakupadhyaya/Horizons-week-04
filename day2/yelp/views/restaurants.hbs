@@ -1,1 +1,29 @@
-{{! YOUR CODE HERE }}
+<h3>Restaurants</h3>
+{{#each restaurants}}
+<h4>Name:</h4>
+<p>{{this.name}}</p>
+
+<h4>Price:</h4>
+<p>{{this.price}}</p>
+
+<h4>Category:</h4>
+<p>{{this.category}}</p>
+
+<h4>Latitude:</h4>
+<p>{{this.latitude}}</p>
+
+<h4>Longitude:</h4>
+<p>{{this.longtitude}}</p>
+
+<h4>Hours: </h4>
+<p>{{this.openTime}} - {{this.closeTime}}</p>
+
+<h4>Total Score:</h4>
+<p>{{this.totalScore}}</p>
+
+<h4>Review Count:</h4>
+<p>{{this.reviewCount}}</p><br>
+
+<a href="/restaurants/{{this._id}}">View Restaurant</a>
+
+{{/each}}

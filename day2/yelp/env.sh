@@ -1,0 +1,1 @@
+export MONGODB_URI=mongodb://teresaliu20:thirstymango655@ds133582.mlab.com:33582/horizons-yelp
