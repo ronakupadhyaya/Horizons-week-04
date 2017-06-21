@@ -1,1 +1,23 @@
-{{! YOUR CODE HERE }}
+<h1 class="text-center page_title">Profiles</h1>
+<div id=profiles>
+  {{#each users}}
+    <div class="profile">
+      <div>
+        <a href="/profiles/{{this.id}}"><h3> {{this.displayName}}</h3></a>
+      </div> <div>
+        <h4>Location: </h4>
+        <h5> {{this.location}}</h5>
+      </div>
+      <!-- <div>
+        <form action="/profiles/{{this.id}}" method="get">
+          <input style="display: inline;" type="submit" value="View this Profile">
+        </form>
+      </div> -->
+    </div>
+    <br />
+  {{/each}}
+</div>
+<br />
+<form  action="/profiles" method="get">
+  <input style="display: inline;" type="submit" value="Back to All Profiles >">
+</form>

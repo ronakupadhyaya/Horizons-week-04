@@ -1,1 +1,44 @@
-{{! YOUR CODE HERE }}
+<div class="title text-center">
+  <h1 style="margin-bottom: 20px;" class="page_title"> {{restaurant.name}}</h1>
+</div>
+<div id="single_restaurant">
+  <div class="single_rest_item">
+    <h3>Details</h3>
+    <br />
+    <h4>Category: {{restaurant.category}}</h4>
+    <div class="single_rest_div">
+      <h4>Price: {{restaurant.price}}</h4>
+      <h4>Open from {{restaurant.openTime}} to {{restaurant.closingTime}}</h4>
+    </div>
+    <div class="">
+      <h4>Location:</h4>
+      <img width=60% src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyBDKUy7p8nfX9b13JTN2pe-1nXYbtrX_7A">
+    </div>
+    <div id="stats">
+      <h4>Review Count: {{restaurant.reviewCount}}</h4>
+      <h4>Total Score: {{restaurant.totalScore}}</h4>
+      <h4>Average Rating: {{restaurant.averageRating}}</h4>
+    </div>
+  </div>
+  <div id="reviews" class="single_rest_item">
+    <div class="single_rest_div">
+      <h3 class="text-center">Reviews</h3>
+      <br />
+      <form  action="/restaurants/{{restaurant.id}}/review" method="get">
+        <input style="display: inline;" type="submit" value="Write a Review">
+      </form>
+      <br />
+      {{#each reviews}}
+      <h4>{{this.user.displayName}}</h4>
+      <h5>rating: {{this.stars}}</h5>
+      <h5>{{this.content}}</h5>
+      {{/each}}
+    </div>
+  </div>
+  <br /> <br />
+</div>
+<div class="text-center">
+  <form  action="/restaurants" method="get">
+    <input style="display: inline; margin-top:20px; margin-bottom: 30px;" type="submit" value="Back to All Restaurants >">
+  </form>
+</div>

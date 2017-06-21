@@ -1,1 +1,45 @@
-{{! YOUR CODE HERE }}
+<div class="title text-center">
+  <h1 class="text-center page_title">Restaurants</h1>
+</div>
+<div id="restaurants">
+  {{#each restaurants}}
+  <div class="restaurant">
+    <div class="rest-item">
+      <a href="/restaurants/{{this._id}}"><h3>{{this.name}}</h3></a>
+    </div> <div class="rest-item rest-stuffs">
+      <div class="rest-item-obj">
+        <h5>Category: {{this.category}}</h5>
+      </div> <div class="rest-item-obj">
+        <h5>Price: {{this.price}}</h5>
+      </div> <div class="rest-item-obj">
+        <h5>Total Score: {{this.totalScore}}</h5>
+      </div> <div class="rest-item-obj">
+        <h5>Review Count: {{this.reviewCount}}</h5>
+      </div> <div class="rest-item-obj">
+        <h5>Location: {{this.address}}</h5>
+      </div> <div class="rest-item-obj">
+        <h5>Open from {{this.openTime}} to {{this.closingTime}}</h5>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+<br />
+<form action="/restaurants/new" method="get" id="new_restaurant">
+  <input style="display: inline;" type="submit" value="Register New Restaurant">
+</form>
+<style>
+  #new_restaurant {
+    display: flex;
+    justify-content: center;
+  }
+  #new-restaurant input {
+    flex: 1;
+    color: white;
+    background-color: black;
+  }
+</style>
+<br /> <br />
+<!-- <form  action="/" method="get">
+  <input style="display: inline;" type="submit" value="Back to Homepage >">
+</form> -->

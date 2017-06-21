@@ -1,25 +1,52 @@
-<h4>Name:</h4>
-<p>{{user.displayName}}</p>
-
-<h4>Email:</h4>
-<p>{{user.username}}</p>
-
-<h4>Address:</h4>
-<p>{{user.address}}</p>
-
-<h4>Reviews:</h4>
-<p>{{user.reviews}}</p>
-
-<h4>Following:</h4>
-{{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
+<div class="title text-center">
+  <h1 class="page_title">
+    {{user.displayName}}
+  </h1>
+  <div id="follow-unfollow-btn">
+    {{#if showUnfollowButton}}
+    <form action="/unfollow/{{user.id}}" method="post">
+      <input style="display: inline; margin-bottom: 30px;" type="submit" value="Unfollow">
+    </form>
+    {{else}}
+    {{/if}}
+    {{#if showFollowButton}}
+    <form action="/follow/{{user.id}}" method="post">
+      <input style="display: inline; margin-bottom: 30px;" type="submit" value="Follow">
+    </form>
+    {{else}}
+    {{/if}}
+  </div>
 </div>
-{{/each}}
 
-<h4>Followers:</h4>
-{{#each followers}}
-  <p>{{uid1.displayName}}</p>
-{{/each}}
+<div id="single_profile">
+  <div id="profile_item1">
+    <h4>Email:</h4>
+    <h4>{{user.email}}</h4>
+
+    <h4>Location:</h4>
+    <h4>{{user.location}}</h4>
+
+  </div><div id="profile_item2">
+    <div>
+      <h4>Following:</h4>
+      {{#each following}}
+        <div>
+        <a href="/profiles/{{this.to._id}}"><h5>{{this.to.displayName}}</h5></a>
+        <p>{{this.to.location}}</p>
+      </div>
+      {{/each}}
+    </div>
+    <div>
+      <h4>Followers:</h4>
+      {{#each followers}}
+          <a href="/profiles/{{this.to._id}}"><h5>{{this.from.displayName}}</h5></a>
+        <p>{{this.from.location}}</p>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+<br /> <br />
+<form class="text-center" action="/profiles" method="get">
+  <input style="display: inline;" type="submit" value="Back to All Profiles >">
+</form>

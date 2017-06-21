@@ -1,1 +1,53 @@
-{{! YOUR CODE HERE }}
+{{#if error}}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+</div>
+{{/if}}
+<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <h3 class="page_title">New Restaurant</h3>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Price</label>
+    <input type="text" name="price" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    <input type="text" name="category" class="form-control">
+  </div>
+  <br />
+  <label>Address:</label>
+
+  <div class="form-group" id="address">
+    <!-- <label>Street Number</label> -->
+    <input type="text" name="address_number" class="form-control" placeholder="Street Number">
+    <!-- <label>Street</label> -->
+    <input type="text" name="address_street" class="form-control" placeholder="Street">
+    <!-- <label>City</label> -->
+    <input type="text" name="address_city" class="form-control" placeholder="City">
+    <!-- <label>State</label> -->
+    <input type="text" name="address_state" class="form-control" placeholder="State">
+  </div>
+  <br />
+  <div class="form-group">
+    <label>Open Time</label>
+    <input type="text" name="openTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Closing Time</label>
+    <input type="text" name="closingTime" class="form-control">
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-success">Create New Restaurant</button>
+  </div>
+  <style>
+    #address input{
+      margin-bottom: 5px;
+    }
+  </style>
+</form>

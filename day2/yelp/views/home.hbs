@@ -1,0 +1,69 @@
+<br />
+<div id="home-welcome" class="title text-center row">
+  <div class="col-xs-6 col-xs-offset-3">
+    <h1></h1>
+  </div>
+</div>
+<!-- <img src="https://unsplash.com/search/people-black-and-white?photo=_es6l-aPDA0" alt="try1" /> -->
+<br />
+<div id="home-main">
+  <div>
+    <div id="wrapper1" class="img bg-wrapper">
+      <img src="https://static.pexels.com/photos/966/black-and-white-restaurant-eating-sitting.jpg" alt="restaurant pic" />
+      <!-- ::before -->
+    </div>
+    <div id="text1" class="home-text">
+      <a href="/restaurants"> <h1> RESTAURANTS </h1> </a>
+    </div>
+  </div><div>
+    <div id="wrapper2" class="img bg-wrapper">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Friends_.jpg" alt="restaurant pic" />
+    </div>
+    <div id="text2" class="home-text">
+      <a href="/profiles"> <h1> PROFILES </h1> </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bg-wrapper {
+    margin-top: 10%;
+    position: absolute;
+    bottom: 2%;
+    height: 90%;
+    z-index: -1;
+  }
+  #wrapper1 {
+    right: 50%;
+  }
+  #wrapper2 {
+    left: 50%;
+  }
+  #text1, #text2 {
+    position: absolute;
+    bottom: 7%;
+    background-color: rgba(0,0,0,0.8);
+    margin-top: 0;
+    padding: 0 10px 10px 10px;
+  }
+  #text1 {
+    left: 5%;
+  }
+  #text2 {
+    right: 5%;
+  }
+  .bg-wrapper > img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    z-index: -2;
+  }
+  /*.bg-wrapper::before {
+    position: absolute;
+    color: white;
+    width: inherit;
+    height: 90%;
+    background-color: rgba(0, 0, 255, 1);
+    z-index: 1;
+  }*/
+</style>

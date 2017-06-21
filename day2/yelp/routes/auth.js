@@ -4,7 +4,6 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models/models');
 
-
 module.exports = function(passport) {
 
   // GET registration page
@@ -24,6 +23,7 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
+      displayName: req.body.displayName,
       email: req.body.username,
       password: req.body.password
     });
@@ -41,7 +41,7 @@ module.exports = function(passport) {
 
   // GET Login page
   router.get('/login', function(req, res) {
-    res.render('login');
+    res.render('login', {notLoggedIn: true});
   });
 
   // POST Login page
