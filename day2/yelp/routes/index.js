@@ -31,7 +31,26 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
+
+router.get('/users/:userId', function(req, res){
+  var userId=req.params.userId:
+
+  User.findByID)userId, function(err, user){
+    if(err || !user){
+      res.status(404).send("no user");
+    } else{
+      user.getFollows(function(err, result){
+        //this is the function known as callback in the other result
+
+        var allFollowing=result.allFollowing;
+        var allFollowers=result.allFollowers;
+        res.render('singleProfile', {user: user})
+
+      })
+    }
+  }
+})
 
 module.exports = router;

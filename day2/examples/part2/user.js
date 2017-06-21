@@ -13,8 +13,13 @@ var userSchema = new Schema({
 },{
   toJSON:{
     virtuals:true
-  }
-});
+},
+
+}), userSchemaOptions;
+
+var ageVirtual=userSchema.virtual('age')
+
+// ageVirtual
 
 var User = mongoose.model('User', userSchema);
 
