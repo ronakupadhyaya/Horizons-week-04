@@ -1,1 +1,17 @@
 {{! YOUR CODE HERE }}
+<div class="restContainer">
+  <div class="restHead">
+    <h1 style="text-align:center;">{{restaurant.name}}</h1>
+      {{dollars}}
+  </div>
+  <div class="rating">
+  </div>
+  <div class="map">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap">
+  </div>
+  <div class="submitRating">
+    <form method="GET" action="/">
+      <input type="submit" name="rating" value="Submit a Rating" class="btn btn-warning btn btn-warning btn-lg btn-block" id="submit-rating" />
+    </form>
+  </div>
+</div>

@@ -1,8 +1,14 @@
 // Add Passport-related auth routes here.
 
 var express = require('express');
+var mongoose = require('mongoose');
 var router = express.Router();
 var models = require('../models/models');
+var User = mongoose.model('User')
+var Restaurant = mongoose.model('Restaurant')
+var Review = mongoose.model('Review')
+var Follow = mongoose.model('Follow')
+
 
 
 module.exports = function(passport) {
@@ -24,8 +30,9 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
-      email: req.body.username,
-      password: req.body.password
+      username: req.body.username,
+      password: req.body.password,
+      displayName: req.body.displayName
     });
 
     u.save(function(err, user) {
@@ -46,7 +53,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/profile');
   });
 
   // GET Logout page

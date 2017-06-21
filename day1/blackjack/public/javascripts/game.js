@@ -1,9 +1,14 @@
 window.game = {};
-$(document).ready(function(){
+
+// $(document).ready(function(){
 
   window.addEventListener("load", getData, false);
 
   function getData(){
+    $('.newGameBtn').hide();
+    $('.user-area').hide();
+    $('.dealer-area').hide();
+    $('#betForm').show();
     $.ajax({
       type: "GET",
       url: $(location).attr('href') + "/json",
@@ -11,20 +16,8 @@ $(document).ready(function(){
       success: function(game){
         console.log(game);
         if (game.status === "Not Started"){
-          $('.newGameBtn').hide();
-          $('.user-area').hide();
-          $('.dealer-area').hide();
-          $('#betForm').show();
-          // game.dealerHand.forEach(function(item)){
-          //   $('#dealer-hand').append(`<div>${item.suit}${item.val}${item.symbol}</div>`)
-          // }
-          // game.playerHand.forEach(function(item)){
-          //   $('#user-hand').append(`<div>${item.suit}${item.val}${item.symbol}</div>`)
-          // }
-          // $('#dealer-score').val(game.dealerTotal);
-          // $('#user-score').val(game.userTotal);
+
         }else{
-          console.log("HERE");
           play(game);
         }
       }
@@ -40,8 +33,6 @@ $(document).ready(function(){
       },
       cache: false,
       success: function(game){
-        console.log(game);
-        console.log($("#betInput").val());
         play(game);
       }
     });
@@ -74,8 +65,7 @@ $(document).ready(function(){
       $('.newGameBtn').show()
     }
     else {
-      var firstCard = $("#dealer-hand .card:first");
-      firstCard.attr("id", "hidden-card");
+      $("#dealer-hand .card:first").attr("id", "hidden-card");
     }
 
   }
@@ -105,7 +95,6 @@ $(document).ready(function(){
       dataType: 'json',
       cache: false,
       success: function(data){
-        console.log(data);
         play(data)
       }
     });
@@ -118,9 +107,8 @@ $(document).ready(function(){
       dataType: 'json',
       cache: false,
       success: function(data){
-        console.log(data);
         play(data)
       }
     });
   }
-})
+//})

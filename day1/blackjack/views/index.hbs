@@ -2,12 +2,12 @@
 
   {{#each items}}
   <div>
-  <button type="button" class="btn btn-primary" id="{{id}}"><a style="text-decoration: inherit;color: inherit;cursor: auto;" href="/game/{{id}}">{{gameStatus}}</a></button>
+  <button type="button" class="btn btn-primary gameBtn" id="{{id}}"><a style="text-decoration: inherit;color: inherit;cursor: auto;" href="/game/{{id}}">{{gameStatus}}</a></button>
   </div>
   {{/each}}
   <form action="/game" method="POST">
   <!-- <input type="number" name="bet" placeholder="bet amount" /> -->
-  <input type="submit" value="New Game" />
+  <input type="submit" class="gameBtn" value="New Game" />
     <!-- <button type="button" id="new" class="btn btn-success btn-lg">Start A New Game</button> -->
   </form>
 <!-- YOUR CODE HERE -->

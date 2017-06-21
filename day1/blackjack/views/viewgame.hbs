@@ -1,9 +1,9 @@
 <h1 style="text-align:center;" class="blkJ">Black Jack</h1>
-<form action="/game" method="POST" class="newGameBtn"><input type="submit" value="New Game" /></form>
+<form action="/game" method="POST" class="newGameBtn"><input type="submit" value="New Game" class="newGame"/></form>
 <form id="betForm" action="" method="POST">
   <h2>Bet:</h2>
   <input type="number" value="numField" id="betInput" name="bet" placeholder="Bet amount" />
-  <input type="submit" value="Submit" />
+  <input type="submit" class="back" value="Submit" />
 </form>
 
 
@@ -32,6 +32,6 @@
     </div>
   </div>
 </div>
-<a href='/' style="text-align:center;">Back to All Games</a>
+<a href='/' class="back" style="text-align:center;">Back to All Games</a>
 
 <script type="text/javascript" src='/javascripts/game.js'></script>

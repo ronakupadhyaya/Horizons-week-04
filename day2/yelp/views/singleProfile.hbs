@@ -1,3 +1,18 @@
+{{#if follow}}
+<form action="/profile/{{user._id}}/unfollow" method="POST" id="unfollow">
+  <button type="submit" form="unfollow" value="Submit">
+    <div style="font-weight:bold;">Unfollow</div>
+  </button>
+</form>
+{{else if self}}
+{{else}}
+<form action="/profile/{{user._id}}/follow" method="POST" id="follow">
+  <button type="submit" form="follow" value="Submit">
+    <div style="font-weight:bold;">Follow</div>
+  </button>
+</form>
+{{/if}}
+
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
@@ -12,8 +27,8 @@
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
+  <div>{{userTo.displayName}}
+  <form  action="/profile/{{userTo.id}}/unfollow" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
@@ -21,5 +36,10 @@
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{uid1.displayName}}</p>
+  <p>{{userFrom.displayName}}</p>
 {{/each}}
+<form action="/profile" method="GET" id="backForm">
+  <button type="submit" form="backForm" value="Submit">
+    Back To All Profiles
+  </button>
+</form>

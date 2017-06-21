@@ -1,5 +1,6 @@
 var express = require('express');
 var session = require('express-session')
+var expressValidator = require('express-validator')
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -20,6 +21,7 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator())
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -51,7 +53,7 @@ passport.deserializeUser(function(id, done) {
 // passport strategy
 passport.use(new LocalStrategy(function(username, password, done) {
     // Find the user with the given username
-    models.User.findOne({ email: username }, function (err, user) {
+    models.User.findOne({ username: username }, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
       if (err) {
         console.error(err);
