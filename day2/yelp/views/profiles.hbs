@@ -1,1 +1,8 @@
 {{! YOUR CODE HERE }}
+<h1>Users: {{users.length}}</h1>
+{{#each users}}
+<div >
+  <p>{{users.name}}</p>
+  <p>{{users.location}}</p>
+</div>
+{{/each users}}

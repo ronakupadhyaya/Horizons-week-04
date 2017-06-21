@@ -22,16 +22,25 @@ app.get('/', function(req, res) {
   var limit = Number(req.query.limit) || 10;
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
+  User.find()
+    .sort({
+      'name.first': 1
+    })
+    .skip(limit * (pageNumber - 1))
+    .limit(limit) // limit ----include   skip --- exclude
+    .exec(function(err, users) {
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
+    })
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
-    });
-  });
+  // User.find(function(err, users) {
+  //
+  // });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
@@ -42,7 +51,7 @@ app.get('/', function(req, res) {
 //-------------------DON'T EDIT BELOW THIS LINE!----------------------//
 
 //helper function to avoid users inputting negative values or 0 for page number
-var getPageNumber = function (attempt) {
+var getPageNumber = function(attempt) {
   if (!attempt || attempt <= 1) {
     return 1;
   } else {
@@ -52,6 +61,6 @@ var getPageNumber = function (attempt) {
 
 var port = process.env.PORT || 3000;
 
-server.listen(port, function () {
+server.listen(port, function() {
   console.log('listening on port ' + port);
 });

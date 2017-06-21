@@ -2,13 +2,15 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(function(username, password, done) {
-  done(null, {username: username});
+  done(null, {
+    username: username
+  });
 }));
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function(user, done) { //saving user into session
   done(null, user);
 });
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function(user, done) { // reading user from session
   done(null, user);
 });
 
@@ -31,5 +33,11 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
 }));
-
+router.use('/', function(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.send('you did not login !')
+  }
+})
 module.exports = router;
