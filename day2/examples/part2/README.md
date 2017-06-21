@@ -120,7 +120,7 @@ name and birthday are properly displayed
     When called `toggleGender` should set the `gender` property of the current
     user to be `male` if the current user is `female` and vice versa.
 
-    You do **not** to `.save()` the user after modifying it.
+    You do **not** need to `.save()` the user after modifying it.
 
     You can see how this static is called in `week04/day2/examples/part2/server.js` in the
     `GET /toggle` route
@@ -139,10 +139,10 @@ the page you should see the gender alternate between `male` and `female`
 ## Section 4: Statics
 ### [Watch me](https://vimeo.com/album/4604349/video/219184740)
 
-1. Edit `week04/day2/examples/part2/user.js` and add a static called `getByFirstName` to the
+1. Edit `week04/day2/examples/part2/user.js` and add a static called `findByName` to the
 `User` schema
 
-    `getByFirstName` should take a String `name` argument and a callback
+    `findByName` should take a String `name` argument and a callback
     function, and should find all users with that first name then
     call the callback function with `error, users`.
 
@@ -153,7 +153,7 @@ the page you should see the gender alternate between `male` and `female`
     Hint
     </summary><p>
 
-    Inside `getByFirstName` call `.find({"first.name": name})` from the
+    Inside `findByName` call `.find({"name.first": name})` from the
     user model.
 
     </p></details>

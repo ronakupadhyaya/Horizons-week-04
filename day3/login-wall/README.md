@@ -1,4 +1,4 @@
-# Warmup Exercise: Login wall
+# Inline Exercise: Login wall
 
 ## Instructions
 
@@ -27,4 +27,4 @@ Rules:
    `req.user` will be a falsy value.
 1. If you see this message your code is **not** working yet:
 
-   ![](img/error.png)
+     ![](img/error.png)
