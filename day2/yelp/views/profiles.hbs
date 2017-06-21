@@ -1,1 +1,12 @@
-{{! YOUR CODE HERE }}
+{{#each user}}
+<div>
+	<center>
+		<div>
+			<h4 style="display:inline-block;">{{displayName}}</h4>
+			<p style="display:inline-block;"> | {{location}}</p>
+		</div>
+		<a href="/users/{{_id}}">View Profile</a>
+		<br><br>
+	<center>
+</div>
+{{/each}}

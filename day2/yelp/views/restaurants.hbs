@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+{{#each restaurant}}
+<div>
+	<center>
+		<div>
+			<h4 style="display:inline-block;">{{name}}</h4>
+			<p style="display:inline-block;"> | {{category}}</p>
+		</div>
+		<div>
+			<p style="display:inline-block;"> Price: {{price}} | Hours: {{openTime}} — {{closingTime}}</p>
+		</div>
+		<p style="display:inline-block;">View More Info</p>
+		<br><br>
+	<center>
+</div>
+{{/each}}
