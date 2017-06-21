@@ -1,1 +1,9 @@
-{{! YOUR CODE HERE }}
+<div class="container col-xs-offset-4 col-xs-4">
+  {{#each restaurant}}
+    <div class="res-container">
+      <p>Name: <a href = "/restaurants/{{_id}}">{{name}}</a>     Category:{{category}}       Price:{{price}}</p>
+      <p>OPEN: {{open}}      CLOSE: {{close}}</p>
+    </div>
+    <br>
+  {{/each}}
+</div>

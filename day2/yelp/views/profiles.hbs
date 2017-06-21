@@ -1,1 +1,13 @@
 {{! YOUR CODE HERE }}
+<h4>User Directory</h4>
+
+{{#each users}}
+<p><a href = "/users/{{_id}}">{{email}}</a>
+  {{#if isFollowing}}
+    <a href="/users/{{_id}}/unfollow"> Unfollow </button>
+  {{else}}
+    <a href="/users/{{_id}}/follow"> Follow </button>
+  {{/if}}
+</p>
+
+{{/each}}
