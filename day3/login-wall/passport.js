@@ -18,8 +18,18 @@ var router = express.Router();
 router.use(passport.initialize());
 router.use(passport.session());
 
+
 router.get('/login', function(req, res) {
   res.render('login');
+});
+
+//PUT HERE IN PASSPORT
+router.use(function(req, res, next){ //use, matches on prefixes
+  if(req.user){
+    next();
+  } else {
+    res.redirect('/login')
+  }
 });
 
 router.get('/logout', function(req, res) {
