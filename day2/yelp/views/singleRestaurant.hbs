@@ -1,1 +1,24 @@
-{{! YOUR CODE HERE }}
+<h1>{{restaurant.name}}</h1>
+
+<h3>{{restaurant.category}}</h3>
+
+<a> Rating: {{restaurant.averageRating}} / 5 </a>
+
+<div class="review-container-1">
+  {{#each reviews}}
+    <h3> {{this.user.displayName}} </h3>
+    <p> {{this.user.location}} </p>
+    <p> Rating: {{this.stars}} / 5 </p>
+    <p> {{this.content}} </p>
+  {{/each}}
+</div>
+
+<br>
+
+<img>
+
+<script>
+  $(document).ready(function(){
+    $('img').attr("src","https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=15&size=600x300&maptype=roadmap&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}");
+  })
+</script>

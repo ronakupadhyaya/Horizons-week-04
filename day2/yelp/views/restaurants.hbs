@@ -1,1 +1,8 @@
 {{! YOUR CODE HERE }}
+<h1>View all restaurants:</h1>
+
+{{#each restaurant}}
+  <h3> <a href="/restaurants/{{_id}}"> {{name}} </a></h3>
+  <p>{{category}} Price: {{price}}</p>
+  <p> Rating: {{averageRating}} / 5 </p>
+{{/each}}

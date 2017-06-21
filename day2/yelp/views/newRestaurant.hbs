@@ -1,1 +1,23 @@
 {{! YOUR CODE HERE }}
+<form action="/restaurants/new" method="post">
+  <input type="text" name="name" placeholder="Restaurant Name">
+
+  <select name="category">
+    {{#each category}}
+    <option value="{{this}}">{{this}}</option>
+    {{/each}}
+  </select>
+
+  <input type="text" name="address" placeholder="Restaurant Address">
+
+  <select name="price">
+    <option value="$">$</option>
+    <option value="$$">$$</option>
+    <option value="$$$">$$$</option>
+  </select>
+
+  <input type="number" name="openTime" placeholder="Open Time">
+  <input type="number" name="closeTime" placeholder="Close Time">
+
+  <input type="submit" value="Create Restaurant">
+</form>

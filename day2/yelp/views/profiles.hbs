@@ -1,1 +1,11 @@
-{{! YOUR CODE HERE }}
+
+<h1>User Directory</h1>
+
+<h4> Logged in as {{currUser}}</h4>
+
+<h3>Users ({{user.length}})</h3>
+{{#each user}}
+<h4>{{displayName}}</h4>
+<p>{{location}}</p>
+<a href="/users/{{id}}"> View this user </a>
+{{/each}}

@@ -23,10 +23,16 @@ module.exports = function(passport) {
         error: "Passwords don't match."
       });
     }
+
+    console.log("USER NAME IS", req.body.displayName);
+
     var u = new models.User({
+      displayName: req.body.displayName,
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      location: "San Francisco"
     });
+
 
     u.save(function(err, user) {
       if (err) {
