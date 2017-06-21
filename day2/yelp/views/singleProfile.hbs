@@ -1,11 +1,21 @@
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
+{{#if isFollowing}}
+  <form class="" action="/users/{{user._id}}/unfollow/" method="post">
+    <input type="submit" name="" value="Unfollow">
+  </form>
+{{else}}
+  <form id="follow-button" class="" action="/users/{{user._id}}/follow/" method="post">
+    <input type="submit" name="" value="Follow">
+  </form>
+{{/if}}
+
 <h4>Email:</h4>
-<p>{{user.username}}</p>
+<p>{{user.email}}</p>
 
 <h4>Address:</h4>
-<p>{{user.address}}</p>
+<p>{{user.location}}</p>
 
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>

@@ -23,11 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var MONGODB_URI = require('./connect')
 
 // Passport stuff here
 
 app.use(session({
-    secret: process.env.SECRET,
+    secret: MONGODB_URI,
     name: 'Catscoookie',
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     proxy: true,
