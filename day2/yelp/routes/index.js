@@ -164,10 +164,14 @@ router.post('/profile/:id/follow',function(req,res,next){
   });
 
   router.get('/restaurants/:id/review',function(req,res,next){
-    res.render('newReview',{
-      id:req.params.id
-    });
+    Restaurant.findById(req.params.id, function(err, rest) {
+      res.render('newReview',{
+        id:req.params.id,
+        rest:rest
+      });
+    })
   })
+
   router.post('/restaurants/:id/review',function(req,res,next){
     req.checkBody('review','You need a review').notEmpty();
     req.checkBody('star','You need a rating').notEmpty();

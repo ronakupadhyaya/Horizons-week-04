@@ -81,6 +81,10 @@ var reviewSchema = mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   }
+},{
+  toJSON:{
+    virtuals:true
+  }
 });
 
 
@@ -131,7 +135,15 @@ restaurantSchema.methods.getReviews = function (callback){
 //   return (total/reviews.length);
 // })
 restaurantSchema.virtual("averageRating").get(function(){
-  return (((this.totalScore/this.reviewCount)/5)*100)
+  console.log((this.totalScore/this.reviewCount));
+   return (this.totalScore/this.reviewCount)*25
+  //return (Math.round((this.totalScore/this.reviewCount) * 2) / 2).toFixed(1)*10;
+
+})
+reviewSchema.virtual("starPercent").get(function(){
+
+   return ((this.stars*25))
+  //return (Math.round((this.totalScore/this.reviewCount) * 2) / 2).toFixed(1)*10;
 
 })
 

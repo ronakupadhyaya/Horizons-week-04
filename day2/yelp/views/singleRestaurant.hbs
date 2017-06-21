@@ -21,25 +21,35 @@
   <div class="rating">
   </div>
   <div class="map">
-    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap&amp;key=AIzaSyByS4EgixgDAkOJHvwBa4VmyHQo6fYrvrE">
+    <img style="margin-left:auto;margin-right:auto;display:block;padding-bottom:10px" src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap&amp;key=AIzaSyByS4EgixgDAkOJHvwBa4VmyHQo6fYrvrE">
   </div>
   <div class="submitRating">
     <form method="GET" action="/restaurants/{{restaurant._id}}/review">
-      <input type="submit" name="rating" value="Add a Review" class="btn btn-warning btn btn-warning btn-lg btn-block" id="submit-rating" />
+      <input type="submit" name="rating" value="Add a Review" class="btn btn-primary btn btn-info btn-lg btn-block" id="submit-rating" />
     </form>
   </div>
 </div>
 
-{{restaurant.averageRating}}
+
 {{#each review}}
-<div>
-{{userId.displayName}}
-<div class="star-ratings-css">
+<div class="review">
+  <div class="head">
+<p>{{userId.displayName}}</p>
+
+<!-- <div class="star-ratings-css">
   <div class="star-ratings-css-top" style="width:{{restaurant.averageRating}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
   <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+</div> -->
+
+<div class="star-ratings-css-review" >
+  <div class="star-ratings-css-top" style="width:{{starPercent}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
 </div>
-{{stars}}
+
 </div>
+<div class="review-Body">
 {{content}}
 </div>
+</div>
+
 {{/each}}
