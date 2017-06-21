@@ -15,10 +15,10 @@ var app = express();
 
 // MONGODB SETUP HERE
 var mongoose = require('mongoose');
-mongoose.connection.on('connected', function() {
-  console.log('Connected to MongoDb!');
-})
-mongoose.connect('mongodb://cyrusbehr:Cyrus1996!@ds131512.mlab.com:31512/week04day1');
+// mongoose.connection.on('connected', function() {
+//   console.log('Connected to MongoDb!');
+// })
+// mongoose.connect('mongodb://cyrusbehr:Cyrus1996!@ds131512.mlab.com:31512/week04day1');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

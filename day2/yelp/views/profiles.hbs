@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+<h1>Profiles</h1>
+<div class="container-fluid">
+{{#each profiles}}
+<div class="row">
+<div class="display-name">
+<a href="/users/{{_id}}">  Name: {{displayName}}</a>
+</div>
+<div class="location">
+  Location: {{location}}
+</div>
+</div>
+{{/each}}
+</div>

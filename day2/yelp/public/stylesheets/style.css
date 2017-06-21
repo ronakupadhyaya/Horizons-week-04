@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+.row{
+  background-color: #F8F8F9;
+  margin: 10px;
+  border-radius: 5px;
+  font-size: 30px;
+  text-align: center;
+}
