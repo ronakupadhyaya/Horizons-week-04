@@ -24,14 +24,17 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
+      diaplayName: req.body.displayName,
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      location: req.body.location
     });
 
     u.save(function(err, user) {
       if (err) {
         console.log(err);
-        res.status(500).redirect('/register');
+        res.status(500)
+          .redirect('/register');
         return;
       }
       console.log(user);
@@ -55,5 +58,8 @@ module.exports = function(passport) {
     res.redirect('/login');
   });
 
+  router.get('/', function(req, res) {
+    res.redirect('/users/' + req.user._id)
+  })
   return router;
 };

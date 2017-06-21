@@ -4,7 +4,8 @@ var express = require('express');
 
 // Express setup
 var app = express();
-var server = require('http').createServer(app);
+var server = require('http')
+  .createServer(app);
 var exphbs = require('express-handlebars');
 var hbs = require('./helpers');
 
@@ -23,15 +24,21 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
+  User.find()
+    .skip(7)
+    .limit(7)
+    .sort({
+      'birthday': 1
+    })
+    .exec(function(err, users) {
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
     });
-  });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
@@ -42,7 +49,7 @@ app.get('/', function(req, res) {
 //-------------------DON'T EDIT BELOW THIS LINE!----------------------//
 
 //helper function to avoid users inputting negative values or 0 for page number
-var getPageNumber = function (attempt) {
+var getPageNumber = function(attempt) {
   if (!attempt || attempt <= 1) {
     return 1;
   } else {
@@ -52,6 +59,6 @@ var getPageNumber = function (attempt) {
 
 var port = process.env.PORT || 3000;
 
-server.listen(port, function () {
+server.listen(port, function() {
   console.log('listening on port ' + port);
 });

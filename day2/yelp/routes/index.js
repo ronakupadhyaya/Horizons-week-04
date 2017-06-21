@@ -16,13 +16,41 @@ var Review = models.Review;
 // });
 
 // THE WALL - anything routes below this are protected!
-router.use(function(req, res, next){
+router.use(function(req, res, next) {
   if (!req.user) {
     res.redirect('/login');
   } else {
     return next();
   }
 });
+
+// router.get('/', )
+
+router.get('/users/:userId', function(req, res) {
+  var userId = req.params.userId;
+  User.findById(userId, function(err, user) {
+    if (err || !user) {
+      res.status(404)
+        .send("No User");
+    } else {
+      user.getFollows(function(err, results) {
+        var allFollowing = results.following;
+        var allFollowers = results.followers;
+
+        res.render('singleProfile', {
+          user: user,
+          following: allFollowing,
+          followers: allFollowers
+        })
+      })
+
+    }
+  })
+})
+
+router.get('/users', function(req, res){
+
+})
 
 router.post('/restaurants/new', function(req, res, next) {
 
@@ -31,7 +59,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
