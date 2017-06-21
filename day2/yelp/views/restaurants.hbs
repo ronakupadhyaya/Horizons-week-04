@@ -1,1 +1,5 @@
-{{! YOUR CODE HERE }}
+{{#each restaurants}}
+  <a href="/singleRestaurant/{{id}}"><button type="button" name="{{name}}">{{name}}</button></a>
+{{/each}}
+
+<a href="/profiles"><button type="button" name="back">Back to all profiles</button></a>

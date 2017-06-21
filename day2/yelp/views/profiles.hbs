@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+<a href="/singleProfile/{{myId}}"><h4>My Profile</h4></a>
+
+<h4>User Profiles</h4>
+{{#each users}}
+<a href="/singleProfile/{{_id}}"><p>{{displayName}}</p></a>
+
+<h4>Email:</h4>
+<p>{{email}}</p>
+
+{{/each}}
+
+<a href="/restaurants"><button type="button" name="restaurants">View Restaurants</button></a>
+<a href="/logout"><button type="button" name="logout">Logout</button></a>

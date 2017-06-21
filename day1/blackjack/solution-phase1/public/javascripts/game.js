@@ -5,7 +5,7 @@ window.addEventListener("load", getData, false);
 function getData(){
   $.ajax({
     type: "GET",
-    url: `game/${game.id}`,
+    url: $(location).attr('href') + "/json",
     dataType: 'json',
     cache: false,
     success: function(game){
