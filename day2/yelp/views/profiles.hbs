@@ -1,1 +1,23 @@
 {{! YOUR CODE HERE }}
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <h2>Users ({{users.length}})</h2>
+    </div>
+    {{#each users}}
+      <div class="col-xs-6 col-xs-offset-3">
+        <strong>{{this.displayName}}</strong>
+      </div>
+      <div class="col-xs-6 col-xs-offset-3">
+        <form class="" action="/users/{{this._id}}/follow" method="post">
+          <input type="submit" name="" value="Follow">
+        </form>
+      </div>
+      <div class="col-xs-6 col-xs-offset-3">
+        {{this.location}}
+      </div>
+    {{/each}}
+  </div>
+
+</div>
