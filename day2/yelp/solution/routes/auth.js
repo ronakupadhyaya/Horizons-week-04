@@ -19,26 +19,27 @@ module.exports = function(passport) {
 
   router.post('/signup', function(req, res) {
     // validation step
+    console.log("I'm here");
     if (!validateReq(req.body)) {
       return res.render('signup', {
         error: "Passwords don't match."
       });
     }
     var u = new models.User({
-      username: req.body.username,
+      email: req.body.email,
       password: req.body.password,
-      address: req.body.address,
-      displayName: req.body.displayName
+      displayName: req.body.displayName,
+      location: req.body.location
     });
     console.log("asd")
     console.log(u)
     u.save(function(err, user) {
+      //console.log(user);
       if (err) {
-        console.log(err);
         res.status(500).redirect('/register');
         return;
       }
-      console.log(user);
+      //console.log(user);
       res.redirect('/login');
     });
   });

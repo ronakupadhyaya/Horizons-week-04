@@ -31,7 +31,31 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
+
+router.get('/',function(req,res){
+  res.send('Home Page');
+})
+
+router.post()
+
+router.get('/user/:userId',function(req,res){
+  var thisId = req.params.userId;
+  User.findById(thisId, function(err,result){
+    if(err || !result){
+      res.status(404).send("No User found")
+    } else {
+      result.getFollows(function(err,follows){
+        if(err || !follows){
+          res.status(404).send("No follow info found")
+        } else {
+          res.render('singleProfile',{user:result, following:follows.allFollowing, followers:follows.allFollowers});
+        }
+      })
+
+    }
+  })
+})
 
 module.exports = router;

@@ -3,7 +3,13 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/models');
+// var crypto = require('crypto');
 
+// function hashPassword(password) {
+//   var hash = crypto.createHash('sha256');
+//   hash.update(password);
+//   return hash.digest('hex');
+// }
 
 module.exports = function(passport) {
 
@@ -24,8 +30,10 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
-      email: req.body.username,
-      password: req.body.password
+      email: req.body.email,
+      password: req.body.password,
+      displayName: req.body.displayName,
+      location: req.body.location
     });
 
     u.save(function(err, user) {
@@ -34,7 +42,7 @@ module.exports = function(passport) {
         res.status(500).redirect('/register');
         return;
       }
-      console.log(user);
+      //console.log(user);
       res.redirect('/login');
     });
   });
@@ -54,6 +62,17 @@ module.exports = function(passport) {
     req.logout();
     res.redirect('/login');
   });
+  //
+  // // POST Login page
+  // router.post(
+  //   '/login',
+  //   passport.authenticate(
+  //     'local',
+  //     {
+  //       successRedirect: '/',
+  //       failureRedirect: '/login'
+  //     }));
+
 
   return router;
 };
