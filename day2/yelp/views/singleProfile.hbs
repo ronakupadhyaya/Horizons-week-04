@@ -1,16 +1,26 @@
 <h4>Name:</h4>
-<p>{{user.displayName}}</p>
+<p>{{user.displayName}}</p><br>
+
+
+<form class="follow/unfollow" action="index.html" method="post">
+  <input type='button' class='followButton {{#if isFollowing}}hidden{{/if}}' value='Follow' /><br>
+  <input type='button' class='unfollowButton {{#if notIsFollowing}}hidden{{/if}}' value='Unfollow' /><br>
+</form>
+
 
 <h4>Email:</h4>
 <p>{{user.email}}</p>
+
+<h4>Address:</h4>
+<p>{{user.address}}</p>
 
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
+  <div>{{to.displayName}}
+  <form  action="/unfollow/{{to.id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
@@ -18,5 +28,44 @@
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{uid1.displayName}}</p>
+  <p>{{from.displayName}}</p>
 {{/each}}
+
+
+<script>
+  $('.followButton').click(function(){
+    $.ajax({
+      url: window.location,
+      method: 'post',
+      data: {
+        buttonType: 'follow'
+      },
+      success: function(res){
+        console.log(res);
+        $('.followButton').addClass('hidden')
+        $('.unfollowButton').removeClass('hidden')
+      },
+      error: function(err){
+        console.log('follow button ajax erro', err)
+      }
+    })
+  })
+
+  $('.unfollowButton').click(function(){
+    $.ajax({
+      url: window.location,
+      method: 'post',
+      data: {
+        buttonType: 'unfollow'
+      },
+      success: function(res){
+        console.log(res);
+        $('.followButton').removeClass('hidden');
+        $('.unfollowButton').addClass('hidden')
+      },
+      error: function(err){
+        console.log('follow button ajax erro', err)
+      }
+    })
+  })
+</script>

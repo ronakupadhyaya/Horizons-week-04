@@ -1,4 +1,3 @@
-// Set up dependencies
 var express = require('express');
 var session = require('express-session')
 var path = require('path');
@@ -12,23 +11,29 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
-// Create express server
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// Logging
 app.use(logger('dev'));
-// Body parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// Cookie handling
 app.use(cookieParser('secretCat'));
-// Static file paths
 app.use(express.static(path.join(__dirname, 'public')));
 
+if (! process.env.MONGODB_URI) {
+  console.log('MONGODB_URI config variable is missing. Try running "source env.sh"');
+  process.exit(1);
+}
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('error', console.error);
+mongoose.connection.on('connected', function(){
+  console.log('connected to mongoDb');
+})
 
 // Passport stuff here
 
