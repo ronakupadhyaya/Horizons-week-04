@@ -1,1 +1,115 @@
-{{! YOUR CODE HERE }}
+<div class="container">
+    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Register Your Restaurant!</div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/login/">Wrong Screen? Log in here!</a></div>
+            </div>
+            <div class="panel-body" >
+                <form method="POST" action="/restaurants/new">
+                    <form  class="form-horizontal" method="POST" action="/restaurants/new">
+                        <div class="form-group required">
+                            <label for="id_name" class="control-label col-md-4 requiredField"> Name<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md form-control" id="id_name" name="name" placeholder="Your Restaurants Name" type="text" required/>
+                            </div>
+                        </div>
+
+                        <div class="form-group required">
+                          <label for="id_category" class="control-label col-md-4 requiredField"> Category<span class="asteriskField">*</span> </label>
+                          <div class="controls col-md-8 ">
+                            <select name="category" class="form-control" id="sel1">
+                              <option value="" selected disabled>Select Category</option>
+
+                              <option value="Mexican" name="category" id="id_category">Mexican Food</option>
+                              <option value="American" name="category" id="id_category">American</option>
+                              <option value="Chinese" name="category" id="id_category">Chinese</option>
+                              <option value="Japanese" name="category" id="id_category">Japanese</option>
+                              <option value="Italian" name="category" id="id_category">Italian</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <!-- <div class="form-group required">
+                             <label for="id_prange" class="control-label col-md-4 requiredField"> Price Range<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                 <input class="input-md form-control" id="id_prange" name="prange" placeholder="Provide a Price Range (1-3)" type="number" required/>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group required">
+                          <div class="controls col-md-8 ">
+                            <label for="id_prange" class="control-label col-md-4 requiredField">Price Range<span class="asteriskField">*</span> </label>
+                          <label class="radio-inline control-label col-md-4">
+                            <input class="form-control" type="radio" name="prange" id="id_prange" value="1"> $
+                          </label>
+                          <label class="radio-inline control-label col-md-4 ">
+                            <input class="form-control" type="radio" name="prange" id="id_prange" value="2"> $$
+                          </label>
+                          <label class="radio-inline control-label col-md-4 ">
+                            <input class="form-control" type="radio" name="prange" id="id_prange" value="3"> $$$
+                          </label>
+                        </div>
+
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="address1">Address Line1</label>
+                          <div class="col-md-8">
+                            <input id="address1" name="address1" type="text" placeholder="" class="form-control input-md" required>
+                            <span class="help-block">Street address, P.O. box, company name, c/o</span>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="city">City/Town</label>
+                          <div class="col-md-6">
+                            <input id="city" name="city" type="text" placeholder="city or town" class="form-control input-md" required>
+
+                          </div>
+                        </div>
+
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="State">State</label>
+                          <div class="col-md-6">
+                            <input id="State" name="State" type="text" placeholder="state" class="form-control input-md" required>
+                            <span class="help-block">Enter Source state</span>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-md-4 control-label" for="zip">Zip/Postal code</label>
+                          <div class="col-md-4">
+                            <input id="zip" name="zip" type="text" placeholder="zip or postal code" class="form-control input-md" required>
+
+                          </div>
+                        </div>
+
+
+
+
+                        <div id="div_id_number" class="form-group required">
+                             <label for="id_open" class="control-label col-md-4  requiredField"> Open Time<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                 <input class="input-md form-control" id="id_open" name="open" placeholder="Opening Time (Military)" type="number" required/>
+                            </div>
+                        </div>
+                        <div id="div_id_number" class="form-group required">
+                             <label for="id_close" class="control-label col-md-4  requiredField"> Close Time<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                 <input class="input-md form-control" id="id_close" name="close" placeholder="Closing time (Military)" style="margin-bottom: 10px" type="number" required/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="aab controls col-md-4 "></div>
+                            <div class="controls col-md-8 ">
+                                <input type="submit" name="Signup" value="Sign Up" class="btn btn-primary btn btn-info btn-lg btn-block" id="submit-id-signup" required/>
+                            </div>
+                        </div>
+                    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

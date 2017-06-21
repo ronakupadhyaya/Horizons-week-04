@@ -6,3 +6,256 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+.reviews{
+  display: flex;
+  flex-direction: column;
+
+
+}
+.stars {
+  margin:10px 0;
+}
+
+.stars i {
+  display: inline-block;
+  width: 0;
+  height: 1.5em;
+  border-width: 0 0.75em;
+  border-style: solid;
+  border-color: #eee;
+  border-radius: .22em;
+  color: white;
+  background: #eee;
+  font-style: normal;
+  line-height: 1.6em;
+  text-indent: -0.5em;
+  text-shadow: 1px 0 1px #b3b3b3;
+}
+
+
+
+.review{
+  flex:1;
+  border: 1px solid;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.reviewer-info{
+  flex: 1;
+}
+
+.review-content{
+  flex:5;
+}
+
+.reviewer-name{
+  font-weight: 900;
+  font-size: large;
+}
+
+.review-wrapper {
+  float: left;
+  padding: 0 15px;
+  min-height: 1px;
+  box-sizing: border-box;
+  width: 62.5%
+}
+
+.review-content {
+  word-wrap: break-word !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+}
+
+ul{
+  list-style: none;
+}
+
+.review-list>li{
+  margin: 0;
+  padding: 18px 0;
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 17px;
+}
+.offscreen {
+  clip: rect(0 0 0 0);
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  overflow: hidden;
+  width: 1px;
+  height: 1px
+}
+
+.biz-stars-large .stars-large{
+  float: left;
+  margin: -1px 6px 0 0;
+}
+
+.stars, .stars-large, .stars-very-large {
+  position: relative;
+  overflow: hidden;
+}
+
+.i-stars--regular-5 {
+  width: 102px;
+  height: 18px;
+  background-position: 0 -402px;
+}
+
+.i-stars--regular-4 {
+  width: 102px;
+  height: 18px;
+  background-position: 0 -366px;
+}
+
+.i-stars--regular-2 {
+  width: 102px;
+  height: 18px;
+  background-position: 0 -330px;
+}
+
+.i-stars--regular-2 {
+  width: 102px;
+  height: 18px;
+  background-position: 0 -294px;
+}
+
+.i-stars--regular-1 {
+  width: 102px;
+  height: 18px;
+  background-position: 0 -258px;
+}
+
+.i-stars {
+    background: url(https://s3-media2.fl.yelpcdn.com/assets/srv0/yelp_design_web/9b34e39ccbeb/assets/img/stars/stars.png) no-repeat;
+    background-size: 132px 560px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/** Colors */
+.stars-1 .star-1,
+.stars-1-half .star-1 {
+  border-color: #cc8b1f;
+  background: #cc8b1f;
+}
+
+.stars-1-half .star-2 {
+  border-left-color: #cc8b1f;
+}
+
+.stars-2 .star-1,
+.stars-2-half .star-1 {
+  border-color: #dcb228;
+  background: #dcb228;
+}
+
+.stars-2 .star-2,
+.stars-2-half .star-2 {
+  border-color: #dcb228;
+  background: #dcb228;
+}
+
+.stars-2-half .star-3 {
+  border-left-color: #dcb228;
+}
+
+.stars-3 .star-1,
+.stars-3-half .star-1 {
+  border-color: #f0991e;
+  background: #f0991e;
+}
+
+.stars-3 .star-2,
+.stars-3-half .star-2 {
+  border-color: #f0991e;
+  background: #f0991e;
+}
+
+.stars-3 .star-3,
+.stars-3-half .star-3 {
+  border-color: #f0991e;
+  background: #f0991e;
+}
+
+.stars-3-half .star-4 {
+  border-left-color: #f0991e;
+}
+
+.stars-4 .star-1,
+.stars-4-half .star-1 {
+  border-color: #f26a2c;
+  background: #f26a2c;
+}
+
+.stars-4 .star-2,
+.stars-4-half .star-2 {
+  border-color: #f26a2c;
+  background: #f26a2c;
+}
+
+.stars-4 .star-3,
+.stars-4-half .star-3 {
+  border-color: #f26a2c;
+  background: #f26a2c;
+}
+
+.stars-4 .star-4,
+.stars-4-half .star-4 {
+  border-color: #f26a2c;
+  background: #f26a2c;
+}
+
+.stars-4-half .star-5 {
+  border-left-color: #f26a2c;
+}
+
+.stars-5 .star-1,
+.stars-5-half .star-1 {
+  border-color: #dd050b;
+  background: #dd050b;
+}
+
+.stars-5 .star-2,
+.stars-5-half .star-2 {
+  border-color: #dd050b;
+  background: #dd050b;
+}
+
+.stars-5 .star-3,
+.stars-5-half .star-3 {
+  border-color: #dd050b;
+  background: #dd050b;
+}
+
+.stars-5 .star-4,
+.stars-5-half .star-4 {
+  border-color: #dd050b;
+  background: #dd050b;
+}
+
+.stars-5 .star-5,
+.stars-5-half .star-5 {
+  border-color: #dd050b;
+  background: #dd050b;
+}
+
+.stars-5-half .star-6 {
+  border-left-color: #dd050b;
+}
+
+/** Print */
+@media print {
+  .stars {
+    -webkit-print-color-adjust: exact;
+  }
+  .stars i {
+    text-shadow: none;
+  }
+}

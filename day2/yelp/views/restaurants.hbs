@@ -1,1 +1,12 @@
 {{! YOUR CODE HERE }}
+{{#each restaurants}}
+
+<form action="/restaurants/{{_id}}" method="GET" id="{{_id}}">
+  <button type="submit" form="{{_id}}" value="Submit">
+    <div style="font-weight:bold;">{{name}}</div>
+    <div>{{price}}</div>
+    <div>{{averageRating}}</div>
+  </button>
+</form>
+
+{{/each}}

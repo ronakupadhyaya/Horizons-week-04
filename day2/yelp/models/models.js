@@ -74,26 +74,16 @@ userSchema.methods.follow = function (idToFollow, callback){
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
   var userId = this._id;
+  console.log("unfollow called");
   Follow.remove({to: idToUnfollow, from: userId}, function(err,result){
     if(err){
+      console.log("error unfollowing");
       callback(err);
     }else{
       callback(null,result);
     }
   });
-  // Follow.findOne({to: to, from: idToUnfollow}, function(err, followObj){
-  //   if(!error){
-  //     //if this follow object exissts, remove it
-  //     if(followObj){
-  //       followObj.remove();
-  //
-  //     }else{ //if this following pair adoes not exis
-  //       console.log("Cant unfollow: not following user");
-  //
-  //     }
-  //     callback(null);
-  //   }
-  // })
+
 }
 
 var FollowsSchema = mongoose.Schema({
@@ -108,16 +98,62 @@ var FollowsSchema = mongoose.Schema({
 });
 
 var reviewSchema = mongoose.Schema({
+  content: {
+    type: String,
+    required: true
+  },
+  stars: {
+    type: Number,
+    required: true
+  },
+  restaurantId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Restaurant'
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 
 });
-
 
 var restaurantSchema = mongoose.Schema({
-
+  name:{
+    type:String,
+    required:true
+  },
+  category:{
+    type:String,
+    required:true
+  },
+  latitude:{
+    type:Number,
+    required: true
+  },
+  longitude:{
+    type:Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  openTime: {
+    type: Number,
+    required: true
+  },
+  closeTime:  {
+    type:Number,
+    required: true
+  }
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
 
+restaurantSchema.methods.getReviews = function (callback){
+  var restid = this._id;
+  Review.find({restaurantId: restid}).populate('userId').exec(function(err,reviews){
+    callback(err,reviews);
+  })
 }
 
 //restaurantSchema.methods.stars = function(callback){

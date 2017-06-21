@@ -10,8 +10,11 @@
 {{#if usersProfile}}
 {{else}}
   {{#if alreadyFollowed}}
+  <form  action="/users/{{{user._id}}}/unfollow" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
   {{else}}
-  <a href="/follow/{{user._id}}">Follow this user</a>
+  <a href="/users/{{user._id}}/follow">Follow this user</a>
   {{/if}}
 {{/if}}
 <!-- <a href="/users/{{user._id}}/follow">Follow this user</a> -->
@@ -25,25 +28,28 @@
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>
 
-<h4>Following:</h4>
+<h4>Following: {{allFollowing.length}}</h4>
 
 {{#each allFollowing}}
-{{#if usersProfile}}
+{{#if ../usersProfile}}
   <div>
-    <p>{{this.to.displayName}}</p>
-    <form  action="/unfollow/{{this.to.id}}" method="post">
+    {{to.displayName}}
+    {{to.location}}
+
+    <form action="/users/{{{to._id}}}/unfollow" method="post">
       <input style="display: inline;" type="submit" value="Unfollow">
     </form>
   </div>
 
   {{else}}
     <div>
-      <p>{{this.to.displayName}}</p>
+      {{to.displayName}}
+      {{to.location}}
     </div>
   {{/if}}
 {{/each}}
 
-<h4>Followers:</h4>
+<h4>Followers: {{allFollowers.length}}</h4>
 {{#each allFollowers}}
   <p>{{this.from.displayName}}</p>
 {{/each}}
