@@ -24,10 +24,10 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
-      email: req.body.email,
+      email: req.body.username,
       password: req.body.password,
-      location: req.body.location,
-      displayName: req.body.displayName
+      displayName: req.body.displayName,
+      location: req.body.location
     });
 
     u.save(function(err, user) {

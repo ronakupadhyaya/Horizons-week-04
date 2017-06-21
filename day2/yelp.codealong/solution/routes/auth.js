@@ -18,18 +18,20 @@ module.exports = function(passport) {
   };
 
   router.post('/signup', function(req, res) {
+    // validation step
     if (!validateReq(req.body)) {
       return res.render('signup', {
         error: "Passwords don't match."
       });
     }
     var u = new models.User({
-      email: req.body.email,
+      username: req.body.username,
       password: req.body.password,
-      location: req.body.location,
+      address: req.body.address,
       displayName: req.body.displayName
     });
-
+    console.log("asd")
+    console.log(u)
     u.save(function(err, user) {
       if (err) {
         console.log(err);
