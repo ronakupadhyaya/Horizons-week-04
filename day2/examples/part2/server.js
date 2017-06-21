@@ -54,7 +54,8 @@ app.get('/users/:name', function(req, res, next) {
       error: 'Missing name parameter'
     });
   } else {
-    User.findByName(req.params.name, function(err, users) {
+    User.getByFirstName(req.params.name, function(err, users) {
+      console.log(err, users)
       res.render('index', {
         users: users
       });
