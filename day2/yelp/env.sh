@@ -1,1 +1,1 @@
-export MONGODB_URI='mongodb://alexlatif:gdelnobolo1@ds131742.mlab.com:31742/yelp'
+export MONGODB_URI='mongodb://brian3345334:jhg67UGYukyt6UFggf65ur@ds019648.mlab.com:19648/yelp'
