@@ -22,6 +22,8 @@ router.get('/login', function(req, res) {
   res.render('login');
 });
 
+//can be the middleware here
+
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
