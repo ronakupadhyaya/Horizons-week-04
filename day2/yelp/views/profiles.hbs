@@ -1,1 +1,44 @@
 {{! YOUR CODE HERE }}
+
+<table class="container table-striped big-table" style="width:50%">
+  <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Follow</th>
+      </tr>
+    </thead>
+    <tbody>
+{{#each profileArr}}
+  <tr>
+    <td>{{displayName}}</td>
+    <td>{{location}}</td>
+    <td>
+      {{#if following}}
+      <input id={{_id}} type="checkbox" class="follow-box" checked >
+      {{else}}
+      <input id={{_id}} type="checkbox" class="follow-box" >
+      {{/if}}
+    </td>
+  </tr>
+{{/each}}
+</table>
+
+<script>
+  $('.big-table').on('click','.follow-box',function(event){
+    $.ajax({
+      url: '/users',
+      method: 'GET',
+      data: {
+        followStatus: $(this).is(":checked"),
+        followID: $(this).attr('id')
+      },
+      success: function(result){
+
+      },
+      error: function(err){
+        console.log(err)
+      }
+    })
+  })
+</script>
