@@ -1,4 +1,9 @@
 review displayName
+<ul class="reviewlist reviews">
+
+
+  {{#each reviews}}
+  <li>
 <div class="review review--with-sidebar">
   <div class="review-wrapper">
     <div class="review-content">
@@ -17,4 +22,9 @@ review displayName
       <p>{{this.content}}</p>
     </div>
     </div>
+</div>
+</li>
+{{/each}}
+  </ul>
+<!-- </div> -->
 </div>

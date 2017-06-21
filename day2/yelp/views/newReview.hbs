@@ -1,14 +1,36 @@
-{{! YOUR CODE HERE }}
-<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+
+<head>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+</head>
+
+<form method="POST" style="border: 0.5px solid gray; padding: 30px 30px 30px 30px">
   <h3>Leave a Review</h3>
+  <!-- <div class="form-group" id="div_id_rating"> -->
+  <div class="form-group">
+    <div id="div_id_rating">
+      <input class="form-control rating rating-5" id="rating-5" type="radio" name="rating" value="5.0"/>
+      <label class="rating rating-5" for="rating-5"></label>
+      <input class="form-control rating rating-4" id="rating-4" type="radio" name="rating" value="4.0"/>
+      <label class="rating rating-4" for="rating-4"></label>
+      <input class="form-control rating rating-3" id="rating-3" type="radio" name="rating" value="3.0"/>
+      <label class="rating rating-3" for="rating-3"></label>
+      <input class="form-control rating rating-2" id="rating-2" type="radio" name="rating" value="2.0"/>
+      <label class="rating rating-2" for="rating-2"></label>
+      <input class="form-control rating rating-1" id="rating-1" type="radio" name="rating" value="1.0"/>
+      <label class="rating rating-1" for="rating-1"></label>
+    </div>
+  </div>
+
   <div class="form-group">
     <label>Review</label>
     <input type="text" name="content" class="form-control">
   </div>
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label>Rating</label>
     <input type="Number" name="rating" class="form-control">
-  </div>
+  </div> -->
+<!-- <div class="form-group"> -->
+
 
   <div class="form-group">
     <button class="btn btn-success">Submit</button>

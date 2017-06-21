@@ -185,16 +185,19 @@ router.get('/restaurants/:id', function(req,res,next){
       if(err){
         res.send(err);
       } else{
-        console.log(restaurant);
+        // console.log(restaurant);
         restaurant.getReviews(function(error,result){
           if(error){
             console.log("errors getting reviews");
           }else{
-            console.log(result);
+            // console.log(result);
+            var starclass= restaurant.averageRating+"";
+
             res.render('singleRestaurant', {
               restaurant: restaurant,
               dollars: "$".repeat(restaurant.price),
               reviews: result
+
             })
           }
         })
@@ -216,7 +219,7 @@ router.post('/restaurants/:id/review', function(req,res,next){
   var content = req.body.content;
   var rating = req.body.rating;
   var userId = req.user._id;
-  console.log(restid,content,rating,userId);
+  // console.log(restid,content,rating,userId);
 
   var review = new Review({content: content, stars: rating, userId: userId, restaurantId: restid});
   review.save(function(err,result){
@@ -224,7 +227,19 @@ router.post('/restaurants/:id/review', function(req,res,next){
       console.log("error saving review");
       res.send(err);
     }else{
-      res.redirect('/restaurants/'+restid);
+      Restaurant.findById(restid, function(err, rest) {
+            //console.log("HEEYHEHEU");
+            //console.log(rest);
+            console.log("raw rating", rating,typeof rating);
+            rest.totalScore += parseFloat(rating).toFixed(1);
+            console.log("rest total score",rest.totalScore);
+            rest.reviewCount += 1;
+            rest.save(function(err,val){
+              res.redirect('/restaurants/'+restid)
+            })
+      })
+
+      // res.redirect('/restaurants/'+restid);
     }
   })
 })

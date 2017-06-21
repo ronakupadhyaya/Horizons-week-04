@@ -4,8 +4,16 @@
 <form action="/restaurants/{{_id}}" method="GET" id="{{_id}}">
   <button type="submit" form="{{_id}}" value="Submit">
     <div style="font-weight:bold;">{{name}}</div>
-    <div>{{price}}</div>
-    <div>{{averageRating}}</div>
+    <div>{{price}}x$</div>
+    <div class="stars" id="stars-{{averageRating}}">
+
+        <i class="star-1">★</i>
+        <i class="star-2">★</i>
+        <i class="star-3">★</i>
+        <i class="star-4">★</i>
+        <i class="star-5">★</i>
+
+    </div>
   </button>
 </form>
 

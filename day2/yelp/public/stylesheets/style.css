@@ -58,195 +58,116 @@ a {
   font-size: large;
 }
 
-.review-wrapper {
-  float: left;
-  padding: 0 15px;
-  min-height: 1px;
-  box-sizing: border-box;
-  width: 62.5%
-}
 
-.review-content {
-  word-wrap: break-word !important;
-  word-break: break-word !important;
-  overflow-wrap: break-word !important;
-}
-
-ul{
-  list-style: none;
-}
-
-.review-list>li{
-  margin: 0;
-  padding: 18px 0;
-  border-bottom: 1px solid #e6e6e6;
-  padding-bottom: 17px;
-}
-.offscreen {
-  clip: rect(0 0 0 0);
-  position: absolute;
-  left: -9999px;
-  top: auto;
-  overflow: hidden;
-  width: 1px;
-  height: 1px
-}
-
-.biz-stars-large .stars-large{
-  float: left;
-  margin: -1px 6px 0 0;
-}
-
-.stars, .stars-large, .stars-very-large {
-  position: relative;
-  overflow: hidden;
-}
-
-.i-stars--regular-5 {
-  width: 102px;
-  height: 18px;
-  background-position: 0 -402px;
-}
-
-.i-stars--regular-4 {
-  width: 102px;
-  height: 18px;
-  background-position: 0 -366px;
-}
-
-.i-stars--regular-2 {
-  width: 102px;
-  height: 18px;
-  background-position: 0 -330px;
-}
-
-.i-stars--regular-2 {
-  width: 102px;
-  height: 18px;
-  background-position: 0 -294px;
-}
-
-.i-stars--regular-1 {
-  width: 102px;
-  height: 18px;
-  background-position: 0 -258px;
-}
-
-.i-stars {
-    background: url(https://s3-media2.fl.yelpcdn.com/assets/srv0/yelp_design_web/9b34e39ccbeb/assets/img/stars/stars.png) no-repeat;
-    background-size: 132px 560px;
-    display: inline-block;
-    vertical-align: middle;
-}
 
 /** Colors */
-.stars-1 .star-1,
-.stars-1-half .star-1 {
+#stars-1\.0 .star-1,
+.stars-1-5 .star-1, #stars-1\.5 .star-1{
   border-color: #cc8b1f;
   background: #cc8b1f;
 }
 
-.stars-1-half .star-2 {
+.stars-1-5 .star-2, #stars-1\.5 .star-2{
   border-left-color: #cc8b1f;
 }
 
-.stars-2 .star-1,
-.stars-2-half .star-1 {
+#stars-2\.0 .star-1,
+.stars-2-5 .star-1, #stars-2\.5 .star-1{
   border-color: #dcb228;
   background: #dcb228;
 }
 
-.stars-2 .star-2,
-.stars-2-half .star-2 {
+#stars-2\.0 .star-2,
+.stars-2-5 .star-2, #stars-2\.5 .star-2{
   border-color: #dcb228;
   background: #dcb228;
 }
 
-.stars-2-half .star-3 {
+.stars-2-5 .star-3, #stars-2\.5 .star-3{
   border-left-color: #dcb228;
 }
 
-.stars-3 .star-1,
-.stars-3-half .star-1 {
+#stars-3\.0 .star-1,
+.stars-3-5 .star-1, #stars-3\.5 .star-1{
   border-color: #f0991e;
   background: #f0991e;
 }
 
-.stars-3 .star-2,
-.stars-3-half .star-2 {
+#stars-3\.0 .star-2,
+.stars-3-5 .star-2, #stars-3\.5 .star-2{
   border-color: #f0991e;
   background: #f0991e;
 }
 
-.stars-3 .star-3,
-.stars-3-half .star-3 {
+#stars-3\.0 .star-3,
+.stars-3-5 .star-3, #stars-3\.5 .star-3 {
   border-color: #f0991e;
   background: #f0991e;
 }
 
-.stars-3-half .star-4 {
+.stars-3-5 .star-4, #stars-3\.5 .star-4 {
   border-left-color: #f0991e;
 }
 
-.stars-4 .star-1,
-.stars-4-half .star-1 {
+#stars-4\.0 .star-1,
+.stars-4-5 .star-1, #stars-4\.5 .star-1 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-.stars-4 .star-2,
-.stars-4-half .star-2 {
+#stars-4\.0 .star-2,
+.stars-4-5 .star-2, #stars-4\.5 .star-2 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-.stars-4 .star-3,
-.stars-4-half .star-3 {
+#stars-4\.0 .star-3,
+.stars-4-5 .star-3, #stars-4\.5 .star-3 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-.stars-4 .star-4,
-.stars-4-half .star-4 {
+#stars-4\.0 .star-4,
+.stars-4-5 .star-4, #stars-4\.5 .star-4 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-.stars-4-half .star-5 {
+.stars-4-5 .star-5, #stars-4\.5 .star-5 {
   border-left-color: #f26a2c;
 }
 
-.stars-5 .star-1,
-.stars-5-half .star-1 {
+#stars-5\.0 .star-1,
+.stars-5-5 .star-1, #stars-5\.5 .star-1 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-.stars-5 .star-2,
-.stars-5-half .star-2 {
+#stars-5\.0 .star-2,
+.stars-5-5 .star-2, #stars-5\.5 .star-2 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-.stars-5 .star-3,
-.stars-5-half .star-3 {
+#stars-5\.0 .star-3,
+.stars-5-5 .star-3, #stars-5\.5 .star-3 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-.stars-5 .star-4,
-.stars-5-half .star-4 {
+#stars-5\.0 .star-4,
+.stars-5-5 .star-4, #stars-5\.5 .star-4 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-.stars-5 .star-5,
-.stars-5-half .star-5 {
+#stars-5\.0 .star-5,
+.stars-5-5 .star-5, #stars-5\.5 .star-5 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-.stars-5-half .star-6 {
+.stars-5-5 .star-6, #stars-5\.5 .star-6 {
   border-left-color: #dd050b;
 }
 
@@ -259,3 +180,65 @@ ul{
     text-shadow: none;
   }
 }
+
+div.ratings {
+  width: 270px;
+  display: inline-block;
+}
+
+input.rating { display: none; }
+
+label.rating {
+  float: right;
+  padding: 10px;
+  font-size: 36px;
+  color: #444;
+  transition: all .2s;
+}
+
+input.rating:checked ~ label.rating:before {
+  content: '\f005';
+  color: #FD4;
+  transition: all .25s;
+}
+
+input.rating-5:checked ~ label.rating:before {
+  color: #FE7;
+  text-shadow: 0 0 20px #952;
+}
+
+input.rating-1:checked ~ label.rating:before { color: #F62; }
+
+label.rating:hover { transform: rotate(-15deg) scale(1.3); }
+
+label.rating:before {
+  content: '\f006';
+  font-family: FontAwesome;
+}
+
+.rating-ratings-css {
+  unicode-bidi: bidi-override;
+  color: #c5c5c5;
+  font-size: 25px;
+  height: 25px;
+  width: 100px;
+  margin: 0 auto;
+  position: relative;
+  padding: 0;
+  text-shadow: 0px 1px 0 #a2a2a2;
+}
+.rating-ratings-css-top {
+    color: #e7711b;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+.rating-ratings-css-bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }

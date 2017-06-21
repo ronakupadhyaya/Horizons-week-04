@@ -145,9 +145,33 @@ var restaurantSchema = mongoose.Schema({
   closeTime:  {
     type:Number,
     required: true
+  },
+  totalScore: {
+    type: Number,
+    default: 0
+  },
+  reviewCount: {
+    type: Number,
+    default: 0
+  }
+}, {
+  toJSON: {
+    virtuals: true
   }
 });
 
+restaurantSchema.virtual("averageRating").get(function(){
+  // console.log(Math.round((this.totalScore/this.reviewCount)).toFixed(1));
+  // console.log((Math.round((this.totalScore/this.reviewCount)) / 2).toFixed(1));
+  var rating = Math.round((this.totalScore/this.reviewCount)).toFixed(1);
+  if((rating%1) > 0.5 ){
+    console.log("rating is decimal");
+    rating = Math.trunc(rating);
+  }
+  console.log(rating);
+  return Math.round((this.totalScore/this.reviewCount)).toFixed(1);
+
+})
 
 restaurantSchema.methods.getReviews = function (callback){
   var restid = this._id;
