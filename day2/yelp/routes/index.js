@@ -6,6 +6,9 @@ var Follow = models.Follow;
 var Restaurant = models.Restaurant;
 var Review = models.Review;
 
+
+
+
 // Geocoding - uncomment these lines when the README prompts you to!
 // var NodeGeocoder = require('node-geocoder');
 // var geocoder = NodeGeocoder({
@@ -15,13 +18,19 @@ var Review = models.Review;
 //   formatter: null
 // });
 
-// THE WALL - anything routes below this are protected!
+// THE WALL - any routes below this are protected!
 router.use(function(req, res, next){
   if (!req.user) {
     res.redirect('/login');
   } else {
     return next();
   }
+});
+
+
+
+router.get("/", function(req, res) {
+  res.render("index");
 });
 
 router.post('/restaurants/new', function(req, res, next) {

@@ -1,21 +1,34 @@
-var express = require('express');
-var session = require('express-session')
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var passport = require('passport');
-var LocalStrategy = require('passport-local');
-var models = require('./models/models')
-var routes = require('./routes/index');
-var auth = require('./routes/auth');
-var MongoStore = require('connect-mongo/es5')(session);
-var mongoose = require('mongoose');
-var app = express();
+var express       = require('express');
+    session       = require('express-session'),
+    exphbs        = require('express-handlebars'),
+    path          = require('path'),
+    logger        = require('morgan'),
+    cookieParser  = require('cookie-parser'),
+    bodyParser    = require('body-parser'),
+    passport      = require('passport'),
+    LocalStrategy = require('passport-local'),
+    models        = require('./models/models')
+    routes        = require('./routes/index'),
+    auth          = require('./routes/auth'),
+    MongoStore    = require('connect-mongo/es5')(session),
+    mongoose      = require('mongoose'),
+    app           = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hbs');
+
+// Handlabars setup
+app.engine('.hbs', exphbs({
+  helpers: {
+        niceDate: function (uglyDate) { 
+          return uglyDate.toDateString(); },
+        setDate: function(uglyDate) {
+          return uglyDate.toISOString().substr(0, 10);
+        }
+    },
+  defaultLayout: 'main', 
+  extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
