@@ -1,25 +1,37 @@
-<h4>Name:</h4>
-<p>{{user.displayName}}</p>
+<div class="row">
+<div class="col-xs-3"><span class="glyphicon glyphicon-user"></span> Name:</div>
+<div class="col-xs-9">{{user.displayName}}</div>
+</div>
 
-<h4>Email:</h4>
-<p>{{user.username}}</p>
+<div class="row">
+<div class="col-xs-3"><span class="glyphicon glyphicon-envelope"></span> Email:</div>
+<div class="col-xs-9">{{user.email}}</div>
+</div>
 
-<h4>Address:</h4>
-<p>{{user.address}}</p>
+<div class="row">
+<div class="col-xs-3"><span class="glyphicon glyphicon-home"></span> Address:</div>
+<div class="col-xs-9">{{user.location}}</div>
+</div>
 
-<h4>Reviews:</h4>
-<p>{{user.reviews}}</p>
+<div class="row">
+<div class="col-xs-3"><span class="glyphicon glyphicon-comment"></span> Reviews:</div>
+<div class="col-xs-9">{{user.reviews}}</div>
+</div>
 
-<h4>Following:</h4>
+<div class="row">
+<div class="col-xs-3">Following:</div>
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
+  <div>{{to.displayName}}
+  <form  action="/unfollow/{{to.id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
 {{/each}}
+</div>
 
-<h4>Followers:</h4>
+<div class="row">
+<div class="col-xs-3">Followers:</div>
 {{#each followers}}
-  <p>{{uid1.displayName}}</p>
+  <p>{{from.displayName}}</p>
 {{/each}}
+</div>

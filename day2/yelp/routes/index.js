@@ -14,6 +14,34 @@ var Review = models.Review;
 //   httpAdapter: "https",
 //   formatter: null
 // });
+router.get('/', function(req, res) {
+  User.find(function(err, users) {
+    res.render('profiles', {
+      users: users
+    });
+  });
+
+});
+
+router.get('/profile/:userid', function(req, res) {
+  console.log(req.params);
+  User.findById(req.params.userid, function(err, user) {
+    if (!err) {
+      res.render('singleProfile', {
+        user: user
+      });
+    } else {
+      console.log("Error finding user");
+    }
+  });
+
+});
+
+router.post('/follow/:userid', function(req, res) {
+  User.findById(req.params.id, function(err, user) {
+    // TODO
+  })
+});
 
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
@@ -31,7 +59,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;

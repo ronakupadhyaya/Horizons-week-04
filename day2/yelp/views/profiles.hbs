@@ -1,1 +1,9 @@
 {{! YOUR CODE HERE }}
+
+{{#each users}}
+  <div class="profile">
+    <a href="/profile/{{_id}}"<h4>asdfsad{{displayName}}</h4></a>
+    {{email}}'s password is {{password}}
+    <a class="btn btn-success" href="/follow/{{_id}}" method="post"><i class="glyphicon glyphicon-plus"></i> Follow</a>
+  </div>
+{{/each}}
