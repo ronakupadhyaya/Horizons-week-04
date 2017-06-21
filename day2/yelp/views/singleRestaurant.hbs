@@ -1,17 +1,45 @@
 {{! YOUR CODE HERE }}
+<head>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+</head>
+
 <div class="restContainer">
   <div class="restHead">
+    <form action="/restaurants" method="GET" id="backForm">
+      <button type="submit" form="backForm" value="Submit">
+        Back To All Restaurants
+      </button>
+    </form>
     <h1 style="text-align:center;">{{restaurant.name}}</h1>
+    <div class="star-ratings-css">
+      <div class="star-ratings-css-top" style="width:{{restaurant.averageRating}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    </div>
       {{dollars}}
+
   </div>
   <div class="rating">
   </div>
   <div class="map">
-    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap&amp;key=AIzaSyByS4EgixgDAkOJHvwBa4VmyHQo6fYrvrE">
   </div>
   <div class="submitRating">
-    <form method="GET" action="/">
-      <input type="submit" name="rating" value="Submit a Rating" class="btn btn-warning btn btn-warning btn-lg btn-block" id="submit-rating" />
+    <form method="GET" action="/restaurants/{{restaurant._id}}/review">
+      <input type="submit" name="rating" value="Add a Review" class="btn btn-warning btn btn-warning btn-lg btn-block" id="submit-rating" />
     </form>
   </div>
 </div>
+
+{{restaurant.averageRating}}
+{{#each review}}
+<div>
+{{userId.displayName}}
+<div class="star-ratings-css">
+  <div class="star-ratings-css-top" style="width:{{restaurant.averageRating}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+  <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+</div>
+{{stars}}
+</div>
+{{content}}
+</div>
+{{/each}}

@@ -22,7 +22,7 @@ router.get('/',function(req,res,next){
 })
 router.get('/profile',function(req,res,next){
   User.find(function(err,users){
-    console.log(users);
+    //console.log(users);
     res.render('profiles',{
       users:users
     })
@@ -92,6 +92,7 @@ router.post('/profile/:id/follow',function(req,res,next){
       if (err){
         res.status(500).redirect('/register');
       }else{
+        //console.log(arr);
         res.render('restaurants',{
           restaurants:arr
         })
@@ -104,6 +105,7 @@ router.post('/profile/:id/follow',function(req,res,next){
       if (err){
         res.status(500).redirect('/register');
       }else{
+        //console.log(arr);
         res.render('restaurants',{
           restaurants:arr
         })
@@ -113,12 +115,16 @@ router.post('/profile/:id/follow',function(req,res,next){
 
   router.get('/restaurants/:id',function(req,res,next){
     Restaurant.findById(req.params.id, function(err, rest) {
-      if (err) return next(err);
-      var dollars = '$'
-      res.render('singleRestaurant', {
-        restaurant:rest,
-        dollars:dollars.repeat(rest.price)
-      });
+      rest.getReviews(function(err, reviews){
+        if (err) return next(err);
+        var dollars = '$'
+        //console.log(rest.averageRating);
+        res.render('singleRestaurant', {
+          restaurant:rest,
+          dollars:dollars.repeat(rest.price),
+          review:reviews
+        });
+      })
     });
   })
   router.post('/restaurants/new', function(req, res, next) {
@@ -128,15 +134,12 @@ router.post('/profile/:id/follow',function(req,res,next){
     req.checkBody('close','You need a closing time').notEmpty();
     var result = req.validationErrors();
     if (result){
-      console.log('1');
+
       res.json(result)
     }else if (!result){
-      console.log('2');
+
       geocoder.geocode(req.body.location, function(err, data) {
-        //console.log(err);
-        console.log(data);
-        // var latitude = data[0];
-        // var longitude= data[1];
+
         var rest = new Restaurant({
           name:req.body.name,
           category:req.body.category,
@@ -146,19 +149,56 @@ router.post('/profile/:id/follow',function(req,res,next){
           openTime:req.body.open,
           closeTime:req.body.close
         })
-        console.log('3');
+
         rest.save(function(err, user) {
           if (err) {
             console.log(err);
             res.status(500).redirect('/restaurants/new');
           }else{
-            console.log(user);
+            //console.log(user);
             res.redirect('/restaurants')
           }
         })
       })
     }
   });
+
+  router.get('/restaurants/:id/review',function(req,res,next){
+    res.render('newReview',{
+      id:req.params.id
+    });
+  })
+  router.post('/restaurants/:id/review',function(req,res,next){
+    req.checkBody('review','You need a review').notEmpty();
+    req.checkBody('star','You need a rating').notEmpty();
+    var result = req.validationErrors();
+    if (result){
+      res.json(result)
+    }else if (!result){
+      console.log(req.body);
+      var review = new Review({
+        content:req.body.review,
+        stars:req.body.star,
+        restId: req.params.id,
+        userId: req.user.id
+      })
+      review.save(function(err){
+        if (err){
+          res.json(err)
+        }else{
+          Restaurant.findById(req.params.id, function(err, rest) {
+            //console.log("HEEYHEHEU");
+            //console.log(rest);
+            rest.totalScore += parseInt(req.body.rating);
+            rest.reviewCount += 1;
+            rest.save(function(err,val){
+              res.redirect('/restaurants/'+req.params.id)
+            })
+          })
+        }
+      })
+    }
+  })
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
   if (!req.user) {

@@ -51,6 +51,13 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
   Follow.find({userFrom: self._id, userTo:idToUnfollow }).remove().exec(callback);
 }
 
+userSchema.methods.getReviews = function (callback){
+  var self=this;
+  Review.find({userId: self._id}).populate('restId').exec(function(err,reviews){
+    callback(err, reviews);
+  })
+}
+
 var FollowsSchema = mongoose.Schema({
   userFrom:{
     type: mongoose.Schema.ObjectId,
@@ -94,16 +101,48 @@ var restaurantSchema = mongoose.Schema({
   },
   price:Number,
   openTime:Number,
-  closeTime:Number
+  closeTime:Number,
+  totalScore:{
+    type:Number,
+    default:0
+  },
+  reviewCount:{
+    type:Number,
+    default:0
+  }
+},{
+  toJSON:{
+    virtuals:true
+  }
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
-
+restaurantSchema.methods.getReviews = function (callback){
+  var self=this;
+  Review.find({restId: self._id}).populate('userId').exec(function(err,reviews){
+    callback(err, reviews);
+  })
 }
+// Review.find({restId: self.id }).populate('userId').exec( function(err, reviews) {
+//   console.log(reviews);
+//   var total = reviews.reduce(function(acc, obj) {
+//     return acc + obj.stars;
+//   }, 0);
+//   console.log(total/reviews.length);
+//   return (total/reviews.length);
+// })
+restaurantSchema.virtual("averageRating").get(function(){
+  return (((this.totalScore/this.reviewCount)/5)*100)
 
-//restaurantSchema.methods.stars = function(callback){
-//
-//}
+})
+
+// restaurantSchema.methods.stars = function(callback){
+//   Review.find( {restaurant: this.id }).populate('user').exec( function(err, reviews) {
+//     var total = reviews.reduce(function (acc, obj) {
+//       return acc + obj.stars;
+//     }, 0);
+//     callback(err, (total/reviews.length));
+// });
+// }
 
 var User = mongoose.model('User', userSchema)
 var Restaurant = mongoose.model('Restaurant', restaurantSchema)
