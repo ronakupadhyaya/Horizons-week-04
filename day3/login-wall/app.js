@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./passport'));
 app.use(require('./routes'));
+app.use('/test',require('./routes')); //this makes all default route to be /test
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {
