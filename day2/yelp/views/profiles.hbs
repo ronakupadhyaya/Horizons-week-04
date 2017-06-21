@@ -1,1 +1,10 @@
 {{! YOUR CODE HERE }}
+
+<h1> User Directory </h1>
+
+<h3>Users</h3>
+
+{{#each users}}
+  <h1>{{this.displayName}}</h1>
+  <h5>{{this.location}}</h5>
+{{/each}}
