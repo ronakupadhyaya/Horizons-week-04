@@ -32,4 +32,12 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
 }));
 
+router.use(function (req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+});
+
 module.exports = router;
