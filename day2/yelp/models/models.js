@@ -9,6 +9,8 @@ var userSchema = mongoose.Schema({
     type:String,
     required: true
   },
+  displayName: String,
+  location: String,
   email: {
     type: String,
     required: true
@@ -20,35 +22,60 @@ var userSchema = mongoose.Schema({
   location: String
 });
 
-//getFollows(cb) - return array of followers and users followed as User objects in callback cb
-userSchema.methods.getFollows = function (callback){ //find all the ones "from" me and then "to" me. one has to go inside the other "nest"
-//   Follow.find({}, function() {
-//     console.log('q');
-//   })
-//   Follow.find({}, function() {
-//     console.log('p');
-//   })
-//   console.log('d');
-// } incorect b/c async
- var fromId = this._id;
- Follow.find({from: fromId})  //from me
- .populate('to') //get info of who i am following, dont need copies of myself
-.exec(function(error, allFollowing) {
+// //getFollows(cb) - return array of followers and users followed as User objects in callback cb
+// userSchema.methods.getFollows = function (callback){ //find all the ones "from" me and then "to" me. one has to go inside the other "nest"
+// //   Follow.find({}, function() {
+// //     console.log('q');
+// //   })
+// //   Follow.find({}, function() {
+// //     console.log('p');
+// //   })
+// //   console.log('d');
+// // } incorect b/c async
+//  var fromId = this._id;
+//  Follow.find({from: fromId})  //from me
+//  .populate('to') //get info of who i am following, dont need copies of myself
+// .exec(function(error, allFollowing) {
+//
+//     if (error) {
+//       callback(error)
+//     } else {
+//       Follow.find({to: myId})
+//       .populate('from')
+//       .exec(function(error, allFollowers) {
+//         if (error) {
+//           callback(error)
+//         } else {
+//           callback(null, {allFollowers: allFollowers, allFollowing: allFollowing})
+//         }
+//       })
+//     }
+// })
+// }
 
-    if (error) {
-      callback(error)
+userSchema.methods.getFollows = function (callback){
+  var myId = this._id;
+  console.log('myId', this._id);
+  Follow.find({from: myId})
+  .populate('to')
+  .exec(function(err, allFollowing) {
+    console.log('allFollowing', allFollowing);
+    if(err) {
+      callback(err)
     } else {
       Follow.find({to: myId})
       .populate('from')
-      .exec(function(error, allFollowers) {
-        if (error) {
-          callback(error)
+      .exec(function(err, allFollowers) {
+        console.log('allFollowers', allFollowers);
+        if(err) {
+          callback(err)
         } else {
-          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing})
+          console.log('completed');
+          callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
     }
-})
+  })
 }
 
 //follow(idToFollow, cb) - create and save a new Follow object with this._id as the from (see below) and idToFollow as to
@@ -87,6 +114,7 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
   })
 };
 
+
 var FollowsSchema = mongoose.Schema({
   to: {
     type: mongoose.Schema.ObjectId,
@@ -115,8 +143,9 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //
 //}
 
-var User =  mongoose.model('User', userSchema);
-var Restaurant =  mongoose.model('Restaurant', restaurantSchema);
+
+var User = mongoose.model('User', userSchema);
+var Restaurant = mongoose.model('Restaurant', restaurantSchema);
 var Review = mongoose.model('Review', reviewSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
