@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+<h3>{{restaurant.name}}</h3>
+<p>Category: {{restaurant.category}}</p>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyAUvqeRfpCeRKJkaqiSv_bqky2jyJVmAbg">
+<p>Price: {{restaurant.price}}</p>
+
+{{#each reviews}}
+
+<p>Review: {{this.content}}</p>
+<p>Rating: {{this.stars}}</p>
+{{/each}}
+
+<a href="/review/new/{{restaurant._id}}"><h5>Review this restaurant</h5></a>
+<a href="/restaurants">Back to Home</a>

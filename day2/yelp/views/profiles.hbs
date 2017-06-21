@@ -1,1 +1,9 @@
-{{! YOUR CODE HERE }}
+{{#each users}}
+<a href="/users/{{this._id}}"><h3>{{this.displayName}}</h3></a>
+<p>{{this.location}}</p>
+<form  action="/follow/{{this._id}}" method="post">
+  <input style="display: inline;" type="submit" value="Follow">
+</form>
+{{/each}}
+
+<a href="/"><h3>Go Home!</h3></a>
