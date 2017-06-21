@@ -23,6 +23,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+if (! process.env.MONGODB_URI) {
+  console.log('MONGODB_URI config variable is missing. Try running "source env.sh"');
+  process.exit(1);
+}
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('error', console.error);
+mongoose.connection.on('connected', function(){
+  console.log('connected to mongoDb');
+})
 
 // Passport stuff here
 
