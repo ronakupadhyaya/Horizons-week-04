@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+<h3>{{restaurant.name}}</h3><br>
+Hours Today: {{restaurant.openTime}}-{{restaurant.closeTime}}
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyAV5gNZlEkSVx1_Pc_TYvxEJi0nh4_PL84">
+<br><button type="button" name="button">Add Review</button>
+<br>
+Reviews <br>
+
+{{#each reviews}}
+ <b>{{userid.name}}</b><br>
+ {{userid.location}} <br>
+ Stars:{{stars}}<br>
+ {{content}}
+{{/each}}

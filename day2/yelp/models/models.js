@@ -72,6 +72,11 @@ userSchema.methods.isfollowing = function(id,callback){
   })
 }
 
+userSchema.methods.getReviews = function(callback){
+  Review.find({userid:this._id})
+  .populate('Restaurant')
+  .exec(callback)
+}
   //  End of User Schema
 var followSchema = mongoose.Schema({
   from:{
@@ -85,27 +90,48 @@ var followSchema = mongoose.Schema({
 });
 
 var reviewSchema = mongoose.Schema({
-
+  content: String,
+  stars: Number,
+  restaurantid: {
+    type: mongoose.Schema.ObjectId,
+    ref:'Restaurant'
+  },
+  userid: {
+    type: mongoose.Schema.ObjectId,
+    ref:'User'
+  }
 });
 
+var restaurantSchemaOptions = ({
+  toJSON:{
+    virtuals:true
+  }
+})
 
 var restaurantSchema = mongoose.Schema({
-  Name: String,
-  Category: String,
-  Latitude: Number,
-  Longitude: Number,
-  Price: Number,
-  OpenTime: Number,
-  CloseTime: Number
-});
+  name: String,
+  category: String,
+  latitude: Number,
+  longitude: Number,
+  price: Number,
+  openTime: Number,
+  closeTime: Number
+},restaurantSchemaOptions);
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+var restaurantVirtual = restaurantSchema.virtual('averageRating');
+restaurantVirtual.get(function(){
+  return
+})
 
+restaurantSchema.methods.getReviews = function (callback){
+  Review.find({restaurantid: this._id})
+  .populate('User')
+  .exec(callback);
 }
 
-//restaurantSchema.methods.stars = function(callback){
-//
-//}
+restaurantSchema.methods.stars = function(callback){
+
+}
 
 var User = mongoose.model('User', userSchema)
 var Restaurant = mongoose.model('Restaurant', restaurantSchema)

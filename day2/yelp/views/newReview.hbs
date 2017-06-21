@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+<h4>Add a review for <b>{{restaurant.name}}</b> </h4> <br>
+
+<form class="" action="/restaurants/{{restaurant._id}}/review" method="post">
+<textarea name="content" rows="8" cols="80" placeholder="Review"></textarea>
+<br>
+Stars: <input type="Number" name="stars" value="">
+<br>
+<input type="submit" name="submit" value="submit">
+</form>
+
+<!--
+The Restaurant ID will come from the URL
+that this form POSTs to
+the User ID will come from the currently logged-in
+user's ID (req.user). -->
