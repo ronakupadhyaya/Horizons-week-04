@@ -1,1 +1,25 @@
-{{! YOUR CODE HERE }}
+<!-- <form>
+  Name:<br>
+  <input type="text" name="name"><br>
+  Category:<br>
+  <input type="text" name="category">
+  Price:<br>
+  <input type="text" name="price">
+  Adress:<br>
+  <input type="text" name="adress">
+  Opens:<br>
+  <input type="text" name="open">
+  Closes:<br>
+  <input type="text" name="close">
+
+  <input type="submit" name="submit">
+</form> -->
+
+<div>
+  <h2>{{name}}</h2>
+  <p>{{category}}</p>
+  <p>Hours Today: {{open}} - {{close}}</p>
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center=[LATITUDE],[LONGITUDE]&markers=color:red|[LATITUDE],[LONGITUDE]&zoom=13&size=600x300&maptype=roadmap">
+
+  <input type="submit" name="submit" value="Add Review">
+</div>

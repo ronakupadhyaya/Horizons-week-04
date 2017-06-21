@@ -18,96 +18,120 @@ var userSchema = mongoose.Schema({
 });
 
 var FollowsSchema = mongoose.Schema({
-  to:{
+  to: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  from:{
+  from: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   }
+});
 
+var restaurantSchema = mongoose.Schema({
+  displayName: String,
+  Category: String,
+  Latitude: Number,
+  Longitude: Number,
+  Price: Number,
+  openTime: Number,
+  closingTime: Number
 });
 
 userSchema.methods.getFollows = function (callback){
-  var myId = this._id
-  //return array of followers and users followed as User objects in callback cb
-  Follow.find({from: myId}).populate('to').exec(function(err, allFollowing){
-    if(err){
-      callback(err);
-    }
-    else{
-      Follow.find({to: myId}).populate('from').exec(function(err, allFollowers){
-        if(err){
-          callback(err);
-        }
-        else{
-          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing})
+  var myId = this._id;
+  console.log('myId', this._id);
+  Follow.find({from: myId})
+  .populate('to')
+  .exec(function(err, allFollowing) {
+    console.log('allFollowing', allFollowing);
+    if(err) {
+      callback(err)
+    } else {
+      Follow.find({to: myId})
+      .populate('from')
+      .exec(function(err, allFollowers) {
+        console.log('allFollowers', allFollowers);
+        if(err) {
+          callback(err)
+        } else {
+          console.log('completed');
+          callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
     }
-
   })
 }
-
 userSchema.methods.follow = function (idToFollow, callback){
   var fromId = this._id;
-  var newFollow = new Follow({
-    to: idToFollow,
-    from: fromId
-  });
-  Follow.find({from: this._id, to: idToFollow}, function(err, theFollow){
-    if (err){
+  Follow.find({from: this._id, to: idToFollow}, function(err,theFollow){
+    if (err) {
       callback(err);
-    }
-    else if (theFollow){
-      callback(new Error('that follow already exists'));
-    }
-    else{
-      newFollow.save(function(err, result){
-        if(err){
+    } else if (theFollow) {
+      callback(new Error("That follow already exists!"));
+    } else {
+      var newFollow = new Follow({
+        to: idToFollow,
+        from: fromId
+      });
+
+      newFollow.save(function(err, result) {
+        if(err) {
           callback(err);
-        }
-        else{
+        } else {
           callback(null, result);
         }
-      })
+      });
     }
   })
 
+}
+
+userSchema.methods.isFollowing = function (idFollowing, callback){
+  var fromId = this._id;
+  Follow.findOne({to: followerId, from: idFollowing}, function(err,theFollow){
+    if (err) {
+      callback(err);
+    }
+    else if (theFollow) {
+      callback(null,{result:true});
+    }
+    else {callback(null, {result: false});
+  }
+})
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
-  Follow.remove({to: idToUnfollow, from: this.id}, function(err, result){
-    if(err){
-      callback(err);
-    }
-    else{
+  Follow.remove({to: idToUnfollow, from: this._id}, function(err,result) {
+    if(err) {
+      callback(err)
+    } else {
       callback(null, result);
     }
-  })
+  });
 }
 
+
+
 var reviewSchema = mongoose.Schema({
-
+//
 });
+//
+//
 
-
-var restaurantSchema = mongoose.Schema({
-
-});
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){
 
 }
 
-//restaurantSchema.methods.stars = function(callback){
+restaurantSchema.methods.stars = function(callback){
 //
-//}
-var User = mongoose.model('User', userSchema),
-var Restaurant = mongoose.model('Restaurant', restaurantSchema),
-var Review = mongoose.model('Review', reviewSchema),
-var Follow = mongoose.model('Follow', FollowsSchema)
+}
+
+var User = mongoose.model('User', userSchema);
+var Restaurant = mongoose.model('Restaurant', restaurantSchema);
+var Review = mongoose.model('Review', reviewSchema);
+var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
   User: User,

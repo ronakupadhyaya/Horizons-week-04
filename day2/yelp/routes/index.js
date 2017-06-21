@@ -24,21 +24,39 @@ router.use(function(req, res, next){
   }
 });
 
-router.get('/users/:userId', function(req, res){
-  User.findById(userId, function(err, user){
-    var userId = req.params.userId;
-    if(err || !user){
-      res.status(404).send("No user");
+router.get('/', function(req, res) {
+  res.send('Home Page');
+})
 
+router.get('/users', function(req,res){
+  User.find(function(err,users){
+    if(err){
+      res.send(err);
     }
-    else{
-      var allFollowing = result.allFollowing;
-      var allFollowers = result.allFollowers;
-      res.render('singleProfile', {user: user});
-    }
+    res.render('profiles', {Users: users})
   })
 
 })
+
+router.get('/users/:userId', function(req,res) {
+  var userId = req.params.userId;
+  console.log('userId', userId);
+
+  User.findById(userId, function(err, user) {
+    if(err || !user) {
+      res.status(404).send("No user");
+    } else {
+      user.getFollows(function(err, result) {
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollowers;
+        console.log('rendered', { user: user, following: allFollowing, followers: allFollowers});
+        res.render('singleProfile', { user: user, following: allFollowing, followers: allFollowers});
+      })
+    }
+  })
+
+
+});
 
 router.post('/restaurants/new', function(req, res, next) {
 
