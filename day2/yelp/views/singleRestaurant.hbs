@@ -1,1 +1,25 @@
 {{! YOUR CODE HERE }}
+<h4>Name:</h4>
+<p>{{restaurant.name}}</p>
+
+<h4>Category:</h4>
+<p>{{restaurant.category}}</p>
+
+<h4>Price:</h4>
+<p>{{restaurant.price}}</p>
+
+<h4>Location:</h4>
+<p>{{restaurant.location}}</p>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=[{{restaurant.latitude}}],[{{restaurant.longitude}}]&markers=color:red|[{{restaurant.latitude}}],[{{restaurant.longitude}}]&zoom=13&size=600x300&maptype=roadmap">
+
+<h4>Open time:</h4>
+<p>{{restaurant.openTime}}</p>
+
+<h4>Close time:</h4>
+<p>{{restaurant.closeTime}}</p>
+
+<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <div class="form-group">
+    <button class="btn btn-add">Add Restaurant</button>
+  </div>
+</form>

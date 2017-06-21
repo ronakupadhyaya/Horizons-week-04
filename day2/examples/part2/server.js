@@ -18,7 +18,9 @@ var Pet = require('./pet');
 
 //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 app.get('/pets', function(req,res,next) {
-  Pet.find(function(err, pets){
+  Pet.find()
+  .populate('owner')
+  .exec(function(err, pets){
     res.render('pets', {
       pets: pets
     });
@@ -27,6 +29,7 @@ app.get('/pets', function(req,res,next) {
 
 app.get('/', function(req, res, next) {
   User.find().sort({"name.first":"asc"}).exec(function(err,users){
+    // console.log(users);
     res.render('index', {
       users: users
     });
