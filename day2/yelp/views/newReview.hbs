@@ -1,1 +1,6 @@
 {{! YOUR CODE HERE }}
+<form  action="/reviews/{{restaurant_id}}/new" method="post">
+  <input style="display: inline;" type="text" name="content" value="" placeholder="Review">
+  <input style="display: inline;" type="number" name="stars" value="" placeholder="Stars: 1-5">
+  <input style="display: inline;" type="submit" class="btn btn-primary" value="Submit your Review!">
+</form>

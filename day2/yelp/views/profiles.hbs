@@ -1,1 +1,15 @@
 {{! YOUR CODE HERE }}
+  <h1>Users ({{users.length}})</h1>
+{{#each users}}
+  <a href="./user/{{this._id}}"><h2>{{this.displayName}}</h2> </a>
+  <p>{{this.location}}<p>
+  <span>
+  <form  action="/follow/{{this._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Follow">
+  </form>
+  <form  action="/unfollow/{{this._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
+</span>
+
+{{/each}}

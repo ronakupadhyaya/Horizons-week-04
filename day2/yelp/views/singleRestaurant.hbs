@@ -1,1 +1,17 @@
 {{! YOUR CODE HERE }}
+<h4>Name: {{restaurant.name}}</h4>
+<p> Average Rating: {{restaurant.averageRating}} </p>
+<p> Hours Today: {{restaurant.opentime}} - {{restaurant.closetime}}</p>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyCqHpYdb8u2Q0wnRusI16E8gHAaODNaALs">
+</br>
+<a href="/reviews/{{restaurant._id}}/new">
+  <button class="btn btn default" action=""> Add a Review! </button>
+</a>
+
+<h4>Reviews</h4>
+{{#each reviews}}
+  <h5>{{this.user.displayName}} </h5>
+  <p>{{this.user.location}} </p>
+  <p>Stars: {{this.stars}}</p>
+  <p>{{this.content}}</p>
+{{/each}}
