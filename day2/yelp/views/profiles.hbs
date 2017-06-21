@@ -1,1 +1,14 @@
+<h1>User Directory ({{users.length}})</h1>
+<div class="flex-container">
+  {{#each users}}
+  <div class="user">
+    <a href="/users/{{this._id}}">{{this.displayName}}</a>
+
+  </div>
+  {{/each}}
+
+</div>
+
+
+
 {{! YOUR CODE HERE }}
