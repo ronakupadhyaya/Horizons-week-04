@@ -1,1 +1,10 @@
-{{! YOUR CODE HERE }}
+<h4>User Directory</h4>
+<ul>
+  {{#each users}}
+  <li>{{this.displayName}}
+    <a href="/user/{{this._id}}">View private page</a>
+    <div>
+    {{this.location}}
+  </div></li>
+  {{/each}}
+</ul>

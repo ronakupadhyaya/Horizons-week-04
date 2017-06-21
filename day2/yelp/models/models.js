@@ -155,7 +155,7 @@ var Follow=mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
   User:User,
-  Restaurant:Restaurant ,
+  Restaurant:Restaurant,
   Review:Review,
   Follow:Follow
 };

@@ -7,13 +7,15 @@ var Restaurant = models.Restaurant;
 var Review = models.Review;
 
 // Geocoding - uncomment these lines when the README prompts you to!
-// var NodeGeocoder = require('node-geocoder');
-// var geocoder = NodeGeocoder({
-//   provider: "google",
-//   apiKey: process.env.GEOCODING_API_KEY || "YOUR KEY HERE",
-//   httpAdapter: "https",
-//   formatter: null
-// });
+var NodeGeocoder = require('node-geocoder');
+var geocoder = NodeGeocoder({
+  provider: "google",
+  apiKey: process.env.GEOCODING_API_KEY || "AIzaSyCJvW1-oBFitDzp1OnC9yqESkAGCBE7fs0",
+  httpAdapter: "https",
+  formatter: null
+});
+
+// AIzaSyCJvW1-oBFitDzp1OnC9yqESkAGCBE7fs0    API key
 
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
@@ -27,10 +29,10 @@ router.use(function(req, res, next){
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!
-  // geocoder.geocode(req.body.address, function(err, data) {
-  //   console.log(err);
-  //   console.log(data);
-  // });
+  geocoder.geocode(req.body.address, function(err, data) {
+    console.log(err);
+    console.log(data);
+  });
 
 });
 
@@ -38,7 +40,16 @@ router.get('/',function(req,res){
   res.send('Home Page');
 })
 
-router.post()
+router.post('/follow/:userId',function(req,res){
+  console.log(req.user);
+    req.user.User.follow(req.params.userId,function(err,result){
+      if (err){
+        console.log('follow failed');
+      } else {
+        console.log("this should work now");
+      }
+})
+  })
 
 router.get('/user/:userId',function(req,res){
   var thisId = req.params.userId;
@@ -56,6 +67,18 @@ router.get('/user/:userId',function(req,res){
 
     }
   })
+})
+
+router.get('/users',function(req,res){
+  var list ;
+   User.find(function(err,result){
+     if(err){
+       console.log("err!");
+     } else {
+       list = result;
+       res.render('profiles',{users:list})
+     }
+   });
 })
 
 module.exports = router;
