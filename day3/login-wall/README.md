@@ -1,4 +1,4 @@
-# Warmup Exercise: Login wall
+# Inline Exercise: Login wall
 
 ## Instructions
 
