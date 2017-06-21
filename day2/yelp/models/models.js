@@ -168,8 +168,26 @@ restaurantSchema.virtual("averageRating").get(function(){
     console.log("rating is decimal");
     rating = Math.trunc(rating);
   }
-  console.log(rating);
-  return Math.round((this.totalScore/this.reviewCount)).toFixed(1);
+  // console.log("Average rating without rounding",(this.totalScore/this.reviewCount));
+  // console.log("Average with tofixed",(this.totalScore/this.reviewCount).toFixed(1));
+  // console.log("Average with tofixed % 5",((this.totalScore/this.reviewCount)%5).toFixed(1));
+  console.log("virtual average rating type", typeof (this.totalScore/this.reviewCount).toFixed(1));
+  return (this.totalScore/this.reviewCount).toFixed(1);
+
+})
+
+restaurantSchema.virtual("averageStars").get(function(){
+  var avgrating = this.averageRating;
+  var stars = avgrating;
+  if((avgrating%1) > 0.2 ){
+    console.log("rating is decimal");
+    stars = Math.trunc(avgrating)+.5;
+    console.log("rounded avergae rating to",stars,"from", avgrating);
+  }else{
+    stars = Math.trunc(avgrating);
+  }
+
+  return stars;
 
 })
 
@@ -180,9 +198,13 @@ restaurantSchema.methods.getReviews = function (callback){
   })
 }
 
-//restaurantSchema.methods.stars = function(callback){
+// restaurantSchema.methods.stars = function(callback){
+//   var restid = this._id;
+//   Review.find({restaurantId: restid}).exec(function(err,reviews){
+//     callback(err,reviews);
+//   })
 //
-//}
+// }
 
 var User = mongoose.model('User', userSchema)
 var Restaurant = mongoose.model('Restaurant', restaurantSchema)

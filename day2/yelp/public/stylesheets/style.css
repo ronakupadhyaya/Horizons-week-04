@@ -61,7 +61,7 @@ a {
 
 
 /** Colors */
-#stars-1\.0 .star-1,
+#stars-1 .star-1, #stars-1\.0 .star-1,
 .stars-1-5 .star-1, #stars-1\.5 .star-1{
   border-color: #cc8b1f;
   background: #cc8b1f;
@@ -71,13 +71,13 @@ a {
   border-left-color: #cc8b1f;
 }
 
-#stars-2\.0 .star-1,
+#stars-2 .star-1, #stars-2\.0 .star-1,
 .stars-2-5 .star-1, #stars-2\.5 .star-1{
   border-color: #dcb228;
   background: #dcb228;
 }
 
-#stars-2\.0 .star-2,
+#stars-2 .star-2, #stars-2\.0 .star-2,
 .stars-2-5 .star-2, #stars-2\.5 .star-2{
   border-color: #dcb228;
   background: #dcb228;
@@ -87,19 +87,19 @@ a {
   border-left-color: #dcb228;
 }
 
-#stars-3\.0 .star-1,
+#stars-3 .star-1, #stars-3\.0 .star-1,
 .stars-3-5 .star-1, #stars-3\.5 .star-1{
   border-color: #f0991e;
   background: #f0991e;
 }
 
-#stars-3\.0 .star-2,
+#stars-3 .star-2, #stars-3\.0 .star-2,
 .stars-3-5 .star-2, #stars-3\.5 .star-2{
   border-color: #f0991e;
   background: #f0991e;
 }
 
-#stars-3\.0 .star-3,
+#stars-3 .star-3, #stars-3\.0 .star-3,
 .stars-3-5 .star-3, #stars-3\.5 .star-3 {
   border-color: #f0991e;
   background: #f0991e;
@@ -109,25 +109,25 @@ a {
   border-left-color: #f0991e;
 }
 
-#stars-4\.0 .star-1,
+#stars-4 .star-1, #stars-4\.0 .star-1,
 .stars-4-5 .star-1, #stars-4\.5 .star-1 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-#stars-4\.0 .star-2,
+#stars-4 .star-2, #stars-4\.0 .star-2,
 .stars-4-5 .star-2, #stars-4\.5 .star-2 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-#stars-4\.0 .star-3,
+#stars-4 .star-3, #stars-4\.0 .star-3,
 .stars-4-5 .star-3, #stars-4\.5 .star-3 {
   border-color: #f26a2c;
   background: #f26a2c;
 }
 
-#stars-4\.0 .star-4,
+#stars-4 .star-4, #stars-4\.0 .star-4,
 .stars-4-5 .star-4, #stars-4\.5 .star-4 {
   border-color: #f26a2c;
   background: #f26a2c;
@@ -137,31 +137,31 @@ a {
   border-left-color: #f26a2c;
 }
 
-#stars-5\.0 .star-1,
+#stars-5 .star-1, #stars-5\.0 .star-1,
 .stars-5-5 .star-1, #stars-5\.5 .star-1 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-#stars-5\.0 .star-2,
+#stars-5 .star-2, #stars-5\.0 .star-2,
 .stars-5-5 .star-2, #stars-5\.5 .star-2 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-#stars-5\.0 .star-3,
+#stars-5 .star-3, #stars-5\.0 .star-3,
 .stars-5-5 .star-3, #stars-5\.5 .star-3 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-#stars-5\.0 .star-4,
+#stars-5 .star-4, #stars-5\.0 .star-4,
 .stars-5-5 .star-4, #stars-5\.5 .star-4 {
   border-color: #dd050b;
   background: #dd050b;
 }
 
-#stars-5\.0 .star-5,
+#stars-5 .star-5, #stars-5\.0 .star-5,
 .stars-5-5 .star-5, #stars-5\.5 .star-5 {
   border-color: #dd050b;
   background: #dd050b;

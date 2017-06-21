@@ -191,8 +191,8 @@ router.get('/restaurants/:id', function(req,res,next){
             console.log("errors getting reviews");
           }else{
             // console.log(result);
-            var starclass= restaurant.averageRating+"";
-
+            // var starclass= restaurant.averageRating+"";
+            console.log("restaurant average rating inside get", restaurant.averageRating);
             res.render('singleRestaurant', {
               restaurant: restaurant,
               dollars: "$".repeat(restaurant.price),
@@ -219,9 +219,11 @@ router.post('/restaurants/:id/review', function(req,res,next){
   var content = req.body.content;
   var rating = req.body.rating;
   var userId = req.user._id;
+  var ratingfloat = parseFloat((parseFloat(rating)).toFixed(1));
+  console.log("parseFloat(rating.toFixed(1)", ratingfloat);
   // console.log(restid,content,rating,userId);
-
-  var review = new Review({content: content, stars: rating, userId: userId, restaurantId: restid});
+  // console.log("not aprsefloat", rating, "parsefloat raing", parseFloat(rating));
+  var review = new Review({content: content, stars: ratingfloat, userId: userId, restaurantId: restid});
   review.save(function(err,result){
     if (err) {
       console.log("error saving review");
@@ -230,8 +232,11 @@ router.post('/restaurants/:id/review', function(req,res,next){
       Restaurant.findById(restid, function(err, rest) {
             //console.log("HEEYHEHEU");
             //console.log(rest);
-            console.log("raw rating", rating,typeof rating);
-            rest.totalScore += parseFloat(rating).toFixed(1);
+            // console.log("raw rating", rating,typeof rating);
+            // console.log("rest total score before adding rating", typeof rest.totalScore);
+            var ratingFloat = parseFloat(rating);
+            // console.log("rating type after parsefloat", typeof parseFloat(ratingFloat.toFixed(1)));
+            rest.totalScore += parseFloat(ratingFloat.toFixed(1));
             console.log("rest total score",rest.totalScore);
             rest.reviewCount += 1;
             rest.save(function(err,val){

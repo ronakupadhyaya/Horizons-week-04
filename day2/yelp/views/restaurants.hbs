@@ -5,7 +5,7 @@
   <button type="submit" form="{{_id}}" value="Submit">
     <div style="font-weight:bold;">{{name}}</div>
     <div>{{price}}x$</div>
-    <div class="stars" id="stars-{{averageRating}}">
+    <div class="stars" id="stars-{{averageStars}}">
 
         <i class="star-1">★</i>
         <i class="star-2">★</i>
@@ -13,7 +13,7 @@
         <i class="star-4">★</i>
         <i class="star-5">★</i>
 
-    </div>
+    </div> {{averageRating}}
   </button>
 </form>
 
