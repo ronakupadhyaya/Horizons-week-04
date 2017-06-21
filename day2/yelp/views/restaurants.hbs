@@ -1,1 +1,11 @@
 {{! YOUR CODE HERE }}
+{{#each restaurants }}
+{{this.name}}   {{this.location}} <br>
+open : {{this.openTime}} , close: {{this.closeTime}}
+category: {{this.category}}
+location
+<!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=[{{data[0].latitude}}],[{{data[0].longitude}}]&markers=color:red|[{{data[0].latitude}}],[{{data[0].longitude}}]&zoom=13&size=600x300&maptype=roadmap"> -->
+<br>
+{{/each}}
+
+data[0].latitude

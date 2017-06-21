@@ -18,11 +18,13 @@ var Pet = require('./pet');
 
 //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 app.get('/pets', function(req,res,next) {
-  Pet.find(function(err, pets){
-    res.render('pets', {
-      pets: pets
-    });
-  });
+  Pet.find()
+    .populate('owner')
+    .exec(function(err, pets){
+      res.render('pets', {
+        pets: pets
+      });
+    })
 });
 
 app.get('/', function(req, res, next) {
@@ -48,13 +50,13 @@ app.get('/toggle', function(req, res) {
   });
 });
 
-app.get('/users/:name', function(req, res, next) {
-  if (! req.params.name) {
+app.get('/users/:firstname', function(req, res, next) {
+  if (! req.params.firstname) {
     res.status(400).json({
       error: 'Missing name parameter'
     });
   } else {
-    User.findByName(req.params.name, function(err, users) {
+    User.findByFirstName(req.params.firstname, function(err, users) {
       res.render('index', {
         users: users
       });
