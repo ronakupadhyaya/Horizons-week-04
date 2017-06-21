@@ -39,7 +39,7 @@
     <div>
       <h4>Followers:</h4>
       {{#each followers}}
-          <a href="/profiles/{{this.to._id}}"><h5>{{this.from.displayName}}</h5></a>
+          <a href="/profiles/{{this.from._id}}"><h5>{{this.from.displayName}}</h5></a>
         <p>{{this.from.location}}</p>
       {{/each}}
     </div>
@@ -47,6 +47,6 @@
 </div>
 
 <br /> <br />
-<form class="text-center" action="/profiles" method="get">
+<form class="back-button" class="text-center" action="/profiles" method="get">
   <input style="display: inline;" type="submit" value="Back to All Profiles >">
 </form>
