@@ -1,1 +1,11 @@
-{{! YOUR CODE HERE }}
+{{#each users}}
+<h4>Name:</h4>
+<p>{{this.displayName}}</p>
+
+<h4>Location:</h4>
+<p>{{this.location}}</p>
+<a href='/users/{{this._id}}'>
+<button type="button" name="view-profiles"> View Profiles </button>
+</a>
+<hr>
+{{/each}}

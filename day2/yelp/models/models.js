@@ -17,24 +17,41 @@ var userSchema = mongoose.Schema({
   }
 });
 
+var restaurantSchema = mongoose.Schema({
+  name: String,
+  category: String,
+  latitude: Number,
+  longitude: Number,
+  price: Number,
+  openTime: Number,
+  closingTime: Number
+})
+
+var reviewSchema = mongoose.Schema({
+  content: String,
+  stars: Number,
+  restaurantId: mongoose.Schema.Types.ObjectId,
+  userId: mongoose.Schema.Types.ObjectId
+});
+
 userSchema.methods.getFollows = function (callback){
   var myId = this._id;
-  console.log('myId', this._id);
+  // console.log('myId', this._id);
   Follow.find({from: myId})
   .populate('to')
   .exec(function(err, allFollowing) {
-    console.log('allFollowing', allFollowing);
+    // console.log('allFollowing', allFollowing);
     if(err) {
       callback(err)
     } else {
       Follow.find({to: myId})
       .populate('from')
       .exec(function(err, allFollowers) {
-        console.log('allFollowers', allFollowers);
+        // console.log('allFollowers', allFollowers);
         if(err) {
           callback(err)
         } else {
-          console.log('completed');
+          // console.log('completed');
           callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
@@ -76,6 +93,10 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
   });
 }
 
+userSchema.methods.getReviews = function(){
+
+}
+
 var FollowsSchema = mongoose.Schema({
   to: {
     type: mongoose.Schema.ObjectId,
@@ -87,14 +108,6 @@ var FollowsSchema = mongoose.Schema({
   }
 });
 
-var reviewSchema = mongoose.Schema({
-
-});
-
-
-var restaurantSchema = mongoose.Schema({
-
-});
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){
 
@@ -108,6 +121,7 @@ var User = mongoose.model('User', userSchema);
 var Restaurant = mongoose.model('Restaurant', restaurantSchema);
 var Review = mongoose.model('Review', reviewSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
+
 
 module.exports = {
   User: User,
