@@ -2,11 +2,15 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+//var user = require("./user")
 
 var petSchema = new Schema({
   name: String,
   gender: String,
-  owner: String
+  owner: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  }
 });
 
 var Pet = mongoose.model('Pet', petSchema);
