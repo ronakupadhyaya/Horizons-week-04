@@ -151,6 +151,8 @@ redirect to `/`:
 
 Create a database in mLab. Connect to it in your `app.js`:
 
+  Remember to store your `MONGODB_URI` in `env.sh`
+
 ![](img/mongoSetup.png)
 
 # Part 3.2: Make sessions persistent
@@ -177,8 +179,6 @@ with `express-session`.
     everything, so you're logged out. Now let's make sessions stick around i.e. persist
     using our database, MognoDb.
 
-1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
-  npm package, this is how we will connect our sessions to MongoDb.
 1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
   npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
