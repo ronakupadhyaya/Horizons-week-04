@@ -23,7 +23,11 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
+  User.find()
+    .sort({'name.first': 1})
+    .skip((pageNumber - 1 )  * 10)  // Skips the the first pageNum * 10 documents
+    .limit(limit) // Limits the number of documents to 10
+    .exec(function(err,users){  // Executes our query
     res.render('index', {
       listItems: users,
       prev: prev,

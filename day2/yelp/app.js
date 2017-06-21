@@ -23,6 +23,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+/*
+ Remember: your currently logged-in users are accessible through your Passport-created req.user object!!!!!!
+ Take advantage of that in the Parts that follow!
+*/
 
 // Passport stuff here
 
@@ -106,5 +110,8 @@ app.use(function(err, req, res, next) {
   });
 });
 
+app.listen(3000, function(){
+  console.log('I AM ALIVE!!!!!!!!!');
+});
 
 module.exports = app;
