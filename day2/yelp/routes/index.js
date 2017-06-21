@@ -29,6 +29,7 @@ router.use(function(req, res, next){
   }
 });
 
+<<<<<<< HEAD
 //send to homepage and show all current profiles
 router.get('/', function(req, res) {
   User.find(function(err, users){
@@ -111,4 +112,32 @@ router.get('/restaurants', function(req,res){
 })
 
 
+=======
+router.get('users/:userID', function(req,res){
+  var userID = req.params.userID;
+  User.findById(userId, function(err, user){
+    if(err || !user){
+      res.status(404).send('No user');
+    } else{
+      user.getFollows(function(err, result){
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollowers;
+          res.render('singleProfile', {user: user, following: allFollowing, followers: allFollowers}) //user is hb should become user from findById
+      })
+
+    }
+  })
+});
+
+router.post('/restaurants/new', function(req, res, next) {
+
+  // Geocoding - uncomment these lines when the README prompts you to!
+  // geocoder.geocode(req.body.address, function(err, data) {
+  //   console.log(err);
+  //   console.log(data);
+  // });
+
+});
+
+>>>>>>> master
 module.exports = router;
