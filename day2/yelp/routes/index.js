@@ -31,7 +31,19 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
+
+router.get('/', function(req, res){
+
+  //
+  req.user.getFollows(function(followers, following){
+    res.render('singleProfile', {
+      user: req.user,
+      following: following,
+      followers: followers
+    })
+  })
+})
 
 module.exports = router;

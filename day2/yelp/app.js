@@ -1,3 +1,4 @@
+// Set up dependencies
 var express = require('express');
 var session = require('express-session')
 var path = require('path');
@@ -11,16 +12,21 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
+// Create express server
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Logging
 app.use(logger('dev'));
+// Body parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// Cookie handling
 app.use(cookieParser('secretCat'));
+// Static file paths
 app.use(express.static(path.join(__dirname, 'public')));
 
 

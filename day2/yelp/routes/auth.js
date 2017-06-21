@@ -14,7 +14,7 @@ module.exports = function(passport) {
 
   // POST registration page
   var validateReq = function(userData) {
-    return (userData.password === userData.passwordRepeat);
+    return userData.password === userData.passwordRepeat;
   };
 
   router.post('/signup', function(req, res) {
@@ -24,8 +24,10 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
-      email: req.body.username,
-      password: req.body.password
+      email: req.body.email,
+      password: req.body.password,
+      displayName: req.body.displayName,
+      bio: req.body.bio
     });
 
     u.save(function(err, user) {
