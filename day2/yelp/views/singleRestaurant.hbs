@@ -1,1 +1,22 @@
 {{! YOUR CODE HERE }}
+
+<div>
+<h4>{{restaurant.name}}</h4>
+<h4>category: {{restaurant.category}}</h4>
+</div>
+
+<h4>Price: {{restaurant.price}}</h4>
+<h4>{{restaurant.address}}</h4>
+
+<div>Start time: {{restaurant.openTime}}
+End time: {{restaurant.closeTime}}</div>
+
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571">
+
+{{#each reviews}}
+<div>User posting the review is : {{this.userId.displayName}}</div>
+  <div>The contentsis {{this.contents}}</div>
+<div>the rate is:{{this.stars}}</div>
+
+<div> ************************<div>
+{{/each}}
