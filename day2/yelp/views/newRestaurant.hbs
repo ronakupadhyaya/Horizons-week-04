@@ -1,1 +1,31 @@
-{{! YOUR CODE HERE }}
+<h1>Restaurants</h1>
+
+<form method="POST" action='/restaurants/new' style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="name" class="form-control" value = {{restaurant.name}} >
+  </div>
+  <div class="form-group">
+    <label>Category</label>
+    <input type="text" name="category"  class="form-control" value = {{restaurant.category}} >
+  </div>
+  <div class="form-group">
+    <label>Relative Price</label>
+    <input type="text" name="price" class="form-control" value = {{restaurant.price}}  >
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" name="address" class="form-control"  value = {{restaurant.address}} >
+  </div>
+  <div class="form-group">
+    <label>Opening Time</label>
+    <input type="text" name="openingTime" class="form-control" value = {{restaurant.openTime}}  >
+  </div>
+  <div class="form-group">
+    <label>Closing Time</label>
+    <input type="text" name="closingTime" class="form-control" value = {{restaurant.closeTime}} >
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success">Add Restaurant</button>
+  </div>
+</form>

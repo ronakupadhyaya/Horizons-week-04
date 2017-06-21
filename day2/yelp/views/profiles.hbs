@@ -1,1 +1,8 @@
-{{! YOUR CODE HERE }}
+<h1>~~~Profiles Directory~~~</h1>
+<ul>
+  {{#each users}}
+    <li>
+      <a href="/users/{{_id}}">{{displayName}}</a>
+    </li>
+  {{/each}}
+</ul>

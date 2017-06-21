@@ -15,23 +15,55 @@ app.set('view engine', '.hbs');
 var User = require('./user');
 
 // routes
+
 app.get('/', function(req, res) {
   var pageNumber = getPageNumber(Number(req.query.page));
   var prev = (pageNumber <= 1 ? 1 : pageNumber - 1);
   var next = pageNumber + 1;
   var limit = Number(req.query.limit) || 10;
-
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
+  //Modify the GET / route to use .exec() to execute the User query
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
+  // User.find(function(err,users){
+  //   res.render('index', {
+      // listItems: users,
+      // prev: prev,
+      // current: pageNumber,
+      // next: next,
+      // limit: limit
+  //   });
+  // });
+
+  // User.find()
+  //     // .limit(7)
+  //     .skip(7)
+  //     // .sort({name.first: 1})
+  //     .sort({birthday: 1})
+  //     .exec(function(err, users) {
+  //       res.render('index', {
+  //         limit: limit,
+  //         listItems: users,
+  //         prev: prev,
+  //         current: pageNumber,
+  //         next: next
+  //       });
+  //   });
+
+  User.find()
+      // .sort({name.first: 1})
+      .sort({birthday: 1})
+      .limit(limit)
+      .skip(pageNumber)
+      .exec(function(err, users) {
+        res.render('index', {
+          limit: limit,
+          listItems: users,
+          prev: prev,
+          current: pageNumber,
+          next: next
+        });
     });
-  });
+
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
