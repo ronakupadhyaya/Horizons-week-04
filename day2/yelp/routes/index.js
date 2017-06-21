@@ -31,7 +31,30 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
+
+router.get('/users/:userId', function(req,res){
+  var id = req.params.userId
+  User.findById(id, function(err, user){
+    if(err || !user) {
+      res.status(404).send('No user');
+    } else {
+        User.getFollows(function(err, result) {
+          var allFollowing = result.allFollowing;
+          var allFollowers = result.allFollowing;
+          res.render('singleProfile', {
+            user: user,
+            following: allFollowing,
+            followers: allFollowers
+          })
+        })
+      }
+  })
+})
+
+router.get('/', function(req, res){
+  res.render('singleProfile');
+})
 
 module.exports = router;
