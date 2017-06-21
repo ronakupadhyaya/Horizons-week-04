@@ -1,14 +1,10 @@
 var mongoose = require('mongoose');
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
-var connect = process.env.MONGODB_URI || require('./connect');
+var connect = process.env.MONGODB_URI;
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({
-  displayName:{
-    type:String,
-    required: true
-  },
   displayName: String,
   location: String,
   email: {
@@ -19,7 +15,6 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  location: String
 });
 
 // //getFollows(cb) - return array of followers and users followed as User objects in callback cb
@@ -85,7 +80,7 @@ userSchema.methods.follow = function (idToFollow, callback){
   Follow.find({from:this._id, to:idToFollow}, function (error, theFollow) {
     if (error) {
       callback(error);
-    } else if (theFollow) {
+    } else if (theFollow) { //already following 
       callback(new Error ("That follow already exists"));
     } else {
   var newFollow = new Follow ({

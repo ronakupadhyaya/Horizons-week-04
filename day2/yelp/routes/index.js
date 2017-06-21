@@ -32,36 +32,30 @@ router.get('/', function(req, res) {
 router.get('/users/:userId', function(req,res) {
   var userId = req.params.userId;
 
-  User.findById(userId, function(error, user) {
-    if (error || !user) {
-      res.status(404).send("no user");
-    } else {
-      user.getFollows(function(error, result) {   //callback
-        var allFollowing = result.allFollowing;
-        var allFollowers = result.allFollowers;
-
-      res.render('singleProfile', {
-        user: user,   //user in handlebars become user in function
-        following: allFollowing,
-        followers: allFollowers
-      })
-        })
-
-  console.log('userId', userId);
-
   User.findById(userId, function(err, user) {
+      console.log('userId', userId);
     if(err || !user) {
       res.status(404).send("No user");
     } else {
-      user.getFollows(function(err, result) {
+      user.getFollows(function(err, result) {     //callback
         var allFollowing = result.allFollowing;
         var allFollowers = result.allFollowers;
         console.log('rendered', { user: user, following: allFollowing, followers: allFollowers});
-        res.render('singleProfile', { user: user, following: allFollowing, followers: allFollowers});
+        res.render('singleProfile', {
+          user: user,           //user in handlebars become user in function
+          following: allFollowing,
+          followers: allFollowers});
       })
 
     }
-  });
+  })
+});
+
+router.get('/users/profiles', function(req,res) {
+  res.render('profiles', {
+    user: user
+  })
+});
 
 router.post('/restaurants/new', function(req, res, next) {
 

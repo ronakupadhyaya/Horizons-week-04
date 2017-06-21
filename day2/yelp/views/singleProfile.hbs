@@ -13,13 +13,19 @@
 <h4>Following:</h4>
 {{#each following}}
   <div>{{this.to.displayName}}
+    <div>{{this.to.location}}
   <form  action="/unfollow/{{this.to._id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
+</div>
 </div>
 {{/each}}
 
 <h4>Followers:</h4>
 {{#each followers}}
   <p>{{this.from.displayName}}</p>
+  <p>{{this.from.location}}</p>
+  <form  action="/unfollow/{{this.from._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
 {{/each}}
