@@ -151,6 +151,8 @@ redirect to `/`:
 
 Create a database in mLab. Connect to it in your `app.js`:
 
+  Remember to store your `MONGODB_URI` in `env.sh`
+
 ![](img/mongoSetup.png)
 
 # Part 3.2: Make sessions persistent
