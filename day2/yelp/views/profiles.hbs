@@ -1,1 +1,39 @@
-{{! YOUR CODE HERE }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>User Directory</title>
+  </head>
+  <body>
+    {{#each users}}
+
+    <h4>User:</h4>
+    <p>{{displayName}}</p>
+    <p>Location: {{Location}}</p>
+      {{#if itIsNotMe}}
+      {{#if isFollowingUser}}
+        <form action="/unfollow/{{_id}}" method="post">
+          <input style="display: inline;" type="submit" value="Unfollow">
+        </form>
+      {{else}}
+        <form action="/follow/{{_id}}" method="post">
+          <input style="display: inline;" type="submit" value="Follow">
+        </form>
+    {{/if}}
+      <!-- {{#each Followers}}
+        {{displayName}}
+        {{Location}}
+      {{/each}}
+      {{#each Following}}
+        {{displayName}}
+        {{Location}}
+      {{/each}}
+      {{#if isFollowing}}
+        <button type="button" name="unfollow"></button>
+        {{else}}
+        <button type="button" name="follow"></button>
+      {{/if}} -->
+      {{/if}}
+    {{/each}}
+  </body>
+</html>

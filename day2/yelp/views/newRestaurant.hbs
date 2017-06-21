@@ -1,1 +1,27 @@
-{{! YOUR CODE HERE }}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Add a Restaurant</title>
+</head>
+<body>
+  <form class="newRestaurant" action="/restaurants/new" method="post">
+    <input type="text" name="Name" value="" placeholder="Name"> <br>
+    <select class="Category" name="Category">
+      <option>Japanese</option>
+      <option>Burmese</option>
+      <option>Thai</option>
+      <option>Chinese</option>
+      <option>Korean</option>
+      <option>Russian</option>
+    </select> <br>
+    <input type="radio" name="Price" value="1">$ <br>
+    <input type="radio" name="Price" value="2">$$ <br>
+    <input type="radio" name="Price" value="3">$$$ <br>
+    <input type="text" name="Address" value="" placeholder="Address"> <br>
+    <input type="time" name="openTime" value=""> <br>
+    <input type="time" name="closeTime" value=""> <br>
+    <button type="submit" name="button">Add Restaurant</button> <br>
+  </form>
+</body>
+</html>

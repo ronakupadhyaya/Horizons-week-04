@@ -1,1 +1,19 @@
-{{! YOUR CODE HERE }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{restaurant.name}}</title>
+  </head>
+  <body>
+    <h2>{{restaurant.name}}</h2>
+    <h4>Open Time:</h4>
+    <p>{{restaurant.openTime}}</p>
+    <h4>Close Time:</h4>
+    <p>{{restaurant.closeTime}}</p>
+    <h4>Category:</h4>
+    <p>{{restaurant.category}}</p>
+    <h4>Price:</h4>
+    <p>{{restaurant.price}}</p>
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{latitude}},{{longitude}}&markers=color:red|{{latitude}},{{longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyD9iwluwA_GPGkgxN85pCdTlr3Svpz_nT4">
+  </body>
+</html>{{! YOUR CODE HERE }}

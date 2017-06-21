@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var models = require('./models/models')
+var User = models.User;
+var Follow = models.Follow;
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
@@ -106,5 +108,17 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+// function createUser(){
+//   var newUser = new User({
+//     displayName: "THISISDISPLAYNAME",
+//     email: "asdfasd@asdofidas.com",
+//     password: "password",
+//     location: "SF"
+//   })
+//   newUser.save();
+// }
+// createUser();
+// createUser();
 
 module.exports = app;
