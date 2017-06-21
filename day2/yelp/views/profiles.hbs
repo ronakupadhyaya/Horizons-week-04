@@ -1,1 +1,12 @@
 {{! YOUR CODE HERE }}
+<h4>User Directory</h4>
+
+
+{{#each users}}
+<div class="">
+  {{this.displayName}} <br>
+  <div class="">
+    {{this.email}}
+  </div>
+</div>
+{{/each}}
