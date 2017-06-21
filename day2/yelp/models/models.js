@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
-var connect = process.env.MONGODB_URI || require('./connect').MONGODB_URI;
+var connect = process.env.MONGODB_URI || require('../connect').MONGODB_URI;
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({

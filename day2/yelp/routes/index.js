@@ -5,12 +5,10 @@ var User = models.User;
 var Follow = models.Follow;
 var Restaurant = models.Restaurant;
 var Review = models.Review;
-
-// Geocoding - uncomment these lines when the README prompts you to!
 // var NodeGeocoder = require('node-geocoder');
 // var geocoder = NodeGeocoder({
 //   provider: "google",
-//   apiKey: process.env.GEOCODING_API_KEY || "YOUR KEY HERE",
+//   apiKey: process.env.GEOCODING_API_KEY || require('../connect').GEOCODING_API_KEY,
 //   httpAdapter: "https",
 //   formatter: null
 // });
@@ -22,6 +20,14 @@ router.use(function(req, res, next){
   } else {
     next();
   }
+});
+
+router.get('/profiles',function(req,res) {
+  User.find().exec(function(err,allUser){
+    res.render('profiles',{
+      users: allUser
+    });
+  });
 });
 
 router.get('/users/:id',function(req,res){
@@ -83,7 +89,7 @@ router.get('/restaurants/:id',function(req,res) {
       if (foundRest === null) {
         res.send("didn't find restaurant");
       } else{
-        console.log(req.user)
+        console.log(foundRest.latitude,foundRest.longitude)
         res.render('singleRestaurant',{
           restaurant:foundRest,
           reviews:reviews
@@ -110,7 +116,6 @@ router.get('/follow/:userid',function(req,res){
 router.get('/unfollow/:userid',function(req,res){
   var userid = req.params.userid;
   var currentUser = req.user;
-  console.log("unfolloLL",userid,currentUser)
   currentUser.unfollow(userid,function(err,result) {
     res.redirect('/restaurants');
   })
@@ -125,9 +130,9 @@ router.post('/review/:restaurantid',function(req,res) {
     userId:req.user._id
   })
   newReview.save(function(err,saved){
-    if (err){console.log(err);return;}
+    if (err){res.send(err);return;}
     res.redirect('/restaurants/'+restaurantid)
   });
 })
-// router.post('/review/restaurantid')
+
 module.exports = router;
