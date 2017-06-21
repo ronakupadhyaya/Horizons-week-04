@@ -23,14 +23,30 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
-    });
+  // User.find(function(err,users){
+  //   res.render('index', {
+  //     listItems: users,
+  //     prev: prev,
+  //     current: pageNumber,
+  //     next: next,
+  //     limit: limit
+  //   });
+  // });
+  var index = pageNumber - 1;
+  User.find()
+    .sort({'name.first': "asc"})
+    //.sort({'birthday': "asc"})
+    //.skip(7)
+    .skip(index * limit)
+    .limit(limit)
+    .exec(function(err, users) {
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
   });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
