@@ -3,7 +3,15 @@
   <p>Relative Cost 1-3: {{price}}</p>
   <p>Opening: {{open}} Closing: {{close}}</p>
   <img src="https://maps.googleapis.com/maps/api/staticmap?center={{latitude}},{{longitude}}&markers=color:red|{{latitude}},{{longitude}}&zoom=13&size=600x300&maptype=roadmap&key={{key}}">
-  <form action="/" method="post">
+  <form action="/restaurants/{{id}}/new" method="get">
     <input type="submit" name="" value="Add a Review"></input>
   </form>
+<br>
+
+<h3>REVIEWS</h3>
+<ul>
+  {{#each reviews}}
+    <li>review: {{content}}  stars: {{stars}}</li>
+  {{/each}}
+</ul>
 </div>

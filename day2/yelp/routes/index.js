@@ -24,22 +24,29 @@ router.use(function(req, res, next){
   }
 });
 
+router.get('/', function(req,res){
+  res.redirect('/restaurants');
+})
+
 router.get('/users/:userid', function(req,res){
   var id = req.params.userid;
 
   User.findById(id, function(err, found){
     found.getFollows(function(followers, following) {
       //console.log(followers, following)
-      res.render('singleProfile',{
-        user: found,
-        //reviews: ,
-        allFollowers: followers,
-        allFollowing: following
-        // isFollowing:
-      });
+
+      //Review.find({rid: req.params.rest_id}, function(err, reviews){
+      Review.find({uid: req.params.userid}, function(err, reviews){
+        res.render('singleProfile',{
+          user: found,
+          reviews: reviews,         //array of reviews of this user
+          allFollowers: followers,
+          allFollowing: following
+          // isFollowing:
+        });
+      })
+
     });
-
-
   })
 
 })
@@ -153,20 +160,60 @@ router.get('/restaurants/:rest_id', function(req, res){
       res.send({err: err})
     }else{
       //console.log(found)
-      var rest_info = {
-        name: found.name,
-        price: found.price,
-        latitude: found.latitude,
-        longitude: found.longitude,
-        open: found.open,
-        close: found.close,
-        key: 'AIzaSyD3_82ErGRq5XN0Noi4k8aUL6EvSkvu_0c'
-      }
-      res.render('singleRestaurant', rest_info)
+
+      Review.find({rid: req.params.rest_id}, function(err, reviews){
+
+        var rest_info = {
+          name: found.name,
+          price: found.price,
+          latitude: found.latitude,
+          longitude: found.longitude,
+          open: found.open,
+          close: found.close,
+          id: req.params.rest_id,
+          key: 'AIzaSyD3_82ErGRq5XN0Noi4k8aUL6EvSkvu_0c',
+          reviews: reviews//array of reviews with this rid
+        }
+        res.render('singleRestaurant', rest_info)
+
+      })
+
     }
   })
 
 
 })
+
+router.get('/restaurants/:rest_id/new', function(req,res){
+  Restaurant.findById(req.params.rest_id, function(err, found){
+    if(err){
+      res.send({err: err})
+    }else{
+      console.log('HERE')
+      res.render('newReview', {name: found.name, id: req.params.rest_id});
+    }
+  })
+})
+
+
+router.post('/restaurants/:rest_id/new', function(req,res){
+  var new_review = new Review({
+    content: req.body.review,
+    stars: req.body.rating,
+    rid: req.params.rest_id,
+    uid: req.user._id
+  })
+
+  new_review.save(function(err){
+    if(err){
+      res.send({err: err})
+    }else{
+      res.redirect(`/restaurants/${req.params.rest_id}`)
+    }
+  })
+})
+
+
+
 
 module.exports = router;

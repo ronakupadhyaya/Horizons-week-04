@@ -122,6 +122,15 @@ var restaurantSchema = mongoose.Schema({
   close: Number
 });
 
+// restaurantSchema.virtual('averageRating').get(function(){
+//
+//   Restaurant.getReviews(this._id, function(found){
+//     console.log(found)
+//     //get total review score / number of reviews
+//   })
+// })
+// .set(...)
+
 restaurantSchema.methods.getReviews = function (restaurantId, callback){
   Review.find({rid:restaurantId})
         .populate('uid')
@@ -130,6 +139,11 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
           callback(found)
         })
 }
+
+// userSchema.methods.getReviews = function(restaurantId, callback){
+//
+// }
+
 
 //restaurantSchema.methods.stars = function(callback){
 //
