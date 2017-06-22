@@ -3,6 +3,7 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models/models');
+var Restaurant = models.Restaurant;
 
 
 module.exports = function(passport) {
@@ -10,6 +11,12 @@ module.exports = function(passport) {
   // GET registration page
   router.get('/signup', function(req, res) {
     res.render('signup');
+  });
+
+  //GET restaurant registration page
+
+  router.get('/create', function(req, res) {
+    res.render('newRestaurant');
   });
 
   // POST registration page
@@ -39,6 +46,59 @@ module.exports = function(passport) {
       console.log(user);
       res.redirect('/login');
     });
+  });
+
+  router.post('/create', function(req, res) {
+
+    var u = new models.Restaurant({
+      name: req.body.restaurantName,
+      address: req.body.address,
+      //    longitude: req.body.longitude,
+      price: req.body.restaurantPrice,
+      openTime: req.body.openingTime,
+      closingTime: req.body.closingTime,
+
+    });
+
+    u.save(function(err, user) {
+      if (err) {
+        console.log(err);
+        res.status(500).redirect('/create');
+        return;
+      }
+      console.log(user);
+      res.redirect('/restaurants');
+    });
+  });
+
+  router.get('/restaurants', function(req, res) {
+    // res.render('restaurants')
+    Restaurant.find(function(err, restaurant) {
+      if (err || !restaurant) {
+        res.status(404).send("No restaurant");
+      } else {
+        res.render('restaurants', {
+          restaurant: restaurant
+        });
+      }
+    })
+
+  })
+
+  router.get('/restaurants/:restaurantId', function(req, res) {
+    var restaurantId = req.params.restaurantId;
+
+    Restaurant.findById(restaurantId, function(err, restaurant) {
+      if (err || !restaurant) {
+        res.status(404).send("No restaurant");
+      } else {
+        res.render('singleRestaurant', {
+          restaurant: restaurant
+        });
+      }
+    })
+
+
   });
 
   // GET Login page

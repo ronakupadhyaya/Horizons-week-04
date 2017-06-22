@@ -1,1 +1,18 @@
 {{! YOUR CODE HERE }}
+{{#each restaurant}}
+<h4>Name:</h4>
+<p>{{this.name}}</p>
+
+<h4>Price:</h4>
+<p>{{this.price}}</p>
+
+<h4>Check out this restaurant!</h4>
+<form  action="/restaurants/{{this._id}}" method="post">
+  <a href="/restaurants/{{this._id}}" style="display: inline;" button>Details</a>
+</form>
+<hr>
+{{/each}}
+
+<form  action="/create" method="post">
+  <a href="/create" style="display: inline;" button>Make a new Restaurant</a>
+</form>

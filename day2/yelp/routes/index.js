@@ -16,7 +16,7 @@ var Review = models.Review;
 // });
 
 // THE WALL - anything routes below this are protected!
-router.use(function(req, res, next){
+router.use(function(req, res, next) {
   if (!req.user) {
     res.redirect('/login');
   } else {
@@ -25,22 +25,41 @@ router.use(function(req, res, next){
 });
 
 router.get('/', function(req, res) {
-  res.send('Home Page');
+
+  User.find(function(err, user) {
+    if (err || !user) {
+      res.status(404).send("No user");
+    } else {
+      res.render('profiles', {
+        user: user
+      });
+    }
+  })
+
+
 })
 
-router.get('/users/:userId', function(req,res) {
+router.get('/users/:userId', function(req, res) {
   var userId = req.params.userId;
   console.log('userId', userId);
 
   User.findById(userId, function(err, user) {
-    if(err || !user) {
+    if (err || !user) {
       res.status(404).send("No user");
     } else {
       user.getFollows(function(err, result) {
         var allFollowing = result.allFollowing;
         var allFollowers = result.allFollowers;
-        console.log('rendered', { user: user, following: allFollowing, followers: allFollowers});
-        res.render('singleProfile', { user: user, following: allFollowing, followers: allFollowers});
+        console.log('rendered', {
+          user: user,
+          following: allFollowing,
+          followers: allFollowers
+        });
+        res.render('singleProfile', {
+          user: user,
+          following: allFollowing,
+          followers: allFollowers
+        });
       })
     }
   })

@@ -17,33 +17,43 @@ var userSchema = mongoose.Schema({
   }
 });
 
-userSchema.methods.getFollows = function (callback){
+userSchema.methods.getFollows = function(callback) {
   var myId = this._id;
   console.log('myId', this._id);
-  Follow.find({from: myId})
-  .populate('to')
-  .exec(function(err, allFollowing) {
-    console.log('allFollowing', allFollowing);
-    if(err) {
-      callback(err)
-    } else {
-      Follow.find({to: myId})
-      .populate('from')
-      .exec(function(err, allFollowers) {
-        console.log('allFollowers', allFollowers);
-        if(err) {
-          callback(err)
-        } else {
-          console.log('completed');
-          callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
-        }
-      })
-    }
-  })
+  Follow.find({
+      from: myId
+    })
+    .populate('to')
+    .exec(function(err, allFollowing) {
+      console.log('allFollowing', allFollowing);
+      if (err) {
+        callback(err)
+      } else {
+        Follow.find({
+            to: myId
+          })
+          .populate('from')
+          .exec(function(err, allFollowers) {
+            console.log('allFollowers', allFollowers);
+            if (err) {
+              callback(err)
+            } else {
+              console.log('completed');
+              callback(null, {
+                allFollowers: allFollowers,
+                allFollowing: allFollowing
+              });
+            }
+          })
+      }
+    })
 }
-userSchema.methods.follow = function (idToFollow, callback){
+userSchema.methods.follow = function(idToFollow, callback) {
   var fromId = this._id;
-  Follow.find({from: this._id, to: idToFollow}, function(err,theFollow){
+  Follow.find({
+    from: this._id,
+    to: idToFollow
+  }, function(err, theFollow) {
     if (err) {
       callback(err);
     } else if (theFollow) {
@@ -55,7 +65,7 @@ userSchema.methods.follow = function (idToFollow, callback){
       });
 
       newFollow.save(function(err, result) {
-        if(err) {
+        if (err) {
           callback(err);
         } else {
           callback(null, result);
@@ -66,9 +76,12 @@ userSchema.methods.follow = function (idToFollow, callback){
 
 }
 
-userSchema.methods.unfollow = function (idToUnfollow, callback){
-  Follow.remove({to: idToUnfollow, from: this._id}, function(err,result) {
-    if(err) {
+userSchema.methods.unfollow = function(idToUnfollow, callback) {
+  Follow.remove({
+    to: idToUnfollow,
+    from: this._id
+  }, function(err, result) {
+    if (err) {
       callback(err)
     } else {
       callback(null, result);
@@ -93,10 +106,26 @@ var reviewSchema = mongoose.Schema({
 
 
 var restaurantSchema = mongoose.Schema({
+  name: String,
+  category: {
+    enum: [
+      "American",
+      "French",
+      "General European",
+      "Italian",
+      "Carribbean",
+      "Mexican"
+    ]
+  },
+  latitude: Number,
+  longitude: Number,
+  price: Number,
+  openTime: Number,
+  closingTime: Number,
 
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+restaurantSchema.methods.getReviews = function(restaurantId, callback) {
 
 }
 

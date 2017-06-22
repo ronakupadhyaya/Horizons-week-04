@@ -1,1 +1,18 @@
 {{! YOUR CODE HERE }}
+<h4>Name:</h4>
+<p>{{restaurant.name}}</p>
+
+<h4>Price:</h4>
+<p>{{restaurant.price}}</p>
+
+<h4>Opening Time:</h4>
+<p>{{restaurant.openTime}}</p>
+
+<h4>Closing Time:</h4>
+<p>{{restaurant.closingTime}}</p>
+
+<form  action="/restaurants" method="post">
+  <a href="/restaurants" style="display: inline;" button>Back to all</a>
+</form>
+
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571">

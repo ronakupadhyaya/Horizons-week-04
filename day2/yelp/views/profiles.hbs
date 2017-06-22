@@ -1,1 +1,14 @@
 {{! YOUR CODE HERE }}
+{{#each user}}
+<h4>Name:</h4>
+<p>{{this.displayName}}</p>
+
+<h4>Location:</h4>
+<p>{{this.location}}</p>
+
+<h4>Check out this person's profile!</h4>
+<form  action="/users/{{this._id}}" method="post">
+  <a href="/users/{{this._id}}" style="display: inline;" button>Profile</a>
+</form>
+<hr>
+{{/each}}

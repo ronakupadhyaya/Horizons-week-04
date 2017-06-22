@@ -1,1 +1,43 @@
 {{! YOUR CODE HERE }}
+{{#if error}}
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+  {{error}}
+</div>
+{{/if}}
+<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <h3>Create New Restaurant</h3>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" name="restaurantName" class="form-control">
+  </div>
+  <!-- <div class="form-group">
+    <label>Type of Restaurant</label>
+    <input type="text" name="restaurantType" class="form-control">
+  </div> -->
+  <select name="category" class="form-control">
+    {{#each category}}
+    <option value="{{this}}">{{this}}</option>
+    {{/each}}
+  </select>
+  <div class="form-group">
+    <label>Relative Price</label>
+    <input type="text" name="restaurantPrice" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="text" name="address" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Opening Time</label>
+    <input type="text" name="openingTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Closing Time</label>
+    <input type="text" name="closingTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success">Create Restaurant</button>
+  </div>
+</form>
