@@ -48,6 +48,32 @@ router.get('/users/:userId', function(req,res) {
 
 });
 
+router.get('/profiles', function(req, res) {
+  User.find(function(err, users){
+    if(err) {
+      console.log("ERRRORRRR")
+    } else {
+        res.render('profiles', {
+        users: users
+      });
+    }
+  })
+})
+
+router.get('/follow', function(req, res) {
+  User.find(function(err, users){
+    if(err) {
+      console.log("ERRRORRRR")
+    } else {
+        res.render('profiles', {
+        users: users
+      });
+    }
+  })
+})
+
+
+
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!

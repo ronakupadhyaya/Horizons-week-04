@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
-var connect = process.env.MONGODB_URI || require('./connect');
+var connect = process.env.MONGODB_URI
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({
@@ -93,7 +93,34 @@ var reviewSchema = mongoose.Schema({
 
 
 var restaurantSchema = mongoose.Schema({
-
+  name: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  openTime: {
+    type: Number,
+    required: true
+  },
+  closeTime: {
+    type: Number,
+    required: true
+  },
 });
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){

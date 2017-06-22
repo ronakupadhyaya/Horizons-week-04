@@ -1,1 +1,23 @@
 {{! YOUR CODE HERE }}
+<h4>Name:</h4>
+<p>{{Restaurant.name}}</p>
+
+<h4>Category:</h4>
+<p>{{Restaurant.category}}</p>
+
+<h4>Price:</h4>
+<p>{{Restaurant.price}}</p>
+
+<h4>Location:</h4>
+<p>{{Restaurant.latitude}}</p>
+<p>{{Restaurant.longitude}}</p>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{Restaurant.latitude}},{{Restaurant.longitude}}&markers=color:red|{{Restaurant.latitude}},{{Restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyBhRML-PfOkLWlB2S8OZOF8wHA_aCCqqF4">
+
+<h4>Opening Time:</h4>
+<p>{{Restaurant.openTime}}</p>
+
+<h4>Closing Time:</h4>
+<p>{{Restaurant.closeTime}}</p>
+
+
+<!-- STEP 2 -->
