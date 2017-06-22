@@ -1,0 +1,1 @@
+export MONGODB_URI=mongodb://otto:password@ds133192.mlab.com:33192/yelpotto

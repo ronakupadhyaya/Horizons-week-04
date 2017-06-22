@@ -25,7 +25,9 @@ module.exports = function(passport) {
     }
     var u = new models.User({
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      location: req.body.location, 
+      displayName: req.body.displayName
     });
 
     u.save(function(err, user) {
