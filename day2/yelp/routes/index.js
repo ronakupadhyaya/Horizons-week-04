@@ -64,6 +64,24 @@ router.post('/users/:userId/follow', function(req,res) {
       res.status(404).send("could not follow");
     } else {
       res.redirect('/users')
+
+
+router.get('/users/:userId', function (req, res) {
+  var userId = req.params.userId;
+  User.findById(userId, function(err, user) {
+    if (error || !user) {
+      res.status(404).send("No user found");
+    } else {
+      user.getFollows(function(err result) {
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollwers;
+        res.render('singleProfile', {
+          user: user,
+          following: allFollowing,
+          followers: allFollwers
+        });
+      });
+
     }
   });
 });
