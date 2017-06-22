@@ -1,0 +1,3 @@
+export MONGODB_URI="mongodb://mohammad:pass123@ds127492.mlab.com:27492/mongoosexcercise"
+export TWILIO_SID=AC89fc0e319e6ff953b772a818789ca214
+export TWILIO_AUTH_TOKEN=4fd9acea6d62110ffce52a7836e46b03
