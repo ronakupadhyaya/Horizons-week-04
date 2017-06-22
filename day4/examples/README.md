@@ -15,6 +15,6 @@
 
 ## Section 3: OAuth
 - [Watch Me: Oauth Intro](https://vimeo.com/222398661)
-- [Watch Me: Oauth with Facebook]()
+- [Watch Me: Oauth with Facebook](https://vimeo.com/222398704)
 - Complete the [oauth](oauth/) exercise
 
