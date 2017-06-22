@@ -22,6 +22,16 @@ router.get('/login', function(req, res) {
   res.render('login');
 });
 
+// this also works, use applies to every single request type, basically, this
+// function checks every single request to see if req.user is signed in
+// router.use('/', function(req, res, next){
+//   if(req.user){
+//     next()
+//   } else {
+//     res.redirect('/login')
+//   }
+// })
+
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');

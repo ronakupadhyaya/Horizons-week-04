@@ -1,1 +1,11 @@
 {{! YOUR CODE HERE }}
+{{! YOUR CODE HERE }}
+{{#if message}}
+Fuck u user
+{{/if}}
+<h4>All users:</h4>
+{{#each users}}
+  <h4>{{this.displayName}}</h4>
+  <h5>{{this.location}}</h5>
+  <a href="/user/{{this._id}}">View profile</a>
+{{/each}}

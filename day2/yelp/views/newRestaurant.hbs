@@ -1,1 +1,33 @@
 {{! YOUR CODE HERE }}
+<!-- A name for the new restaurant
+A category (could be a dropdown selector)
+The relative price of the restaurant's items - on a scale of 1-3
+An address for geocoding to coordinates
+An open time
+A closing time -->
+<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+<h3>Add a restaurant</h3>
+  <div class="form-group">
+    <label>Category</label>
+    <input type="text" name="category" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Relative price</label>
+    <input type="price" name="relativePrice" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="address" name="address" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Open time</label>
+    <input type="time" name="openTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Close time</label>
+    <input type="time" name="closeTime" class="form-control">
+  </div>
+  <div class="form-group">
+    <button class="btn btn-success">Add</button>
+  </div>
+</form>

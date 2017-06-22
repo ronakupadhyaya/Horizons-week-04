@@ -23,15 +23,19 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
+  User.find()
+    .sort({'name.first': 1})
+    .skip((pageNumber-1)*limit)
+    .limit(limit)
+    .exec(function(err, users){
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
     });
-  });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
@@ -50,7 +54,7 @@ var getPageNumber = function (attempt) {
   }
 };
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 
 server.listen(port, function () {
   console.log('listening on port ' + port);
