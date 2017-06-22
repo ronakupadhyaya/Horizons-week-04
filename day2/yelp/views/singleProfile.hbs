@@ -53,3 +53,24 @@
 {{#each allFollowers}}
   <p>{{this.from.displayName}}</p>
 {{/each}}
+
+
+<h4>Reviews {{reviews.length}}</h4>
+{{#each reviews}}
+
+<div class="review">
+  <div class="reviewer-info">
+    <div class="reviewer-name" style="font-size: large">{{this.restaurantId.name}}</div>
+    <div class="stars stars-{{this.stars}}" id="stars-{{this.stars}}" >
+        <i class="star-1">★</i>
+        <i class="star-2">★</i>
+        <i class="star-3">★</i>
+        <i class="star-4">★</i>
+        <i class="star-5">★</i>
+    </div>
+  </div>
+  <div class="review-content">
+    <p>{{this.content}}</p>
+  </div>
+</div>
+{{/each}}

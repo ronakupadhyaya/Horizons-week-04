@@ -6,7 +6,12 @@
       {{dollars}}
   </div>
   <a href="/restaurants">Back to all restaurants</a>
-  <div class="rating">{{restaurant.averageRating}}
+  <div class="rating">
+    {{#if restaurant.averageRating}}
+      {{restaurant.averageRating}}
+    {{else}}
+      Not yet reviewed!
+    {{/if}}
     <div class="stars stars-{{restaurant.averageStars}}" id="stars-{{restaurant.averageStars}}">
     <!-- <div class="stars stars-{{restaurant.averageRating}}" id="stars-{{restaurant.averageRating}}"> -->
 
@@ -43,18 +48,15 @@
         {{this.userId.location}}
         {{this.stars}}
         <div class="stars stars-{{this.stars}}" id="stars-{{this.stars}}" >
-
             <i class="star-1">★</i>
             <i class="star-2">★</i>
             <i class="star-3">★</i>
             <i class="star-4">★</i>
             <i class="star-5">★</i>
-
         </div>
       </div>
       <div class="review-content">
         <p>{{this.content}}</p>
-
       </div>
     </div>
 

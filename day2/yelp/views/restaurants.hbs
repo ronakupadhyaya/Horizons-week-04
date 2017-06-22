@@ -1,6 +1,59 @@
 {{! YOUR CODE HERE }}
-{{#each restaurants}}
+<a href="/restaurants/new">Add a new Restaurant</a>
+<div class="restaurants-container">
 
+
+  {{#each restaurants}}
+
+    <div class="restaurant-item">
+
+      <div class="restaurant-item-header">
+        <div class="restaurant-item-header-info">
+          <div class="restaurant-item-name">
+            <a href="/restaurants/{{_id}}" >{{name}}</a>
+          </div>
+          <!-- <div style="font-weight:bold;">{{name}}</div> -->
+
+          <div class="starrating">
+            <div class="stars" id="stars-{{averageStars}}">
+              <i class="star-1">★</i>
+              <i class="star-2">★</i>
+              <i class="star-3">★</i>
+              <i class="star-4">★</i>
+              <i class="star-5">★</i>
+            </div>
+            <div class="starvalue" style="color: #666666">
+              {{#if averageRating}}
+              ({{reviewCount}} reviews)
+              {{else}}
+              Not yet reviewed!
+              {{/if}}
+
+            </div>
+          </div>
+
+          <div>
+            {{dollars}} - {{category}}
+          </div>
+        </div>
+        <div class="restaurant-item-header-addr">
+          <div class="">
+
+            {{address}}
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-preview">
+
+        <p>review1</p>
+        <p>review2</p>
+      </div>
+
+    </div>
+  {{/each}}
+</div>
+<!--
 <form action="/restaurants/{{_id}}" method="GET" id="{{_id}}">
   <button type="submit" form="{{_id}}" value="Submit">
     <div style="font-weight:bold;">{{name}}</div>
@@ -13,8 +66,12 @@
         <i class="star-4">★</i>
         <i class="star-5">★</i>
 
-    </div> {{averageRating}}
-  </button>
-</form>
+    </div>
+    {{#if averageRating}}
+      {{averageRating}}
+    {{else}}
+      Not yet reviewed!
+    {{/if}}
 
-{{/each}}
+  </button>
+</form> -->

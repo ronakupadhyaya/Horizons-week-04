@@ -126,6 +126,9 @@ var restaurantSchema = mongoose.Schema({
     type:String,
     required:true
   },
+  address: {
+    type: String
+  },
   latitude:{
     type:Number,
     required: true
@@ -161,19 +164,20 @@ var restaurantSchema = mongoose.Schema({
 });
 
 restaurantSchema.virtual("averageRating").get(function(){
-  // console.log(Math.round((this.totalScore/this.reviewCount)).toFixed(1));
-  // console.log((Math.round((this.totalScore/this.reviewCount)) / 2).toFixed(1));
-  var rating = Math.round((this.totalScore/this.reviewCount)).toFixed(1);
-  if((rating%1) > 0.5 ){
-    console.log("rating is decimal");
-    rating = Math.trunc(rating);
+  var result = (this.totalScore/this.reviewCount).toFixed(1);
+  if(parseFloat(result)){
+    // console.log("result is truthy for", this.name);
+    return result;
+  }else{
+    return 0;
   }
-  // console.log("Average rating without rounding",(this.totalScore/this.reviewCount));
-  // console.log("Average with tofixed",(this.totalScore/this.reviewCount).toFixed(1));
-  // console.log("Average with tofixed % 5",((this.totalScore/this.reviewCount)%5).toFixed(1));
-  console.log("virtual average rating type", typeof (this.totalScore/this.reviewCount).toFixed(1));
-  return (this.totalScore/this.reviewCount).toFixed(1);
+  // console.log("virtual average rating type", typeof parseFloat((this.totalScore/this.reviewCount).toFixed(1)));
 
+})
+
+restaurantSchema.virtual("dollars").get(function(){
+  var numdollars = parseInt(this.price);
+  return "$".repeat(numdollars);
 })
 
 restaurantSchema.virtual("averageStars").get(function(){
@@ -194,6 +198,13 @@ restaurantSchema.virtual("averageStars").get(function(){
 restaurantSchema.methods.getReviews = function (callback){
   var restid = this._id;
   Review.find({restaurantId: restid}).populate('userId').exec(function(err,reviews){
+    callback(err,reviews);
+  })
+}
+
+userSchema.methods.getReviews = function (callback){
+  var userid = this._id;
+  Review.find({userId: userid}).populate('restaurantId').exec(function(err,reviews){
     callback(err,reviews);
   })
 }

@@ -6,6 +6,8 @@ var Follow = models.Follow;
 var Restaurant = models.Restaurant;
 var Review = models.Review;
 
+var expressValidator = require('express-validator');
+router.use(expressValidator());
 // Geocoding - uncomment these lines when the README prompts you to!
 var NodeGeocoder = require('node-geocoder');
 var geocoder = NodeGeocoder({
@@ -25,6 +27,8 @@ router.use(function(req, res, next){
 });
 
 router.get('/', function(req,res,next){
+  // res.render
+  // res.render('home');
   res.redirect('/users');
 })
 
@@ -63,15 +67,24 @@ router.get('/users/:userId', function(req,res,next){
               // console.log("follower",follower.from._id,req.user._id,follower.from._id+"" == req.user._id+"");
               return follower.from._id+"" == req.user._id+"";
             })
+          user.getReviews(function(error,reviews){
+            if(error){
+              console.log("errors getting reviews");
+            }else{
 
-          console.log(result.allFollowing);
-          res.render('singleProfile',{
-            user: user,
-            allFollowers: result.allFollowers,
-            allFollowing: result.allFollowing,
-            usersProfile: usersProfile,
-            alreadyFollowed: alreadyFollowed
+
+              // console.log(result.allFollowing);
+              res.render('singleProfile',{
+                user: user,
+                allFollowers: result.allFollowers,
+                allFollowing: result.allFollowing,
+                usersProfile: usersProfile,
+                alreadyFollowed: alreadyFollowed,
+                reviews: reviews
+              })
+            }
           })
+
         })
     }
   })
@@ -139,37 +152,58 @@ router.get('/restaurants/new', function(req,res,next){
 })
 
 router.post('/restaurants/new', function(req, res, next) {
-  var address = req.body.address1+" "+req.body.city+", "+req.body.State+" "+req.body.zip;
+  req.checkBody('name', 'Please enter a restaurant name').notEmpty();
+  req.checkBody('open','please enter a valid opening time').notEmpty();
+  req.checkBody('close','please enter a valid closing time').notEmpty();
+  req.checkBody('address1','Please enter an address').notEmpty();
+  req.checkBody('city','Please enter a city').notEmpty();
+  req.checkBody('state','Please enter a state').notEmpty();
+  req.checkBody('zip','Please enter a valid zip').isInt().notEmpty();
+  req.checkBody('id_prange','Please select a price range').notEmpty();
+  req.checkBody('category','Please choose a category').notEmpty();
+  var errors = req.validationErrors();
+  if(errors){
+    res.render('newRestaurant', {
+      errors: errors
+    })
+  }else{
+    var address = req.body.address1+" "+req.body.city+", "+req.body.state+" "+req.body.zip;
+    console.log(address);
+    geocoder.geocode(address, function(err, data) {
+      // if(err && err.length>0){
+      //   console.log("error in post restaurants new ");
+      //   res.send(err);
+      // }else{
+      console.log(err,data);
+      if(data.length>0){
+        var rest = new Restaurant({
+          name:req.body.name,
+          address: address,
+          category:req.body.category,
+          latitude: data[0].latitude,
+          longitude: data[0].longitude,
+          price: req.body.id_prange,
+          openTime: req.body.open,
+          closeTime: req.body.close
+        })
+        rest.save(function(err, user) {
+          if (err) {
+            res.send(err);
+          }else{
+            res.render('singleRestaurant', {
+              restaurant: rest,
+              dollars: "$".repeat(rest.price)
+            })
+          }
+        })
+      }else{
+        console.log("no data returned from geocode");
+        res.send("couldnt get data from geocode")
+      }
 
-  geocoder.geocode(address, function(err, data) {
-    // if(err && err.length>0){
-    //   console.log("error in post restaurants new ");
-    //   res.send(err);
-    // }else{
-    console.log(err,data);
-    if(data){
-      var rest = new Restaurant({
-        name:req.body.name,
-        category:req.body.category,
-        latitude: data[0].latitude,
-        longitude: data[0].longitude,
-        price: req.body.prange,
-        openTime: req.body.open,
-        closeTime: req.body.close
-      })
-      rest.save(function(err, user) {
-        if (err) {
-          res.send(err);
-        }else{
-          res.render('singleRestaurant', {
-            restaurant: rest,
-            dollars: "$".repeat(rest.price)
-          })
-        }
-      })
-    }
+    });
 
-  });
+  }
 });
 
 
@@ -219,21 +253,17 @@ router.post('/restaurants/:id/review', function(req,res,next){
   var content = req.body.content;
   var rating = req.body.rating;
   var userId = req.user._id;
-  var ratingfloat = parseFloat((parseFloat(rating)).toFixed(1));
-  console.log("parseFloat(rating.toFixed(1)", ratingfloat);
+
   // console.log(restid,content,rating,userId);
   // console.log("not aprsefloat", rating, "parsefloat raing", parseFloat(rating));
-  var review = new Review({content: content, stars: ratingfloat, userId: userId, restaurantId: restid});
+  var review = new Review({content: content, stars: rating, userId: userId, restaurantId: restid});
   review.save(function(err,result){
     if (err) {
       console.log("error saving review");
       res.send(err);
     }else{
       Restaurant.findById(restid, function(err, rest) {
-            //console.log("HEEYHEHEU");
-            //console.log(rest);
-            // console.log("raw rating", rating,typeof rating);
-            // console.log("rest total score before adding rating", typeof rest.totalScore);
+            
             var ratingFloat = parseFloat(rating);
             // console.log("rating type after parsefloat", typeof parseFloat(ratingFloat.toFixed(1)));
             rest.totalScore += parseFloat(ratingFloat.toFixed(1));
