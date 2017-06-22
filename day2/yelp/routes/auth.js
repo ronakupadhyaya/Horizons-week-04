@@ -57,8 +57,11 @@ module.exports = function(passport) {
     res.redirect('/login');
   });
 
-  router.get('/', function(req, res){
-    res.send('Home Page');
+  router.get('/restaurants/new', function(req, res){
+    res.render('newRestaurant');
   })
+  // router.get('/', function(req, res){
+  //   res.send('Home Page');
+  // })
   return router;
 };

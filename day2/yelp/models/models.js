@@ -36,6 +36,7 @@ userSchema.methods.getFollows = function (callback){
   Follow.find({from: fromId})
   .populate('to')
   .exec(function(err, allFollowing) {
+    console.log('allFollowing', allFollowing);
     if(err) {
       callback(err)
     } else {
@@ -45,7 +46,8 @@ userSchema.methods.getFollows = function (callback){
         if(err) {
           callback(err)
         } else {
-          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing})
+
+          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
     }
@@ -54,7 +56,7 @@ userSchema.methods.getFollows = function (callback){
 
 userSchema.methods.follow = function (idToFollow, callback){
   var fromID = this._id;
-  Follow.find({from: this._id, to: idToFollow}, function(err, theFollow){
+  Follow.findOne({from: this._id, to: idToFollow}, function(err, theFollow){
     if(err) {
       callback(err)
     } else if(theFollow){
@@ -64,7 +66,9 @@ userSchema.methods.follow = function (idToFollow, callback){
         to: idToFollow,
         from: fromID
       })
-      newFollow.save(callback);
+      newFollow.save(function(err, result) {
+        callback(err, result);
+      });
     }
   })
 }
@@ -90,11 +94,19 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
     } else{
       callback(null, result);
     }
-  })
+  });
 }
 
 userSchema.methods.isFollowing = function (user) {
-
+  Follow.findOne({from: this._id, to: user}, function(err, isFollowing){
+    if(err) {
+      callback(err)
+    } else if(isFollowing){
+      callback(null, isFollowing);
+    } else{
+      callback(null, false);
+    }
+  })
 }
 
 userSchema.methods.getReviews = function (cb) {
@@ -118,6 +130,40 @@ var reviewSchema = new mongoose.Schema({
 
 
 var restaurantSchema = new mongoose.Schema({
+  Name: {
+    type: String,
+    required: true
+  },
+  Category: {
+    type: String,
+    required: true
+  },
+  Latitude: {
+    type: Number,
+    required: true
+  },
+  Longitude: {
+    type: Number,
+    required: true
+  },
+  relativePrice: {
+    type: Number,
+    min: 1,
+    max: 3,
+    required: true
+  },
+  openTime: {
+    type: Number,
+    min: 0,
+    max: 23,
+    required: true
+  },
+  closeTime: {
+    type: Number,
+    min: 0,
+    max: 23,
+    required: true
+  }
 
 });
 

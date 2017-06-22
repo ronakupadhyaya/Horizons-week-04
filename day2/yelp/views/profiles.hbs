@@ -1,1 +1,17 @@
 {{! YOUR CODE HERE }}
+<br>
+{{#each users}}
+<tr>
+  <td>{{displayName}}</td>
+      {{location}}
+  <!-- <td>{{username}}</td>
+  <td>{{address}}</td>
+  <td>{{reviews}}</td>
+  <td>{{friends}}</td> -->
+  <td>
+
+    <a href="/users/{{id}}">Profile</a>
+    <br><br>
+  </td>
+</tr>
+{{/each}}

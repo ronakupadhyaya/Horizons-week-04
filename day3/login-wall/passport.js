@@ -2,6 +2,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 passport.use(new LocalStrategy(function(username, password, done) {
+
   done(null, {username: username});
 }));
 
@@ -31,5 +32,13 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
 }));
+
+router.use(function(req, res, next) {
+  if (req.user){
+    next();
+  } else {
+    res.redirect('/login');
+  }
+});
 
 module.exports = router;

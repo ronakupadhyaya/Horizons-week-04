@@ -1,3 +1,5 @@
+<br>
+<h2>My Profile</h2>
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
@@ -12,10 +14,7 @@
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{this.to.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
+  <div>{{to.displayName}}
 </div>
 {{/each}}
 
@@ -23,3 +22,7 @@
 {{#each followers}}
   <p>{{this.from.displayName}}</p>
 {{/each}}
+
+<form action="/follow/{{user._id}}" method="post">
+  <input style="display: inline;" type="submit" value="follow">
+</form>
