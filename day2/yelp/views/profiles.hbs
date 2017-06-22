@@ -1,1 +1,10 @@
 {{! YOUR CODE HERE }}
+<div>
+  <h1> Users: {{users.length}}</h1>
+  {{#each users}}
+  <div>
+  <p>Display Name: {{displayName}}</p>
+  <p>Location: {{location}}</p>
+</div>
+  {{/each}}
+</div>

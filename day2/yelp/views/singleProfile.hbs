@@ -2,18 +2,34 @@
 <p>{{user.displayName}}</p>
 
 <h4>Email:</h4>
-<p>{{user.username}}</p>
+<p>{{user.email}}</p>
 
-<h4>Address:</h4>
-<p>{{user.address}}</p>
+<h4>Location:</h4>
+<p>{{user.location}}</p>
 
 <h4>Reviews:</h4>
-<p>{{user.reviews}}</p>
+<div>
+{{#each reviews}}
+<p>{{restaurantId}}</p>
+<p>{{content}}</p>
+<p>{{stars}}</p>
+{{/each}}
+</div>
+
+<form action="/unfollow/{{user._id}}" method="post">
+  <input style="display: inline;" type="submit" value="Unfollow">
+</form>
+
+<form action="/follow/{{user._id}}" method="post">
+  <input style="display: inline;" type="submit" value="Follow">
+</form>
+
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
+  <div>{{displayName}}
+    {{location}}
+  <form  action="/unfollow/{{userId2.id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
@@ -21,5 +37,6 @@
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{uid1.displayName}}</p>
+  <p>{{displayName}}
+  {{location}}</p>
 {{/each}}
