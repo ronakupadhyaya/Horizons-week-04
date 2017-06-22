@@ -7,9 +7,9 @@
 ---
 
 ## Section 2: Webhooks
-- [Webhooks Intro](https://vimeo.com/222624480)
-- [Webhooks with Twilio](https://vimeo.com/222623051)
-- Navigate to `examples/webhooks` and complete the exercise
+- [Watch Me: Webhooks Intro](https://vimeo.com/222624480)
+- [Watch Me: Webhooks with Twilio](https://vimeo.com/222623051)
+- Complete the [webhooks](webhooks/) exercise
 
 ---
 
