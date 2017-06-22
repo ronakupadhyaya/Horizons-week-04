@@ -20,10 +20,11 @@ app.get('/', function(req, res) {
   var prev = (pageNumber <= 1 ? 1 : pageNumber - 1);
   var next = pageNumber + 1;
   var limit = Number(req.query.limit) || 10;
+  var skip = (pageNumber - 1) * limit
+
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
-
-  User.find(function(err,users){
+  User.find().sort({'name.first': 1}).skip(skip).limit(limit).exec(function(err, users){
     res.render('index', {
       listItems: users,
       prev: prev,
@@ -31,7 +32,16 @@ app.get('/', function(req, res) {
       next: next,
       limit: limit
     });
-  });
+  })
+  // User.find(function(err,users){
+  //   res.render('index', {
+  //     listItems: users,
+  //     prev: prev,
+  //     current: pageNumber,
+  //     next: next,
+  //     limit: limit
+  //   });
+  // });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 

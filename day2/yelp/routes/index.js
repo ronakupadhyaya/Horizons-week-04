@@ -24,6 +24,24 @@ router.use(function(req, res, next){
   }
 });
 
+router.get('/',function(req,res){
+  res.redirect("/users/:userId")
+});
+
+router.get("/users/:userId", function(req, res){
+  var userId = req.params.userId;
+  User.findById(userId, function(err, user){
+    if(err){
+      res.status(404).send("no user")
+    }
+    else{
+      res.render("singleProfile.hbs", {
+        user: user
+      })
+    }
+  })
+});
+
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!

@@ -1,0 +1,1 @@
+MONGODB_URI="mongodb://sarkarpm:Smiliepants101@ds155087.mlab.com:55087/yelp-priya"
