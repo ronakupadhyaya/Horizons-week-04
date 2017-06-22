@@ -8,8 +8,9 @@ In this section we will get started with Heroku. In the first video we install t
 ### [Deploying with Heroku]()
 
 ### Exercise 
-    Using your understanding of heroku deployment go through the same steps with the codebase [here]() to put this application on the cloud.
-    Be sure to test the app you deploy by using `heroku open`.
+    
+Using your understanding of heroku deployment go through the same steps with the codebase [here]() to put this application on the cloud.
+Be sure to test the app you deploy by using `heroku open`.
 
 
 ## Part 2: Debugging common deployment issues 
@@ -18,7 +19,8 @@ In this section we will take a closer look at how to debug some common issues th
 in the terminal. Similiar to the local environment heroku provides you with some built in mechanisms to debug issues in the cloud. Watch the video below to learn more.
 
 ### Exercise
-    Now that you know a little more about how heroku tries to deploy your app try to fix the common errors in repo located [here](). Be sure to test that your app is deployed by visiting the url provided by heroku.
+    
+Now that you know a little more about how heroku tries to deploy your app try to fix the common errors in repo located [here](). Be sure to test that your app is deployed by visiting the url provided by heroku.
 
 
 ## Part 3: Heroku config
@@ -28,7 +30,8 @@ In this section we will learn more about configuring environment variables in he
 ### [Heroku Config Variables]()
 
 ### Exercise
-    Using the app you deployed in the previous exercise add the following config variables using either the admin interface or the heroku command line: `HORIZON_URI="abhi_darwish"`, and `TEST=0`. Use heroku logs and `console.log()` calls to print the values of `process.env.HORIZON_URI` and `process.env.TEST` to make sure the variables are set after the app has been redeployed. 
+    
+Using the app you deployed in the previous exercise add the following config variables using either the admin interface or the heroku command line: `HORIZON_URI="abhi_darwish"`, and `TEST=0`. Use heroku logs and `console.log()` calls to print the values of `process.env.HORIZON_URI` and `process.env.TEST` to make sure the variables are set after the app has been redeployed. 
 
 ## Part 4: Heroku addons: mlab
 
@@ -37,7 +40,8 @@ In this section we will build on the previous section by exploring how to use ml
 [Heroku Addons]()
 
 ### Exercise
-    Now that we understand how to deploy our apps to heroku, debug common problems using Heroku logs, set environment or config variables, and configuring addons we are ready to put it all together and get the app located at the repo [here]() up and running on Heroku.
+
+Now that we understand how to deploy our apps to heroku, debug common problems using Heroku logs, set environment or config variables, and configuring addons we are ready to put it all together and get the app located at the repo [here]() up and running on Heroku.
 
 
 ## Summary
