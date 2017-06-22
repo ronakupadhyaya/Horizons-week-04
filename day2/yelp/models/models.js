@@ -98,7 +98,7 @@ userSchema.methods.getFollows = function (callback){
          if(err){
            callback(err);
          } else {
-           callback(null,{allFollowers:allFollowers,allFollowing:allFollowing})
+           callback(null,allFollowers,allFollowing)
          }
        })
      }
@@ -106,7 +106,10 @@ userSchema.methods.getFollows = function (callback){
 }
 userSchema.methods.follow = function (idToFollow, callback){
   var self = this._id;
- Follow.find({from:self,to:idToFollow},function(err,theFollow){
+ Follow.findOne({from:self,to:idToFollow},function(err,theFollow){
+   console.log("hello in follow");
+   console.log(err);
+   console.log(theFollow);
    if (err) {
      callback(err)
    } else if (theFollow){
@@ -123,6 +126,7 @@ userSchema.methods.follow = function (idToFollow, callback){
      //     callback(null,result);
      //   }
      // });   this is the same thing as the following line
+     console.log("new Fellow",newFollow)
      newFollow.save(callback);
    }
  })

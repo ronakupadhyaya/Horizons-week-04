@@ -41,27 +41,29 @@ router.get('/',function(req,res){
 })
 
 router.post('/follow/:userId',function(req,res){
-  console.log(req.user);
-    req.user.User.follow(req.params.userId,function(err,result){
-      if (err){
-        console.log('follow failed');
-      } else {
-        console.log("this should work now");
-      }
-})
-  })
+    req.user.follow(req.params.userId,function(err,result){
+      console.log("saved",result)
+      res.redirect('/user/'+req.params.userId);
+    })
+  });
 
 router.get('/user/:userId',function(req,res){
   var thisId = req.params.userId;
   User.findById(thisId, function(err,result){
+    console.log("user",result)
     if(err || !result){
       res.status(404).send("No User found")
     } else {
-      result.getFollows(function(err,follows){
-        if(err || !follows){
+      result.getFollows(function(err,allFollowers,allFollowing){
+        console.log("allFollowers",allFollowers)
+        if(err){
           res.status(404).send("No follow info found")
         } else {
-          res.render('singleProfile',{user:result, following:follows.allFollowing, followers:follows.allFollowers});
+          res.render('singleProfile',{
+            user:result,
+            following:allFollowing,
+            followers:allFollowers
+          });
         }
       })
 
