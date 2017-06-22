@@ -1,5 +1,5 @@
 var express = require('express');
-
+var geodist = require('geodist')
 var router = express.Router();
 var models = require('../models/models');
 var User = models.User;
@@ -16,7 +16,13 @@ var geocoder = NodeGeocoder({
   formatter: null
 });
 
-
+router.use(function(req, res, next){
+  if (!req.user) {
+    res.redirect('/login');
+  } else {
+    return next();
+  }
+});
 router.get('/',function(req,res,next){
   res.render('layout');
 })
@@ -24,7 +30,8 @@ router.get('/profile',function(req,res,next){
   User.find(function(err,users){
     //console.log(users);
     res.render('profiles',{
-      users:users
+      users:users,
+      selfId:req.user.id
     })
   })
 })
@@ -51,7 +58,8 @@ router.get('/profile/:id',function(req,res,next){
           following: following,
           followers: followers,
           follow: follow,
-          self:self
+          self:self,
+          selfId:req.user.id
         });
       });
     });
@@ -84,7 +92,9 @@ router.post('/profile/:id/follow',function(req,res,next){
 
 
   router.get('/restaurants/new' , function(req,res,next){
-    res.render('newRestaurant')
+    res.render('newRestaurant',{
+      selfId:req.user.id
+    })
   })
 
   router.get('/restaurants', function(req,res,next){
@@ -94,7 +104,8 @@ router.post('/profile/:id/follow',function(req,res,next){
       }else{
         //console.log(arr);
         res.render('restaurants',{
-          restaurants:arr
+          restaurants:arr,
+          selfId:req.user.id
         })
       }
     })
@@ -107,7 +118,8 @@ router.post('/profile/:id/follow',function(req,res,next){
       }else{
         //console.log(arr);
         res.render('restaurants',{
-          restaurants:arr
+          restaurants:arr,
+          selfId:req.user.id
         })
       }
     })
@@ -122,7 +134,8 @@ router.post('/profile/:id/follow',function(req,res,next){
         res.render('singleRestaurant', {
           restaurant:rest,
           dollars:dollars.repeat(rest.price),
-          review:reviews
+          review:reviews,
+          selfId:req.user.id
         });
       })
     });
@@ -143,6 +156,7 @@ router.post('/profile/:id/follow',function(req,res,next){
         var rest = new Restaurant({
           name:req.body.name,
           category:req.body.category,
+          address: req.body.location,
           latitude:data[0].latitude,
           longitude: data[0].longitude,
           price:req.body.prange,
@@ -167,7 +181,8 @@ router.post('/profile/:id/follow',function(req,res,next){
     Restaurant.findById(req.params.id, function(err, rest) {
       res.render('newReview',{
         id:req.params.id,
-        rest:rest
+        rest:rest,
+        selfId:req.user.id
       });
     })
   })
@@ -186,6 +201,7 @@ router.post('/profile/:id/follow',function(req,res,next){
         restId: req.params.id,
         userId: req.user.id
       })
+      console.log(review);
       review.save(function(err){
         if (err){
           res.json(err)
@@ -193,10 +209,14 @@ router.post('/profile/:id/follow',function(req,res,next){
           Restaurant.findById(req.params.id, function(err, rest) {
             //console.log("HEEYHEHEU");
             //console.log(rest);
-            rest.totalScore += parseInt(req.body.rating);
+            console.log(rest);
+            console.log(req.body.star);
+            console.log(rest.totalScore);
+            rest.totalScore += parseInt(req.body.star);
             rest.reviewCount += 1;
             rest.save(function(err,val){
               res.redirect('/restaurants/'+req.params.id)
+              console.log(val);
             })
           })
         }
@@ -204,13 +224,7 @@ router.post('/profile/:id/follow',function(req,res,next){
     }
   })
 // THE WALL - anything routes below this are protected!
-router.use(function(req, res, next){
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    return next();
-  }
-});
+
 
 
 

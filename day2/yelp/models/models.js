@@ -104,6 +104,7 @@ var restaurantSchema = mongoose.Schema({
     type:Number
   },
   price:Number,
+  address:String,
   openTime:Number,
   closeTime:Number,
   totalScore:{
@@ -135,8 +136,26 @@ restaurantSchema.methods.getReviews = function (callback){
 //   return (total/reviews.length);
 // })
 restaurantSchema.virtual("averageRating").get(function(){
-  console.log((this.totalScore/this.reviewCount));
-   return (this.totalScore/this.reviewCount)*25
+  console.log(this.totalScore);
+  console.log(this.reviewCount);
+  console.log((this.totalScore/this.reviewCount)*20);
+   //return ((this.totalScore/this.reviewCount)*20)
+   return Math.max( Math.round(((this.totalScore/this.reviewCount)*20) * 10) / 10, 2.8 ).toFixed(1);
+  //return (Math.round((this.totalScore/this.reviewCount) * 2) / 2).toFixed(1)*10;
+
+})
+
+restaurantSchema.virtual("mainStar").get(function(){
+  console.log(this.totalScore);
+  console.log(this.reviewCount);
+  console.log((this.totalScore/this.reviewCount)*20);
+   return ((this.totalScore/this.reviewCount)*2)-0.8
+  //return (Math.round((this.totalScore/this.reviewCount) * 2) / 2).toFixed(1)*10;
+
+})
+restaurantSchema.virtual("dollarSigns").get(function(){
+  var dollar = '$'
+  return dollar.repeat(this.price);
   //return (Math.round((this.totalScore/this.reviewCount) * 2) / 2).toFixed(1)*10;
 
 })

@@ -4,24 +4,39 @@
 </head>
 
 <div class="restContainer">
+  <form action="/restaurants" method="GET" id="backForm">
+    <button type="submit"  class="btn btn-primary btn btn-info btn-md btn-arrow-left"form="backForm" value="Submit">
+      <span class="glyphicon glyphicon-arrow-left" style="color:white; font-size: 20px; vertical-align: bottom;" aria-hidden="true"></span>
+             Back To All Restaurants
+    </button>
+  </form>
   <div class="restHead">
-    <form action="/restaurants" method="GET" id="backForm">
-      <button type="submit" form="backForm" value="Submit">
-        Back To All Restaurants
-      </button>
-    </form>
-    <h1 style="text-align:center;">{{restaurant.name}}</h1>
+    <div>
+      <h1>{{restaurant.name}}</h1>
+    </div>
+    <div>
+      <h4>{{restaurant.address}}</h4>
+    </div>
+    <div style="">{{dollars}}</div>
+    {{#if restaurant.averageRating}}
     <div class="star-ratings-css">
       <div class="star-ratings-css-top" style="width:{{restaurant.averageRating}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
     </div>
-      {{dollars}}
+    {{else}}
+    <div class="star-ratings-css">
+      <div class="star-ratings-css-top" style="width:0%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+    </div>
+    {{/if}}
+
+
 
   </div>
   <div class="rating">
   </div>
-  <div class="map">
-    <img style="margin-left:auto;margin-right:auto;display:block;padding-bottom:10px" src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap&amp;key=AIzaSyByS4EgixgDAkOJHvwBa4VmyHQo6fYrvrE">
+  <div class="map" style="padding:25px">
+    <img style="margin-left:auto;margin-right:auto;display:block;padding-bottom:20px" src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&amp;markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&amp;zoom=13&amp;size=600x300&amp;maptype=roadmap&amp;key=AIzaSyByS4EgixgDAkOJHvwBa4VmyHQo6fYrvrE">
   </div>
   <div class="submitRating">
     <form method="GET" action="/restaurants/{{restaurant._id}}/review">
@@ -30,16 +45,16 @@
   </div>
 </div>
 
-
+<!--
 {{#each review}}
 <div class="review">
   <div class="head">
 <p>{{userId.displayName}}</p>
 
-<!-- <div class="star-ratings-css">
+<div class="star-ratings-css">
   <div class="star-ratings-css-top" style="width:{{restaurant.averageRating}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
   <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-</div> -->
+</div>
 
 <div class="star-ratings-css-review" >
   <div class="star-ratings-css-top" style="width:{{starPercent}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
@@ -51,5 +66,26 @@
 {{content}}
 </div>
 </div>
+{{/each}} -->
 
-{{/each}}
+
+<div class="flex-container">
+  <div class="reviews">
+    {{#each review}}
+    <div class="review">
+      <div class="reviewer-info">
+        <span class="reviewer-name">{{userId.displayName}}</span>
+        {{userId.location}}
+        <!-- {{this.stars}} -->
+        <div class="star-ratings-css-review" >
+          <div class="star-ratings-css-top" style="width:{{starPercent}}%"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+          <div class="star-ratings-css-bottom"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        </div>
+      </div>
+      <div class="review-content">
+        <p>{{content}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
