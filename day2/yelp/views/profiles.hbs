@@ -1,15 +1,12 @@
 {{! YOUR CODE HERE }}
-  <h1>Users ({{users.length}})</h1>
+  <h1>User Directory ({{users.length}})</h1>
 {{#each users}}
+<div class="list">
   <a href="./user/{{this._id}}"><h2>{{this.displayName}}</h2> </a>
   <p>{{this.location}}<p>
-  <span>
-  <form  action="/follow/{{this._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Follow">
-  </form>
-  <form  action="/unfollow/{{this._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
-</span>
-
+<form  action="/follow/{{this._id}}" method="post">
+      <input style="display: inline-block;" type="submit" value="Follow"></form>
+<form  action="/unfollow/{{this._id}}" method="post">
+      <input style="display: inline-block;" type="submit" value="Unfollow"></form>
+</div>
 {{/each}}

@@ -25,6 +25,10 @@ router.use(function(req, res, next){
 });
 
 router.get('/',function(req,res){
+  res.render('HomePage')
+})
+
+router.get('/profiles',function(req,res){
  User.find(function(err,users){
   res.render('profiles',{
     users:users})
@@ -125,7 +129,7 @@ router.get('/restaurants/:restaurant_id',function(req,res){
         res.send(err)
       } else{
         console.log(restaurant)
-        
+
         res.render('singleRestaurant',{
           restaurant: restaurant,
           reviews: reviews

@@ -1,0 +1,9 @@
+.restContain {
+  border-top: solid orange;
+  border-bottom: solid orange;
+}
+
+#home {
+  background-color: red;
+  text-align: center;
+}

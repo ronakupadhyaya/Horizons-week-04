@@ -6,3 +6,44 @@ body {
 a {
   color: #00B7FF;
 }
+
+.restContain {
+  border-top: solid orange;
+  border-bottom: solid orange;
+}
+
+.container-fluid{
+  display: flex;
+  background-color: gray;
+}
+.row{
+  display:flex;
+  flex:1;
+  background-color: yellow;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  margin-top: 50px;
+}
+
+.col-xs-12 {
+  display:flex;
+  flex:1;
+  justify-content: center;
+  align-items: center;
+}
+
+#home{
+  display:flex;
+  flex:1;
+  background-color: #990000;
+  text-align: center;
+}
+.list{
+  display:flex;
+  display: block;
+}
+.search{
+  display:flex;
+
+}
