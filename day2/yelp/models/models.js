@@ -35,11 +35,51 @@ var FollowsSchema = new mongoose.Schema({
 });
 
 var reviewSchema = new mongoose.Schema({
-
+  stars: Number,
+  content: {
+    type: String,
+    required: true
+  },
+  restaurant: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Restaurant'
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
 });
 
 var restaurantSchema = new mongoose.Schema({
-
+  name: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  category: {
+    type: String,
+    enum: ['asian', 'mexican', 'korean', 'italian', 'french', 'american']
+  },
+  latitude: {
+    type: Number,
+    required: false,
+  },
+  longitude: {
+    type: Number,
+    required: false,
+  },
+  openTime:{
+    type: Number,
+    required: false,
+  },
+  closingTime:{
+    type: Number,
+    required: false,
+  },
+  totalScore: Number
 });
 
 userSchema.methods.getFollows = function (callback){
@@ -95,13 +135,13 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
 userSchema.methods.isFollowing = function (idToFind, callback){
   //find follow doc
   var id = this._id
-  module.exports.Follow.find({'from':idToFind, 'to': id}, function(err, followDoc){
+  module.exports.Follow.find({'from':id, 'to': idToFind}, function(err, followDoc){
     if(err){
       console.log('error in db for isFollowing', err)
     }
     //if there is a follower to that user return true through the callback
     console.log('isfol', followDoc)
-    if(followDoc === []){
+    if(followDoc.length === 0){
       callback(false)
     }else{
       callback(true)
@@ -109,8 +149,27 @@ userSchema.methods.isFollowing = function (idToFind, callback){
   })
 }
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
 
+// `total score helper
+
+function updateRestaurant(restaurantId) {
+  Restaurant.getReviews(restaurantId, function(err, reviews){
+    if(err)console.log(err);
+    var total = 0
+    reviews.forEach(function(review){
+      total += reivew.stars
+    })
+    Restaurant.findById(restaurantId, function(err, restaurant){
+      if(err)console.log(err);
+      restaurant.totalScore = total
+    })
+  })
+}
+
+restaurantSchema.methods.getReviews = function (restaurantId, callback){
+  module.exports.Review.find({'restaurant._id': restaurantId}).exec(function(err, reviews){
+    callback(err, reviews)
+  })
 }
 
 //restaurantSchema.methods.stars = function(callback){

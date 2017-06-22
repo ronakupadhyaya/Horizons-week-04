@@ -1,1 +1,6 @@
 {{! YOUR CODE HERE }}
+{{#each users}}
+  <a href='/profile/{{this._id}}'>{{this.displayName}}</a><br>
+{{/each}}
+
+<a href='/'>Home</a>

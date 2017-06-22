@@ -20,8 +20,8 @@
 <h4>Following:</h4>
 {{#each following}}
   <div>{{to.displayName}}
-  <form  action="/unfollow/{{to.id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
+  <form  action="/unfollow/{{to._id}}" method="post" class='{{to._id}}'>
+    <input style="display: inline;" type="submit" value="Unfollow" class="unfollowBut">
   </form>
 </div>
 {{/each}}
@@ -31,6 +31,8 @@
   <p>{{from.displayName}}</p>
 {{/each}}
 
+<a href='/'>Home</a><br>
+<a href='/profiles'>Profiles</a>
 
 <script>
   $('.followButton').click(function(){
