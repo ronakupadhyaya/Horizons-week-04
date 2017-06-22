@@ -1,1 +1,30 @@
-{{! YOUR CODE HERE }}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>User Directory</h1>
+    <div class="container">
+      <div class="col-xs-12 centered">
+        <h3 class="red">Users ({{users.length}})</h3>
+          {{#each users}}
+          <form class="" action="users/{{this._id}}" method="get">
+            <div class="row centered">
+              <button class="col-xs-4 col-xs-offset-4" type="submit" >
+                <div class="form-group">
+                  <p class="bolded">{{this.displayName}}</p>
+                  <p class="unbolded smaller">{{this.location}}</p>
+                </div> <br>
+              </button>
+            </div> <br>
+          </form>
+          {{/each}}
+      </div>
+    </div>
+    <form class="" action="/newRestaurant" method="get">
+      <input type="submit" name="" value="Add a new restaurant">
+    </form>
+  </body>
+</html>

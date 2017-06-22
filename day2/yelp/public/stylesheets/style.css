@@ -6,3 +6,24 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+.bolded{
+  font-weight: 500 !important;
+}
+
+.smaller{
+  font-size: 13px !important;
+}
+
+.big {
+  font-size: 40px;
+}
+
+.centered{
+  text-align: center;
+}
+
+.red {
+  color: #d32323 !important;
+}
