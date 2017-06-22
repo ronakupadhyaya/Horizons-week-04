@@ -51,22 +51,24 @@ router.get('/users/:userId', function(req, res){
         if(error){
           res.send("There was an error finding the user");
         }else{
-          var followers, following;
           user.getFollows(function(err, l, f){
             if(err){
               console.log('some error occured: ', err)
+              res.send('an error occured')
             }else{
-              followers = f;
-              following = l;
+              console.log('the value of l is: ',l)
+              console.log('the value of f is :', f)
+              console.log(f[0].from.displayName)
+              res.render('singleProfile', {
+                user: user,
+                following: l,
+                followers: f,
+                isFollowing: cyrus
+              })
             }
           })
-          console.log('cyrus: ',cyrus)
-          res.render('singleProfile', {
-            user: user,
-            following: following,
-            followers: followers,
-            isFollowing: cyrus
-          })
+
+
         }
       })
     })
