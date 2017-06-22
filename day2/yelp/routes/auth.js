@@ -48,7 +48,8 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    console.log('AT LOGIN, TRY USER ID', req.user)
+    res.redirect('/users/'+req.user._id);
   });
 
   // GET Logout page

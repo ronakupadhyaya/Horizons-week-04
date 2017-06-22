@@ -4,7 +4,7 @@
 <h4>Email:</h4>
 <p>{{user.email}}</p>
 
-<h4>Address:</h4>
+<h4>Location:</h4>
 <p>{{user.location}}</p>
 
 <h4>Reviews:</h4>
@@ -12,8 +12,8 @@
 
 <h4>Following:</h4>
 {{#each following}}
-  <div>{{to.displayName}}
-  <form  action="/unfollow/{{to.id}}" method="post">
+  <div>{{this.to.displayName}}
+  <form  action="/unfollow/{{this.to._id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
@@ -21,8 +21,9 @@
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{from.displayName}}</p>
+  <p>{{this.from.displayName}}</p>
 {{/each}}
 
 
+<a href="/users/"+{{user._id}}></a>
 <a href="/all">To see all users</a>

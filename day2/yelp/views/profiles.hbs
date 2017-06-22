@@ -13,10 +13,10 @@
     <div class="eachUser">
       <h4>{{this.displayName}}</h4>
       <h4>{{this.location}}</h4>
-      <button type="submit" name="follow">Follow</button>
+      <a href="/users/{{_id}}">More details</a>
+      <button user-id="{{_id}}" class="followbutton" type="submit" name="follow">Follow</button>
+      <button user-id="{{_id}}" class="unfollowbutton" type="submit" name="unfollow">Unfollow</button>
     </div>
     {{/each}}
   </div>
-
-
 </div>

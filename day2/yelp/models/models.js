@@ -5,6 +5,8 @@ var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({
+  displayName: String,
+  location: String,
   email: {
     type: String,
     required: true
@@ -17,64 +19,131 @@ var userSchema = mongoose.Schema({
   location: String
 });
 
-// userSchema.statics.findById= function(id, cb){
-//   this.find({"id": id}, cb)
-// }
+// <<<<<<< HEAD
+// // userSchema.statics.findById= function(id, cb){
+// //   this.find({"id": id}, cb)
+// // }
+//
+// userSchema.methods.getFollows = function (id, cb){
+//   //the user is the 'from' end
+//   Follow.find({from: id}).populate('to').exec(function(err, following){
+//     if(err){res.send('Error find follows', err)}
+//     else{
+//       //the user is the 'to' end
+//       Follow.find({to: id}).populate('from').exec(function(err, followers){
+//         if(err){res.send('Error find follows', err)}
+//         else{
+//           console.log('id', id, 'Followers: ', followers, 'Following: ', following);
+//           cb(followers, following);
+// =======
+userSchema.methods.getFollows = function(callback) {
 
-userSchema.methods.getFollows = function (id, cb){
-  //the user is the 'from' end
-  Follow.find({from: id}).populate('to').exec(function(err, following){
-    if(err){res.send('Error find follows', err)}
-    else{
-      //the user is the 'to' end
-      Follow.find({to: id}).populate('from').exec(function(err, followers){
-        if(err){res.send('Error find follows', err)}
-        else{
-          console.log('id', id, 'Followers: ', followers, 'Following: ', following);
-          cb(followers, following);
+  var myId = this._id;
+  console.log('myId', this._id);
+  Follow.find({from: myId})
+  .populate('to')
+  .exec(function(err, allFollowing) {
+    console.log('allFollowing', allFollowing);
+    if(err) {
+      callback(err)
+    } else {
+      Follow.find({to: myId})
+      .populate('from')
+      .exec(function(err, allFollowers) {
+        console.log('allFollowers', allFollowers);
+        if(err) {
+          callback(err,null)
+        } else {
+          console.log('completed');
+          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
     }
   })
 }
+// <<<<<<< HEAD
+// =======
+userSchema.methods.follow = function (idToFollow, callback){
+  var fromId = this._id;
+  Follow.find({from: fromId, to: idToFollow}, function(err,theFollow){
+    if (err) {
+      callback(err);
+    } else if (theFollow) {
+      callback(new Error("That follow already exists!"));
+    } else {
+      var newFollow = new Follow({
+        to: idToFollow,
+        from: fromId
+      });
 
-userSchema.methods.follow = function (fromId, toId, callback){
-  Follow.find({from: fromId, to: toId}, function(err, follows){
-    if(err) {console.log("Error finding follows", err)}
-    else{
-      if(!follows){
-        var newFollow = new Follow ({
-          from: fromId,
-          to: toId
-        })
-        newFollow.save(callback)
-      }
+      newFollow.save(function(err, result) {
+        if(err) {
+          callback(err);
+        } else {
+          callback(null, result);
+        }
+      });
     }
   })
 }
+// >>>>>>> step1GWSCodealong
 
-userSchema.methods.unfollow = function (fromId, toId, cb){
-  Follow.remove({from: fromId, to: toId}, function(err){
-    if(err) {res.send('Error when unfollowing', err)}
-  })
-}
+// userSchema.methods.follow = function (fromId, toId, callback){
+//   Follow.find({from: fromId, to: toId}, function(err, follows){
+//     if(err) {console.log("Error finding follows", err)}
+//     else{
+//       if(!follows){
+//         var newFollow = new Follow ({
+//           from: fromId,
+//           to: toId
+//         })
+//         newFollow.save(callback)
+//       }
+//     }
+//   })
+// }
 
+// <<<<<<< HEAD
+// userSchema.methods.unfollow = function (fromId, toId, cb){
+//   Follow.remove({from: fromId, to: toId}, function(err){
+//     if(err) {res.send('Error when unfollowing', err)}
+//   })
+// }
+//
 userSchema.methods.isFollowing = function (toId, cb){
   Follow.findOne({from: this._id, to:toId}, function(err, follow){
     if(!err && follow) {cb}
   })
 }
-
-userSchema.methods.getReviews = function (user, callback){
-
+//
+// userSchema.methods.getReviews = function (user, callback){
+//
+// }
+//
+// var followsSchema = mongoose.Schema({
+//   from: {    //the ID of the User following another
+//     type: mongoose.Schema.ObjectId,
+//     ref: 'User'
+//   },
+//   to: {    ////the ID of the User being followed
+// =======
+userSchema.methods.unfollow = function (idToUnfollow, callback){
+  Follow.remove({to: idToUnfollow, from: this._id}, function(err,result) {
+    if(err) {
+      callback(err)
+    } else {
+      callback(null, result);
+    }
+  });
 }
 
 var followsSchema = mongoose.Schema({
-  from: {    //the ID of the User following another
+  to: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  to: {    ////the ID of the User being followed
+  from: {
+    // >>>>>>> step1GWSCodealong
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   }
@@ -118,7 +187,6 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //restaurantSchema.methods.stars = function(callback){
 //
 //}
-
 
 var User = mongoose.model('User', userSchema)
 var Restaurant = mongoose.model('Restaurant', restaurantSchema)
