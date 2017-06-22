@@ -2,13 +2,14 @@
   "name": "login-wall",
   "version": "1.0.0",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "body-parser": "^1.16.0",
     "cookie-session": "^2.0.0-alpha.2",
     "express": "^4.14.1",
     "express-handlebars": "^3.0.0",
+    "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"
   }
