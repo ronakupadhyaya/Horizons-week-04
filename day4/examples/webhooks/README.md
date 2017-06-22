@@ -51,7 +51,7 @@ Whenever a text message is sent to our twilio number, we want Twilio to send a p
 - in your `env.sh` file, export two more variables `TWILIO_SID` and `TWILIO_AUTH_TOKEN`, which should have the values of your SID and Auth Token (which can be found at `https://www.twilio.com/console` once you've logged in to twilio)
 - source your `env.sh` file
 - add `var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN)` in `app.js` where all the node modules are required
-  - *Note: I'm getting this information from the Twilio REST API which you all are free to reference here `https://www.twilio.com/docs/api/rest/sending-messages`*
+  - *Note: You can find examples and detailed documentation about the Twilio REST API at https://www.twilio.com/docs/api/rest/sending-messages*
 - using the following code, edit your Twilio webhook handler route to send messages back to the original texter 
   ```
     client.messages.create({ 
