@@ -14,7 +14,8 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
+  location: String
 });
 
 userSchema.methods.getFollows = function (callback){
@@ -41,6 +42,8 @@ userSchema.methods.getFollows = function (callback){
     }
   })
 }
+
+// Following
 userSchema.methods.follow = function (idToFollow, callback){
   var fromId = this._id;
   Follow.find({from: this._id, to: idToFollow}, function(err,theFollow){
@@ -64,7 +67,6 @@ userSchema.methods.follow = function (idToFollow, callback){
     }
   })
 
-}
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
   Follow.remove({to: idToUnfollow, from: this._id}, function(err,result) {
