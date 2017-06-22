@@ -24,6 +24,59 @@ router.use(function(req, res, next){
   }
 });
 
+//is this how you render??
+// router.get('/singleprofile', function(req, res, next){
+//   res.render('singleProfile')
+// })
+
+router.get('/', function(req, res){
+  res.render('singleProfile',{
+    user: req.user
+  })
+})
+
+router.get("/users/:userid", function(req,res){
+  var userid = req.params.userid
+  User.findById(userid, function(err,user){
+    req.user.isFollowing(userid, function(found){
+      user.getFollows(userid, function(followers, following){
+        res.render('singleProfile', {
+          user:user,
+          followers: followers,
+          following: following,
+          alreadyFollowing: found
+        })
+      })
+    })
+  })
+})
+
+router.get('/allprofiles', function(req,res){
+  User.find(function(err, users){
+    res.render('profiles', {users: users})
+  })
+});
+
+router.post('/follow/:userId', function(req,res){
+  req.user.follow(req.params.userId, function(err, doc){
+    res.redirect('/')
+  })
+})
+
+router.post('/unfollow/:userId', function(req,res){
+  req.user.unfollow(req.params.userId, function(err, doc) {
+    res.redirect('/users/'+req.params.userId)
+  });
+})
+// router.get('/followunfollow', function(req,res){
+//   Follow.findOne({from:this_.id}).exec(function(err,){
+//     if(){
+//       res.send('Already followed!')
+//     }
+//   })
+// })
+
+
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!
@@ -31,7 +84,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
