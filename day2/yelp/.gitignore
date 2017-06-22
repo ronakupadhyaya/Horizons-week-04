@@ -38,4 +38,5 @@ jspm_packages
 *.swp
 
 connect.js
+env.sh
 .idea/

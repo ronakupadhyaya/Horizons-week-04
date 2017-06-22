@@ -1,1 +1,9 @@
 {{! YOUR CODE HERE }}
+<h1> User Directory </h1>
+<h4> Users ({{users.length}})</h4>
+{{#each users}}
+  <div>
+    <div> {{this.displayName}} </div>
+    <div> {{this.location}} </div>
+  </div>
+{{/each}}

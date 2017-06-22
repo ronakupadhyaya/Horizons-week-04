@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+<h1>{{restaurant.name}}</h1>
+<h3>{{ratings}}: {{restaurant.reviewCount}} Reviews </h3>
+<h3>Hours Today: {{restaurant.openTime}}-{{restaurant.closingTime}}</h3>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap">
+<form action="/restaurants/{{id}}/review">
+  <input type="submit" value="Add Review">
+</form>
+
+<h3> Reviews: </h3>
+{{#each reviews}}
+  <div>{{userId.displayName}}</div>
+  <div>{{userId.location}}</div>
+  <div>{{stars}}</div>
+  <div>{{content}}</div>
+{{/each}}
