@@ -26,7 +26,7 @@ app.get('/', function(req, res) {
   User.find().
   skip((pageNumber-1)*limit).
   limit(limit).
-  sort({"name.first": 1}).
+  sort({"name.first": 1,"name.last":1}).
   exec(function(err,users){
     res.render('index', {
       listItems: users,
