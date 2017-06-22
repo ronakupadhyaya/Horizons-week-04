@@ -41,7 +41,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
@@ -53,33 +52,40 @@ passport.deserializeUser(function(id, done) {
 });
 
 // passport strategy
-passport.use(new LocalStrategy(function(username, password, done) {
-  // Find the user with the given username
-  models.User.findOne({
-    email: username
-  }, function(err, user) {
-    // if there's an error, finish trying to authenticate (auth failed)
-    if (err) {
-      console.error(err);
-      return done(err);
-    }
-    // if no user present, auth failed
-    if (!user) {
-      console.log(user);
-      return done(null, false, {
-        message: 'Incorrect username.'
-      });
-    }
-    // if passwords do not match, auth failed
-    if (user.password !== password) {
-      return done(null, false, {
-        message: 'Incorrect password.'
-      });
-    }
-    // auth has has succeeded
-    return done(null, user);
-  });
-}));
+
+passport.use(new LocalStrategy({
+    passReqToCallBack: true
+  },
+  function(username, password, done) {
+    // Find the user with the given username
+    models.User.findOne({
+      email: username
+    }, function(err, user) {
+      // if there's an error, finish trying to authenticate (auth failed)
+      if (err) {
+        console.error(err);
+        return done(err);
+      }
+      // if no user present, auth failed
+      if (!user) {
+        console.log(user);
+        return done(null, false, {
+          message: 'Incorrect password.'
+        });
+      }
+      // if passwords do not match, auth failed
+      if (user.password !== password) {
+        return done(null, false, {
+          message: 'Incorrect password.'
+        });
+      }
+      // auth has has succeeded
+      return done(null, user);
+    });
+  }));
+
+
+
 
 app.use('/', auth(passport));
 app.use('/', routes);

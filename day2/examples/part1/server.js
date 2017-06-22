@@ -26,8 +26,10 @@ app.get('/', function(req, res) {
     .sort({
       'name.first': 1
     })
+
     .skip(limit * (pageNumber - 1))
-    .limit(limit) // limit ----include   skip --- exclude
+    .limit(limit)
+    // limit ----include   skip --- exclude
     .exec(function(err, users) {
       res.render('index', {
         listItems: users,

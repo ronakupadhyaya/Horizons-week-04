@@ -119,19 +119,17 @@ router.use(function(req, res, next) {
 
 
 router.post('/restaurants/new', function(req, res, next) {
-  console.log(1);
   var address = req.body.address;
   var name = req.body.name;
   var category = req.body.category;
   var price = req.body.price;
   var openTime = req.body.openTime;
   var closeTime = req.body.closeTime;
-  console.log(address);
-  console.log(name);
   geocoder.geocode(address, function(err, data) {
-    console.log(data);
+    // console.log(data);
     var latitude = data[0].latitude;
     var longitude = data[0].longitude;
+
     var singleRes = new Restaurant({
       name: name,
       category: category,
@@ -145,16 +143,7 @@ router.post('/restaurants/new', function(req, res, next) {
     singleRes.save(function(err, result) {
       if (err) console.log(err);
       else {
-        res.render('singleRestaurant', {
-          address: address,
-          name: name,
-          category: category,
-          price: price,
-          openTime: openTime,
-          closeTime: closeTime,
-          latitude: latitude,
-          longitude: longitude,
-        })
+        res.redirect('/restaurants');
       }
     });
   });
@@ -162,6 +151,27 @@ router.post('/restaurants/new', function(req, res, next) {
 router.get('/restaurants/new', function(req, res, next) {
   res.render('newRestaurant');
   // Geocoding - uncomment these lines when the README prompts you to!
-
 });
+router.get('/restaurants', function(req, res, next) {
+  Restaurant.find(function(err, restaurants) {
+    if (err) console.log(err);
+    else {
+      // console.log(restaurants);
+      res.render('restaurants', {
+        restaurants: restaurants
+      })
+    }
+  })
+})
+router.get('/restaurants/:id', function(req, res, next) {
+  var id = req.params.id;
+  Restaurant.findById(id, function(err, restaurant) {
+    if (err) console.log(err);
+    else {
+      res.render('singleRestaurant', {
+        restaurant: restaurant
+      })
+    }
+  })
+})
 module.exports = router;

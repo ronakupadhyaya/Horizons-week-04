@@ -27,7 +27,7 @@ var followSchema = mongoose.Schema({
   }
 });
 
-var RestaurantSchema = mongoose.Schema({
+var restaurantSchema = mongoose.Schema({
   name: String,
   category: [
     "Korean", "Barbeque", "Casual"
@@ -128,9 +128,9 @@ var reviewSchema = mongoose.Schema({
 });
 
 
-var restaurantSchema = mongoose.Schema({
-
-});
+// var restaurantSchema = mongoose.Schema({
+//
+// });
 
 restaurantSchema.methods.getReviews = function(restaurantId, callback) {
 

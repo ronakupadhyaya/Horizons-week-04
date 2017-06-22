@@ -1,13 +1,16 @@
 
-{{# each restaurants}}
 
-<h1> name: {{name}}</h1>
-<h1>address: {{address}}</h1>
-<h1>open time: {{openTime}}</h1>
-<h1>close time: {{closeTime}}</h1>
-<h1>relative price: {{price}}</h1>
-<h1>category: {{gatrgory}}</h1>
-<img src=`https://maps.googleapis.com/maps/api/staticmap?center
-={{latitude}},{{longitude}}&zoom=15&size=600x300&maptype=roadmap&
-markers=color:red|{{latitude}},{{longitude}}`>
-{{/each restaurants}}
+
+{{#each restaurants}}
+
+<h1>name: {{this.name}}</h1>
+<h1>address: {{this.address}}</h1>
+<h1>open time: {{this.openTime}}</h1>
+<h1>close time: {{this.closeTime}}</h1>
+<h1>relative price: {{this.price}}</h1>
+<h1>category: {{this.category}}</h1>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center
+={{this.latitude}},{{this.longitude}}&zoom=15&size=600x300&maptype=roadmap&
+markers=color:red|{{this.latitude}},{{this.longitude}}">
+<a class="btn btn-primary" href="/restaurants/{{this.id}}">View Profile</a>
+{{/each}}

@@ -3,14 +3,14 @@
 
 
 
-
-<h1> name: {{name}}</h1>
-<h1>address: {{address}}</h1>
-<h1>open time: {{openTime}}</h1>
-<h1>close time: {{closeTime}}</h1>
-<h1>relative price: {{price}}</h1>
-<h1>category: {{gatrgory}}</h1>
-
-<img src=`https://maps.googleapis.com/maps/api/staticmap?center
-={{latitude}},{{longitude}}&zoom=15&size=600x300&maptype=roadmap&
-markers=color:red|{{latitude}},{{longitude}}`>
+<form >
+  <h1>name: {{restaurant.name}}</h1>
+  <h1>address: {{restaurant.address}}</h1>
+  <h1>open time: {{restaurant.openTime}}</h1>
+  <h1>close time: {{restaurant.closeTime}}</h1>
+  <h1>relative price: {{restaurant.price}}</h1>
+  <h1>category: {{restaurant.category}}</h1>
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center
+  ={{restaurant.latitude}},{{restaurant.longitude}}&zoom=15&size=600x300&maptype=roadmap&
+  markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}">
+</form>

@@ -46,9 +46,14 @@ module.exports = function(passport) {
   });
 
   // POST Login page
-  router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-  });
+  // router.post('/login', passport.authenticate('local'), function(req, res) {
+  //   res.redirect('/users');
+  // });
+  router.post('/login', passport.authenticate('local', {
+    successRedirect: '/users',
+    failureRedirect: '/login',
+    // failureFlash: true
+  }));
 
   // GET Logout page
   router.get('/logout', function(req, res) {
