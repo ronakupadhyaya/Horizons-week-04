@@ -22,6 +22,8 @@ app.set('view engine', 'handlebars');
 
 //ROUTES GO HERE
 
+//add a route that will respond to post requests sent by Twilio via
+//webhooks
 
 //start up our server
 var port = process.env.PORT || 3000
