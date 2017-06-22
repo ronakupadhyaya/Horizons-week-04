@@ -1,0 +1,3 @@
+export MONGODB_URI=mongodb://mcgloflen:haley@ds137141.mlab.com:37141/examples-haley
+export TWILIO_SID=AC02ba3d102e5501cf6df71f136c6ea676
+export TWILIO_AUTH_TOKEN=3f38510e02db0a44f82b8f0cccb001f8
