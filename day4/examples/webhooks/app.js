@@ -2,13 +2,13 @@
 var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
-var exphbs  = require('express-handlebars');
+var exphbs = require('express-handlebars');
 
 //setup mongoose connection
-mongoose.connection.on('error', function(){
+mongoose.connection.on('error', function() {
   console.log('error connecting to database')
-}
-mongoose.connection.on('connected', function(){
+})
+mongoose.connection.on('connected', function() {
   console.log('succesfully connected to database')
 })
 mongoose.connect(process.env.MONGODB_URI)
