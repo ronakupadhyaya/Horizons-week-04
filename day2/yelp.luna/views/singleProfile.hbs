@@ -1,0 +1,29 @@
+<h4>Name:</h4>
+<p>{{user.displayName}}</p>
+
+<h4>Email:</h4>
+<p>{{user.email}}</p>
+
+<h4>Location:</h4>
+<p>{{user.location}}</p>
+
+<h4>Reviews:</h4>
+<p>{{user.reviews}}</p>
+
+<form  action="/follow/{{user.id}}" method="post">
+  <input style="display: inline;" type="submit" value="follow">
+</form>
+
+<h4>Following:</h4>
+{{#each following}}
+  <div>{{this.to.displayName}}
+  <form  action="/unfollow/{{this.to.id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
+</div>
+{{/each}}
+
+<h4>Followers:</h4>
+{{#each followers}}
+  <p>{{uid1.displayName}}</p>
+{{/each}}
