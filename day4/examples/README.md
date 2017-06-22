@@ -32,35 +32,35 @@ Now that you know a little more about how heroku tries to deploy your app try to
 
 ### Part 3: Heroku config
 
-In this section we will learn more about configuring environment variables in heroku. Environment variables are easily set in our local environment by either using an `env.sh` file or manually calling `export` inside a terminal window. For example `export myEnv="myValueString"` adds the environment variable `myEnv` to the `process.env` object inside your program. If we logged the value of `process.env.myEnv` we would see the string `"myValueString"`. Similiar to the export command heroku has a builtin command to set an environment variable for your node application running on heroku in the cloud. Watch the video below to learn how.
+In this section we will learn more about configuring environment variables in heroku. Environment variables are easily set in our local environment by either using an `env.sh` file or manually calling `export` inside a terminal window. For example `export myEnv="myValueString"` adds the environment variable `myEnv` to the `process.env` object inside your program. If we logged the value of `process.env.myEnv` we would see the string `"myValueString"`. Similar to the `export` command, heroku has a built-in command to set an environment variable for your node application running on heroku in the cloud. Watch the video below to learn how.
 
 #### [Optional: process.env walkthrough](https://vimeo.com/222652293)
 #### [Heroku Config Variables](https://vimeo.com/222654441)
 
 #### Exercise
     
-Using the app you deployed in the previous exercise add the following config variables using either the admin interface or the heroku command line: `HORIZON_URI="abhi_darwish"`, and `TEST=0`. Use `console.log()` calls to print the values of `process.env.HORIZON_URI` and `process.env.TEST` and heroku logs command to see that the variables are set after the app has been redeployed. Note: you may need to wait a few seconds for the changes to update.
+Using the app you deployed in the previous exercise add the following config variables using either the admin interface or the heroku command line: `HORIZON_URI="abhi_darwish"`, and `TEST=0`. Use `console.log()` calls to print the values of `process.env.HORIZON_URI` and `process.env.TEST` and `heroku logs` command to see that the variables are set after the app has been redeployed. Note: you may need to wait a few seconds for the changes to update.
 
-### Part 4: Heroku with mlab
 
-In this section we will build on the previous section by exploring how to use mlabs with Heroku. The addon we will be working with is mongodb provided by mlabs. Watch the video below to learn about setting up mongodb/mlab with a heroku application. 
+### Part 4: Heroku with mLab
+
+In this section we will build on the previous section by exploring how to use mlabs with Heroku. The addon we will be working with is MongoDB provided by mLab. Watch the video below to learn about setting up MongoDB/mLab with a heroku application. 
 
 [Heroku with MongoDB: mlab](https://vimeo.com/222664592)
 
 #### Exercise
 
-Now that we understand how to deploy our apps to heroku, debug problems using Heroku logs, set environment/config variables, and configure mlabs we are ready to put it all together and get the app located at the repo [here](https://github.com/horizons-school-of-technology/heroku-final-exercise) up and running on Heroku. Remember heroku logs command is your friend! Warning: Sometimes it takes a minute for heroku logs to update.
+Now that we understand how to deploy our apps to heroku, debug problems using Heroku logs, set environment/config variables, and configure mLab we are ready to put it all together and get the app located at the repo [here](https://github.com/horizons-school-of-technology/heroku-final-exercise) up and running on Heroku. Remember heroku logs command is your friend! Warning: Sometimes it takes a minute for heroku logs to update.
 
 
 ### Reference
 
-1. heroku login- login using password/email from terminal.
-1. heroku create- inside a git repo add a heroku app for the project you are in.
-1. git push yourbranch:heroku- from the current branch, called "yourbranch" in this case, push the app to heroku. Note: you need to have a new commit to heroku in order for this to trigger a redeploy.
-1. heroku logs- see the terminal for your heroku deployment, lets you see terminal output (console.logs etc.) for the app.
-1. heroku logs --tail- see the last few lines of terminal output instead of the entire log
-1. heroku config:set GITHUB_USERNAME=joesmith-sets a new variable called GITHUB_USERNAME that is available through `proccess.env.GITHUB_USERNAME`, setting a config var triggers a reset of your app
-
+1. `heroku login` - login using password/email from terminal.
+1. `heroku create` - inside a git repo add a heroku app for the project you are in.
+1. `git push heroku your-branch-name:master` - from the current branch, called "yourbranch" in this case, push the app to heroku. Note: you need to have a new commit to heroku in order for this to trigger a redeploy.
+1. `heroku logs` - see the terminal for your heroku deployment, lets you see terminal output (console.logs etc.) for the app.
+1. `heroku logs --tail` - see the last few lines of terminal output instead of the entire log
+1. `heroku config:set GITHUB_USERNAME=joesmith` - sets a new variable called GITHUB_USERNAME that is available through `proccess.env.GITHUB_USERNAME`, setting a config var triggers a reset of your app
 
 ---
 
@@ -75,4 +75,3 @@ Now that we understand how to deploy our apps to heroku, debug problems using He
 - [Watch Me: Oauth Intro](https://vimeo.com/222398661)
 - [Watch Me: Oauth with Facebook](https://vimeo.com/222398704)
 - Complete the [oauth](oauth/) exercise
-
