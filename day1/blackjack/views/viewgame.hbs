@@ -1,7 +1,11 @@
 <h2 id="bet">Bet:{{game.playerBet}}</h2>
-<form id="betForm" action="" method="POST">
-  <input type="number" name="bet" placeholder="bet amount" />
-  <input type="submit" value="Submit" />
+<form id="betForm" action="" method="POST" data-toggle="validator" role="form">
+  <!-- <input type="number" name="bet" placeholder="bet amount" /> -->
+  <input type="number" data-minlength="1" class="form-control" id="inputBet" placeholder="Amount" required>
+  <div class="help-block with-errors"></div>
+
+
+  <input type="submit" value="Submit Bet" />
 </form>
 
 

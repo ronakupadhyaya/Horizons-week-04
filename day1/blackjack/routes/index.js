@@ -117,11 +117,13 @@ router.post('/game/:id', function(req, res, next) {
   // YOUR CODE HERE
   var game = req.game;
   var bet = req.body.bet;
-  req.checkBody('bet','Must enter a number for bet').notEmpty().isInt();
-  var errors = req.validationErrors();
-  if(errors){
-    res.json(gameRepresentation(game))
-  }
+
+  console.log(bet);
+  // req.checkBody('bet','Must enter a number for bet').notEmpty().isInt();
+  // var errors = req.validationErrors();
+  // if(errors){
+  //   res.json(gameRepresentation(game))
+  // }
 
   game.dealInitial();
   if(game.playerBet){
@@ -129,7 +131,6 @@ router.post('/game/:id', function(req, res, next) {
   }
   game.playerBet= req.body.bet;
   game.save(function(error){
-
     if(error){
       console.log("Error saving game");
     }else{

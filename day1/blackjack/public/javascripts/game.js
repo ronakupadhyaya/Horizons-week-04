@@ -5,36 +5,18 @@
 
 $(document).on("submit", "form", function(e){
   e.preventDefault();
-  var betval = $('#betForm input[name="bet"]').val();
-  // 
-  //
-  // $('#contact_form').bootstrapValidator({
-  //      // To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-  //      feedbackIcons: {
-  //          invalid: 'glyphicon glyphicon-remove'
-  //      },
-  //      fields: {
-  //          bet: {
-  //              validators: {
-  //                      stringLength: {
-  //                      min: 1,
-  //                  },
-  //                      notEmpty: {
-  //                      message: 'Please supply your first name'
-  //                  }
-  //              }
-  //          }
-  //
-  //
+  // var betval = $('#inputBet').val();
 
+  alert($('#inputBet').val());
   $.ajax({
     type: "POST",
     url: $(location).attr('href'),
     data: {
-      bet: betval
+      bet: $('#inputBet').val()
     },
     cache: false,
     success: function(resp){
+      var betval = $('#inputBet').val();
       $('#bet').text(`Bet is: ${betval}`)
       play(resp);
     }
