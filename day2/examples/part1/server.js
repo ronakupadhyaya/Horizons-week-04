@@ -23,6 +23,7 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
+<<<<<<< HEAD
   User.find()
   .sort({'name.first': 1})
   .skip((pageNumber-1)*limit)

@@ -16,6 +16,7 @@ var userSchema = new Schema({
   }
 });
 
+
 var ageVirtual = userSchema.virtual('age')
 
 ageVirtual.get(function(){
@@ -35,6 +36,7 @@ userSchema.method('toggleGender', function(){
 userSchema.static('getByFirstName', function(name, cb){
   this.find({'name.first': name}, cb)
 })
+
 
 var User = mongoose.model('User', userSchema);
 
