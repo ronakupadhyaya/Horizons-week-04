@@ -1,1 +1,12 @@
-{{! YOUR CODE HERE }}
+<h1>User Directory</h1>
+
+<div class="col-xs-offset-5 col-xs-3">
+
+  <h2>Users: ({{users.length}})</h2>
+
+  {{#each users}}
+    <h3>{{this.displayName}}</h3>
+    <p>{{this.location}}</p>
+  {{/each}}
+
+</div>

@@ -1,1 +1,16 @@
-{{! YOUR CODE HERE }}
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyDqrttUkSj4h3skkorapjgYWPy4_z58A&callback=initMap"
+        type="text/javascript"></script>
+
+<h2>{{restaurant.name}}</h2>
+<div>
+  {{#each relPrice}}
+    $
+  {{/each}}
+</div>
+
+<p>Hours today: &nbsp{{restaurant.openTime}}am-{{restaurant.closeTime}}pm</p>
+
+<div>
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key=AIzaSyAyDqrttUkSj4h3skkorapjgYWPy4_z58A">
+</div>
+
