@@ -2,7 +2,7 @@
 
 ## Morning Videos & Individual Exercises
 
-1. [Videos and Exercises](#)
+1. [Videos and Exercises](examples/)
 
 ## Pair programming exercise
 
