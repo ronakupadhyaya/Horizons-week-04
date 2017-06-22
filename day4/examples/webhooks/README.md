@@ -1,8 +1,7 @@
 # Inline Exercise: Twilio Webhooks
 
-The end goal of this exercise is to be able to enable the following scenario to happen
-- You text your Twilio number either "Nihar" or some other text
-- You recieve a response from your Twilio number that is either 
+The goal of this exercise is to use Twilio webhooks to receive text messages.
+When a message is received we will send an automated reply based on the following rules:
   1. "Over the horizons" if the text message you sent was "Nihar" 
   1. or "I don't understand" otherwise
 
