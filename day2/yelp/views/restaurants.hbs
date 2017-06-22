@@ -1,1 +1,9 @@
 {{! YOUR CODE HERE }}
+<h2>View All Restaurants</h2>
+
+{{#each restaurants}}
+{{this.name}}
+<li>{{this.category}} {{this.price}} {{this.reviewCount}}</li>
+<li>Open Time: {{this.openTime}}</li>
+<li>Close Time: {{this.closingTime}}</li>
+{{/each}}

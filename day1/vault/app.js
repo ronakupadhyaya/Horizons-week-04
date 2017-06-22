@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var plain = require('./passwords.plain.json')
-var hash = require('./password.hashed.json')
+var hash = require('./passwords.hashed.json')
 var session = require('cookie-session')
 var session = require('express-session')
 var MongoStore = require('connect-mongo')(session)
@@ -54,19 +54,35 @@ app.use(passport.session());
 
 
 // PASSPORT LOCALSTRATEGY HERE
+// unhashed
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     plain.passwords.forEach(function(user) {
+//       // console.log('check user')
+//       if (user.username === username && user.password === password) {
+//         // console.log('check user', user)
+//         return done(null, user)
+//       }
+//
+//     })
+//     return done(null, false,  {message: 'Incorrect username or password.' })
+//   }
+// ));
+// hashed
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    plain.passwords.forEach(function(user) {
+    var hashedPassword = hashPassword(password)
+    hash.passwords.forEach(function(user) {
       console.log('check user')
-      if (user.username === username && user.password === password) {
+      if (user.username === username && user.password === hashedPassword) {
         console.log('check user', user)
         return done(null, user)
       }
-
     })
     return done(null, false,  {message: 'Incorrect username or password.' })
   }
-));
+))
+
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user, done) { //mandantory
@@ -121,9 +137,10 @@ app.get('/signup', function(req, res) {
 })
 
 app.post('/signup', function(req, res) {
-  if (req.body.username && req.body.password) {
-    newUser = 
-  }
+  var u = new models.User({
+    username: req.body.username,
+    hashedPassword: hashedPassword(req.body.password)
+  })
 })
 
 

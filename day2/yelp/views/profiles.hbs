@@ -1,1 +1,21 @@
 {{! YOUR CODE HERE }}
+<h4>User Directory</h4>
+<div>
+  <h3>Users</h3>
+</div>
+
+
+{{#each users}}
+<ul>
+  {{this.displayName}}
+</ul>
+<ul>
+  <form action="/follow/{{this.id}}" method="post">
+    <input type="submit" name="submit" value="follow">
+  </form>
+  <br>
+  <form action="/unfollow/{{this.id}}" method="post">
+    <input type="submit" name="submit" value="unfollow">
+  </form>
+</ul>
+{{/each}}

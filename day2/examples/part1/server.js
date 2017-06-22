@@ -12,10 +12,14 @@ app.engine('.hbs', exphbs(hbs));
 app.set('view engine', '.hbs');
 
 // mongoose setup
+// var mongoose = require('mongoose')
+
 var User = require('./user');
+
 
 // routes
 app.get('/', function(req, res) {
+
   var pageNumber = getPageNumber(Number(req.query.page));
   var prev = (pageNumber <= 1 ? 1 : pageNumber - 1);
   var next = pageNumber + 1;
@@ -23,15 +27,33 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
-    });
-  });
+  // User.find(function(err,users){
+  //   console.log(users)
+  //   res.render('index', {
+  //     listItems: users,
+  //     prev: prev,
+  //     current: pageNumber,
+  //     next: next,
+  //     limit: limit
+  //   });
+  // });
+  User.find()
+      // .sort({'birthday': 1})
+      .skip(pageNumber*limit)
+      .limit(limit)
+      // .skip(10)
+
+      .exec(function (err, users) {
+        var users = users
+        res.render('index', {
+            listItems: users,
+            prev: prev,
+            current: pageNumber,
+            next: next,
+            limit: limit
+          });
+        // res.json(users)
+      })
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 

@@ -25,8 +25,10 @@ module.exports = function(passport) {
     }
     var u = new models.User({
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      displayName: req.body.displayName
     });
+    console.log('user', u);
 
     u.save(function(err, user) {
       if (err) {
@@ -39,6 +41,8 @@ module.exports = function(passport) {
     });
   });
 
+
+
   // GET Login page
   router.get('/login', function(req, res) {
     res.render('login');
@@ -46,6 +50,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
+    console.log('post login');
     res.redirect('/');
   });
 

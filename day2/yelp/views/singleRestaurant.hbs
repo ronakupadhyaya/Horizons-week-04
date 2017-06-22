@@ -1,1 +1,16 @@
 {{! YOUR CODE HERE }}
+<h3>Single Restaurant Profile</h3>
+
+<h4>Restaurant: {{Restaurant.name}}</h4>
+<p>{{Restaurant.category}}</p>
+<p>Total Score: {{Restaurant.totalScore}}</p>
+<p>{{Restaurant.reviewCount}} Reviews</p>
+
+<h4>{{Restaurant.address}}</h4>
+
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{Restaurant.latitude}},{{Restaurant.longitude}}&markers=color:red|{{Restaurant.latitude}},{{Restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap">
+
+<h4>Open Time: {{Restaurant.openTime}}</h4>
+<h4>Close Time: {{Restaurant.closingTime}}</h4>
+<h4>Reviews:</h4>
+<p>{{reviews}}</p>
