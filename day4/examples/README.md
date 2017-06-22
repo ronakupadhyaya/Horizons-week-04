@@ -6,7 +6,7 @@
 
 ### Part 1: Introduction to Heroku and deployment of a test app
 
-In this section we will get started with Heroku. In the first video we install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and create a [Heroku account](https://www.heroku.com). In order to follow along in the second video you will need to clone the heroku test app [repo](https://github.com/horizons-school-of-technology/heroku-testapp) on your local machine. In the third video you will learn how to link a mlab MongoDB instance to your application running on Heroku.
+In this section we will get started with Heroku. In the first video we install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) and create a [Heroku account](https://www.heroku.com). In order to follow along in the second video you will need to clone the heroku test app [repo](https://github.com/horizons-school-of-technology/heroku-testapp) on your local machine. The third (optional) video gives a pictorial representation of what the heroku create command is doing.
 
 #### [Initial Heroku CLI & Account creation video](https://vimeo.com/222642703)
 #### [Deploying with Heroku](https://vimeo.com/222645394)
