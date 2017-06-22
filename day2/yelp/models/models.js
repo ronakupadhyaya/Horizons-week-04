@@ -35,7 +35,7 @@ userSchema.methods.getFollows = function (callback){
           callback(err)
         } else {
           console.log('completed');
-          callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
+          callback(null, {allFollowers: allFollowers, allFollowing: allFollowing});
         }
       })
     }
@@ -43,8 +43,12 @@ userSchema.methods.getFollows = function (callback){
 }
 userSchema.methods.follow = function (idToFollow, callback){
   var fromId = this._id;
+  console.log(`fromId is ${fromId}`);
+  console.log(`idToFollow is ${idToFollow}`);
   Follow.find({from: this._id, to: idToFollow}, function(err,theFollow){
     if (err) {
+      console.log(`first error occured`);
+
       callback(err);
     } else if (theFollow) {
       callback(new Error("That follow already exists!"));
@@ -53,9 +57,10 @@ userSchema.methods.follow = function (idToFollow, callback){
         to: idToFollow,
         from: fromId
       });
-
       newFollow.save(function(err, result) {
         if(err) {
+          console.log(`second error occured`);
+
           callback(err);
         } else {
           callback(null, result);
@@ -63,7 +68,6 @@ userSchema.methods.follow = function (idToFollow, callback){
       });
     }
   })
-
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){

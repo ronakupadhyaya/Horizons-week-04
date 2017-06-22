@@ -44,8 +44,28 @@ router.get('/users/:userId', function(req,res) {
       })
     }
   })
+});
 
+router.get('/users', function(req, res) {
+  User.find({}, function (err, user) {
+    res.render('profiles', {
+      user: user
+    });
+  })
+});
 
+router.post('/users/:userId/follow', function(req,res) {
+  var self = req.user;
+  // console.log(self);
+  var toBeFollow = req.params.userId;
+  console.log(toBeFollow);
+  self.follow(toBeFollow, function(err, follow) {
+    if (err) {
+      res.status(404).send("could not follow");
+    } else {
+      res.redirect('/users')
+    }
+  });
 });
 
 router.post('/restaurants/new', function(req, res, next) {

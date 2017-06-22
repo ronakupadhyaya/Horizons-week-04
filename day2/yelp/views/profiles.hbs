@@ -1,1 +1,24 @@
-{{! YOUR CODE HERE }}
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" align="center">
+      <h3>User Directory</h3>
+    </div>
+  </div>
+</div>
+
+<h4>User ({{user.length}})</h4>
+<br>
+{{#each user}}
+  <h5>{{displayName}}</h5>
+  <p>{{location}}</p>
+  <form class="" action="/users/{{_id}}/follow" method="post">
+    <input type="submit" name="follow" value="follow">
+  </form>
+  <form class="" action="/users/{{_id}}/unfollow" method="post">
+    <input type="submit" name="unfollow" value="unfollow">
+  </form>
+{{/each}}
