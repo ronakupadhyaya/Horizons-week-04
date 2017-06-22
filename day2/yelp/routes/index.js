@@ -76,10 +76,10 @@ router.get('/restaurants/:rid',function(req,res){
 })
 
 router.post('/restaurants/new', function(req, res, next) {
-  // geocoder.geocode(req.body.restaurantLocation, function(err, data) {
-  //   console.log(err);
-  //   console.log(data);
-  // });
+  geocoder.geocode(req.body.restaurantLocation, function(err, data) {
+    console.log(err);
+    console.log(data);
+  });
   var newR = new Restaurant({
     name:req.body.restaurantName,
     category:req.body.restaurantCategory,
