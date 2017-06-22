@@ -23,6 +23,7 @@ module.exports = function(passport) {
         error: "Passwords don't match."
       });
     }
+
     var u = new models.User({
       email: req.body.username,
       password: req.body.password,
@@ -47,9 +48,10 @@ module.exports = function(passport) {
   });
 
   // POST Login page
-  router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
-  });
+  router.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
 
   // GET Logout page
   router.get('/logout', function(req, res) {

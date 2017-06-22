@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var restaurantList = require('./restaurantList')
+
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
 var connect = process.env.MONGODB_URI || require('./connect');
@@ -17,35 +19,35 @@ var userSchema = mongoose.Schema({
   }
 });
 
+// instance of a user calls this method (anything an instance has, can be access by this)
+// TODO getfollows isn't working
 userSchema.methods.getFollows = function (callback){
   var myId = this._id;
-  console.log('myId', this._id);
   Follow.find({from: myId})
-  .populate('to')
-  .exec(function(err, allFollowing) {
-    console.log('allFollowing', allFollowing);
-    if(err) {
-      callback(err)
-    } else {
-      Follow.find({to: myId})
-      .populate('from')
-      .exec(function(err, allFollowers) {
-        console.log('allFollowers', allFollowers);
-        if(err) {
-          callback(err)
-        } else {
-          console.log('completed');
-          callback(null, { allFollowers: allFollowers, allFollowing: allFollowing});
-        }
-      })
-    }
-  })
-}
+    .populate('to')
+    .exec(function(err, allFollowing){
+      if (err) {
+        callback(err);
+      } else {
+        Follow.find({to: myId})
+          .populate('from')
+          .exec(function(err, allFollowers){
+            if (err) {
+              callback(err)
+            } else {
+              callback(null, {allFollowers: allFollowers, allFollowing: allFollowing});
+            }
+          })
+      }
+    });
+};
+
+// callback function to be expected to be called
 userSchema.methods.follow = function (idToFollow, callback){
   var fromId = this._id;
-  Follow.find({from: this._id, to: idToFollow}, function(err,theFollow){
+  Follow.findOne({from: fromId, to: idToFollow}, function(err, theFollow){
     if (err) {
-      callback(err);
+      callback(err)
     } else if (theFollow) {
       callback(new Error("That follow already exists!"));
     } else {
@@ -53,18 +55,16 @@ userSchema.methods.follow = function (idToFollow, callback){
         to: idToFollow,
         from: fromId
       });
-
       newFollow.save(function(err, result) {
         if(err) {
           callback(err);
-        } else {
+        } else{
           callback(null, result);
         }
       });
     }
   })
-
-}
+};
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
   Follow.remove({to: idToUnfollow, from: this._id}, function(err,result) {
@@ -74,26 +74,76 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
       callback(null, result);
     }
   });
-}
+};
 
 var FollowsSchema = mongoose.Schema({
-  to: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  },
   from: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User'
+    ref: 'user'
+  },
+  to: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user'
   }
 });
 
 var reviewSchema = mongoose.Schema({
-
+  stars: {
+    type: Number,
+    required: true
+  },
+  content: {
+    type: String,
+    required: true
+  },
+  restaurant: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'restaurant'
+  },
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user'
+  }
 });
 
-
 var restaurantSchema = mongoose.Schema({
-
+  name: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true
+  },
+  category: {
+    type: String,
+    enum: restaurantList,
+    required: true
+  },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
+  },
+  openTime: {
+    type: Number,
+    required: true
+  },
+  closingTime: {
+    type: Number,
+    required: true
+  },
+  totalScore: {
+    type: Number,
+    required: true
+  },
+  reviewCount: {
+    type: Number,
+    required: true
+  }
 });
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){

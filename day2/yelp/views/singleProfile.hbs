@@ -11,15 +11,7 @@
 <p>{{user.reviews}}</p>
 
 <h4>Following:</h4>
-{{#each following}}
-  <div>{{this.to.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
-</div>
-{{/each}}
+
+
 
 <h4>Followers:</h4>
-{{#each followers}}
-  <p>{{this.from.displayName}}</p>
-{{/each}}

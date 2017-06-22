@@ -1,1 +1,66 @@
 {{! YOUR CODE HERE }}
+
+<h1>Add a new restaurant</h1>
+<div class="container">
+  <div class="row">
+    <form class="form-group" method="post">
+      <div class="col-xs-3">
+        Name
+      </div>
+      <div class="col-xs-9">
+        <input type="text" name="name" value="" class="form-control">
+      </div>
+      <div class="col-xs-3">
+        Category
+      </div>
+      <div class="col-xs-3">
+        <select class="form-control" name="category" id="sel1">
+          {{#each restaurantList}}
+          <option value={{this}}>{{this}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-xs-3">
+        Price
+      </div>
+      <div class="col-xs-3">
+        <div class="form-inline">
+          <div class="radio form-control">
+            <label><input type="radio" name="price" value="1">$</label>
+          </div>
+          <div class="radio form-control">
+            <label><input type="radio" name="price" value="2">$$</label>
+          </div>
+          <div class="radio form-control">
+            <label><input type="radio" name="price" vaule="3">$$$</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-3">
+        Address
+      </div>
+      <div class="col-xs-9">
+        <input type="address" class="form-control" name="address" value="">
+      </div>
+      <div class="col-xs-3">
+        Open Time
+      </div>
+      <div class="col-xs-3">
+        <input type="number" class="form-control" name="openTime" value="">
+      </div>
+      <div class="col-xs-3">
+        Close Time
+      </div>
+      <div class="col-xs-3">
+        <input type="number" class="form-control" name="closeTime" value="">
+      </div>
+      <input type="submit" name="" value="Submit" class="btn btn-primary">
+
+
+
+
+
+      </div>
+    </form>
+  </div>
+</div>

@@ -7,7 +7,7 @@
     </div>
     {{#each users}}
       <div class="col-xs-6 col-xs-offset-3">
-        <strong>{{this.displayName}}</strong>
+        <a href="/users/{{this._id}}"><strong>{{this.displayName}}</strong></a>
       </div>
       <div class="col-xs-6 col-xs-offset-3">
         <form class="" action="/users/{{this._id}}/follow" method="post">
