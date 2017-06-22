@@ -1,1 +1,46 @@
+
+{{#each user}}
+<h1>{{allFollowing}}</h1>
+
+<h4>Name:</h4>
+<p>{{displayName}}</p>
+
+<h4>Email:</h4>
+<p>{{email}}</p>
+
+<h4>Address:</h4>
+<p>{{location}}</p>
+
+<h4>Reviews:</h4>
+<p>{{reviews}}</p>
+
+<h4>Following:</h4>
+{{#each allFollowing}}
+  <div>{{from.displayName}}
+    <div class="" name="follower" value={{follower.displayName}}>Follower</div>
+    <div class="" name = followerLoc value={{follower.location}}>Location</div>
+      </div>
+    </div>
+  <form  action="/unfollow/{{from.id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
+</div>
+{{/each}}
+
+<h4>Followers:</h4>
+{{#each allFollowers}}
+  <p>{{to.displayName}}</p>
+  <div class="" name="allFollowing" value={{following.displayName}}>Follower</div>
+  <div class="" name =followerLoc value={{following.location}}>Location</div>
+{{/each}}
+
+{{#if isFollowing}}
+<h1> HI!!!!</h1>
+{{else}}
+<form  action="/follow/{{to.id}}" method="post">
+  <input style="display: inline;" type="submit" value="follow">
+</form>
+{{/if}}
+
+{{/each}}
 {{! YOUR CODE HERE }}
