@@ -18,7 +18,7 @@ The goal of this exercise is to use MongoDb with Heroku.
 1. First commit, then push your app with `git push heroku`
 1. Add your MONGODB_URI to Heroku. Do this with the following in your terminal:
     ```
-    heroku config:set MONGODB_URE=YOUR_URI_HERE
+    heroku config:set MONGODB_URI=YOUR_URI_HERE
     ```
     You can double check if you've added it correctly on your Heroku dashboard (Settings > Config Variables)
 1. Create a couple books on your app on Heroku, use `/books` to check that they
