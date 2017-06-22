@@ -24,6 +24,8 @@ module.exports = function(passport) {
       });
     }
     var u = new models.User({
+      displayName: req.body.displayName,
+      location: req.body.location,
       email: req.body.username,
       password: req.body.password
     });

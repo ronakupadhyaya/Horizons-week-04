@@ -1,1 +1,13 @@
 {{! YOUR CODE HERE }}
+{{#each users}}
+<div class="jumbotron">
+  <h3 class="display-3">{{this.displayName}}</h3>
+  <p class="location">{{this.location}}</p>
+  <p class="follow-unfollow">
+    <a class="btn btn-primary btn-lg" href="/follow/{{this._id}}" role="button">Follow</a>
+    <a class="btn btn-primary btn-lg" href="/unfollow/{{this._id}}" role="button">Unfollow</a>
+  </p>
+</div>
+{{/each}}
+
+{{users}}
