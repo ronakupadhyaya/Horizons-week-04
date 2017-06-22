@@ -23,6 +23,9 @@ In this exercise we're going to implement logins using GitHub OAuth.
 1. Follow directions from
   [`passport-github` documentation](https://github.com/jaredhanson/passport-github)
     1. Create a new GitHub strategy and put it in the marked place in `routes.js`
+        - Your strategy should specify clientID and clientStrategy using process.env variables we stored in env.sh
+        - Make sure the callback URL matches the authorization callback URL we set at registration
+        - Since we are not using a database, we can simply pass the profile that we get back into the cb function `return cb(null, profile);`
     1. Create `GET /auth/github` and `GET /auth/github/callback` endpoints in
       `routes.js`
 1. Start your app and open it in your browser. Click `Login with GitHub` and
