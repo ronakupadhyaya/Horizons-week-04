@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(require('./passport'));
+app.use(require('./passport')); //these routes get called first before routes
 app.use(require('./routes'));
 
 var port = process.env.PORT || 3000;

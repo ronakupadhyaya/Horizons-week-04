@@ -32,4 +32,13 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/login',
 }));
 
+//can also be put here, must be below login other will be in infinite loop around login
+// router.use('/', function(req,res,next) {
+//   if (req.user) {
+//     return next();
+//   } else {
+//     res.redirect('/login');
+//   }
+// })
+
 module.exports = router;
