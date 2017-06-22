@@ -15,6 +15,26 @@ var Review = models.Review;
 //   formatter: null
 // });
 
+router.get('/user/:userid', function(req,res){
+  var userid = req.params.userid;
+  console.log(userid)
+  User.findById(userid, function(err, userObj){
+    if (err){
+      console.log("User does not exist - get error")
+    } else{
+      console.log(userObj)
+      userObj.getFollows(function(followers, followings) {
+        res.render('singleProfile', {
+          user: userObj,
+          allFollowers: followers,
+          allFollowings: followings
+        })
+      })
+    }
+  })
+
+})
+
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
   if (!req.user) {
@@ -31,7 +51,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
