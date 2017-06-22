@@ -1,0 +1,6 @@
+$.ajax({
+method:"POST",
+url:"/walter",
+data: {"secret": {"$ne": "jjj"}},
+success: function(h) { console.log(h); }
+})
