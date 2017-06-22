@@ -1,1 +1,7 @@
 {{! YOUR CODE HERE }}
+
+<h4>Users:{{profileArray.length}}</h4>
+{{#each profileArray}}
+  <p>{{this.displayName}}</p>
+  <p>{{this.location}}</p>
+{{/each}}
