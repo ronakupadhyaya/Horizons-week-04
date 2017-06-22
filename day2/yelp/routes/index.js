@@ -31,7 +31,80 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
+
+router.get('/users/:userId', function(req, res){
+  User.findById(req.params.userId, function(err, user){
+    if(err || !user){
+      res.status(404).send('No user');
+    }
+    else{
+      user.getFollows(function(err, result){
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollowers;
+        res.render('singleProfile', {
+          user: user,
+          following: allFollowing,
+          followers: allFollowers
+        })
+      })
+    }
+  });
+})
+
+// GET Profiles page
+router.get('/', function(req, res){
+  User.find(function(err, user){
+    if(err){
+      res.status(404).send('No users');
+    }
+    else{
+      res.render('profiles', {
+        user: user
+      });
+    }
+  })
+})
+
+router.post('/follow/:id', function(req, res){
+  var currentId = req.user._id;
+  Follow.find({from: currentId, to: req.params.id}, function(err, foundFollow){
+    console.log("THIS IS THE FOUND FOLLOW: " + foundFollow);
+    if(err){
+      console.log(err);
+    }
+    if(!foundFollow){
+      console.log("You are already following this person!");
+    }
+    else{
+      var newFollow = new Follow({
+        from: currentId,
+        to: req.params.id
+      })
+      newFollow.save(function(err, result){
+        if(err){
+          console.log(err);
+        }
+        else{
+          console.log(result);
+        }
+      })
+    }
+    res.redirect('/users/'+currentId);
+  })
+})
+
+router.post('/unfollow/:id', function(req, res){
+  req.user.unfollow(req.params.id, function(err, foundFollow){
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log(foundFollow);
+    }
+    res.redirect('/users/'+req.user._id);
+  })
+})
 
 module.exports = router;

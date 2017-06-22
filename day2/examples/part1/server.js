@@ -23,14 +23,18 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
-    });
+  User.find()
+    .sort({'name.first': 1})
+    .skip((pageNumber-1)*limit)
+    .limit(limit)
+    .exec(function(err,users){
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
   });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
