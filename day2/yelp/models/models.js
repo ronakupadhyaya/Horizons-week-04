@@ -93,7 +93,16 @@ var FollowsSchema = new mongoose.Schema({
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 var reviewSchema = new mongoose.Schema({
-
+  content: String,
+  stars: Number,
+  restaurantId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Restaurant'
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 var Review = mongoose.model('Review', reviewSchema);
@@ -105,13 +114,15 @@ var restaurantSchema = new mongoose.Schema({
   latitude: Number,
   longitude: Number,
   stars: Number,
-  price: Number,
-  openTime: Number,
-  closingTime: Number
+  price: String,
+  openTime: String,
+  closingTime: String
 });
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){
+  Reviews.find({restaurantId: restaurantId}, function(err, rest) {
 
+  });
 }
 
 //restaurantSchema.methods.stars = function(callback){

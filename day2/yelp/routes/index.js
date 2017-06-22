@@ -10,7 +10,7 @@ var Review = models.Review;
 var NodeGeocoder = require('node-geocoder');
 var geocoder = NodeGeocoder({
   provider: "google",
-  apiKey: process.env.GEOCODING_API_KEY || "AIzaSyC7PnlgvcUFoVuQfJTXPj6K2rQi2LZbGZk",
+  apiKey: process.env.GEOCODING_API_KEY || "AIzaSyAdou71Ign7js43A5uREoGM0ju51sPi7kk",
   httpAdapter: "https",
   formatter: null
 });
@@ -92,6 +92,7 @@ router.post('/unfollow/:userId', function(req, res, next) {
 router.get('/single/:restaurantId', function(req, res, next) {
   Restaurant.findById(req.params.restaurantId, function(err, rest) {
     if (rest) {
+      console.log(rest);
       res.render('singleRestaurant', {
         restaurant: rest
       });
@@ -125,22 +126,24 @@ router.post('/restaurants/new', function(req, res, next) {
   geocoder.geocode(req.body.address, function(err, data) {
     console.log(err);
     console.log('data', data);
+    var newR = new Restaurant({
+      name: req.body.name,
+      category: req.body.category,
+      price: req.body.price,
+      latitude: data[0].latitude,
+      longitude: data[0].longitude,
+      openTime: req.body.open,
+      closingTime: req.body.closing
+    });
+    newR.save(function(err, rest) {
+      if (err) {
+        console.log('error');
+      }
+      else {
+        res.redirect('/all/restaurants');
+      }
+    })
   });
-  var newR = new Restaurant({
-    name: req.body.name,
-    category: req.body.category,
-    price: req.body.price,
-    openTime: req.body.open,
-    closingTime: req.body.closing
-  });
-  newR.save(function(err, rest) {
-    if (err) {
-      console.log('error');
-    }
-    else {
-      res.redirect('/all/restaurants');
-    }
-  })
 });
 
 module.exports = router;
