@@ -1,1 +1,20 @@
 {{! YOUR CODE HERE }}
+
+<h1>{{restaurant.name}}</h1>
+<br><br>
+Stars: {{stars}}
+<br><br>
+Hours Today: {{restaurant.open}}-{{restaurant.close}}
+<br><br>
+<!--<img src="https://maps.googleapis.com/maps/api/staticmap?center={{LATITUDE}},{{LONGITUDE}}&markers=color:red|{{LATITUDE}},{{LONGITUDE}}&zoom=13&size=600x300&maptype=roadmap">
+-->
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=37.4224764,-122.0842499&markers=color:red|37.4224764,-122.0842499&zoom=13&size=600x300&maptype=roadmap" width="600px" height="300px">
+<br><br>
+<button>Add Review </button>
+<br><br>
+<p>Reviews</p>
+<ul>
+{{#each reviews}}
+  <li>{{content}} -- {{stars}}</li>
+{{/each}}
+<ul>
