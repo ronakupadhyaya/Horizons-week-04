@@ -1,1 +1,30 @@
-{{! YOUR CODE HERE }}
+
+<div>
+   <span> <h2>{{resta.name}}</h2>   Relative Price: {{resta.relativePrice}}</span>
+   <span> Rating:{{rating}}</span>
+  <p>Category: {{resta.category}}</p></br>
+  <p> Hours Today: {{resta.openTime}}-{{resta.closeTime}} </br>
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{resta.latitude}},{{resta.longitude}}&markers=color:red|{{resta.latitude}},{{resta.longitude}}&zoom=15&size=600x300&maptype=roadmap&key=AIzaSyDDZKFtqs7NZojrQdTshXsqGB1WeIu9J8A"><br>
+  <button class="addRev" type="button">Add Reviews</button>
+
+
+ <h3> Reviews</h3>
+ {{#each Review}}
+ <div>
+
+   <p> stars </p?
+   <p> content </p>
+</div>
+ {{/each}}
+
+
+
+
+ <h2> Leave review for{{resta.name}}</h2>
+ <form action='/restaurant/{{restid}}' method="post">
+ <input type="textarea" name="content" value="content" placeholder="Review"><br>
+ <input type="Number" name="rating" value="rating" placeholder=" Rate on a scale of 1-5" ><br>
+ <input type="submit" name="submit" value="Post Review" ><br>
+ </form>
+
+</div>

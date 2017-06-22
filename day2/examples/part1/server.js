@@ -22,8 +22,10 @@ app.get('/', function(req, res) {
   var limit = Number(req.query.limit) || 10;
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
+  var pg=pageNumber;
+  var lim=limit;
 
-  User.find(function(err,users){
+  User.find().sort({"name.first":"asc"}).skip((pg-1)*lim).limit(lim).exec(function(err,users){
     res.render('index', {
       listItems: users,
       prev: prev,
