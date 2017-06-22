@@ -2,20 +2,23 @@
 <p>{{user.displayName}}</p>
 
 <h4>Email:</h4>
-<p>{{user.username}}</p>
+<p>{{user.email}}</p>
 
 <h4>Address:</h4>
-<p>{{user.address}}</p>
+<p>{{user.location}}</p>
 
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>
 
 <h4>Following:</h4>
+{{following}}
 {{#each following}}
-  <div>{{uid2.displayName}}
-  <form  action="/unfollow/{{uid2.id}}" method="post">
+  <div>
+    {{this.displayName}}
+  <!-- <form  action="/unfollow/{{uid2.id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
+  </form> -->
+
 </div>
 {{/each}}
 
@@ -23,3 +26,10 @@
 {{#each followers}}
   <p>{{uid1.displayName}}</p>
 {{/each}}
+<!-- {{user}} -->
+{{#if isFollowing}}
+
+<a href = "/unfollow/{{user._id}}" >Unfollow</a>
+{{else}}
+<a href = "/follow/{{user._id}}">Follow</a>
+{{/if}}

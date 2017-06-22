@@ -15,6 +15,56 @@ var Review = models.Review;
 //   formatter: null
 // });
 
+router.get('/user/:userid', function(req, res){
+  var userID = req.params.userid;
+  console.log("is printing here " + userID)
+  //console.log("testing, 1, 2, 3")
+  User.findById(userID, function(err, userObj){
+    console.log(userObj)
+    if(err){
+      console.log(err)
+    }else{
+      // console.log("is printing on line 26" + userObj)
+      userObj.getFollows(function(followers, following){
+        userObj.isFollowing(function(trueOrFalse){
+          var isFollowing = null;
+          if(trueOrFalse){
+            isFollowing = true
+          }else{
+            isFollowing = false
+          }
+
+          res.render('singleProfile', {
+            user: userObj,
+            isFollowing: isFollowing,
+            allFollowing: following,
+            allFollowers: followers
+          })
+        })
+      })
+    }
+  })
+})
+
+router.get('/follow/:userid', function(res, req){
+  var userID = req.params.userid
+  User.findById(userID, function(err, userObj){
+    console.log(userObj)
+    if(err){
+      console.log(err)
+    }else{
+      userObj.follow()
+    }
+})
+router.get('/follow/:userid', function(res, req){
+  var userID = req.params.userid
+  User.findById(userID, function(err, userObj){
+    console.log(userObj)
+    if(err){
+      console.log(err)
+    }else{
+})
+
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
   if (!req.user) {
@@ -31,7 +81,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
