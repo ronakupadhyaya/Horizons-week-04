@@ -7,7 +7,7 @@ The end goal of this exercise is to be able to enable the following scenario to 
   1. or "I don't understand" otherwise
 
 ## Step 1: Setup
-- cd to the webhooks_examples directory
+- cd to the `week04/day4/examples/webhooks` directory
 - run `git init` to initialize webhooks_examples as a git repository
 - run `npm init` to initialize webhooks_examples as a npm project
 - using npm and with the `--save` flag, install `express`, `express-handlebars`, `mongoose`, `twilio`, and `body-parser`
