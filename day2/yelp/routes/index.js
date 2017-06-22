@@ -25,6 +25,7 @@ router.use(function(req, res, next) {
 });
 
 router.get('/', function(req, res) {
+<<<<<<< HEAD
 
   User.find(function(err, user) {
     if (err || !user) {
@@ -37,10 +38,14 @@ router.get('/', function(req, res) {
   })
 
 
+=======
+  res.send('Home Page')
+>>>>>>> master
 })
 
 router.get('/users/:userId', function(req, res) {
   var userId = req.params.userId;
+<<<<<<< HEAD
   console.log('userId', userId);
 
   User.findById(userId, function(err, user) {
@@ -55,10 +60,21 @@ router.get('/users/:userId', function(req, res) {
           following: allFollowing,
           followers: allFollowers
         });
+=======
+  User.findById(userId, function(err, user) {
+    if (err || !user) {
+      res.status(404).send("No User :(")
+    } else {
+      user.getFollows(function(err, results) {
+        var allFollowing = result.allFollowing;
+        var allFollowers = result.allFollowers;
+
+>>>>>>> master
         res.render('singleProfile', {
           user: user,
           following: allFollowing,
           followers: allFollowers
+<<<<<<< HEAD
         });
       })
     }
@@ -66,6 +82,15 @@ router.get('/users/:userId', function(req, res) {
 
 
 });
+=======
+        })
+      })
+
+
+    }
+  })
+})
+>>>>>>> master
 
 router.post('/restaurants/new', function(req, res, next) {
 
