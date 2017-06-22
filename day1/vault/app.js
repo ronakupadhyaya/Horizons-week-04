@@ -74,9 +74,11 @@ passport.use(new LocalStrategy(
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user, done) {
+  console.log('serializeUser');
   done(null, user._id);
 });
 passport.deserializeUser(function(id,done){
+  console.log("deserializeUser");
   var user;
   console.log(id);
   User.findById(id,function(err,user){

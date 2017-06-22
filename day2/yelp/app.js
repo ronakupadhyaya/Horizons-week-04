@@ -73,6 +73,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 ));
 
 app.use('/', auth(passport));
+console.log(routes);
 app.use('/', routes);
 
 // catch 404 and forward to error handler
