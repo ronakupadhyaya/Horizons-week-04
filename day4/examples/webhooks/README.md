@@ -10,15 +10,13 @@ When a message is received we will send an automated reply based on the followin
 - run `git init` to initialize webhooks_examples as a git repository
 - run `npm init` to initialize webhooks_examples as a npm project
 - using npm and with the `--save` flag, install `express`, `express-handlebars`, `mongoose`, `twilio`, and `body-parser`
-- add a `MONGODB_URI` to the given `env.sh`
-- source `env.sh`
+- add `MONGODB_URI` to your heroku environmental variables
 - turn this git repo into a heroku project by running `heroku create` (you should then be given some url for your project)
 - set up `MONGODB_URI` as a heroku environment variable by running `heroku config:set MONGODB_URI=YOUR_URI_HERE`
 - add the following lines to your `.gitignore` file: 
   ```
   node_modules
   DS_Store
-  env.sh
   ```
 - run `git add .` to add all files to be staged to commit
 - run `git commit -m "SOME_COMMIT_MESSAGE"` to commit your files
@@ -48,8 +46,7 @@ Whenever a text message is sent to our twilio number, we want Twilio to send a p
 - text anything to your Twilio phone number. You should see your message logged to the console
 
 ## Step 5: Send a text back
-- in your `env.sh` file, export two more variables `TWILIO_SID` and `TWILIO_AUTH_TOKEN`, which should have the values of your SID and Auth Token (which can be found at `https://www.twilio.com/console` once you've logged in to twilio)
-- source your `env.sh` file
+- in your heroku configuration, add two more variables `TWILIO_SID` and `TWILIO_AUTH_TOKEN`, which should have the values of your SID and Auth Token (which can be found at `https://www.twilio.com/console` once you've logged in to twilio)
 - add `var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN)` in `app.js` where all the node modules are required
   - *Note: You can find examples and detailed documentation about the Twilio REST API at https://www.twilio.com/docs/api/rest/sending-messages*
 - using the following code, edit your Twilio webhook handler route to send messages back to the original texter 
