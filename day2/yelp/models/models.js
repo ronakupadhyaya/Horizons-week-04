@@ -16,7 +16,7 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
   location: {
     type: String,
     required: false
@@ -24,15 +24,41 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.methods.getFollows = function (id, callback){
+  var self = this._id
+  //
+  // Follow.find().populate('followed').exec({follower: id}, function(err, user){
+  //   if (err){console.log("CAN'T GET IT: " + err)}
+  //   else if (user){
+  //     allFollowing.push(user)
+  //   }
+  // })
+  // Follow.find().populate('follower').exec({followed: id}, function(err, user){
+  //   if (err){console.log("CAN'T GET IT: " + err)}
+  //   else if (user){
+  //     allFollowers.push(user)
+  //   }
+  // })
+
+Follow.find({follower: id}).populate('followed').exec(function(err1, user1){
+  if(err1){console.log("THIS IS THE ERROR " + err1)}
+  else{
+  Follow.find({followed: id}).populate('follower').exec(function(err, user2){
+    if (err){console.log("THIS IS THE ERROR 2: " + err)}
+    else{
+      callback(null, {allFollowing: user1, allFollowers: user2})
+    }
+  })
+}
+})
 
 }
 userSchema.methods.follow = function(idToFollow){
   Follow.find({followed: idToFollow}, function(err, users){
     if(err){console.log("FOLLOW FUNCTIONALITY LOST: " + err)}
-    else if(users.following === this._id){console.log("You are already following them")}
+    else if(users.follower === this._id){console.log("You are already following them")}
     else {
       var newfoll = new Follow({
-        following: this._id,
+        follower: this._id,
         followed: idToFollow
       })
       newfoll.save(function(err){
@@ -40,16 +66,17 @@ userSchema.methods.follow = function(idToFollow){
       })
     }
   })
+  //New --> save -->
 }.bind(this)
 
-userSchema.methods.unfollow = function(idToUnfollow{
+userSchema.methods.unfollow = function(idToUnfollow){
   Follow.find({followed: idToUnfollow}, function(err, currfollowed){
     if (error){console.log("CAN'T UNFOLLOW BECAUSE: " + error)}
     else if (idToUnfollow !== currfollowed.followed){
       console.log("You must follow before you can unfollow")
-    }else{Follow.remove({following: this._id,followed: idToUnfollow}, function(err{
+    }else{Follow.remove({follower: this._id,followed: idToUnfollow}, function(err){
       if (err){console.log("THIS IS YOUR REMOVE PROBLEM: " + err)}
-    }))}
+    })}
   })
 }.bind(this)
 
@@ -81,10 +108,15 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //
 //}
 
+var User = mongoose.model('User', userSchema)
+var Restaurant = mongoose.model('Restaurant', restaurantSchema)
+var Review = mongoose.model('Review', reviewSchema)
+var Follow = mongoose.model('Follow', FollowsSchema)
+
 
 module.exports = {
-  User: mongoose.model('User', userSchema),
-  Restaurant: mongoose.model('Restaurant', restaurantSchema),
-  Review: mongoose.model('Review', reviewSchema),
-  Follow: mongoose.model('Follow', FollowsSchema)
+  User: User,
+  Restaurant: Restaurant,
+  Review: Review,
+  Follow: Follow
 };
