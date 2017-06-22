@@ -1,1 +1,19 @@
 {{! YOUR CODE HERE }}
+
+<h1>User Directory</h1>
+
+<h3> Users {{numUsers}}</h3>
+
+{{#each users}}
+  <h5 class="">
+    {{this.displayName}}
+  </h5>
+  {{this.location}}
+  {{this.email}}
+  <form action="/unfollow/{{this._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow">
+  </form>
+  <form action="/follow/{{this._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Follow">
+  </form>
+{{/each}}

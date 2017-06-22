@@ -23,7 +23,11 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
+  User.find()
+      .skip(10*(pageNumber-1))
+      .limit(10)
+      .sort({'name.first': 1})
+      .exec(function(err,users){
     res.render('index', {
       listItems: users,
       prev: prev,
