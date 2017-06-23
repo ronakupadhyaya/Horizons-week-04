@@ -24,6 +24,16 @@ router.use(function(req, res, next){
   }
 });
 
+router.get('/users/:id', function(req, res, next) {
+  var id = req.params.id;
+  
+
+
+
+
+  res.render('singleProfile', )
+})
+
 router.post('/restaurants/new', function(req, res, next) {
 
   // Geocoding - uncomment these lines when the README prompts you to!
@@ -31,7 +41,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
