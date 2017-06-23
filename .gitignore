@@ -36,3 +36,9 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
+
+
+day4/heroku-app-exercise/
+day4/heroku-error-app/
+day4/heroku-final-exercise/
+day4/heroku-testapp/
