@@ -1,0 +1,5 @@
+export MONGODB_URI=mongodb://week04day5user:horizons@ds157487.mlab.com:57487/week04day5final
+
+export TWILIO_SID=AC0030c1ae1198dde57f595d6de09ae546
+
+export TWILIO_AUTH_TOKEN=c88c5702a6b3bd609358a3991cf9253b
