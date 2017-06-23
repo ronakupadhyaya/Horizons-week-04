@@ -1,0 +1,28 @@
+
+<div style="max-width: 600px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <h3>Contacts</h3>
+
+  {{#each contacts}}
+  <div class="form-group">
+  <div class="form-inline">
+  <label class="mr-sm-2" for="inlineFormCustomSelect">{{this.name}} ({{this.number}})</label>
+  <button type="button" class="btn btn-primary">Send Text</button>
+  <button type="button" class="btn btn-primary">View Messages</button>
+  <a href="/contacts/{{this._id}}"><button type="button" class="btn btn-primary">Edit Contact</button></a>
+  </div>
+</div>
+  {{/each}}
+
+<hr>
+  <div class="form-group">
+    <a href="/contacts/new"><button class="btn btn-success">Add Contact</button></a>
+  </div>
+
+  <div class="form-group">
+    <button class="btn btn-secondary">View All Messages</button>
+  </div>
+
+  <div class="form-group">
+    <a href='/logout'>Logout</a>
+  </div>
+</div>

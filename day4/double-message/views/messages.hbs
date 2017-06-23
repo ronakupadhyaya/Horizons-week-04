@@ -1,0 +1,11 @@
+
+<div style="max-width: 600px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+  <h3>Messages</h3>
+
+  {{#each messages}}
+  <div style="background-color:lightblue; border: 0.5px solid gray">
+    <p style="color:grey">Sent to {{this.user.username}} at {{this.created}}</p>
+    <p>{{this.content}}</p>
+
+  </div>
+  {{/each}}
