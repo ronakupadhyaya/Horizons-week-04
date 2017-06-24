@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Edit Contact</title>
+  </head>
+  <body>
+
+    <form class="" method="post">
+      <div style="margin:70px">
+        <div>
+          <label>Name</label>
+          <input type="text" name="name" value="{{contact.name}}">
+        </div>
+        <br>
+        <div>
+          <label>Phone Number</label>
+          <input type="text" name="phone" value="{{contact.phone}}">
+        </div>
+        <br>
+        <button class="btn btn-success">Update Contact</button>
+      </div>
+    </form>
+    <form class="" action="/logout" method="get" style="margin: 70px">
+      <button class="btn btn-success">Log Out</button>
+    </form>
+  </body>
+</html>

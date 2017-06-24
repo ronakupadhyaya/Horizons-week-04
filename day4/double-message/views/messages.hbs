@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>messages</title>
+  </head>
+  <body>
+    <div style="margin-left: 30px">
+      <h3>Your Conversation Stream</h3>
+      {{#each messages}}
+      <h6>Sent to {{contactName}} {{contact.phone}} via {{channel}}: {{created}}</h6>
+      <ul>
+        {{content}}
+      </ul>
+      {{/each}}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Contact</title>
+  </head>
+  <body>
+    <div style="margin-top: 30px">
+      {{#each contacts}}
+      <ul>
+        {{this.name}} ({{this.phone}})
+      </ul>
+      <ul>
+        <form class="" action="/messages/send/{{_id}}" method="get">
+          <input type="submit" name="send" value="Send Texts" style="margin-left: 9px">
+        </form>
+        <form class="" action="/messages/{{_id}}" method="get">
+          <input type="submit" name="view" value="View Messages" style="margin-left: 9px">
+        </form>
+
+        <form action="/contacts/{{_id}}" method="get">
+          <input type="submit" name="edit" value="Edit Contact" style="margin-left: 9px">
+        </form>
+      </ul>
+      {{/each}}
+    </div>
+
+    <form class="" action="/contacts/new" method="get" style="margin: 30px">
+      <button class="btn btn-success">Add Contact</button>
+    </form>
+    <form action="/messages" method="get"  style="margin: 30px">
+      <button class="btn btn-success">View All Messages</button>
+    </form>
+    <form class="" action="/logout" method="get" style="margin: 30px">
+      <button class="btn btn-success">Log Out</button>
+    </form>
+
+
+  </body>
+</html>

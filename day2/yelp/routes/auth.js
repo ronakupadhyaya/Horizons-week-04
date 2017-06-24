@@ -23,6 +23,7 @@ module.exports = function(passport) {
         error: "Passwords don't match."
       });
     }
+
     var u = new models.User({
       email: req.body.username,
       password: req.body.password,

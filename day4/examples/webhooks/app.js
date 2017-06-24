@@ -3,6 +3,8 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars');
+var Note = require('./models').Note
+var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN)
 
 //setup mongoose connection
 mongoose.connection.on('error', function() {
@@ -21,6 +23,24 @@ app.engine('handlebars', exphbs({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 //ROUTES GO HERE
+app.get('/', function(req, res) {
+  Note.find(function(err, note) {
+    res.render('viewmessages', {
+      notes: notes
+    })
+  })
+})
+
+app.post('/handletext', function(req, res) {
+  // console.log(req.body);
+  // // res.status(200).send('post succesfully');
+  // res.end()
+  client.messages.create({
+    to: req.body.From,
+    from: req.body.To,
+    body: "wassup? join~us~",
+  })
+})
 
 //add a route that will respond to post requests sent by Twilio via
 //webhooks
