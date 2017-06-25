@@ -1,0 +1,3 @@
+MONGODB_URI="mongodb://tcw:abc@ds133922.mlab.com:33922/twilio-test"
+TWILIO_SID=ACf2eb1c1bdbca70600d612ffe687d3bb2
+TWILIO_AUTH_TOKEN=1933caf56c86b43ebcf26a938f24836d
