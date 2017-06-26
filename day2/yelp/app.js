@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Passport stuff here
-
 app.use(session({
     secret: process.env.SECRET,
     name: 'Catscoookie',
