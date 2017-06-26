@@ -3,6 +3,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars');
+var client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_AUTH_TOKEN);
 
 //setup mongoose connection
 mongoose.connection.on('error', function() {
@@ -24,8 +25,28 @@ app.set('view engine', 'handlebars');
 
 //add a route that will respond to post requests sent by Twilio via
 //webhooks
+app.post('/handletext', function(req, res) {
+  var message = req.body
+  if(message.Body === 'Nihar') {
+    client.messages.create({ 
+      to: req.body.From, 
+      from: req.body.To, 
+      body: "over the horizons"
+    }, function(err) {
+      res.status(200);
+    })
+  } else {
+    client.messages.create({ 
+      to: req.body.From, 
+      from: req.body.To, 
+      body: "don't understand"
+    }, function(err) {
+      res.status(200);
+    })
+  }
+})
 
 //start up our server
 var port = process.env.PORT || 3000
-
+console.log("string port", port)
 app.listen(port)
