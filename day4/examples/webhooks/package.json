@@ -1,0 +1,20 @@
+{
+  "name": "webhooks",
+  "version": "1.0.0",
+  "description": "The goal of this exercise is to use Twilio webhooks to receive text messages.\r When a message is received we will send an automated reply based on the following rules:\r   1. \"Over the horizons\" if the text message you sent was \"Nihar\" \r   1. or \"I don't understand\" otherwise",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.10.8",
+    "twilio": "^3.4.0"
+  }
+}

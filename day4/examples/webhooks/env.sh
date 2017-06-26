@@ -1,0 +1,3 @@
+export MONGODB_URI=mongodb://jeremyhorizons:PassWord12#@ds135382.mlab.com:35382/twiliowebhooksjeremy
+export TWILIO_SID=AC1b4be69ce2eeb90716138d545a8abac8
+export TWILIO_AUTH_TOKEN=f6cb4c696c41c2ae573f02dd50cec6bf
