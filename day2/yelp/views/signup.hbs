@@ -5,7 +5,7 @@
   {{error}}
 </div>
 {{/if}}
-<form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
+<!-- <form method="POST" style="max-width: 300px; margin: auto; margin-top: 50px; border: 0.5px solid gray; padding: 30px 30px 30px 30px">
   <h3>Register</h3>
   <div class="form-group">
     <label>Display Name</label>
@@ -26,4 +26,57 @@
   <div class="form-group">
     <button class="btn btn-success">Register</button>
   </div>
-</form>
+</form> -->
+
+<div class="container">
+    <div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">Register</div>
+                <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="/login/">Already Registered? Log in here!</a></div>
+            </div>
+            <div class="panel-body" >
+                <form method="POST">
+                    <form  class="form-horizontal" method="POST">
+                        <div id="div_id_dname" class="form-group required">
+                            <label for="id_dname" class="control-label col-md-4  requiredField"> Display Name<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" id="id_dname" name="displayName" placeholder="Your Full Name" style="margin-bottom: 10px" type="text" />
+                            </div>
+                        </div>
+                        <div id="div_id_email" class="form-group required">
+                            <label for="id_email" class="control-label col-md-4  requiredField"> Email<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                 <input class="input-md textinput textInput form-control" id="id_email" name="username" placeholder="Email" style="margin-bottom: 10px" type="text" />
+                            </div>
+                        </div>
+                        <div id="div_id_userLoc" class="form-group required">
+                            <label for="id_userLoc" class="control-label col-md-4  requiredField"> Location<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" id="id_userLoc" name="userLoc" placeholder="Your Address" style="margin-bottom: 10px" type="text" />
+                            </div>
+                        </div>
+                        <div id="div_id_password" class="form-group required">
+                             <label for="id_password" class="control-label col-md-4  requiredField"> Password<span class="asteriskField">*</span> </label>
+                             <div class="controls col-md-8 ">
+                                 <input class="input-md textinput textInput form-control" id="id_password" name="password" placeholder="Password" style="margin-bottom: 10px" type="password" />
+                            </div>
+                        </div>
+                        <div id="div_id_rPass" class="form-group required">
+                            <label for="id_rPass" class="control-label col-md-4  requiredField"> Verify Password<span class="asteriskField">*</span> </label>
+                            <div class="controls col-md-8 ">
+                                <input class="input-md textinput textInput form-control" id="id_rPass" name="passwordRepeat" placeholder="Repeat Password" style="margin-bottom: 10px" type="password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="aab controls col-md-4 "></div>
+                            <div class="controls col-md-8 ">
+                                <input type="submit" name="Signup" value="Sign Up" class="btn btn-primary btn btn-info btn-lg btn-block" id="submit-id-signup" />
+                            </div>
+                        </div>
+                    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

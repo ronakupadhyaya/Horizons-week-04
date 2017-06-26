@@ -14,6 +14,7 @@ var Follow = mongoose.model('Follow')
 module.exports = function(passport) {
 
   // GET registration page
+
   router.get('/signup', function(req, res) {
     res.render('signup');
   });
