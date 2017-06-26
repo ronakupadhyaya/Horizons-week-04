@@ -1,5 +1,9 @@
 Exercises to finish: 
 
 1. Second half of day2
+
 2. https://github.com/horizons-school-of-technology/steal-this-app/blob/master/exercise2.md
 	part 3 
+
+3. https://github.com/horizons-school-of-technology/double-message/blob/master/readme-part1.md
+	Testing of part 2 

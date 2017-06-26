@@ -7,12 +7,13 @@ var models = require('../models/models');
 
 module.exports = function(passport) {
 
-  // GET registration page
+
+  // GET signup page
   router.get('/signup', function(req, res) {
     res.render('signup');
   });
 
-  // POST registration page
+  // POST signup page
   var validateReq = function(userData) {
     return (userData.password === userData.passwordRepeat);
   };
