@@ -1,0 +1,3 @@
+export MONGODB_URI=mongodb://maxiliarias:moralia6@ds135252.mlab.com:35252/herokuexercise
+export TWILIO_SID=ACb15eb482b2232e76865e10c82bb947ae
+export TWILIO_AUTH_TOKEN=040785ad50c1e8e36d6ce916a8444bf0

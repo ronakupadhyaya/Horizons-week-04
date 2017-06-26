@@ -35,14 +35,13 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 passport.serializeUser(function(user, done) {
+  console.log("serial")
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
+  console.log("deserial")
   models.User.findById(id, function(err, user) {
     done(err, user);
   });
@@ -51,6 +50,7 @@ passport.deserializeUser(function(id, done) {
 // passport strategy
 passport.use(new LocalStrategy(function(username, password, done) {
     // Find the user with the given username
+    console.log("strat")
     models.User.findOne({ email: username }, function (err, user) {
       // if there's an error, finish trying to authenticate (auth failed)
       if (err) {
@@ -71,6 +71,9 @@ passport.use(new LocalStrategy(function(username, password, done) {
     });
   }
 ));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', auth(passport));
 app.use('/', routes);

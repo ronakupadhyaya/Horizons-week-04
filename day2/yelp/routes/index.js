@@ -16,13 +16,13 @@ var geocoder = NodeGeocoder({
 });
 
 // THE WALL - anything routes below this are protected!
-router.use(function(req, res, next){
-  if (!req.user) {
-    res.redirect('/login');
-  } else {
-    return next();
-  }
-});
+// router.use(function(req, res, next){
+//   if (!req.user) {
+//     res.redirect('/login');
+//   } else {
+//     return next();
+//   }
+// });
 
 router.get('/',function(req,res){
   res.render('HomePage')
@@ -114,6 +114,7 @@ router.post('/restaurants/new', function(req, res, next) {
 
 router.get('/restaurants',function(req,res){
   Restaurant.find(function(err,restaurant){
+    console.log(restaurant,'heree')
     res.render('restaurants',{
       restaurant: restaurant
     })

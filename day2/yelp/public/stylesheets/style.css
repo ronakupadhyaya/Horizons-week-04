@@ -26,11 +26,12 @@ a {
   margin-top: 50px;
 }
 
-.col-xs-12 {
+.col-xs {
   display:flex;
   flex:1;
   justify-content: center;
   align-items: center;
+  background-color: blue;
 }
 
 #home{
