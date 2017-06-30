@@ -13,9 +13,10 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true
   }
+  /* Add other fields here */
 });
 
-userSchema.methods.getFollows = function (id, callback){
+userSchema.methods.getFollows = function (callback){
 
 }
 userSchema.methods.follow = function (idToFollow, callback){
@@ -47,10 +48,14 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //
 //}
 
+var User = mongoose.model('User', userSchema);
+var Restaurant = mongoose.model('Restaurant', restaurantSchema);
+var Review = mongoose.model('Review', reviewSchema);
+var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
-  User: mongoose.model('User', userSchema),
-  Restaurant: mongoose.model('Restaurant', restaurantSchema),
-  Review: mongoose.model('Review', reviewSchema),
-  Follow: mongoose.model('Follow', FollowsSchema)
+  User: User,
+  Restaurant: Restaurant,
+  Review: Review,
+  Follow: Follow
 };

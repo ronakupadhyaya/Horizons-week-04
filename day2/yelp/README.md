@@ -102,11 +102,9 @@ Begin by defining a `Schema` - you'll need to do this in order to create `virtua
 This:
 
 ```javascript
-module.exports = {
-  User: mongoose.model("User", {
-    property1: String
-  })
-}
+var User = mongoose.model("User", {
+  property1: String
+});
 ```
 is equivalent to this:
 
@@ -115,32 +113,34 @@ var userSchema = new mongoose.Schema({
    property1: String
 })
 
-module.exports = {
-   User: mongoose.model("User", userSchema);
-}
+var User = mongoose.model("User", userSchema);
 ```
 
 
 
-**We want to use the latter**, because Schemas allow us to define useful functions on top of them, using virtuals and methods (more about these below). You will be able to define your properties inside of your Schema just like you normally do. When you create your model, just pass in a Schema as the second parameter, like `mongoose.model("User", userSchema)` as demonstrated above.
+**We want to use the latter**, because Schemas allow us to define useful additional properties on top of them, using virtuals, methods, and statics (more about these below). You will be able to define your properties inside of your Schema just like you normally do. When you create your model, just pass in a Schema as the second parameter, like `mongoose.model("User", userSchema)` as demonstrated above.
 
-Here are some properties you definitely want to include in your **Users Schema**; your choice for their actual property names - just be consistent!
+Here are some properties you definitely want to include in your **Users Schema**.
 
-- **Display Name** (`String`) - could be a first name, last name, nickname, etc.
-- **Email** (`String`) - email used for authentication
-- **Password** (`String`) - hashed password used for authentication
-- **Location** (`String`) - descriptive location for a User (a bio, of sorts)
+- **displayName** (`String`) - could be a first name, last name, nickname, etc.
+- **email** (`String`) - email used for authentication
+- **password** (`String`) - hashed password used for authentication
+- **location** (`String`) - descriptive location for a User (a bio, of sorts)
+
+Make sure that all these fields are defined on the `userSchema` before moving on.
 
 ### Follows! 👫 - `models/models.js (FollowSchema)`
 
-Follows are awesome, but they are also a little complicated. We _could_ choose to add to two arrays of usernames representing followers/users following to _each_ User, but that would mean we would have to update two users every time someone was followed. Instead, we'll keep track of each User's relationship with another model - the `Follow`.
+Follows are awesome, but they are also a little complicated. We _could_ choose to add to two arrays of emails representing followers/users following to _each_ User, but that would mean we would have to update two users every time someone was followed. Instead, we'll keep track of each User's relationship with another model - the `Follow`.
 
 Here are the properties you'll want to define for each of your Follows:
 
-- **User ID 1 (from)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) (for this part, order does matter) - the ID of the user that follows the other.
-- **User ID 2 (to)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) - The ID of the user being followed
+- **from (User ID 1)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) (for this part, order does matter) - the ID of the user that follows the other.
+- **to (User ID 2)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) - The ID of the user being followed
 
-Note that this is the Twitter way of following. One can follow the other without being followed.
+(Note that this is the Twitter way of following. One can follow the other without being followed.)
+
+When you add the above lines to your Schema, you are telling mongoose that that field will contain an `_id` corresponding to a document in the `User` collection (called `users` on mLab). The string value of `ref` will indicate the mongoose model that was made using the same string, in this case the result of `mongoose.model('User', userSchema)`
 
 > ⚠️  **Warning:** Careful about creating duplicate follows! You should be only creating a new Follows document if it doesn't already exist - make sure you handle this in your routes below.
 
@@ -163,11 +163,18 @@ We want to write the following methods on our `User` Schema:
 > **Tip:** When creating your methods for `User`, use _callback functions_ to return data. For example, `getFollows` should be _used_ in a future route like:
 
 ```javascript
-req.user.getFollows(function(followers, following) {
+// myUser is an instance of a user. Could be obtained with User.find, for example
+myUser.getFollows(function(followers, following) {
   /* do something with the result of the callback function */  
 });
 ```
 > To accomplish this, your implementation should take a parameter that represents a callback function that will later be called with the resulting data. See more about this below.
+
+
+**Tip**: You can refer to the current model that is calling a method using the `this` keyword - a lot like an object and its function prototypes! As always when using `this`, be mindful of binding issues.
+
+
+**Tip**: It is suggested that when writing your own Schema methods that take callbacks you adhere to the same pattern that mongoose's predefined methods/statics (like `save`/`find`) do: that the callback functions take two arguments, the first being an `error` if there was one and the second being the `response` or `result` of the operation. If you need to send back more than one thing as the `result`, you can just wrap them in an object and call the callback with the singular object as its `result`.
 
 
 - `follow` - should set a following relationship as on Twitter, Instagram, or any site that supports followers.
@@ -180,7 +187,7 @@ req.user.getFollows(function(followers, following) {
 
 - `unfollow` - deletes the relationship represented by a `Follow` document where User 1 (the caller of the `unfollow` function) follows User 2 (given by a parameter `idToUnfollow`).
 
-- `getFollows` - This method will go through and find all `Follow` documents that correspond to both user relationships where the user's ID (accessible by the caller of the function, `this._id`) is the `from` and where the user is the `to` of a `Follow` relationship. In other words, you want **both the Users the user follows and the Users the user is being followed by** returned by this function. This should call the callback method with the followers and users you are following with something like `allFollowers` and `allFollowing`.
+- `getFollows` - This method will go through and find all `Follow` documents that correspond to both user relationships where the user's ID (accessible by the caller of the function, `this._id`) is the `from` and where the user is the `to` of a `Follow` relationship. In other words, you want **both the Users the user follows and the Users the user is being followed by** 'returned' by this function. This should call the callback method with the followers and users you are following with something like `allFollowers` and `allFollowing`.
 
   When first retrieving the correct `Follow` documents relevant to a user, your `allFollowers` and `allFollowing` arrays will look something like:
 
@@ -237,11 +244,6 @@ req.user.getFollows(function(followers, following) {
 - `isFollowing` - this method will take in another User ID and call true or false on the callback based on whether or not the user calling `isFollowing` (`this`) is following the user represented by the ID passed in. Query for a `Follow` document where `follower` is `this._id` and `following` is the ID passed in, and call a callback function with `true` if the resulting query turns up an existing `Follow` document.
 
 
-**Tip**: you can refer to the current model that is calling a method using the `this` keyword - a lot like an object and its function prototypes! Keep in mind that to call `.populate`, you will have to run:
-
-`this.model("User OR YOUR MODEL NAME").populate(this, {opts...}, function(err, user) {...})`
-
-
 ### Viewing Profiles 👸 - `views/singleProfile.hbs`
 Time to put the views together! You'll be first creating the Handlebars template for displaying a user's single profile page. The information you'll need to display here is largely what you've already defined in the models.
 
@@ -256,15 +258,15 @@ When creating your Single Profile template, imagine that you are passing in the 
    user: {    
      _id: PERSON_BEING_VIEWED,    
      displayName: "Ethan Lee",    
-    email: "ethan@joinhorizons.com",    
-    location: "Probably making a PB&J"    
+     email: "ethan@joinhorizons.com",    
+     location: "Probably making a PB&J"    
    },    
    reviews: [{    
      _id: "575xxxxxxxxxxxx",    
      restauraunt: "575xxxxxxxxxxxx",    
      content: "This food was okay"    
   }],    
-   allFollowers: [{  
+   followers: [{  
      from: {  
        _id: USER_FOLLOWING_PERSON,    
        displayName: "Abhi Fitness",    
@@ -273,7 +275,7 @@ When creating your Single Profile template, imagine that you are passing in the 
      },
      to: PERSON_BEING_VIEWED
    }],
-   allFollowing: [{
+   following: [{
     from: PERSON_BEING_VIEWED,
     to: {
       _id: PERSON_FOLLOWING_USER,
@@ -286,16 +288,17 @@ When creating your Single Profile template, imagine that you are passing in the 
  }    
  ```
 Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!
-You'll want to display all the information you have so far, including:
+
+Most of `singleProfile.hbs` is already written for you. Open it up and see to it that it includes:
 
  * **Display Name** `{{user.displayName}}` _in the context object above_: show the name of a user currently being viewed
  * **Location** `{{user.location}}`: the descriptive location of a user
- * **Followers** `{{#each allFollowers}}...{{/each}}` display some details about the user's followers, including:
-   * **Display Name** -  `{{follower.displayName}}`
-   * **Location** - `{{follower.location}}`
- * **Following** `{{#each allFollowing}}...{{/each}}` display some details about the users that the user is following, including:
-   * **Display Name** -  `{{following.displayName}}`
-   * **Location** - `{{following.location}}`
+ * **Followers** `{{#each followers}}...{{/each}}` display some details about the user's followers, including:
+   * **Display Name** -  `{{this.from.displayName}}`
+   * **Location** - `{{this.from.location}}`
+ * **Following** `{{#each followings}}...{{/each}}` display some details about the users that the user is following, including:
+   * **Display Name** -  `{{this.to.displayName}}`
+   * **Location** - `{{this.to.location}}`
  * **Follow or Unfollow Button**: Display a follow or unfollow button for the top-level user _only_ with a link to the appropriate route (to be made soon!) based on whether or not `isFollowing` is true.
 
 ### Viewing ALL the Profiles 🏃 - `views/profiles.hbs`
@@ -317,11 +320,14 @@ As aforementioned, we are going to leave many of these design decisions up to yo
   * Both `allFollowers` and `allFollowing` mentioned in the example context object above can be retrieved from using your `getFollows` method - remember that the results are passed into a callback! Example:
 
   ```javascript
-  req.user.getFollows(function(followers, followings) {
+  req.user.getFollows(function(err, response) {
+    var allFollowers = response.allFollowers;
+    var allFollowings = response.allFollowings;
+
     res.render({
       ...,
-      allFollowers: followers,
-      allFollowings: followings
+      followers: allFollowers,
+      followings: allFollowings
     })
   })
   ```
