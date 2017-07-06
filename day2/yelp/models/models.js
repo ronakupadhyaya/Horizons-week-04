@@ -5,6 +5,10 @@ var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({
+  displayName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true
@@ -12,23 +16,33 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  location: {
+    type: String,
+    required: true
   }
-  /* Add other fields here */
 });
 
-userSchema.methods.getFollows = function (callback){
+userSchema.methods.getFollows = function(callback) {
 
 }
-userSchema.methods.follow = function (idToFollow, callback){
+userSchema.methods.follow = function(idToFollow, callback) {
 
 }
 
-userSchema.methods.unfollow = function (idToUnfollow, callback){
+userSchema.methods.unfollow = function(idToUnfollow, callback) {
 
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  userId1: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  userId2: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
 });
 
 var reviewSchema = mongoose.Schema({
@@ -40,7 +54,7 @@ var restaurantSchema = mongoose.Schema({
 
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+restaurantSchema.methods.getReviews = function(restaurantId, callback) {
 
 }
 

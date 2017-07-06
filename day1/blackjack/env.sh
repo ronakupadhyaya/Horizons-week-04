@@ -1,0 +1,1 @@
+export MONGODB_URI='mongodb://Jack:Jack@ds151062.mlab.com:51062/blackjack'
