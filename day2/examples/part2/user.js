@@ -16,6 +16,28 @@ var userSchema = new Schema({
   }
 });
 
+userSchema.methods.toggleGender = function() {
+  if (this.gender === 'female') {
+    this.gender = 'male';
+  } else {
+    this.gender = 'female';
+  }
+}
+
+userSchema.statics.findByName = function(name, cb) {
+  this.find({'name.first': name}, function(err, users) {
+    cb(err, users);
+  });
+}
+
+var ageVirtual = userSchema.virtual('age');
+
+ageVirtual.get(function() {
+  var age = (new Date()).getFullYear() - (new Date(this.birthday)).getFullYear();
+  return Math.floor(age);
+});
+
 var User = mongoose.model('User', userSchema);
+
 
 module.exports = User;

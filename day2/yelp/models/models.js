@@ -12,23 +12,96 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  }
+  },
   /* Add other fields here */
+  displayName: {
+    type: String,
+    required: true
+  },
+  location: String
 });
 
 userSchema.methods.getFollows = function (callback){
-
+  var allFollowers = [];
+  var allFollowing = [];
+  Follow.find({to: this._id}) //retrieve all Follow documents where user is being followed (from someone, to user)
+    .populate('from')
+    .exec(function(err, follows) {
+      allFollowers = follows;
+    });
+  Follow.find({from: this._id})
+    .populate('to')
+    .exec(function(err, follows) {
+      allFollowing = follows;
+    });
+  callback(allFollowers, allFollowing);
 }
-userSchema.methods.follow = function (idToFollow, callback){
 
+userSchema.methods.follow = function (idToFollow, callback){
+  var followerId = this._id;
+  Follow.find({
+    from: followerId,
+    to: idToFollow
+  }, function(err, follow) {
+    if (err) {
+      callback(err, false);
+    } else if (follow === null) {
+      callback(null, false);
+    } else {
+      new Follow({
+        from: followerId,
+        to: idToFollow
+      }).save(function(err, newFollow) {
+        if (err) {
+          callback(err, false);
+        } else if (follow === null) {
+          callback(null, false);
+        } else {
+          callback(null, newFollow);
+        }
+      });
+    }
+  });
+}
+
+userSchema.methods.isFollowing = function(followedId, callback) {
+  var followerId = this._id;
+  Follow.find({
+    from: followerId,
+    to: followedId
+  }, function(err, follow) {
+    if (!err && follow !== null) {
+      callback(true);
+    }
+  })
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
-
+  var followerId = this._id;
+  Follow.find({
+    from: followerId,
+    to: idToUnfollow
+  }, function(err, follow) {
+    if (err) {
+      callback(err, false);
+    } else if (follow == null) {
+      callback(null, false);
+    } else {
+      follow.remove();
+      callback(null, follow);
+    }
+  });
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  from: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  to: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  }
 });
 
 var reviewSchema = mongoose.Schema({
