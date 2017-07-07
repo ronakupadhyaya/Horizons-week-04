@@ -2,7 +2,7 @@
 
 Meet *Hexpess*, your very own, *very minimal* version of Express.
 
-We have using Express to build many apps, now it's time to pull aside the curtain
+We have been using Express to build many apps, now it's time to pull aside the curtain
 and understand what Express is doing behind the scenes. :star2:
 
 ## Outline
