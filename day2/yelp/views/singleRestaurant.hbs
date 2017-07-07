@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+<h1>{{restaurant.name}} (price: {{restaurant.price}})</h1>
+<h4>Average Rating: {{restaurant.averageRating}} stars</h4>
+<h5>address: {{restaurant.address}}</h5>
+<form action="/restaurants/review/{{restaurant._id}}" method="get">
+  <input type="submit" value="Review this restaurant"/>
+</form>
+<h3>Reviews</h3>
+{{#each reviews}}
+  Written by {{this.user.displayName}}:
+  {{this.stars}} stars
+  <p>{{this.content}}</p>
+{{/each}}
+<form action="/restaurants" method="get">
+  <input type="submit" value="See all restaurants"/>
+</form>

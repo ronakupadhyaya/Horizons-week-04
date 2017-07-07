@@ -23,6 +23,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connection.on('connected', function() {
+  console.log("Connected to MongoDB")
+})
+
+mongoose.connect(process.env.MONGODB_URI)
+
 
 // Passport stuff here
 

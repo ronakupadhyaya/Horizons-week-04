@@ -11,7 +11,7 @@
 <p>{{user.reviews}}</p>
 
 <h4>Following:</h4>
-{{#each followings}}
+{{#each following}}
   <div>{{this.to.displayName}}
   <form  action="/unfollow/{{this.to._id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
@@ -23,3 +23,7 @@
 {{#each followers}}
   <p>{{this.from.displayName}}</p>
 {{/each}}
+
+<form action="/profiles">
+  <input type="submit" value="See all users">
+</form>

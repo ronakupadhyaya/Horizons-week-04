@@ -1,0 +1,8 @@
+app.use(express.static('assets'))
+==> put all static things in the "assets" folder (html, css, img)
+==> index.html is the default html page
+==> download jquery/bootstrap and put it in assets
+
+put "next()" in a request handler to look for another request that matches
+
+req.session is like the token storage

@@ -1,1 +1,31 @@
-{{! YOUR CODE HERE }}
+<h1>Create a new Restaurant</h1>
+
+<form method="post" action="/restaurants/new">
+  <label>Restaurant name</label>
+  <input type="text" name="name" required/><br>
+  <label for="sel1">Type of food:</label>
+  <select name="category" class="form-control" id="category" required>
+    <option>Mexican</option>
+    <option>Chinese</option>
+    <option>Barbeque</option>
+    <option>Cheesesteak</option>
+    <option>Japanese</option>
+    <option>Italian</option>
+    <option>Pizza</option>
+    <option>Ice Cream</option>
+    <option>Breakfast and Brunch</option>
+  </select>
+  <label for="sel1">Relative price:</label>
+  <select name="price" class="form-control" id="category" required>
+    <option>$</option>
+    <option>$$</option>
+    <option>$$$</option>
+  </select>
+  <label>Adress</label>
+  <input type="text" name="address" required/><br>
+  <label>Open time</label>
+  <input type="time" name="openTime" required/>
+  <label>Close time</label>
+  <input type="time" name="closeTime" required/><br>
+  <input type="submit" value="Create"/>
+</form>

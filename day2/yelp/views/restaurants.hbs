@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+{{#each restaurants}}
+  <div class="restaurant">
+    <h5>{{this.name}}</h5>
+    <p>{{this.address}}</p>
+    <form action="/restaurants/{{this._id}}" method="get">
+      <input type="submit" value="View restaurant"/>
+    </form>
+  </div>
+{{/each}}
+<br>
+<form action="/restaurants/new" method="get">
+  <input type="submit" value="New restaurant"/>
+</form>

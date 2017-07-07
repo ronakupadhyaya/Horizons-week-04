@@ -1,1 +1,13 @@
 {{! YOUR CODE HERE }}
+
+<h1>Users ({{users.length}})</h1>
+{{#each users}}
+
+  <div>
+    <h4>{{this.displayName}}</h4>
+    <p>{{this.location}}</p>
+    <form action="/follow/{{this._id}}" method="post">
+      <input style="display: inline;" type="submit" value="follow">
+    </form>
+  </div>
+{{/each}}

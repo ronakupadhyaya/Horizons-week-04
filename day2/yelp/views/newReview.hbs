@@ -1,1 +1,14 @@
-{{! YOUR CODE HERE }}
+<h2>Write a review for {{restaurant.name}}...</h2>
+<form method="post" action="/restaurants/review/{{restaurant._id}}">
+  <label>How many stars?</label>
+  <select name="stars" class="form-control" required>
+    <option>5</option>
+    <option>4</option>
+    <option>3</option>
+    <option>2</option>
+    <option>1</option>
+  </select>
+  <label>Write your review...</label>
+  <input type="text" name="content" required/><br>
+  <input type="submit" value="Create"/>
+</form>

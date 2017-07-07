@@ -28,27 +28,33 @@ module.exports = function(passport) {
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      displayName: req.body.displayName,
+      location: ""
     });
 
     u.save(function(err, user) {
+      console.log('attempting to save user')
       if (err) {
         console.log(err);
-        res.status(500).redirect('/register');
+        res.status(500).redirect('/signup');
         return;
       }
       console.log(user);
+      console.log('redirecting to /login')
       res.redirect('/login');
     });
   });
 
   // GET Login page
   router.get('/login', function(req, res) {
+    console.log('redirected to /login')
     res.render('login');
   });
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
+    console.log('login succesful')
     res.redirect('/');
   });
 
