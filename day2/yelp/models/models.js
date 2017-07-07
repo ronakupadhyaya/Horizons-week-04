@@ -24,25 +24,97 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.methods.getFollows = function(callback) {
+  var following;
+  var followers;
 
+  var thisUsersId = this._id;
+
+  Follow.find({
+      from: thisUsersId
+    })
+    .populate('to')
+    .exec(function(err, followings) {
+      Follow.find({
+          to: thisUsersId
+        })
+        .populate('from')
+        .exec(function(err, followers) {
+
+          var followingUsers = followings.map(function(user) {
+            return user.to;
+          })
+
+          var followerUsers = followers.map(function(user) {
+            return user.from;
+          })
+
+          callback(followingUsers, followerUsers);
+        })
+    })
 }
-userSchema.methods.follow = function(idToFollow, callback) {
 
+userSchema.methods.follow = function(idToFollow, callback) {
+  var self = this;
+
+  Follow.find({
+    to: idToFollow,
+    from: self._id
+  }, function(err, arr) {
+    if (arr.length == 0) {
+      var follow = new Follow({
+        to: idToFollow,
+        from: self._id
+      });
+      follow.save(function(err) {
+        callback(err);
+      });
+    } else {
+      callback('Error: Already following')
+    }
+  })
 }
 
 userSchema.methods.unfollow = function(idToUnfollow, callback) {
+  var self = this;
 
+  Follow.find({
+    to: idToUnfollow,
+    from: self._id
+  }, function(err, arr) {
+    if (arr.length == 0) {
+      callback('Error: Must be following to unfollow');
+    } else {
+      arr[0].remove(function(err) {
+        callback(err);
+      });
+    }
+  })
+}
+
+userSchema.methods.isFollowing = function(idToCheck, callback) {
+  var id = this._id;
+
+  Follow.find({
+    to: idToCheck,
+    from: id
+  }, function(err, arr) {
+    if (arr.length === 0) {
+      callback(false)
+    } else {
+      callback(true)
+    }
+  })
 }
 
 var FollowsSchema = mongoose.Schema({
-  userId1: {
+  to: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
   },
-  userId2: {
+  from: {
     type: mongoose.Schema.ObjectId,
     ref: 'User'
-  },
+  }
 });
 
 var reviewSchema = mongoose.Schema({

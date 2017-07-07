@@ -10,16 +10,25 @@
 <h4>Reviews:</h4>
 <p>{{user.reviews}}</p>
 
-<h4>Following:</h4>
+<h4>Following: ({{followings.length}})</h4>
 {{#each followings}}
-  <div>{{this.to.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
-</div>
+  <div>
+    <ul style='list-style: none;'>
+      <li>Name: {{this.displayName}}</li>
+      <li>Location: {{this.location}}</li>
+      {{#unless ../isFollowing}}
+        <form action="/unfollow/{{this._id}}" method="post">
+          <input style="display: inline;" type="submit" value="Unfollow">
+        </form>
+      {{/unless}}
+    </ul>
+  </div>
 {{/each}}
 
-<h4>Followers:</h4>
+<h4>Followers: ({{followers.length}})</h4>
 {{#each followers}}
-  <p>{{this.from.displayName}}</p>
+  <ul style='list-style: none;'>
+    <li>Name: {{this.displayName}}</li>
+    <li>Location: {{this.location}}</li>
+  </ul>
 {{/each}}
