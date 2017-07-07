@@ -15,6 +15,62 @@ var Review = models.Review;
 //   formatter: null
 // });
 
+router.get('/test', function(req, res, next) {
+  // Save a new User.
+  // var user = new User({
+  //   email: 'something@gmail.com',
+  //   password: 'something'
+  // });
+  // user.save(function(err) {
+  //   if (err) {
+  //     res.send('Error occurred while saving user.'+err);
+  //   } else {
+  //     res.send('User saved.')
+  //   }
+  // });
+
+  // Find a user.
+  User.findOne({email: 'dummy@gmail.com'}, function(err, user) {
+    // Follow/unfollow another user.
+    // user.follow("595ebfe086a89b4d6c753c11", function(err) {
+    //   if (err) {
+    //     res.send(err);
+    //   } else {
+    //     res.send('User followed.');
+    //   }
+    // });
+    // Get Follows of a user..
+    // user.getFollows(function(followers, following) {
+    //   res.send(followers);
+    // });
+    // Check if user is following another user
+    // user.isFollowing("595ebfe086a89b4d6c753c11", function(response) {
+    //   res.send(response);
+    // });
+  });
+
+});
+
+// router.get('/users/:userid', function(req, res) {
+//   var userId = req.params.userid;
+//   User.findOne({_id: userId}, function(err, user) {
+//     if (err) {
+//       res.send('Error occurred while trying to fetch user.')
+//     } else if (user === null) {
+//       res.send('User does not exist.')
+//     } else {
+//       user.getFollows(function(followers, following) {
+//         res.render('singleProfile', {
+//           user: user,
+//           followers: followers,
+//           followings: following,
+//         });
+//       });
+//     }
+//   });
+// });
+
+
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
   if (!req.user) {
@@ -31,7 +87,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;
