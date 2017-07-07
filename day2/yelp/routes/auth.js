@@ -28,10 +28,13 @@ module.exports = function(passport) {
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      displayName: req.body.displayName,
+      location: req.body.location
     });
 
     u.save(function(err, user) {
+      console.log("saving user");
       if (err) {
         console.log(err);
         res.status(500).redirect('/register');
@@ -49,7 +52,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/allUsers');
   });
 
   // GET Logout page

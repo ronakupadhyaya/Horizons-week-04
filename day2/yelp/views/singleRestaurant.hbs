@@ -1,1 +1,42 @@
 {{! YOUR CODE HERE }}
+<form>
+  <div style="width:50%">
+    <div style="margin-bottom:-30px;">
+      <h3>{{restaurant.name}}</h3>
+      {{#if has1}}
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+      {{/if}}
+      {{#if has2}}
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+      {{/if}}
+      {{#if has3}}
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+        <span class="glyphicon glyphicon-usd" style="display: inline-block"></span>
+      {{/if}}
+    </div>
+    <br/>
+
+    <div>
+      <h5 style="display: inline-block; margin-right:20px">Hours Today: {{open}}-{{end}}</h5>
+      <!--<h5 style="display: inline-block">Open</h5>-->
+    </div>
+
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap">
+    <input style="width:105%" type="submit" class="btn btn-info" value="Add Review">
+  </div>
+</form>
+
+{{#each reviews}}
+  <strong><h4>{{this.userId.displayName}}</h4></strong>
+  <i><h5 style="color:grey">{{this.userId.location}}</h5></i>
+  {{#each this.yellowStarsArr}}
+    <span style="color:gold; display:inline-block" class="glyphicon glyphicon-star"></span>
+  {{/each}}
+  {{#each this.greyStarsArr}}
+    <span style="color:grey; display:inline-block" class="glyphicon glyphicon-star"></span>
+  {{/each}}
+  <p>{{this.content}}</p>
+  <br/>
+{{/each}}

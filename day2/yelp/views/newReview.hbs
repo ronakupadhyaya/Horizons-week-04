@@ -1,1 +1,21 @@
 {{! YOUR CODE HERE }}
+<form method="post" action="/newreview">
+  <center><div class="form-group">
+    <input style="width:40%" type="text" class="form-control" name='name' value='{{name}}' placeholder="{{name}}"></input>
+  </div>
+  <div class="form-group" style="width:40%">
+    <textarea name="comment" class="form-control" placeholder="Review" rows="5" id="comment"></textarea>
+  </div>
+  <select class="selectpicker" style="width:40%;" data-style="btn-info" name="selectpicker">
+    <optgroup label="Rating">
+      <option name="table1" value="1">1</option>
+      <option name="table2" value="2">2</option>
+      <option name="table3" value="3">3</option>
+      <option name="table4" value="4">4</option>
+      <option name="table5" value="5">5</option>
+    </optgroup>
+  </select>
+  <br/>
+  <br/>
+  <input type="submit" style="width:40%" class="btn btn-info" value="Submit Review"></center>
+</form>

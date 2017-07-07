@@ -1,25 +1,66 @@
-<h4>Name:</h4>
-<p>{{user.displayName}}</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Reviews</th>
+      <th>Following</th>
+      <th>Followers</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{user.displayName}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.location}}</td>
+      <td>
+        {{#each reviews}}
+          <strong><h4>{{this.restaurantId.name}}</h4></strong>
+          {{#each yellowStarsArr}}
+            <span style="color:gold; display:inline-block" class="glyphicon glyphicon-star"></span>
+          {{/each}}
+          {{#each greyStarsArr}}
+            <span style="color:grey; display:inline-block" class="glyphicon glyphicon-star"></span>
+          {{/each}}
+          <br/>
+            <p>{{this.content}}</p>
+          <br/>
+          <br/>
+        {{/each}}
+      </td>
+      <td>
+        {{#each followings}}
+          <strong>{{this.to.displayName}}</strong><br/>
+          {{this.to.location}}
+          <br/>
+        {{/each}}
+      </td>
+      <td>
+        {{#each followers}}
+          <strong>{{this.from.displayName}}</strong><br/>
+          {{this.from.location}}
+        <br/>
+        {{/each}}
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-<h4>Email:</h4>
-<p>{{user.email}}</p>
-
-<h4>Address:</h4>
-<p>{{user.location}}</p>
-
-<h4>Reviews:</h4>
-<p>{{user.reviews}}</p>
-
-<h4>Following:</h4>
-{{#each followings}}
-  <div>{{this.to.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
-  </form>
-</div>
-{{/each}}
-
-<h4>Followers:</h4>
-{{#each followers}}
-  <p>{{this.from.displayName}}</p>
-{{/each}}
+{{#if notLoggedInUser}}
+  {{#if beingFollowed}}
+    <div>
+      <form action="/unfollow?toBeUnfollowedId={{user._id}}" method="post">
+        <a href="http://localhost:3000/allUsers"><input class="btn btn-default" style="display: inline;" type="submit" value="Unfollow"></a>
+      </form>
+    </div>
+    <br/>
+    {{else}}
+    <div>
+      <form action="/follow?toBeFollowedId={{user._id}}" method="post">
+        <a href="http://localhost:3000/allUsers"><input class="btn btn-default" style="display: inline;" type="submit" value="Follow"></a>
+      </form>
+    </div>
+    <br/>
+    {{/if}}
+{{/if}}

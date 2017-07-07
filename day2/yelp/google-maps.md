@@ -5,7 +5,7 @@ You'll notice that in `routes/index.js`, there is a variable commented out to st
 
 ![](http://cl.ly/2m3H2O2u0x0j/Image%202016-06-27%20at%202.26.00%20AM.png)
 
-#### Click on the Google Maps Geocoding API. You may have to hit the down arrow under Google Maps to see all the API options. 
+#### Click on the Google Maps Geocoding API. You may have to hit the down arrow under Google Maps to see all the API options.
 
 ![](http://cl.ly/2w0c1V2v0l2m/Image%202016-06-27%20at%202.26.14%20AM.png)
 
@@ -13,7 +13,7 @@ You'll notice that in `routes/index.js`, there is a variable commented out to st
 
 ![](http://cl.ly/3J0d2f2V3a3m/Image%202016-06-27%20at%2010.30.18%20AM.png)
 
-#### After you create a project, click the enable button 
+#### After you create a project, click the enable button
 
 ![](http://cl.ly/263A0w2B1k3Q/Image%202016-06-27%20at%202.27.06%20AM.png)
 
@@ -29,6 +29,6 @@ You'll notice that in `routes/index.js`, there is a variable commented out to st
 
 ![](http://cl.ly/0s0Y343H012C/Image%202016-06-27%20at%202.27.50%20AM.png)
 
-#### TA DA, you have an API key! 
+#### TA DA, you have an API key!
 
 ![](http://cl.ly/433d3c3Q1W35/Image%202016-06-27%20at%202.27.56%20AM.png)

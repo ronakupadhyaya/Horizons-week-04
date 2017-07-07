@@ -22,30 +22,30 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.methods.getFollows = function (callback){
-  var allFollowers = [];
   var allFollowing = [];
-  Follow.find({to: this._id}) //retrieve all Follow documents where user is being followed (from someone, to user)
-    .populate('from')
-    .exec(function(err, follows) {
-      allFollowers = follows;
+  var allFollowers = [];
+  var id = this._id;
+  Follow.find({from: id}).populate('to').exec(function(err, f1) {
+      allFollowing = f1;
+      Follow.find({to: id}).populate('from').exec(function(err, f2) {
+          allFollowers = f2;
+          console.log("Followers: " + allFollowers);
+          console.log("Following: " + allFollowing);
+          callback(allFollowers, allFollowing);
+        });
     });
-  Follow.find({from: this._id})
-    .populate('to')
-    .exec(function(err, follows) {
-      allFollowing = follows;
-    });
-  callback(allFollowers, allFollowing);
 }
 
 userSchema.methods.follow = function (idToFollow, callback){
   var followerId = this._id;
-  Follow.find({
+  Follow.findOne({
     from: followerId,
     to: idToFollow
   }, function(err, follow) {
     if (err) {
       callback(err, false);
-    } else if (follow === null) {
+    } else if (follow !== null) {
+      console.log("follow " + follow);
       callback(null, false);
     } else {
       new Follow({
@@ -54,8 +54,6 @@ userSchema.methods.follow = function (idToFollow, callback){
       }).save(function(err, newFollow) {
         if (err) {
           callback(err, false);
-        } else if (follow === null) {
-          callback(null, false);
         } else {
           callback(null, newFollow);
         }
@@ -64,13 +62,20 @@ userSchema.methods.follow = function (idToFollow, callback){
   });
 }
 
+// user.isFollowing(1, function(bool) {
+//})
 userSchema.methods.isFollowing = function(followedId, callback) {
   var followerId = this._id;
-  Follow.find({
+  Follow.findOne({
     from: followerId,
     to: followedId
   }, function(err, follow) {
-    if (!err && follow !== null) {
+  //  console.log("follow: " + follow);
+    if (!err && follow === null) {
+  //    console.log("Is NOT following");
+      callback(false);
+    } else if (!err && follow !== null) {
+    //  console.log("IS following");
       callback(true);
     }
   })
@@ -78,19 +83,21 @@ userSchema.methods.isFollowing = function(followedId, callback) {
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
   var followerId = this._id;
-  Follow.find({
-    from: followerId,
-    to: idToUnfollow
-  }, function(err, follow) {
-    if (err) {
-      callback(err, false);
-    } else if (follow == null) {
-      callback(null, false);
-    } else {
-      follow.remove();
-      callback(null, follow);
-    }
-  });
+  Follow.find({from: followerId, to: idToUnfollow}).remove().exec();
+  console.log("Unfollowed successfully");
+}
+
+userSchema.methods.getReviews = function(callback) {
+  Review.find({userId: this._id})
+    .populate('restaurantId')
+    .exec(function(err, reviews) {
+      if (err) {
+        console.log('user schema review: ' + reviews);
+        callback(err, false);
+      } else {
+        callback(null, reviews);
+      }
+    });
 }
 
 var FollowsSchema = mongoose.Schema({
@@ -105,16 +112,107 @@ var FollowsSchema = mongoose.Schema({
 });
 
 var reviewSchema = mongoose.Schema({
-
+  content: {
+    type: String,
+    required: true
+  },
+  stars: {
+    type: Number,
+    min: 1,
+    max: 5,
+    required: true
+  },
+  restaurantId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Restaurant',
+    required: true
+  },
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true
+  }
 });
 
+reviewSchema.virtual('yellowStarsArr').get(function() {
+  var num = this.stars;
+  var array = [];
+  for (var i = 0; i < num; i++) {
+    array.push(i + 1);
+  }
+  return array;
+});
+
+reviewSchema.virtual('greyStarsArr').get(function() {
+  var num = 5 - this.stars;
+  var array = [];
+  for (var i = 0; i < num; i++) {
+    array.push(i + 1);
+  }
+  return array;
+});
 
 var restaurantSchema = mongoose.Schema({
-
+  name: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    enum: ['Korean', 'Barbeque', 'Casual'],
+    required: true
+  },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 3
+  },
+  openTime: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 23
+  },
+  closingTime: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 23
+  },
+  reviewCount: {
+    type: Number,
+    default: 0
+  },
+  totalScore: {
+    type: Number,
+    default: 0
+  }
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+restaurantSchema.virtual('averageRating').get(function() {
+  return totalScore/reviewCount;
+});
 
+restaurantSchema.methods.getReviews = function (callback){
+  Review.find({restaurantId: this._id})
+    .populate('userId')
+    .exec(function(err, reviews) {
+      console.log("Reviews 2: " + reviews);
+      if (err) {
+        callback(err, false);
+      } else {
+        callback(null, reviews);
+      }
+    });
 }
 
 //restaurantSchema.methods.stars = function(callback){

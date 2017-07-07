@@ -1,1 +1,25 @@
 {{! YOUR CODE HERE }}
+<h2>You are logged in as: {{loggedInUser}}</h2>
+<div class="container">
+  <p style="color:red">Users ({{numUsers}})</p>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Profile</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td>{{this.displayName}}</td>
+        <td>{{this.location}}</td>
+        <td><a href="http://localhost:3000/users?id={{this._id}}" class="btn btn-info" role="button">View profile</a></center></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<script>
+</script>
