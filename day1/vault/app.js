@@ -58,8 +58,6 @@ passport.serializeUser(function(user, done) {
 })
 
 passport.deserializeUser(function(id, done) {
-  var passwords = jsonData.passwords;
-  var user = null;
   User.findById(id, function(error, currUser) {
     if (error) {
       res.send(error)

@@ -1,1 +1,26 @@
-{{! YOUR CODE HERE }}
+
+<center>
+<div class="profiles-page" method="POST">
+  <h2>Restaurant Listing</h2>
+
+  <form method="get" action="/restaurants/new">
+    <input type="submit" value="Register a restaurant"></input>
+  </form></br>
+
+  <ul>
+    {{#each restaurants}}
+      <div class="user col-xs-offset-4 col-xs-4">
+        <h3><strong>{{this.name}}</strong></h3>
+        <h4>Cuisine type: {{this.category}}</h4>
+        <h4>Price: {{this.price}}</h4>
+        <form method="get" action="/restaurants/{{this._id}}">
+          <input type="submit" value="View Restaurant"></input>
+        </form></br>
+      </div></br>
+    {{/each}}
+  </ul>
+
+
+
+
+</div></center>

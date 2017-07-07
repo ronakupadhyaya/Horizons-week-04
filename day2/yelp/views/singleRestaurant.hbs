@@ -1,1 +1,20 @@
-{{! YOUR CODE HERE }}
+<center>
+  <h3>{{restaurant.name}}'s Restaurant Page</h3>
+
+  <h4>Cuisine type: {{restaurant.category}}</h4>
+  <h4>Price: {{restaurant.price}}</h4>
+  <h5>Opens at: {{restaurant.openTime}} AM</h5>
+  <h5>Closes at: {{restaurant.closingTime}} PM</h5>
+
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=600x300&maptype=roadmap&key={{restaurant.apiKey}}">
+
+
+  <h4>Reviews:</h4>
+  <!-- <p>{{restaurant.reviews}}</p> -->
+
+
+  <form action="/restaurants" method="get">
+    <input style="display: inline" type="submit" value="All Restaurants"></input>
+  </form>
+
+</center>

@@ -13,6 +13,8 @@ var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
 var app = express();
 
+mongoose.connect(process.env.MONGODB_URI)
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');

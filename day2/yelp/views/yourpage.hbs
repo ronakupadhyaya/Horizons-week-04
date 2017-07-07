@@ -11,6 +11,9 @@
   <h4>Following:</h4>
   {{#each followings}}
     <p>{{to.displayName}}</p>
+    <form action="/unfollow/{{this.to._id}}" method="get">
+      <input style="display: inline" type="submit" value="Unfollow"></input>
+    </form></br>
   {{/each}}
 
   <h4>Followers:</h4>

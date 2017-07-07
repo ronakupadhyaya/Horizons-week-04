@@ -1,1 +1,29 @@
-{{! YOUR CODE HERE }}
+
+<center>
+<div class="profiles-page" method="POST">
+  <h2>User Directory</h2>
+  <h5>You are: {{name}}</h5>
+  <form action="/profiles/yours/{{id}}" method="get">
+    <input style="display: inline" type="submit" value="Your Page"></input>
+  </form></br>
+
+  <ul>
+    {{#each users}}
+      <div class="user col-xs-offset-4 col-xs-4">
+        <h3><strong>{{this.displayName}}</strong></h3>
+        <h4>{{this.location}}</h4>
+        <div class="form-group">
+          <form action="/profiles/follow/{{this._id}}" method="post">
+            <input style="display: inline" type="submit" value="Follow"></input>
+          </form>
+          <form action="/profiles/{{this._id}}" method="get">
+            <input style="display: inline" type="submit" value="Visit"></input>
+          </form>
+        </div>
+      </div></br>
+    {{/each}}
+  </ul>
+
+
+
+</div></center>
