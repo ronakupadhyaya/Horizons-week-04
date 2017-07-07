@@ -90,7 +90,27 @@ userSchema.methods.unfollow = function(idToUnfollow, callback) {
         callback(err);
       });
     }
-  })
+  });
+}
+
+userSchema.methods.isFollowing = function(idToCheck, callback) {
+  var id = this._id;
+  console.log('ID of current:', id);
+  console.log('ID to check:', idToCheck);
+
+  Follow.find({
+    to: idToCheck,
+    from: id
+  }, function(err, arr) {
+    console.log(arr);
+    if (err) {
+      console.log(err);
+    } else if (arr.length === 0) {
+      callback(false);
+    } else {
+      callback(true);
+    }
+  });
 }
 
 var FollowsSchema = mongoose.Schema({

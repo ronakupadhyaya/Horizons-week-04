@@ -37,16 +37,21 @@ router.get('/users', function(req, res) {
 })
 
 router.get('/users/:id', function(req, res) {
+  console.log(req.user);
   User.findById(req.params.id, function(err, user) {
     if (err) {
       console.log(err);
       res.redirect('/users');
     } else {
-      user.getFollows(function(followingUsers, followerUsers) {
-        res.render('singleProfile', {
-          user: user,
-          followings: followingUsers,
-          followers: followerUsers
+      req.user.isFollowing(user._id, function(isFollowBool) {
+        user.getFollows(function(followingUsers, followerUsers) {
+          console.log('isFollow -', isFollowBool);
+          res.render('singleProfile', {
+            user: user,
+            followings: followingUsers,
+            followers: followerUsers,
+            isFollowBool: isFollowBool
+          });
         });
       });
     }
