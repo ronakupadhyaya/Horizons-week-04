@@ -5,6 +5,10 @@ var connect = process.env.MONGODB_URI || require('./connect');
 mongoose.connect(connect);
 
 var userSchema = mongoose.Schema({
+  displayName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true
@@ -12,23 +16,92 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  location: {
+    type: String,
+    required: true
   }
   /* Add other fields here */
 });
 
-userSchema.methods.getFollows = function (callback){
+userSchema.methods.getFollows = function(callback) {
+  var following;
+  var followers;
+  var thisId = this._id;
 
+  Follow.find({
+      from: thisId
+    })
+    .populate('to')
+    .exec(function(err, following) {
+      Follow.find({
+          to: thisId
+        })
+        .populate('from')
+        .exec(function(err, followers) {
+          var followingUsers = following.map(function(user) {
+            return user.to;
+          });
+
+          var followerUsers = followers.map(function(user) {
+            return user.from;
+          });
+
+          callback(followingUsers, followerUsers);
+        })
+    });
 }
-userSchema.methods.follow = function (idToFollow, callback){
+userSchema.methods.follow = function(idToFollow, callback) {
+  var id = this._id;
+  var newFollow = new Follow({
+    to: idToFollow,
+    from: id
+  });
 
+  Follow.find({
+    to: idToFollow,
+    from: id
+  }, function(err, arr) {
+    if (err) {
+      console.log(err);
+    } else if (arr.length === 0) {
+      newFollow.save(function(err) {
+        callback(err);
+      });
+    } else {
+      callback('Error: already following.');
+    }
+  });
 }
 
-userSchema.methods.unfollow = function (idToUnfollow, callback){
+userSchema.methods.unfollow = function(idToUnfollow, callback) {
+  var id = this._id;
 
+  Follow.find({
+    to: idToUnfollow,
+    from: id
+  }, function(err, arr) {
+    if (err) {
+      console.log(err);
+    } else if (arr.length === 0) {
+      callback('Not following that user.');
+    } else {
+      arr[0].remove(function(err) {
+        callback(err);
+      });
+    }
+  })
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  to: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  from: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  }
 });
 
 var reviewSchema = mongoose.Schema({
@@ -40,7 +113,7 @@ var restaurantSchema = mongoose.Schema({
 
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+restaurantSchema.methods.getReviews = function(restaurantId, callback) {
 
 }
 

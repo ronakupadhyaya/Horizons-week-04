@@ -1,1 +1,7 @@
-{{! YOUR CODE HERE }}
+<center>
+  <h3>Users ({{users.length}})</h3>
+  {{#each users}}
+    <a href="/users/{{this._id}}">{{this.displayName}}</a><br>
+    <p>{{this.location}}</p><br>
+  {{/each}}
+</center>
