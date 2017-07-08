@@ -1,3 +1,5 @@
+"use strict";
+
 var hexpress = require('./hexpress');
 var app = hexpress();
 

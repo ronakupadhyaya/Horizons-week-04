@@ -1,3 +1,5 @@
+"use strict";
+
 var hexpress = require('./hexpress');
 var app = hexpress();
 
@@ -8,7 +10,7 @@ app.use('/api/version', function (req, res) {
 
 // this endpoint should not be reachable because it shares a prefix with the previous URL
 app.use('/api/version/2', function (req, res) {
-    res.send('Hexpress v2.0');
+  res.send('Hexpress v2.0');
 });
 
 // thie endpoint responds to GET /api with "API is online"
