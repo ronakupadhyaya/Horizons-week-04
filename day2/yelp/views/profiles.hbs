@@ -1,1 +1,23 @@
 {{! YOUR CODE HERE }}
+
+<h2>USER DIRECTORY</h2>
+
+{{#each users}}
+<div class="container col-xs-3" style="border: 3px dashed black; padding: 2em">
+
+  <a href="/users/{{this._id}}">Profile</a>
+
+  <h4>Name:</h4>
+  <p>{{this.displayName}}</p>
+
+  <h4>Email:</h4>
+  <p>{{this.email}}</p>
+
+  <h4>Bio:</h4>
+  <p>{{this.location}}</p>
+
+  <form action="/follow/{{this._id}}" method="post">
+    <button type="submit" class="btn btn-success">follow</button>
+  </form>
+</div>
+{{/each}}

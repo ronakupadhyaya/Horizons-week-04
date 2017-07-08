@@ -1,1 +1,17 @@
-{{! YOUR CODE HERE }}
+
+<div class="container col-xs-6 col-xs-offset-3" action="" method="post" style="text-align: center; border: 2px dashed pink; padding: 2em">
+
+  <h4>{{restaurant.name}}</h4>
+  <p>{{price}}</p>
+  <p>{{restaurant.category}}</p>
+  <p>Hours Today: {{restaurant.openTime}}:00-{{restaurant.closeTime}}:00</p>
+
+  <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=15&size=460x300&maptype=roadmap&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&key=AIzaSyBqqiPsHSWu-V3TvKkyH6ocBN3L1q-uZeg" style=“width: 460px”> -->
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=200x200&maptype=roadmap&markers={{restaurant.latitude}},{{restaurant.longitude}}&sensor=false&key=AIzaSyDTXl23UKN9aqWG0zcYQHGqHDzMnRkUwwo">
+  <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571" style=“width: 460px”> -->
+
+<br><br><br><br><br><br><br><br><br><br><br>
+  <form action="" method="post">
+    <button type="submit" class="btn btn-warning">Add Review</button>
+  </form>
+</div>

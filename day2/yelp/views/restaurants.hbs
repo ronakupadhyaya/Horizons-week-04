@@ -1,1 +1,12 @@
-{{! YOUR CODE HERE }}
+
+<div style="text-align: center">
+  <h2>View All Restaurants</h2>
+  <a href="/restaurants/new">Add a restaurant</a><br><br>
+  {{#each restaurants}}
+    <div class="container col-xs-6 col-xs-offset-3" style="border: 1px solid black; margin-bottom: 1em; background-color: #D3D3D3">
+      <h4 style="text-align: left">{{this.name}} | <a href="/restaurants/{{this._id}}">More!</a></h4>
+      <p style="text-align: right">{{this.category}}</p>
+      <p style="text-align: right">{{this.price}}</p>
+    </div><br><br>
+  {{/each}}
+</div>
