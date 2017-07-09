@@ -1,3 +1,5 @@
+"use strict";
+
 var hexpress = require('./hexpress');
 var app = hexpress();
 
@@ -27,5 +29,6 @@ app.get('/login', function(req, res) {
     username: req.query.username,
     password: req.query.password
   });
-  
+});
+
 app.listen(3000);
