@@ -1,1 +1,9 @@
-{{! YOUR CODE HERE }}
+<h4>Restaurants:</h4>
+{{#each restos}}
+  <div><b>Restaurant:</b> {{this.restoName}}</div>
+  <div><b>Category:</b> {{this.category}}</div>
+  <div><b>Price:</b> {{this.price}}</div>
+  <div><b>Address:</b> {{this.address}}</div>
+  <div><b>Open Time:</b> {{this.openTime}}</div>
+  <div><b>Close Time:</b> {{this.closeTime}}</div></br>
+{{/each}}
