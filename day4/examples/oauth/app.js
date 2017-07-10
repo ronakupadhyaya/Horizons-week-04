@@ -10,11 +10,16 @@ var hbs = require('express-handlebars')({
 app.engine('hbs', hbs);
 app.set('view engine', 'hbs');
 
+
 var session = require('cookie-session');
-app.use(session({keys: ['some private info']}));
+app.use(session({
+  keys: ['some private info']
+}));
 
 var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
