@@ -121,7 +121,33 @@ var restaurantSchema = new mongoose.Schema({
 });
 
 restaurantSchema.methods.getReviews = function (restaurantId, callback){
+  Review.find({restaurantId: restaurantId})
+    .populate("userId")
+    .exec(function(err, reviews) {
+      if (err) console.log("ERROR", err);
+      else {
+        callback(err, {
+          allReviews: reviews
+        });
+      }
+  })
+}
 
+restaurantSchema.virtual("averageRating").get(function() {
+  return this.totalScore/this.reviewCount;
+})
+
+userSchema.methods.getReviews = function (userId, callback){
+  Review.find({userId: userId})
+    .populate("restaurantId")
+    .exec(function(err, reviews) {
+      if (err) console.log("ERROR", err);
+      else {
+        callback(err, {
+          allReviews: reviews
+        });
+      }
+  })
 }
 
 //restaurantSchema.methods.stars = function(callback){

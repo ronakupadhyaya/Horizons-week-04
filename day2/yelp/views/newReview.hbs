@@ -1,1 +1,8 @@
-{{! YOUR CODE HERE }}
+<div class="container col-xs-6 col-xs-offset-3" style="text-align: center; border: 2px dashed pink; padding: 2em">
+  <h3>Add a review for {{restaurant.name}}</h3><br>
+  <form action="/restaurants/{{restaurant._id}}/review" method="post">
+    <textarea name="content" rows="6" cols="40" placeholder="Review"></textarea><br><br>
+    <input type="text" name="stars" placeholder="Stars(1-5)"><br><br>
+    <input type="submit" class="btn btn-warning" value="Submit Review">
+  </form>
+</div>

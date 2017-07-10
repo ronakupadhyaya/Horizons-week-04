@@ -1,17 +1,36 @@
 
+<form action="/restaurants">
+  <input type="submit" class="col-xs-offset-1 btn btn-primary" value="<——"><br>
+</form>
+
 <div class="container col-xs-6 col-xs-offset-3" action="" method="post" style="text-align: center; border: 2px dashed pink; padding: 2em">
 
-  <h4>{{restaurant.name}}</h4>
+  <h3>{{restaurant.name}}</h3>
   <p>{{price}}</p>
   <p>{{restaurant.category}}</p>
   <p>Hours Today: {{restaurant.openTime}}:00-{{restaurant.closeTime}}:00</p>
 
   <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=15&size=460x300&maptype=roadmap&markers=color:red|{{restaurant.latitude}},{{restaurant.longitude}}&key=AIzaSyBqqiPsHSWu-V3TvKkyH6ocBN3L1q-uZeg" style=“width: 460px”> -->
-  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=200x200&maptype=roadmap&markers={{restaurant.latitude}},{{restaurant.longitude}}&sensor=false&key=AIzaSyDTXl23UKN9aqWG0zcYQHGqHDzMnRkUwwo">
+  <img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.latitude}},{{restaurant.longitude}}&zoom=13&size=300x180&maptype=roadmap&markers={{restaurant.latitude}},{{restaurant.longitude}}&sensor=false&key=AIzaSyDTXl23UKN9aqWG0zcYQHGqHDzMnRkUwwo">
   <!-- <img src="https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571" style=“width: 460px”> -->
 
-<br><br><br><br><br><br><br><br><br><br><br>
-  <form action="" method="post">
+<br><br>
+  <form action="/restaurants/{{restaurant._id}}/review" method="get">
     <button type="submit" class="btn btn-warning">Add Review</button>
   </form>
+</div>
+
+
+
+<div class="col-xs-8 col-xs-offset-2" style="padding: 1em; margin-top: 2em">
+  <h3 style="text-align: center">Reviews ({{allReviews.length}})</h3>
+  {{#each allReviews}}
+    <div style="border-top: 2px solid grey; padding: 1em">
+      <br>
+      <p><strong>{{this.userId.displayName}}</strong></p>
+      <p style="color: grey">{{this.userId.location}}</p>
+      <p>{{this.stars}} stars</p>
+      <p>{{this.content}}</p>
+    </div>
+  {{/each}}
 </div>
