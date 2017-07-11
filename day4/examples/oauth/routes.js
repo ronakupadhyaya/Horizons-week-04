@@ -2,8 +2,18 @@ var express = require('express');
 var router = express.Router();
 
 var passport = require('passport');
+var GitHubPassport = require('passport-github')
 
 // YOUR GITHUB STRATEGY HERE
+
+passport.use(new GitHubPassport.Strategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/auth/github/callback'
+},
+function(accessToken, refreshToken, profile, done) {
+  return done(null, profile)
+}))
 
 passport.serializeUser(function(user, done) {
   done(null, user.username);
@@ -16,6 +26,14 @@ router.use(passport.session());
 
 // YOUR GET /auth/github ENDPOINT HERE
 
+router.get('/auth/github', passport.authenticate('github'))
+
+router.get('/auth/github/callback',
+  passport.authenticate('github', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.render('index', {user: req.user});
+  });
 // YOUR GET /auth/github/callback ENDPOINT HERE
 
 router.get('/login', function(req, res) {
