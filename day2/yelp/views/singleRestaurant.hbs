@@ -1,1 +1,13 @@
-{{! YOUR CODE HERE }}
+<h1>{{restaurant.name}}</h1>
+
+{{#if (isPrice 1)}}
+  <h1>$</h1>
+{{else}}
+  {{#if (isPrice 2)}}
+    <h1>$$</h1>
+  {{else}}
+    <h1>$$$</h1>
+  {{/if}}
+{{/if}}
+
+<h4>Times of service: {{restaurant.openTime}}-{{restaurant.closingTime}}</h4>

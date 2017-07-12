@@ -1,10 +1,19 @@
 <center>
   <h3>Users ({{users.length}})</h3>
-  <h2>{{testing}}</h2> dsgsfd {{bar}}
-  {{#if bar}}
-
-    <h3>you</h3>
-    <button type="button" name="click me"></button>
-  {{/if}}
+  {{#each users}}
+    <a href="/users/{{this.id}}">{{this.displayName}}</a><br>
+    {{#unless (isSelf id)}}
+      {{#if (shouldShow id)}}
+        <form style='margin-bottom: 0em;' action="/follow/{{id}}" method="post">
+          <input style="display: inline;" type="submit" value="Follow">
+        </form>
+      {{else}}
+        <form style='margin-bottom: 0em;' action="/unfollow/{{id}}" method="post">
+          <input style="display: inline;" type="submit" value="Unfollow">
+        </form>
+      {{/if}}
+    {{/unless}}
+    <a>{{this.location}}</a><br><br>
+  {{/each}}
 
 </center>

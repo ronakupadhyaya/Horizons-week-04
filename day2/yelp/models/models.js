@@ -94,11 +94,11 @@ userSchema.methods.unfollow = function(idToUnfollow, callback) {
 userSchema.methods.isFollowing = function(idToCheck, callback) {
   var id = this._id;
 
-  Follow.find({
+  Follow.findOne({
     to: idToCheck,
     from: id
-  }, function(err, arr) {
-    if (arr.length === 0) {
+  }, function(err, follow) {
+    if (!follow) {
       callback(false)
     } else {
       callback(true)
@@ -123,7 +123,40 @@ var reviewSchema = mongoose.Schema({
 
 
 var restaurantSchema = mongoose.Schema({
-
+  name: {
+    type: String,
+    required: true
+  },
+  category: {
+    type: String,
+    required: true
+  },
+  latitude: {
+    type: Number,
+    required: true
+  },
+  longitude: {
+    type: Number,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 3
+  },
+  openTime: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 23
+  },
+  closingTime: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 23
+  }
 });
 
 restaurantSchema.methods.getReviews = function(restaurantId, callback) {
