@@ -6,7 +6,7 @@ mongoose.connect(process.env.MONGODB_URI);
 
 var User = mongoose.model('user', {
   username: String,
-  password: String,
+  hashedPassword: String,
 });
 
 // var user = mongoose.model('user', {

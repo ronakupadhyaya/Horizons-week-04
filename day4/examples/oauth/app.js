@@ -1,5 +1,7 @@
 var express = require('express');
 var path = require('path');
+var passport = require('passport')
+var FacebookStrategy = require('passport-facebook')
 
 var app = express();
 var hbs = require('express-handlebars')({
@@ -19,6 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./routes'));
+
+
 
 var port = process.env.PORT || 3000;
 app.listen(port, function() {

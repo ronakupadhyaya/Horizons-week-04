@@ -16,6 +16,19 @@ router.use(passport.session());
 
 // YOUR GET /auth/github ENDPOINT HERE
 
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: 'http://localhost:3000/fb/login/callback'
+},
+function(accessToken, refreshToken, profile, done) {
+  done(null, {
+    token: accessToken,
+    name: profile.displayName,
+    id: profile.id
+  });
+}));
+
 // YOUR GET /auth/github/callback ENDPOINT HERE
 
 router.get('/login', function(req, res) {
