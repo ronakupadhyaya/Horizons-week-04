@@ -24,7 +24,6 @@ router.use(function(req, res, next){
   }
 });
 
-router.get("/login", )
 
 router.get("/users/:id", function(req, res, next) {
   User.findOne({_id: req.params.id}, function(err, user) {

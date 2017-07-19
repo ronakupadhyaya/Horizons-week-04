@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local');
+var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = require('./models/models').User;
 
@@ -28,15 +28,26 @@ app.use(session({ secret: 'keyboard cat' }));
 passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
- 
+
 passport.deserializeUser(function(id, done) {
   User.findById(id, function(err, user) {
     done(err, user);
   });
 });
 
-// passport strategy
-// YOUR CODE HERE
+
+passport.use(new LocalStrategy(function(username, password, done) {
+  User.findOne({ username: username }, function (err, user) {
+    if (err) { return done(err); }
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    if (user.password !== password) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    return done(null, user);
+  });
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());

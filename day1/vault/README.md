@@ -181,8 +181,6 @@ with `express-session`.
 
 1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
   npm package, this is how we will connect our sessions to MongoDb.
-1. Install the [`connect-mongo`](https://github.com/jdesboeufs/connect-mongo)
-  npm package, this is how we will connect our sessions to MongoDb.
 1. Set the `store` property of `express-session` to use `connect-mongo` now.
 
     ![](img/mongoSession.png)
