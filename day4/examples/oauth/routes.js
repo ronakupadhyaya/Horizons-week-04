@@ -12,11 +12,6 @@ passport.use(new GitHubStrategy({
   callbackURL: "http://localhost:3000/auth/github/callback"
 }, function(accessToken, refreshToken, profile, done) {
   console.log(profile);
-  // done(null, {
-  //   token: accessToken,
-  //   username: profile.displayname,
-  //   id: profile.id
-  // })
   return done(null, profile);
 }))
 

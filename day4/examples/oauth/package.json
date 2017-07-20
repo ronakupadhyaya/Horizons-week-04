@@ -11,5 +11,10 @@
     "express-handlebars": "^3.0.0",
     "passport": "^0.3.2",
     "passport-github": "^1.1.0"
-  }
+  },
+  "description": "## Goal",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }

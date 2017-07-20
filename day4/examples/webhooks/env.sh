@@ -1,0 +1,3 @@
+export MONGODB_URI=mongodb://shanlu:Lushan980103@ds141242.mlab.com:41242/horizons
+export TWILIO_SID=AC80d5ea1278fe5641f98d21086ebb1fce
+export TWILIO_AUTH_TOKEN=e26e3ab85b13cff6cec0e5953b2d6eda
