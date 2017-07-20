@@ -14,6 +14,15 @@ var Review = models.Review;
 //   httpAdapter: "https",
 //   formatter: null
 // });
+route.get('/test', function(req, res){ //over the middleware to turn it off
+var user = new User({
+  email: 'dummy2@gmail.com',
+  password: 'dummy22'
+});
+  
+})
+
+
 
 // THE WALL - anything routes below this are protected!
 router.use(function(req, res, next){
@@ -31,7 +40,7 @@ router.post('/restaurants/new', function(req, res, next) {
   //   console.log(err);
   //   console.log(data);
   // });
-  
+
 });
 
 module.exports = router;

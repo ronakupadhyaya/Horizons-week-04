@@ -14,6 +14,14 @@ var userSchema = mongoose.Schema({
     required: true
   }
   /* Add other fields here */
+
+
+
+
+  // followers: [{
+  //   type: mongoose.Schema.ObjectId,
+  //   ref: 'Follow'
+  // }]
 });
 
 userSchema.methods.getFollows = function (callback){
@@ -28,6 +36,15 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
 }
 
 var FollowsSchema = mongoose.Schema({
+  to: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+  },
+  from: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  }
+
 
 });
 
