@@ -1,1 +1,9 @@
 {{! YOUR CODE HERE }}
+<h4>Restaurants</h4>
+{{#each restaurants}}
+<p>
+<a href="/restaurants/{{this.id}}"> {{this.name}} </a>
+</p>
+{{/each}}
+
+<a href="/restaurants/new"> <h4>Add a fucking restaurant here</h4></a>

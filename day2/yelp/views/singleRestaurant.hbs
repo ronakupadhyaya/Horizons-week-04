@@ -1,1 +1,7 @@
 {{! YOUR CODE HERE }}
+<h4>{{restaurant.name}}</h4>
+<p>Price: {{restaurant.price}} </p>
+<p>Opening: {{restaurant.openTime}} </p>
+<p>Closing: {{restaurant.closingTime}}</p>
+<br></br>
+<img src="https://maps.googleapis.com/maps/api/staticmap?center={{restaurant.lattitude}},{{restaurant.longitude}}&markers=color:red|[{{restaurant.lattitude}}],[{{restaurant.longitude}}]&zoom=13&size=600x300&maptype=roadmap">

@@ -1,1 +1,7 @@
 {{! YOUR CODE HERE }}
+<h4>Profiles on Yash Yelp</h4>
+<br> </br>
+{{#each users}}
+<a href="/users/{{this._id}}"> {{this.displayName}}</a>
+<p> {{this.location}} </p>
+{{/each}}
