@@ -1,7 +1,7 @@
-# Building Yelp!
+# Building Twitter!
 
 
-Today we will be building a clone of the popular restaurant reviews website Yelp, using your knowledge of MongoDB queries, processing, and performance. Yay!
+Today we will be building a clone of the popular media webite Twitter, using your knowledge of MongoDB queries, processing, and performance. Yay!
 
 
 ## Table of Contents
@@ -9,13 +9,13 @@ Today we will be building a clone of the popular restaurant reviews website Yelp
 - **The Big Picture** 🖼
 - **Step 0:** Authentication 🔐
 - **Step 1:** Connecting Users 🙇
-- **Step 2:** Creating and Viewing Restaurants 🍔
+- **Step 2:** Creating and Viewing Tweets 🍔
 - **Step 3:** Reviewing Restaurants ⭐
 - **Phase 1 Challenges** 🏆
 
 ## The Big Picture 🖼
 
-Yelp is a big project. Refer back to this section if you're ever feeling lost and need to see where this is all going. Below is a reference to all of the models we will be using in this project. More detailed information on their implementations and applications can be found in their respective sections!
+Twitter is a big project. Refer back to this section if you're ever feeling lost and need to see where this is all going. Below is a reference to all of the models we will be using in this project. More detailed information on their implementations and applications can be found in their respective sections!
 
 Alternatively, you could try structuring the application solely from **The Big Picture**, if you're up for the challenge.
 
@@ -25,13 +25,12 @@ Alternatively, you could try structuring the application solely from **The Big P
   - `displayName` - the displayed name for a User when visiting their profile
   - `email` - used for authentication, should not be publicly available
   - `password` - used for authentication, definitely should not be publicly available
-  - `location` - the displayed location for a User - not coordinates! Just a quick description of where they are in the world.
+  - `bio` - a biography that the user can give to display on their profile
 - `User` **Schema methods** - methods that your models will inherit to be called from in your routes
   - `follow(idToFollow, cb)` - create and save a new `Follow` object with `this._id` as the `from` (see below) and `idToFollow` as `to`
   - `unfollow(idToUnfollow, cb)` - find and delete a `Follow` object (if it exists!)
   - `getFollows(cb)` - return array of followers and users followed as User objects in callback `cb`
   - `isFollowing(user)` - return whether or not the user calling `isFollowing` is following the User model
-  - `getReviews(cb)` - _Completed in Step 3:_ return array of reviews as Review objects in callback `cb`
 
 **Follows** (Step 1)
 
@@ -39,34 +38,11 @@ Alternatively, you could try structuring the application solely from **The Big P
   - `from` - the ID of the User following another
   - `to` - the ID of the User being followed
 
-**Restaurants** (Step 2, 3)
+**Tweets** (Step 3)
 
-_Completed in Step 2_
-
-- `Restaurant` **Schema properties** - the model that identifies a restaurant
-   - `name` - The name of the Restaurant
-   - `price` - A Number on a scale of 1-3 (which you could represent on the page as "$", "$$", "$$$" or "Cheap", "Fair", "Expensive" or whatever you want!)
-   - `category` - A String (may be an `enum` if you want to limit its possible options) that describes the type of restaurant represented, i.e. "Korean" or "Barbeque."
-   - `latitude` - A Number representing the geographic location of the restaurant
-   - `longitude` - Another Number representing the geographic location of the restaurant
-   - `openTime` - A Number from 0-23 representing the hour the restaurant opens (assume Eastern Time)
-   - `closingTime` - A Number from 0-23 representing the hour the restaurant closes
-   - `totalScore` - A Number that represents the sum of stars from Reviews that have been posted for the Restaurant
-   - `reviewCount` - A Number that represents the number of Reviews that have been posted for the Restaurant
-- `Restaurant` **Schema virtuals**
-  - `averageRating` - A virtual that is calculated from `totalScore / reviewCount` to return the current average rating for a Restaurant by its Reviews.
-
-_Completed in Step 3_
-
-- `Restaurant` **Schema methods** - methods for your Restaurant models
-  - `getReviews(cb)` - pass an array of Review objects to callback `cb`
-
-**Reviews** (Step 3)
-
-- `Review` **Schema properties** - the model that defines a single review on a Restaurant
-  - `stars` - A Number (1-5) that defines how many stars were given in the review
-  - `content` - A String with the contents of the Review
-  - `restaurant` - the ID of the Restaurant that was reviewed
+- `Tweet` **Schema properties** - the model that defines a single review on a Restaurant
+  - `content` - A String with the contents of the Tweet
+  - `likes` - the ID of the Restaurant that was reviewed
   - `user` the ID of the User who posted the review
 
 
@@ -85,10 +61,10 @@ Begin by adding authentication details for your MongoDB database (either with th
 
 
 That’s it! There’s nothing to code in this part - just getting familiar with your code.
-Get ready to dive in and create more models and properties to build out the rest of Yelp!
+Get ready to dive in and create more models and properties to build out the rest of Twitter!
 
 ## Step 1: Connecting Users 🙇
-Now we’ll be adding more properties to our users in our database model to give them followers and reviews. Notice how we are *not* providing you with the typical scaffolding for each route!
+Now we’ll be adding more properties to our users in our database model to give them followers and tweets. Notice how we are *not* providing you with the typical scaffolding for each route!
 
 Your job is to take the specifications for each model and determine, with your views, how many routes you *have*, what they are *called*, and what they *do*. Take a deep breath; you've got this!
 
@@ -99,14 +75,14 @@ Begin by defining a `Schema` - you'll need to do this in order to create `virtua
 
 **Tip: you've been creating `Schema`s already!**
 
-This:
+This (we shall call method 1):
 
 ```javascript
 var User = mongoose.model("User", {
   property1: String
 });
 ```
-is equivalent to this:
+is equivalent to this (method 2):
 
 ```javascript
 var userSchema = new mongoose.Schema({
@@ -117,15 +93,14 @@ var User = mongoose.model("User", userSchema);
 ```
 
 
-
-**We want to use the latter**, because Schemas allow us to define useful additional properties on top of them, using virtuals, methods, and statics (more about these below). You will be able to define your properties inside of your Schema just like you normally do. When you create your model, just pass in a Schema as the second parameter, like `mongoose.model("User", userSchema)` as demonstrated above.
+**We want to use the method 2**, because Schemas allow us to define useful additional properties on top of them, using virtuals, methods, and statics (more about these below). You will be able to define your properties inside of your Schema just like you normally do. When you create your model, just pass in a Schema as the second parameter, like `mongoose.model("User", userSchema)` as demonstrated above.
 
 Here are some properties you definitely want to include in your **Users Schema**.
 
 - **displayName** (`String`) - could be a first name, last name, nickname, etc.
 - **email** (`String`) - email used for authentication
 - **password** (`String`) - hashed password used for authentication
-- **location** (`String`) - descriptive location for a User (a bio, of sorts)
+- **bio** (`String`) - a biography for a User
 
 Make sure that all these fields are defined on the `userSchema` before moving on.
 
@@ -154,7 +129,7 @@ We will accomplish this by using Mongoose _methods_. The way we write Mongoose m
 ```javascript
 var userSchema = new mongoose.Schema({...});
 userSchema.methods.yourMethodName = function() {
-  /* define your method here! */
+  /* define your method before your model here! */
 };
 ```
 
