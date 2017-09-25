@@ -69,11 +69,9 @@ Begin by adding authentication details for your MongoDB database (either with th
 
 > ⚠️ **Warning**: You will be changing the schema for a user significantly in the next Part (Connecting Users). Remember to dump your existing users from this Part before testing your website in the next.
 
-To test our routes, lets make a register and login .hbs file. These two handlebar files should be basic forms in which users should be able to register for an account using our MongoDb. When testing register, make sure the correct information is stored in MongoDB!!!  
-Finally, lets check that our `LocalStrategy` worked! Let's try to log in, firstly with an incorrect username+password combination. Next, let's try with the correct combination. Did it work? If yes yay! If not, you should make sure you implemented your `LocalStrategy` *exactly* as we have above!
 
-That’s it! There’s nothing to code in this part - just getting familiar with your code.
-Get ready to dive in and create more models and properties to build out the rest of Twitter!
+That’s it! There’s nothing else to code in this part - just make sure to get familiar with your code.
+Now, get ready to dive in and create more models and properties to build out the rest of Twitter!
 
 ## Step 1: Connecting Users 🙇
 Now we’ll be adding more properties to our users in our database model to give them followers and tweets. Notice how we are *not* providing you with the typical scaffolding for each route!
@@ -113,8 +111,17 @@ Here are some properties you definitely want to include in your **Users Schema**
 - **email** (`String`) - email used for authentication
 - **password** (`String`) - hashed password used for authentication
 - **bio** (`String`) - a biography for a User
+- **imgUrl** (`String`) - a direct link to your profile image
 
 Make sure that all these fields are defined on the `userSchema` before moving on.
+
+#### Checkpoint  
+  
+Great! Now lets try to register a user! We want to make sure that when we register, all of the users credentials are stored in our database. So, when we try out our register route, we should check MongoDB to make sure our user appears there right after we regsiter!  
+  
+Now that our user is stored in our database, let's try to login and test to make sure our passport works! We should try to login with incorrect credentials, and then try again with correct credentials. If this works, we should move on to the next part!  
+
+
 
 ### Follows! 👫 - `models/models.js (FollowSchema)`
 
