@@ -51,14 +51,14 @@ Alternatively, you could try structuring the application solely from **The Big P
 
 Before you start this project, check out the codebase, beginning in **`app.js`** - the entry point of your application.
 
-    1. You should begin by setting your authentication to use a `LocalStrategy` with Passport to identify users by an email address and check their password (which is stored as a hash in your MongoDB database). **Remember**: your currently logged-in users are accessible through your Passport-created `req.user` object. Take advantage of that in the Parts that follow!
+1. You should begin by setting your authentication to use a `LocalStrategy` with Passport to identify users by an email address and check their password (which is stored as a hash in your MongoDB database). **Remember**: your currently logged-in users are accessible through your Passport-created `req.user` object. Take advantage of that in the Parts that follow!
 
-        <details>
-        <summary>Hint</summary>
+    <details>
+    <summary>Hint</summary>
     
-        [Use columnify's headingTransform option](https://github.com/timoxley/columnify#transforming-column-data-and-headers)
+    [Use columnify's headingTransform option](https://github.com/timoxley/columnify#transforming-column-data-and-headers)
         
-        </details>
+    </details>
 
     2. Next, head into **`routes/index.js`**. and **`routes/auth.js`**. You should notice that the Login, Logout and Registration routes have been provided for you. These already handle storing users on the database and storing the sessions using passport and mongo-connect.
 
