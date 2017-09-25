@@ -12,6 +12,16 @@ var userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+  imgUrl: {
+    type: String,
+    required: true
+  },
+  displayName: {
+    type: String,
+  },
+  bio: {
+    type: String,
   }
   /* Add other fields here */
 });
@@ -31,16 +41,12 @@ var FollowsSchema = mongoose.Schema({
 
 });
 
-var reviewSchema = mongoose.Schema({
+
+var tweetSchema = mongoose.Schema({
 
 });
 
-
-var restaurantSchema = mongoose.Schema({
-
-});
-
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+tweetSchema.methods.getReviews = function (tweetId, callback){
 
 }
 
@@ -49,13 +55,11 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //}
 
 var User = mongoose.model('User', userSchema);
-var Restaurant = mongoose.model('Restaurant', restaurantSchema);
-var Review = mongoose.model('Review', reviewSchema);
+var Tweet = mongoose.model('Restaurant', tweetSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
   User: User,
-  Restaurant: Restaurant,
-  Review: Review,
+  Tweet: Tweet,
   Follow: Follow
 };
