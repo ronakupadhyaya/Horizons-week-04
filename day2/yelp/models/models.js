@@ -36,6 +36,9 @@ userSchema.methods.follow = function (idToFollow, callback){
 userSchema.methods.unfollow = function (idToUnfollow, callback){
 
 }
+userSchema.methods.getTweets = function (callback){
+
+}
 
 var FollowsSchema = mongoose.Schema({
 
@@ -46,13 +49,10 @@ var tweetSchema = mongoose.Schema({
 
 });
 
-tweetSchema.methods.getReviews = function (tweetId, callback){
+tweetSchema.methods.numLikes = function (tweetId, callback){
 
 }
 
-//restaurantSchema.methods.stars = function(callback){
-//
-//}
 
 var User = mongoose.model('User', userSchema);
 var Tweet = mongoose.model('Restaurant', tweetSchema);
