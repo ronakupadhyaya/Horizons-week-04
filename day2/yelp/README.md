@@ -56,16 +56,20 @@ Before you start this project, check out the codebase, beginning in **`app.js`**
     <details>
     <summary>Hint</summary>
     
+    ![](https://ibb.co/iyWRdk "hey")
+    ![](https://ibb.co/mSYYPQ "hey")
     ![](https://ibb.co/jJ2Dr5 "hey")
-        
+    
     </details>
 
-    2. Next, head into **`routes/index.js`**. and **`routes/auth.js`**. You should notice that the Login, Logout and Registration routes have been provided for you. These already handle storing users on the database and storing the sessions using passport and mongo-connect.
+2. Next, head into **`routes/index.js`**. and **`routes/auth.js`**. You should notice that the Login, Logout and Registration routes have been provided for you. These already handle storing users on the database and storing the sessions using passport and mongo-connect.
 
 Begin by adding authentication details for your MongoDB database (either with the environment variable `MONGODB_URI` or with the file `connect.js`) on mLab and creating an account.
 
 > ⚠️ **Warning**: You will be changing the schema for a user significantly in the next Part (Connecting Users). Remember to dump your existing users from this Part before testing your website in the next.
 
+To test our routes, lets make a register and login .hbs file. These two handlebar files should be basic forms in which users should be able to register for an account using our MongoDb. When testing register, make sure the correct information is stored in MongoDB!!!  
+Finally, lets check that our `LocalStrategy` worked! Let's try to log in, firstly with an incorrect username+password combination. Next, let's try with the correct combination. Did it work? If yes yay! If not, you should make sure you implemented your `LocalStrategy` *exactly* as we have above!
 
 That’s it! There’s nothing to code in this part - just getting familiar with your code.
 Get ready to dive in and create more models and properties to build out the rest of Twitter!
