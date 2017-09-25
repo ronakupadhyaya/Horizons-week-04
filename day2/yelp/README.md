@@ -121,7 +121,7 @@ Great! Now lets try to register a user! We want to make sure that when we regist
   
 Now that our user is stored in our database, let's try to login and test to make sure our passport works! We should try to login with incorrect credentials, and then try again with correct credentials. If this works, we should move on to the next part!  
 
-### Profile Page  
+### Single Profile Page - `views/singleProfile.hbs`
 
 Now that we are logged in, let's make a profile page that will display all of our information, tweets, etc. Design this page however you please, but make sure you have the following:  
   
@@ -131,7 +131,11 @@ Now that we are logged in, let's make a profile page that will display all of ou
 - **Following container** - A container which is hold and display the number of people that *you* follow.
 - **Follow Button** - A nonfunctional button which a user will click when they want to follow you. (*Will be implemented later*)  
 
-### Checkpoint
+#### Adding the Route 🌀 - `routes/index.js`
+
+* Add a route to a single profile page (`singleProfile.hbs`) based on an ID (as a part of the URL, i.e. `/users/575xxxxxxxxx`) - pass in the relevant details of a User and their populated friends list.
+
+#### Checkpoint
   
 Let's make this the page we go to by default after login. Now, let's get all of the correct information to show up on the page. Once we get the user information from MongoDB, we can move on.  
 
@@ -251,69 +255,7 @@ myUser.getFollows(function(followers, following) {
 Now that we have all of our follow logic set up, let make this button work! When a user hits the button on a specific users page, we should update our MongoDB so that this reflects.  
 _Note: Remember that we are using the **Twitter** method for follows (i.e. a user can follow another **without** having them follow them back)_  
 
-#### Checkpoint
-  
-We should be able to follow ourselfs, so let's test our button. MongoDB should update accordingly. To unfollow yourself for now, just simply delete the entry manually in mLab. Does that work? Great let's keep going!
-
-
-### Viewing Profiles 👸 - `views/singleProfile.hbs`
-Time to put the views together! You'll be first creating the Handlebars template for displaying a user's single profile page. The information you'll need to display here is largely what you've already defined in the models.
-
-Display something that looks like the following:    
-
-<img src="http://cl.ly/1q1H2F3L0D0z/Yelp%20Lite-2.png" width="500">    
-
-When creating your Single Profile template, imagine that you are passing in the following context object into the template (_you are responsible for actually passing this into your template_ when you `.render` your route in the following sections!):    
-
- ```javascript    
- {    
-   user: {    
-     _id: PERSON_BEING_VIEWED,    
-     displayName: "Ethan Lee",    
-     email: "ethan@joinhorizons.com",    
-     location: "Probably making a PB&J"    
-   },    
-   reviews: [{    
-     _id: "575xxxxxxxxxxxx",    
-     restauraunt: "575xxxxxxxxxxxx",    
-     content: "This food was okay"    
-  }],    
-   followers: [{  
-     from: {  
-       _id: USER_FOLLOWING_PERSON,    
-       displayName: "Abhi Fitness",    
-       email: "abhi@joinhorizons.com",    
-       location: "The Gym"
-     },
-     to: PERSON_BEING_VIEWED
-   }],
-   following: [{
-    from: PERSON_BEING_VIEWED,
-    to: {
-      _id: PERSON_FOLLOWING_USER,
-      displayName: "Josh",
-      email: "josh@joinhorizons.com",
-      location: "Rutgers"
-    }
-  }],
-  isFollowing: true
- }    
- ```
-Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!
-
-Most of `singleProfile.hbs` is already written for you. Open it up and see to it that it includes:
-
- * **Display Name** `{{user.displayName}}` _in the context object above_: show the name of a user currently being viewed
- * **Location** `{{user.location}}`: the descriptive location of a user
- * **Followers** `{{#each followers}}...{{/each}}` display some details about the user's followers, including:
-   * **Display Name** -  `{{this.from.displayName}}`
-   * **Location** - `{{this.from.location}}`
- * **Following** `{{#each followings}}...{{/each}}` display some details about the users that the user is following, including:
-   * **Display Name** -  `{{this.to.displayName}}`
-   * **Location** - `{{this.to.location}}`
- * **Follow or Unfollow Button**: Display a follow or unfollow button for the top-level user _only_ with a link to the appropriate route (to be made soon!) based on whether or not `isFollowing` is true.
-
-### Viewing ALL the Profiles 🏃 - `views/profiles.hbs`
+#### Viewing ALL the Profiles 🏃 - `views/profiles.hbs`
 
 To have a central directory of Users where people can follow others, we will have a template dedicated to displaying all of the Users registered for our site. The result will look like:
 
@@ -323,12 +265,9 @@ To have a central directory of Users where people can follow others, we will hav
 
 You can call that method from Handlebars using a line inside of an `each` loop like: `{{#if this.isFollowing(../user)`, given that the context object looks like: `{user: req.user, users: [Array]}` - the `../` notation will give you a parent scope in Handlebars.-->
 
-### Adding the Routes 🌀 - `routes/index.js`
-Now that you have the view templates and models for setting up Users and their relationships (Follows), it's time to make it all accessible through Express routes (`router.get` and `router.post`!).
-
+#### Adding Additional Routes 🌀 - `routes/index.js`
 As aforementioned, we are going to leave many of these design decisions up to you - but here's a few routes that you'll _definitely_ need to have.
 
-* A route to a single profile page (`singleProfile.hbs`) based on an ID (as a part of the URL, i.e. `/users/575xxxxxxxxx`) - pass in the relevant details of a User and their populated friends list.
   * Both `allFollowers` and `allFollowing` mentioned in the example context object above can be retrieved from using your `getFollows` method - remember that the results are passed into a callback! Example:
 
   ```javascript
@@ -348,6 +287,52 @@ As aforementioned, we are going to leave many of these design decisions up to yo
 * Routes to handle a user **following** or **unfollowing** another, and updating that `Follow` relationship accordingly
   * The routes to handle following and unfollowing should check whether or not the relationship exists first using `find`. For example, if User A with ID 1 attempts to follow  User 2 with ID 2 (a user they are already following), a new `Follow` document _should not_ be created, and the response should be "Already followed!"
 
+#### Checkpoint
+  
+We should be able to follow ourselfs, so let's test our button. MongoDB should update accordingly. To unfollow yourself for now, just simply delete the entry manually in mLab.  
+
+Display something that looks like the following:    
+
+<img src="http://cl.ly/1q1H2F3L0D0z/Yelp%20Lite-2.png" width="500">  
+
+When creating your Single Profile template, imagine that you are passing in the following context object into the template (_you are responsible for actually passing this into your template_ when you `.render` your route in the following sections!):    
+
+ ```javascript    
+ {    
+   user: {    
+     _id: PERSON_BEING_VIEWED,    
+     displayName: "Ethan Lee",    
+     email: "ethan@joinhorizons.com",   
+     bio: "All I know is cats.",  
+     imgUrl: "http://fallinpets.com/wp-content/uploads/2016/09/surrender.jpg",    
+   },       
+   followers: [{  
+     from: {  
+       _id: USER_FOLLOWING_PERSON,    
+       displayName: "Abhi Fitness",    
+       email: "abhi@joinhorizons.com",   
+       bio: "Oh me? Probably at the gym.",  
+       imgUrl: "http://www.top13.net/wp-content/uploads/2015/10/perfectly-timed-funny-cat-pictures-5.jpg",  
+     },
+     to: PERSON_BEING_VIEWED
+   }],
+   following: [{
+    from: PERSON_BEING_VIEWED,
+    to: {
+      _id: PERSON_FOLLOWING_USER,
+      displayName: "Josh",
+      email: "josh@joinhorizons.com",
+      bio: "Hey I'm Josh.",  
+      imgUrl: "https://i.ytimg.com/vi/geqVuYmo8Y0/hqdefault.jpg",  
+    }
+  }],
+  isFollowing: true
+ }    
+ ```
+Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!
+
+
+
 ### End Result, Step 1🏅- `http://localhost:3000`
 Time to step back and take a look at your hard work!
 
@@ -356,7 +341,7 @@ At the end of Step 1, you should be able to login, view profile pages, view othe
 Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of restaurants and their reviews.
 
 
-## Step 2: Creating and Viewing Restaurants 🍔
+## Step 2: Creating and Viewing Tweets 🍔
 
 ### Restaurant Models 🍚 - `models/models.js (RestaurantSchema)`
 
