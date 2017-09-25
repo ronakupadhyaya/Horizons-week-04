@@ -121,7 +121,19 @@ Great! Now lets try to register a user! We want to make sure that when we regist
   
 Now that our user is stored in our database, let's try to login and test to make sure our passport works! We should try to login with incorrect credentials, and then try again with correct credentials. If this works, we should move on to the next part!  
 
+### Profile Page  
 
+Now that we are logged in, let's make a profile page that will display all of our information, tweets, etc. Design this page however you please, but make sure you have the following:  
+  
+- **Profile picture** - A spot to load your profile image, given the image in your `User` model.
+- **Tweets container** - A container which will hold and display tweets that belong to you.
+- **Followers container** - A container which is hold and display the number of people that follow you.
+- **Following container** - A container which is hold and display the number of people that *you* follow.
+- **Follow Button** - A nonfunctional button which a user will click when they want to follow you. (*Will be implemented later*)  
+
+### Checkpoint
+  
+Let's make this the page we go to by default after login. Now, let's get all of the correct information to show up on the page. Once we get the user information from MongoDB, we can move on.  
 
 ### Follows! 👫 - `models/models.js (FollowSchema)`
 
@@ -129,8 +141,8 @@ Follows are awesome, but they are also a little complicated. We _could_ choose t
 
 Here are the properties you'll want to define for each of your Follows:
 
-- **from (User ID 1)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) (for this part, order does matter) - the ID of the user that follows the other.
-- **to (User ID 2)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) - The ID of the user being followed
+- **follower (User ID 1)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) (for this part, order does matter) - the ID of the user that follows the other.
+- **following (User ID 2)** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) - The ID of the user being followed
 
 (Note that this is the Twitter way of following. One can follow the other without being followed.)
 
@@ -187,15 +199,15 @@ myUser.getFollows(function(followers, following) {
 
   ```javascript
   allFollowers = [{
-    from: ID_OF_FOLLOWER,
-    to: YOUR_USER_ID
+    follower: ID_OF_FOLLOWER,
+    following: YOUR_USER_ID
   }, {
-    from: ID_OF_FOLLOWER,
-    to: YOUR_USER_ID
+    follower: ID_OF_FOLLOWER,
+    following: YOUR_USER_ID
   }];
 
   allFollowing = [{
-    to: YOUR_USER_ID,
+    follower: YOUR_USER_ID,
     following: ID_OF_USER_YOU_ARE_FOLLOWING
   }]
   ```
@@ -205,30 +217,27 @@ myUser.getFollows(function(followers, following) {
 
   ```javascript
   allFollowers = [{
-    from: {
+    follower: {
       _id: ID_OF_FOLLOWER,
-      displayName: "Moose Paksoy",
-      email: "moose@joinhorizons.com",
-      location: "San Francisco"
+      displayName: "Francisco Flores",
+      email: "frankie@joinhorizons.com",
     },
-    to: YOUR_USER_ID
+    following: YOUR_USER_ID
   }, {
-    from: {
+    follower: {
       _id: ID_OF_FOLLOWER,
-      displayName: "Fast Lane",
-      email: "lane@joinhorizons.com",
-      location: "New York City"
+      displayName: "Graham Smith",
+      email: "graham@joinhorizons.com",
     },
-    to: YOUR_USER_ID
+    following: YOUR_USER_ID
   }];
 
   allFollowing = [{
-    from: YOUR_USER_ID,
-    to: {
+    follower: YOUR_USER_ID,
+    following: {
       _id: ID_OF_USER_YOU_ARE_FOLLOWING,
-      displayName: "Josh",
-      email: "josh@joinhorizons.com",
-      location: "Rutgers"
+      displayName: "Moose Paksoy",
+      email: "moose@joinhorizons.com",
     }
   }]
   ```
@@ -236,6 +245,15 @@ myUser.getFollows(function(followers, following) {
   Notice how the `from` field for `allFollowers` and the `to` field for `allFollowing` for the populated set of data has been transformed from an ID (`ID_OF_FOLLOWER` or `ID_OF_USER_YOU_ARE_FOLLOWING`) to an actual User object. Use Mongoose's [`.populate()`](http://mongoosejs.com/docs/api.html#model_Model.populate) to populate the correct fields and accomplish this.
 
 - `isFollowing` - this method will take in another User ID and call true or false on the callback based on whether or not the user calling `isFollowing` (`this`) is following the user represented by the ID passed in. Query for a `Follow` document where `follower` is `this._id` and `following` is the ID passed in, and call a callback function with `true` if the resulting query turns up an existing `Follow` document.
+
+#### Follow Button  
+  
+Now that we have all of our follow logic set up, let make this button work! When a user hits the button on a specific users page, we should update our MongoDB so that this reflects.  
+_Note: Remember that we are using the **Twitter** method for follows (i.e. a user can follow another **without** having them follow them back)_  
+
+#### Checkpoint
+  
+We should be able to follow ourselfs, so let's test our button. MongoDB should update accordingly. To unfollow yourself for now, just simply delete the entry manually in mLab. Does that work? Great let's keep going!
 
 
 ### Viewing Profiles 👸 - `views/singleProfile.hbs`
