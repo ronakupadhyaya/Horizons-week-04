@@ -5,6 +5,7 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var session = require('cookie-session')
 
 // Express setup
 var app = express();
@@ -18,6 +19,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // MONGODB SETUP HERE
 
 // SESSION SETUP HERE
+app.use(session({
+  keys: ['my super secret password'],
+  maxAge: 1000*60*2
+}));
 
 // PASSPORT LOCALSTRATEGY HERE
 var Strategy = require('passport-local').Strategy;
@@ -48,9 +53,15 @@ passport.serializeUser(function(user, done) {
   done(null, user._id);
 });
 
-// passport.deserializeUser(function(user, done) {
-//   done(null, user._id);
-// });
+passport.deserializeUser(function(id, done) {
+  var user = null;
+  passwordsPlain.passwords.forEach(function(item, index) {
+    if (id === item._id) {
+      user = item;
+    }
+  });
+  done(null, user);
+});
 
 // PASSPORT MIDDLEWARE HERE
 app.use(passport.initialize());
@@ -58,7 +69,10 @@ app.use(passport.session());
 
 // YOUR ROUTES HERE
 app.get('/', function(req, res) {
-  res.render('index');
+  if (!req.user) {res.redirect('/login');}
+  else {
+    res.render('index', {user: req.user});
+  }
 });
 
 app.get('/login', function(req, res) {
@@ -68,5 +82,10 @@ app.get('/login', function(req, res) {
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login'})
 );
+
+app.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
 
 module.exports = app;
