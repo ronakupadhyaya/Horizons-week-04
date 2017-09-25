@@ -359,7 +359,15 @@ To start off the basics of the Tweets model, let's create some fundamental prope
     [See Mongoose maxlength to do this properly](http://mongoosejs.com/docs/api.html#schema_string_SchemaString-maxlength)
     
     </details>
-- **likes** (`Array`) - Should store an ***Array of references*** for users who have liked each individual tweet
+- **likes** (`Array`) - Should store an ***Array of references*** for users who have liked each individual tweet  
+    <details>
+    <summary>Hint</summary>
+    
+    likes: [{ type : ObjectId, ref: 'User' }]
+    
+    </details>
+
+
 
 That's all for Tweets for now!
 
