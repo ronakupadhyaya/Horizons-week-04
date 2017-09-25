@@ -49,6 +49,7 @@ Alternatively, you could try structuring the application solely from **The Big P
 ## Step 0: Authentication 🔐 - `app.js`, `routes/index.js`,  `models/models.js`
 👀 **Note:** this is step is partially completed for you! All you must do is fill in passport where it is needed! - _The code will be given, but make sure to read through, familiarize yourself with the authentication flow, and add your MongoDB details!_
 
+
 Before you start this project, check out the codebase, beginning in **`app.js`** - the entry point of your application.
 
 1. You should begin by setting your authentication to use a `LocalStrategy` with Passport to identify users by an email address and check their password (which is stored as a hash in your MongoDB database). **Remember**: your currently logged-in users are accessible through your Passport-created `req.user` object. Take advantage of that in the Parts that follow!
@@ -56,9 +57,9 @@ Before you start this project, check out the codebase, beginning in **`app.js`**
     <details>
     <summary>Hint</summary>
     
-    ![](https://ibb.co/iyWRdk "hey")
-    ![](https://ibb.co/mSYYPQ "hey")
-    ![](https://ibb.co/jJ2Dr5 "hey")
+    ![](https://preview.ibb.co/dhAxjQ/Screen_Shot_2017_09_25_at_8_43_36_AM.png)
+    ![](https://preview.ibb.co/cg8NJk/Screen_Shot_2017_09_25_at_8_43_17_AM.png)
+    ![](https://preview.ibb.co/euymB5/Screen_Shot_2017_09_25_at_8_43_03_AM.png)
     
     </details>
 
