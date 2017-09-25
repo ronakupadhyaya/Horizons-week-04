@@ -539,8 +539,24 @@ Tomorrow, we'll be delving into searching, sorting, and filtering through all th
 
 
 ## Phase 1 Challenge 🏆
-You've made it this far, and early. Why not a challenge?
+You've made it this far, and early. Why not a challenge?  
+  
+These challenges will be a bit more open ended, and you will be free to implement them however you want!  
+  
+- Retweets
+    <details>
+    <summary>Hint</summary>
+    
+    You should add another key to our Tweet model, similarly to "likes". How could we make sure these retweets display on a singleProfile of a user who does not own them?
+    
+    </details>  
+- Filter tweets  
+    - Based on user, date posted, etc. 
+- Enable mentions 
+   <details>
+   <summary>Hint</summary>
+   Extract usernames with the '@' symbol infront in tweets. Maybe add another key to your tweets model, which has a list of all users mentioned in the tweet.
+   </details>
+ 
 
-Right now, you've only added a button that changes between Follow and Unfollow for single profile views (`singleProfile.hbs`). Try doing that for every follower and followee in each `singleProfile` user view and for every user in the `profiles.hbs` user directory.
 
-Keep in mind that you will have to check whether to display a Follow or Unfollow button _from the perspective of `req.user`_, regardless of what page they are viewing! There are a few options here - creating new fields on Users for keeping track of followers and followed users by IDs, or calling `getFollows` on `req.user` to determine which users both the currently logged-in user and the user being viewed follow. Good luck!
