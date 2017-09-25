@@ -3,6 +3,7 @@
 
 Today we will be building a clone of the popular media webite Twitter, using your knowledge of MongoDB queries, processing, and performance. Yay!
 
+_Note: Make sure you are committing to github **as much as you can**._ If you do this and something happens with your code, you can always go fetch your old version!
 
 ## Table of Contents
 
@@ -123,6 +124,8 @@ Make sure that all these fields are defined on the `userSchema` before moving on
 Great! Now lets try to register a user! We want to make sure that when we register, all of the users credentials are stored in our database. So, when we try out our register route, we should check MongoDB to make sure our user appears there right after we regsiter!  
   
 Now that our user is stored in our database, let's try to login and test to make sure our passport works! We should try to login with incorrect credentials, and then try again with correct credentials. If this works, we should move on to the next part!  
+  
+  If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 ### Single Profile Page - `views/singleProfile.hbs`
 
@@ -141,6 +144,8 @@ Now that we are logged in, let's make a profile page that will display all of ou
 #### Checkpoint
   
 Let's make this the page we go to by default after login. Now, let's get all of the correct information to show up on the page. Once we get the user information from MongoDB, we can move on.  
+  
+If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 ### Follows! 👫 - `models/models.js (FollowSchema)`
 
@@ -332,16 +337,18 @@ When creating your Single Profile template, imagine that you are passing in the 
   isFollowing: true
  }    
  ```
-Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!
-
-
+Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!  
+  
+If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 ### End Result, Step 1🏅- `http://localhost:3000`
 Time to step back and take a look at your hard work!
 
 At the end of Step 1, you should be able to login, view profile pages, view other profiles, and follow other users.
 
-Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of tweets.
+Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of tweets.  
+  
+If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 
 ## Step 2: Creating and Viewing Tweets 🍔
@@ -447,7 +454,7 @@ Looks like your views and models for restaurants are ready to go! Time to build 
 
 
 ### End Result, Step 2🏅- `http://localhost:3000`
-At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Tweets with their details of content, author, and likes.
+At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Tweets with their details of content, author, and likes. Make sure to commit your code!
 
 
 ## Step 3: The Final Touches ⭐
@@ -457,6 +464,10 @@ Now that we have an Array of references attached to our tweets, representing eac
   
 In our `singleTweet.hbs` file, let's add a container to view the likes on the individual tweet! The goal is to see some information about each person who has liked the tweet, e.g their display name. Use `.populate()` to get this information and display it on the page!
 
+## Phase 1: COMPLETE ⭐  
+Congrats! You have finished phase 1! You have succesfully implemeneted most of the basic functionality that twitter uses! Make sure you commit your code to github, if you haven't already.  
+  
+Hungry for more? Check out the below challenges!
 
 ## Phase 1 Challenge 🏆
 You've made it this far, and early. Why not a challenge?  
