@@ -42,8 +42,8 @@ Alternatively, you could try structuring the application solely from **The Big P
 
 - `Tweet` **Schema properties** - the model that defines a single review on a Restaurant
   - `content` - A String with the contents of the Tweet
-  - `likes` - the ID of the Restaurant that was reviewed
-  - `user` the ID of the User who posted the review
+  - `likes` - the ID's of the users who have 'liked' the tweet  
+  - `user` - the ID of the User who posted/authored the tweet
 
 
 ## Step 0: Authentication 🔐 - `app.js`, `routes/index.js`,  `models/models.js`
@@ -341,7 +341,7 @@ Time to step back and take a look at your hard work!
 
 At the end of Step 1, you should be able to login, view profile pages, view other profiles, and follow other users.
 
-Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of restaurants and their reviews.
+Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of tweets.
 
 
 ## Step 2: Creating and Viewing Tweets 🍔
@@ -359,81 +359,52 @@ To start off the basics of the Tweets model, let's create some fundamental prope
     [See Mongoose maxlength to do this properly](http://mongoosejs.com/docs/api.html#schema_string_SchemaString-maxlength)
     
     </details>
-- **Latitude** (`Number`) - the latitude of the Restaurant's location
-- **Longitude** (`Number`) - the longitude of the Restaurant's location
-- **Price** (`Number`) - the descriptive scaling of a restaurants price, on a scale of 1-3
-- **Open Time** (`Number`) - an hour of opening time (assume Eastern Time, UTC-4) between 0-23
-- **Closing Time** (`Number`) - an hour of closing time between 0-23
+- **likes** (`Array`) - Should store an ***Array of references*** for users who have liked each individual tweet
 
-That's all for Restaurants for now - we will be giving them virtuals and methods when we create **Reviews** in Step 3!
+That's all for Tweets for now!
 
-### Creating Restaurants 💛 - `views/newRestaurant.hbs`
-Create a basic form for creating a new restaurant with all of its basic information. In place of `latitude` and `longitude`, take in a single field for an `address` - in **Adding the Routes**, we'll show you how to geocode this address into coordinates you can store in your database. Your form should take each of the following inputs:
+### Creating Tweets 💛 - `views/newRestaurant.hbs`
+Create a basic form for creating a new tweet with all of its basic information. Your form should take each of the following inputs:
 
-* A name for the new restaurant
-* A category (could be a dropdown selector)
-* The relative price of the restaurant's items - on a scale of 1-3
-* An address for geocoding to coordinates
-* An open time
-* A closing time
+* The content of the tweet
+    <details>
+    <summary>Hint</summary>
+    
+    You should make sure the user DOES NOT enter more than 140 characters per tweet (Twitter has this limitation, so we should as well!)
+    
+    </details>
 
-Keep your `name` attributes for each input of the form in the back of your mind - you'll need it when handling the `POST` request that will save the new restaurant as a MongoDB document.
 
 The end result should look something like:
 
 <img src="http://cl.ly/3F2126010E36/Yelp%20Lite-4.png" width="500">
 
-### Browsing Restaurants 🍺 - `views/singleRestaurant.hbs`
-When displaying a single restaurant, you'll want to show all of the fields you created for the `Restaurant` model above. The end result should look something like the following:
+### Viewing Single Tweets 🍺 - `views/singleTweet.hbs`
+When displaying a single tweet, you should only display the relevant information, so in this case, the author, the content, and the number of likes the tweet has. We want to add the ability to view a single tweet so we can send them to our friends without having to dig through a mess of tweets!
 
 <img src="http://cl.ly/0K10042i0l01/Yelp%20Lite-5.png" width="500">
 
-You can display a map by coordinates by using the [**Google Maps Static Maps API**](https://developers.google.com/maps/documentation/static-maps).
-To
-create and see a static map, just insert an image in the following format:
 
-```
-<img src="https://maps.googleapis.com/maps/api/staticmap?center=[LATITUDE],[LONGITUDE]&markers=color:red|[LATITUDE],[LONGITUDE]&zoom=13&size=600x300&maptype=roadmap">
-```
+**Methods for Tweets**
 
-![](https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571)
+- `getLikes` - This method should find the array of User documents associated with the Tweet calling the method (`this`) and call a callback function with an array of populated Tweets. Make sure to use `.populate` for this to replace the `userId` in the Review with the details of the actual user! This will be used in the likes page .
 
-As an example, this map of the middle of nowhere was created using the `src`: `https://maps.googleapis.com/maps/api/staticmap?center=33.6434822,-117.5809571&zoom=15&size=600x300&maptype=roadmap&markers=color:red|33.6434822,-117.5809571`.
+**Virtuals for Tweets**
 
-For now, a restaurant will not display anything but its basic details and location. When we create the **Reviews** model in Step 3, we will revisit this view and add interface elements to create and view reviews on a restaurant.
+- `numLikes` - this virtual should return the total number of likes per tweet. Need a refresher on creating Mongoose virtuals? Take a look at [the documentation!](http://mongoosejs.com/docs/guide.html) - scroll down to "Virtuals."
 
-### Browsing ALL the Restaurants 🍻 - `views/restaurants.hbs`
 
-When viewing all Restaurants, you should be able to see their basic information; Location, Category, Price, and Name are all important here. Don't worry about sorting, searching, or filtering for now - we'll tackle that tomorrow.
+### Creating User Methods for Tweets 🍃 - `models/models.js (UserSchema)`
+The single method you will be creating for your User to fetch tweets will also use a callback to return its results. Likewise, make sure that when you call this in your routes, you are passing in a callback function to define _what happens_ when you get those results back.
 
-In this template, imagine that your context object looks like the following:
+- `getTweets` - This method will query the Tweet documents for all tweets with the same User ID as the user calling `getTweets`, which you can identify by the `this` keyword. For this `getTweets`, you will `.populate` the Tweet ID instead!
 
-```javascript
-[{
-  "name": "Brotherly Grub",
-  "category": "Food Trucks",
-  "price": 1,
-  "latitude": 39.9552474,
-  "longitude": -75.1969099,
-  "openTime": 11,
-  "closeTime": 15,
-  "totalScore": 15,
-  "reviewCount": 3
-},
-{
-  "name": "Wawa",
-  "category": "Convenience Store",
-  "price": 1,
-  "latitude": 39.9509339,
-  "longitude": -75.19891,
-  "openTime": 9,
-  "closeTime": 19,
-  "totalScore": 20,
-  "reviewCount": 10
-}]
-```
+### Browsing ALL tweets 🍻 - `views/tweets.hbs`
 
-**Use your `averageRating` virtual (which will be defined below) to display the average rating of each restaurant inline with its listing on your restaurants view. You can access it like any other property!**
+When viewing all tweets, you should be able to see basic information; content, # of likes, and author are all important here. Don't worry about sorting, searching, or filtering for now - we'll tackle that tomorrow.
+
+
+**Use your `numLikes` virtual (which will be defined below) to display the average rating of each restaurant inline with its listing on your restaurants view. You can access it like any other property!**
 
 > ⚠️  **Warning:** You may have called these fields by different property names! Make sure that your Handlebars templates `{{placeholders}}` match those that you defined in your models previously.
 
@@ -445,20 +416,17 @@ The end result will look something like the following:
 ### Adding the Routes 🌀 - `routes/index.js`
 Looks like your views and models for restaurants are ready to go! Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
 
-* A route for viewing all the restaurants with basic information (name, location, price, category), rendering `restaurants.hbs`.
-  * _What to Pass In_: A context object with a property `restaurants` that has an array of all Restaurant documents.
-  * Go the extra mile and implement paging for restaurants!
-* A route for viewing any one restaurant by its ID, also with basic information, rendering `singleRestaurant.hbs`.
-  * _What to Pass In_: A context object with a property `restaurant` that has a single Restaurant document
-* A route for creating new restaurants, rendering `newRestaurant.hbs`
-  * You'll need to have a `POST` route to handle the form from `newRestaurant.hbs` as well, so that you can save the new Restaurant document with the data receieved in `req.body`.
-  * **Note**: your `POST` route will take an `address` field as specified in **Creating Restaurants 💛** - follow the directions in `google-maps.md` (within this directory) on **Getting a Google Maps API Key** to put your key into `index.js` and use our scaffold to automatically convert a passed-in address to longitude and latitude coordinates that you can store.
+* A route for viewing all the restaurants with basic information (name, content, likes), rendering `tweets.hbs`.
+  * _What to Pass In_: A context object with a property `tweet` that has an array of all Tweet documents.
+  * Go the extra mile and implement paging for tweets!
+* A route for viewing any one restaurant by its ID, also with basic information, rendering `singleTweet.hbs`.
+  * _What to Pass In_: A context object with a property `tweet` that has a single Tweet document
+* A route for creating new restaurants, rendering `newTweet.hbs`
+  * You'll need to have a `POST` route to handle the form from `newTweet.hbs` as well, so that you can save the new Tweet document with the data receieved in `req.body`.
 
 
 ### End Result, Step 2🏅- `http://localhost:3000`
-At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Restaurants with their details of location, category, and price.
-
-It is important to note that up until this point, we have not connected users to the restaurants themselves; that will come with Reviews. Get ready!
+At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Tweets with their details of content, author, and likes.
 
 
 ## Step 3: Reviewing Restaurants ⭐
@@ -489,19 +457,6 @@ Restaurant.findById(req.params.id, function(err, rest) {
 ```
 Your code may look different! Just remember to be consistent with your naming and usage of variables in your templates!
 
-**Methods for Restaurants**
-
-- `getReviews` - This method should find the array of Review documents associated with the Restaurant calling the method (`this`) and call a callback function with an array of populated Reviews. Make sure to use `.populate` for this to replace the `userId` in the Review with the details of the actual user! This will be used in the restaurant page (created below).
-
-**Virtuals for Restaurants**
-
-- `averageRating` - this virtual should return the result of `totalScore / reviewCount` (1-5). Need a refresher on creating Mongoose virtuals? Take a look at [the documentation!](http://mongoosejs.com/docs/guide.html) - scroll down to "Virtuals."
-
-
-### Creating User Methods for Reviews 🍃 - `models/models.js (UserSchema)`
-The single method you will be creating for your User to fetch reviews will also use a callback to return its results. Likewise, make sure that when you call this in your routes, you are passing in a callback function to define _what happens_ when you get those results back.
-
-- `getReviews` - This method will query the Review documents for all reviews with the same User ID as the user calling `getReviews`, which you can identify by the `this` keyword. For this `getReviews`, you will `.populate` the Restaurant ID instead!
 
 ### Displaying Reviews on Profiles and Restaurants 🌋 - `views/singleRestaurant.hbs`, `views/singleProfile.hbs`
 
@@ -514,31 +469,6 @@ The finished product for the `singleRestaurant` view will look something like:
 And the finished `singleProfile` view will look like:
 
 <img src="http://cl.ly/2d043u3j013F/Yelp%20Lite-8.png" width="500">
-
-### Leaving Reviews 🌟 - `views/newReview.hbs`
-Next, create a simple form for leaving a Review for a Restaurant. All it needs to take in is fields for review content and a rating from 1-5. The Restaurant ID will come from the URL that this form `POST`s to (something along the lines of `POST /restaurants/:id/review`; we'll define what this is later in **Adding the Routes 🌀**), and the User ID will come from the currently logged-in user's ID (`req.user`).
-
-<img src="http://cl.ly/0p3S3s2Q1n0U/download/Image%202016-06-27%20at%2011.15.21%20AM.png" width="500">
-
-
-### Adding the Routes 🌀 - `routes/index.js`
-We're almost there! Like before, this is only basic guidance on how to implement your routes - design decisions are still up to you. We need to modify existing routes in the following ways:
-
-* The route that handles rendering `singleRestaurant` must now be passed a context object that has a `reviews` property as well, containing an array of populated Review objects using a Restaurant's `getReviews` method. `singleRestaurant` should also now be passed a `stars` property that is provided by a Restaurant's `stars` method.
-* The route that handles rendering `singleProfile` must now also be passed a context object that has a `reviews` property, containing an array of populated Review objects using a User's `getReviews` method.
-
-We also need to create a couple new routes to handle new reviews:
-
-* A route to render the `newReview` template that has a Restaurant ID in its URL (`req.params`)
-* A route to handle the `POST` of a new Review at the same URL, that saves the new incoming Review from details in `req.body`, a User ID for the review from `req.user`, and a Restaurant ID for the review from `req.params`. **When you create the new Review, make sure to update the corresponding Restaurant's `totalScore` and `reviewCount`!**
-
-
-### End Result, Step 3🏅- `http://localhost:3000`
-Amazing! You've completed Phase 1 of the Yelp project. You should be able to perform all of the basic functions of Yelp - from logging in and making friends to posting reviews and looking up restaurants.
-
-The most significant result from this step will be to have given logged-in users the ability to review restaurants and display those reviews on both User profiles and Restaurant listings.
-
-Tomorrow, we'll be delving into searching, sorting, and filtering through all this data to provide your users with the exact content they are looking for.
 
 
 ## Phase 1 Challenge 🏆
