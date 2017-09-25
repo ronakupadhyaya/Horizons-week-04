@@ -343,12 +343,19 @@ Hooray! You've just built the fundamentals of a social network! Now it's time to
 
 ## Step 2: Creating and Viewing Tweets 🍔
 
-### Restaurant Models 🍚 - `models/models.js (RestaurantSchema)`
+### Tweet Models 🍚 - `models/models.js (TweetSchema)`
 
-To start off the basics of the Restaurants model, let's create some fundamental properties for _what make a restaurant a restaraunt_. The ones we thought of are as follows:
+To start off the basics of the Tweets model, let's create some fundamental properties for _what make a tweet a tweet_. The ones we thought of are as follows:
 
-- **Name** (`String`) - the name of the Restaurant
-- **Category** (`String`) - the type of the Restaurant ("Korean", "Barbeque", "Casual")
+- **user** (`type: mongoose.Schema.ObjectId`, `ref: 'User'`) - The user who posted/is the author of the tweet
+- **content** (`String`) - The content of the tweet.
+    - Should limit this field to be a maximum of 140 characters
+    <details>
+    <summary>Hint</summary>
+    
+    [See Mongoose maxlength to do this properly](http://mongoosejs.com/docs/api.html#schema_string_SchemaString-maxlength)
+    
+    </details>
 - **Latitude** (`Number`) - the latitude of the Restaurant's location
 - **Longitude** (`Number`) - the longitude of the Restaurant's location
 - **Price** (`Number`) - the descriptive scaling of a restaurants price, on a scale of 1-3
