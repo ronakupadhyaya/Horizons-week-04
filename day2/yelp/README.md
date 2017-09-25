@@ -8,7 +8,7 @@ Today we will be building a clone of the popular media webite Twitter, using you
 
 - **The Big Picture** 🖼
 - **Step 0:** Authentication 🔐
-- **Step 1:** Connecting Users (Followers amd Profiles)🙇
+- **Step 1:** Connecting Users (Followers and Profiles)🙇
 - **Step 2:** Creating and Viewing Tweets 🍔
 - **Step 3:** Connecting everything ⭐
 - **Phase 1 Challenges** 🏆
@@ -98,6 +98,9 @@ is equivalent to this (method 2):
 var userSchema = new mongoose.Schema({
    property1: String
 })
+
+//STATIC DEFINITIONS SHOULD GO HERE  
+//METHOD DEFINITIONS SHOULD GO HERE
 
 var User = mongoose.model("User", userSchema);
 ```
