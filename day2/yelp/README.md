@@ -8,9 +8,9 @@ Today we will be building a clone of the popular media webite Twitter, using you
 
 - **The Big Picture** 🖼
 - **Step 0:** Authentication 🔐
-- **Step 1:** Connecting Users 🙇
+- **Step 1:** Connecting Users (Followers amd Profiles)🙇
 - **Step 2:** Creating and Viewing Tweets 🍔
-- **Step 3:** Reviewing Restaurants ⭐
+- **Step 3:** Connecting everything ⭐
 - **Phase 1 Challenges** 🏆
 
 ## The Big Picture 🖼
@@ -35,8 +35,8 @@ Alternatively, you could try structuring the application solely from **The Big P
 **Follows** (Step 1)
 
 - `Follow` - the model that is used to identify a relationship between a User and another they are following (_see **Follows!**_)
-  - `from` - the ID of the User following another
-  - `to` - the ID of the User being followed
+  - `follower` - the ID of the User following another
+  - `following` - the ID of the User being followed
 
 **Tweets** (Step 3)
 
@@ -47,11 +47,18 @@ Alternatively, you could try structuring the application solely from **The Big P
 
 
 ## Step 0: Authentication 🔐 - `app.js`, `routes/index.js`,  `models/models.js`
-👀 **Note:** this is a read-only Step - _No writing code here, but make sure to read through, familiarize yourself with the authentication flow, and add your MongoDB details!_
+👀 **Note:** this is step is partially completed for you! All you must do is fill in passport where it is needed! - _The code will be given, but make sure to read through, familiarize yourself with the authentication flow, and add your MongoDB details!_
 
 Before you start this project, check out the codebase, beginning in **`app.js`** - the entry point of your application.
 
-Notice how your authentication method has been set to use a `LocalStrategy` with Passport to identify users by an email address and check their password (which is stored as a hash in your MongoDB database). **Remember**: your currently logged-in users are accessible through your Passport-created `req.user` object. Take advantage of that in the Parts that follow!
+You should begin by setting your authentication to use a `LocalStrategy` with Passport to identify users by an email address and check their password (which is stored as a hash in your MongoDB database). **Remember**: your currently logged-in users are accessible through your Passport-created `req.user` object. Take advantage of that in the Parts that follow!
+
+        <details>
+        <summary>Hint</summary>
+    
+        [Use columnify's headingTransform option](https://github.com/timoxley/columnify#transforming-column-data-and-headers)
+        
+        </details>
 
 Next, head into **`routes/index.js`**. and **`routes/auth.js`**. You should notice that the Login, Logout and Registration routes have been provided for you. These already handle storing users on the database and storing the sessions using passport and mongo-connect.
 
