@@ -5,7 +5,10 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var session = require('cookie-session')
+
+// var session = require('cookie-session'); // not confidential - atob('cookie value') will decode
+var session = require('express-session'); // confidential
+var MongoStore = require('connect-mongo')(session);
 
 // Express setup
 var app = express();
@@ -24,9 +27,13 @@ mongoose.connection.on('connected', function() {
 mongoose.connect(process.env.MONGODB_URI);
 
 // SESSION SETUP HERE
+// app.use(session({
+//   keys: ['my super secret password'],
+//   maxAge: 1000*60*2
+// }));
 app.use(session({
-  keys: ['my super secret password'],
-  maxAge: 1000*60*2
+  secret: process.env.SECRET_BENG,
+  store: new MongoStore({mongooseConnection: require('mongoose').connection})
 }));
 
 // PASSPORT LOCALSTRATEGY HERE
@@ -51,7 +58,6 @@ passport.use(new Strategy(
     }
   }
 ));
-
 
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user, done) {
