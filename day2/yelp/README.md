@@ -56,7 +56,7 @@ Before you start this project, check out the codebase, beginning in **`app.js`**
     <details>
     <summary>Hint</summary>
     
-    ![](https://ibb.co/jJ2Dr5)
+    ![](https://ibb.co/jJ2Dr5 "hey")
         
     </details>
 
