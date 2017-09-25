@@ -10,7 +10,7 @@ In this exercise we're going to implement logins using GitHub OAuth.
     1. Pick a fun application name
     1. Set "Homepage URL" to `http://localhost:3000`
     1. Set "Authorization callback URL" to `http://localhost:3000/auth/github/callback`
-1. Create a new file `env.sh` in `week04/day3/oauth` put the Client ID and Client
+1. Create a new file `env.sh` in `week04/day4/examples/oauth` put the Client ID and Client
   Secret for your new app there:
 
     ```bash
