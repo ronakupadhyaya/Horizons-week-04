@@ -17,6 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // MONGODB SETUP HERE
+var mongoose = require('mongoose');
+mongoose.connection.on('connected', function() {
+  console.log('Connected to MongoDB!');
+});
+mongoose.connect(process.env.MONGODB_URI);
 
 // SESSION SETUP HERE
 app.use(session({
