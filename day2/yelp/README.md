@@ -407,6 +407,19 @@ The single method you will be creating for your User to fetch tweets will also u
 
 - `getTweets` - This method will query the Tweet documents for all tweets with the same User ID as the user calling `getTweets`, which you can identify by the `this` keyword. For this `getTweets`, you will `.populate` the Tweet ID instead!
 
+Remember that because our methods rely on asynchronous calls (namely, database queries such as `find`), we must take in a callback function for these methods to get the result of the function! For example, using the `getTweets` function in our routes will look _something_ like:
+
+```javascript
+User.findById(req.params.id, function(err, user1) {
+  user1.getTweets(function(tweets) {
+    res.render('singleProfile', {
+      user: user,
+      tweets: tweets
+    });
+  });
+});
+```
+
 ### Browsing ALL tweets 🍻 - `views/tweets.hbs`
 
 When viewing all tweets, you should be able to see basic information; content, # of likes, and author are all important here. Don't worry about sorting, searching, or filtering for now - we'll tackle that tomorrow.
@@ -437,46 +450,12 @@ Looks like your views and models for restaurants are ready to go! Time to build 
 At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Tweets with their details of content, author, and likes.
 
 
-## Step 3: Reviewing Restaurants ⭐
+## Step 3: The Final Touches ⭐
 
-### Review Models 📝 - `models/models.js (ReviewSchema)`
-
-Reviews are a Schema by themselves. A review contains both the ID of the user posting the review and the ID of the restaurant receiving the review. You should also have a property for content and the number of stars for the review. In other words, it should look like:
-
-* **Content** (`String`) - the content of the review
-* **Stars** (`Number`) - the number of stars (1-5) given for a restaurant by a review
-* **Restaurant ID** (`mongoose.Schema.Types.ObjectId`) - the ID of the restaurant that the review is associated with
-* **User ID** (`mongoose.Schema.Types.ObjectId`) - the ID of the user that posted the review
-
-Great! Review models don't need any helpers or virtuals for their Schema, but next, we'll be revisiting our Schemas for Restaurants and Users to add Review-related methods to their respective models.
-
-### Creating Restaurant Methods and Virtuals for Reviews 🌪 - `models/models.js (RestaurantSchema)`
-Remember that because our methods rely on asynchronous calls (namely, database queries such as `find`), we must take in a callback function for these methods to get the result of the function! For example, using the `getReviews` function in our routes will look _something_ like:
-
-```javascript
-Restaurant.findById(req.params.id, function(err, rest) {
-  rest.getReviews(function(reviews) {
-    res.render('singleRestaurant', {
-      restaurant: rest,
-      reviews: reviews
-    });
-  });
-});
-```
-Your code may look different! Just remember to be consistent with your naming and usage of variables in your templates!
-
-
-### Displaying Reviews on Profiles and Restaurants 🌋 - `views/singleRestaurant.hbs`, `views/singleProfile.hbs`
-
-Now that we've updated our models with methods that allow you to fetch reviews on a per-Restaurant or per-User basis, we need to update our templates to allow us to display them on profile and restaurant pages.
-
-The finished product for the `singleRestaurant` view will look something like:
-
-<img src="http://cl.ly/2C1A2H0Y3U0Q/Yelp%20Lite-7.png" width="500">
-
-And the finished `singleProfile` view will look like:
-
-<img src="http://cl.ly/2d043u3j013F/Yelp%20Lite-8.png" width="500">
+### Viewing Likes 📝 
+Now that we have an Array of references attached to our tweets, representing each 'like', we want to do something with this!  
+  
+In our `singleTweet.hbs` file, let's add a container to view the likes on the individual tweet! The goal is to see some information about each person who has liked the tweet, e.g their display name. Use `.populate()` to get this information and display it on the page!
 
 
 ## Phase 1 Challenge 🏆
