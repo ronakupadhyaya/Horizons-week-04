@@ -12,4 +12,9 @@
     <button class="btn btn-success">Login</button>
     <a class="btn btn-primary" href="/signup">Register</a>
   </div>
+  <ul>
+    {{#each messages}}
+      <li> {{this}} </li>
+    {{/each}}
+  </ul>
 </form>
