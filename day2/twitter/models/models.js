@@ -26,36 +26,49 @@ var userSchema = mongoose.Schema({
   /* Add other fields here */
 });
 
-userSchema.methods.getFollows = function (callback){
+userSchema.methods.getFollows = function (callback) {
 
 }
-userSchema.methods.follow = function (idToFollow, callback){
+userSchema.methods.follow = function (idToFollow, callback) {
 
 }
 
-userSchema.methods.unfollow = function (idToUnfollow, callback){
+userSchema.methods.unfollow = function (idToUnfollow, callback) {
 
 }
-userSchema.methods.getTweets = function (callback){
+userSchema.methods.getTweets = function (callback) {
 
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  follower: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
+  following: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  }
 });
-
 
 var tweetSchema = mongoose.Schema({
-
+  content: {
+    type: String,
+    required: true
+  },
+  author: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  }
 });
 
-tweetSchema.methods.numLikes = function (tweetId, callback){
+tweetSchema.methods.numLikes = function (tweetId, callback) {
 
 }
 
 
 var User = mongoose.model('User', userSchema);
-var Tweet = mongoose.model('Restaurant', tweetSchema);
+var Tweet = mongoose.model('Tweet', tweetSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {

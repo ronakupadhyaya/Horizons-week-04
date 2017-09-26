@@ -5,19 +5,19 @@ var router = express.Router();
 var models = require('../models/models');
 
 
-module.exports = function(passport) {
+module.exports = function (passport) {
 
   // GET registration page
-  router.get('/signup', function(req, res) {
+  router.get('/signup', function (req, res) {
     res.render('signup');
   });
 
   // POST registration page
-  var validateReq = function(userData) {
+  var validateReq = function (userData) {
     return (userData.password === userData.passwordRepeat);
   };
 
-  router.post('/signup', function(req, res) {
+  router.post('/signup', function (req, res) {
     if (!validateReq(req.body)) {
       return res.render('signup', {
         error: "Passwords don't match."
@@ -31,7 +31,7 @@ module.exports = function(passport) {
       password: req.body.password
     });
 
-    u.save(function(err, user) {
+    u.save(function (err, user) {
       if (err) {
         console.log(err);
         res.status(500).redirect('/register');
@@ -43,17 +43,17 @@ module.exports = function(passport) {
   });
 
   // GET Login page
-  router.get('/login', function(req, res) {
+  router.get('/login', function (req, res) {
     res.render('login');
   });
 
   // POST Login page
-  router.post('/login', passport.authenticate('local'), function(req, res) {
+  router.post('/login', passport.authenticate('local'), function (req, res) {
     res.redirect('/');
   });
 
   // GET Logout page
-  router.get('/logout', function(req, res) {
+  router.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/login');
   });
