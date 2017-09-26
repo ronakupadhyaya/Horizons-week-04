@@ -24,3 +24,11 @@
 {{#each followers}}
   <p>{{this.follower.displayName}}</p>
 {{/each}}
+
+{{#if isFollowing}}
+  <a id="{{user._id}}" class="follow btn btn-primary">Unfollow</a>
+{{else}}
+  <a id="{{user._id}}" class="follow btn btn-primary">Follow</a>
+{{/if}}
+
+<script src="/javascript/singleProfile.js"></script>

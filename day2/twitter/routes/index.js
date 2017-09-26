@@ -14,7 +14,12 @@ router.use(function(req, res, next){
   }
 });
 router.get('/', function(req, res){
-  res.render('singleProfile', {user: req.user});
+  req.user.getFollows(function(response){
+    var allFollowers = response.followed;
+    var allFollowing = response.follows;
+    res.render('singleProfile', {user: req.user, followers: allFollowers, followings: allFollowing});
+  })
+
 })
 router.get('/users/', function(req, res, next) {
 
@@ -30,11 +35,55 @@ router.get('/users/:userId', function(req, res, next) {
     if(err){
       res.send(err);
     } else{
-      res.render('singleProfile', {user: user});
+      req.user.isFollowing(user, function(err, respObj){
+        if(err){
+          res.send(err);
+        } else{
+          user.getFollows(function(response){
+            var allFollowers = response.followed;
+            var allFollowing = response.follows;
+            console.log("following", allFollowing);
+            res.render('singleProfile', {user: user, followers: allFollowers, followings: allFollowing, isFollowing: respObj.isFollowing});
+          })
+        }
+
+
+      })
+
     }
   })
 
 });
+
+router.get('/followers', function(req, res){
+  var userId = req.user.id;
+  User.findById(userId, function(err, user){
+    user.getFollows(function(resultObj){
+      console.log("RESULT OBJ", resultObj);
+      res.json(resultObj);
+    })
+  })
+});
+
+router.get('/follow/:userId', function(req, res){
+  var idToFollow = req.params.userId;
+  User.findById(req.user._id, function(err, user){
+    user.follow(idToFollow, function(err, followObj){
+      console.log("FOLLOW OBJ", followObj);
+      res.send(followObj);
+    })
+  });
+});
+
+router.get('/unfollow/:userId', function(req, res){
+  var idToFollow = req.params.userId;
+  User.findById(req.user._id, function(err, user){
+    user.unfollow(idToFollow, function(err, followObj){
+      console.log("FOLLOW OBJ", followObj);
+      res.json(followObj);
+    })
+  });
+})
 
 router.get('/tweets/', function(req, res, next) {
 

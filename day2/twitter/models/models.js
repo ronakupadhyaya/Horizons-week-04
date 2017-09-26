@@ -56,21 +56,74 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 userSchema.methods.getFollows = function (callback){
-
+  var userId = this._id
+  Follow.find({follower: userId}).populate('following').exec(function(err, follows){
+    Follow.find({following: userId}).populate('follower').exec(function(err, followed){
+      callback({err: err, followed: followed, follows: follows});
+    })
+  })
 }
 userSchema.methods.follow = function (idToFollow, callback){
+  var userId = this._id;
+  if(idToFollow !== userId){
+    Follow.findOne({follower: this._id, following: idToFollow}, function(err, alreadyFollowed){
+      if(err){
+        callback(err, null)
+      } else{
+        if(alreadyFollowed){
+          callback("already followed", null);
+        } else{
+          var follow = new Follow({
+            follower: userId,
+            following: idToFollow
+          });
+          follow.save(callback);
+        }
+      }
+    })
+  } else{
+    callback("You can't follow yourself", null);
+  }
 
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
+  var userId = this._id;
+  Follow.findOne({follower: userId, following: idToUnfollow}).remove(function(err, resp){
+    if(err){
+      callback(err, null);
+    } else{
+      callback(null, resp);
+    }
+  })
 
 }
 userSchema.methods.getTweets = function (callback){
 
 }
 
+userSchema.methods.isFollowing = function(user, callback){
+  Follow.findOne({following: user.id, follower: this._id}, function(err, follow){
+    if(err){
+      callback(err, null);
+    } else{
+      if(!follow){
+        callback(null, {isFollowing: false})
+      } else{
+        callback(null, {isFollowing: true});
+      }
+    }
+  })
+}
 var FollowsSchema = mongoose.Schema({
-
+  follower:{
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  following: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  }
 });
 
 
