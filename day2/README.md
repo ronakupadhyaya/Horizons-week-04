@@ -7,4 +7,4 @@
 
 ## Pair programming exercise
 
-1. [Yelp!](yelp/)
+1. [Twitter](twitter/)
