@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
-var connect = process.env.MONGODB_URI || require('./connect');
+var connect = process.env.MONGODB_URI;
 mongoose.connect(connect);
+
+var Schema = mongoose.Schema;
 
 var userSchema = mongoose.Schema({
   email: {
@@ -30,7 +32,17 @@ userSchema.methods.getFollows = function (callback) {
 
 }
 userSchema.methods.follow = function (idToFollow, callback) {
-
+  console.log('Hello!')
+  var Follow = {};
+  Follow.follower = this._id;
+  Follow.following = idToFollow;
+  var newFollow = new Follow(Follow);
+  newFollow.save(function (error) {
+    if (error) {
+      console.log('Follow could not be saved.');
+    } else
+      console.log('Followed successfully!')
+  })
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback) {

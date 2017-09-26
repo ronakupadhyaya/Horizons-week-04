@@ -28,7 +28,9 @@ module.exports = function (passport) {
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      displayName: req.body.displayName,
+      imgUrl: req.body.imgUrl
     });
 
     u.save(function (err, user) {
@@ -37,7 +39,7 @@ module.exports = function (passport) {
         res.status(500).redirect('/register');
         return;
       }
-      console.log(user);
+      console.log('Saved user:', giuser);
       res.redirect('/login');
     });
   });

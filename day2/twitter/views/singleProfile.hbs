@@ -1,30 +1,32 @@
 <h4>Name:</h4>
-<p>{{user.displayName}}</p>
+<p>{{displayName}}</p>
 
-<img src={{user.imgUrl}} alt="Mountain View" style="width:304px;height:228px;">
+<img src={{imgUrl}} alt="Mountain View" style="width:304px;height:228px;">
 
 <h4>Email:</h4>
-<p>{{user.email}}</p>
+<p>{{email}}</p>
 
 <h4>Biography:</h4>
-<p>{{user.bio}}</p>
+<p>{{bio}}</p>
 
 <h4>Tweets:</h4>
-<p>{{user.tweets}}</p>
+<p>{{tweets}}</p>
 
-<button type="button" name="follow">follow</button>
+{{!-- <button id="follow-button" type="button" name="follow" action="/follow/{{this._id}}">follow</button> --}}
+
+<a href="/follow/{{this._id}}"> Follow..</a>
 
 
 <h4>Following:</h4>
 {{#each followings}}
-  <div>{{this.following.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
+<div>{{this.following.displayName}}
+  <form action=" /unfollow/{{this.to._id}} " method="post ">
+    <input style="display: inline; " type="submit " value="Unfollow ">
   </form>
 </div>
 {{/each}}
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{this.follower.displayName}}</p>
+<p>{{this.follower.displayName}}</p>
 {{/each}}

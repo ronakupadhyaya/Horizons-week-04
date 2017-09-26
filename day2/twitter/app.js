@@ -13,6 +13,10 @@ var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
 var app = express();
 
+var User = models.User;
+var Follow = models.Follow;
+var Tweet = models.Tweet;
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -32,15 +36,55 @@ mongoose.connect(connectInfo)
 // Passport stuff here
 
 // Session info here
-
+app.use(session({
+  secret: process.env.SECRET,
+  name: 'Catscoookie',
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Passport Serialize
+passport.serializeUser(function (user, done) {
+  done(null, user._id)
+})
 
 // Passport Deserialize
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (error, user) {
+    done(error, user);
+  })
+})
 
 // Passport Strategy
+passport.use(new LocalStrategy(function (email, password, done) {
+  User.findOne({
+    email: email
+  }, function (error, user) {
+    if (error) {
+      console.error(error);
+    }
+    if (!user) {
+      console.log(user);
+      return done(null, false, {
+        message: 'Incorrect Email'
+      })
+    }
+    if (user.password !== password) {
+      return done(null, false, {
+        message: 'Incorrect Password'
+      })
+    }
+    return done(null, user)
+  })
+}))
 
 app.use('/', auth(passport));
 app.use('/', routes);
