@@ -33,7 +33,9 @@ app.get('/', function(req, res) {
   //   });
   // });
   User.find()
-    .skip(7)
+    .sort({'name.first': 1})
+    .limit(limit)
+    .skip(pageNumber*limit)
     .exec(function(errFindingUsers, foundUsers) {
       res.render('index', {
         listItems: foundUsers,
