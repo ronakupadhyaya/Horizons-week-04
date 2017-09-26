@@ -7,12 +7,15 @@ _Note: Make sure you are committing to github **as much as you can**._ If you do
 
 ## Table of Contents
 
-- **The Big Picture** 🖼
-- **Step 0:** Authentication 🔐
-- **Step 1:** Connecting Users (Followers and Profiles)🙇
-- **Step 2:** Creating and Viewing Tweets 🍔
-- **Step 3:** Connecting everything ⭐
-- **Phase 1 Challenges** 🏆
+- **The Big Picture: Your Models** 🖼  
+- **Part 0:** Authentication 🔐  
+- **Part 1:** Connecting Users 🙇  
+- **Part 2:** Follows and Unfollows! 👫  
+- **Part 3:** Get Follows  ⭐  
+- **Part 4:** Is Following  
+- **Part 5:** Viewing ALL the Profiles 🏃  
+- **Part 6:** Tweets   
+- **Phase 1 Challenges** 🏆  
 
 ## The Big Picture: Your Models 🖼
 
