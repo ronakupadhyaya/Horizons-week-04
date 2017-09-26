@@ -22,8 +22,7 @@ app.get('/', function(req, res) {
   var limit = Number(req.query.limit) || 10;
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
-
-  User.find(function(err,users){
+  User.find().skip(pageNumber * limit).limit(limit).sort({'birthday': 'asc'}).exec(function(err, users){
     res.render('index', {
       listItems: users,
       prev: prev,
@@ -31,7 +30,8 @@ app.get('/', function(req, res) {
       next: next,
       limit: limit
     });
-  });
+  })
+
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
