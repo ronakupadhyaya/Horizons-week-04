@@ -23,15 +23,28 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
-    });
-  });
+    User.find()
+      .sort({'name.first': 1})
+      .skip(10*(pageNumber-1))
+      .limit(10)
+      .exec(function(err,users){
+        res.render('index', {
+          listItems: users,
+          prev: prev,
+          current: pageNumber,
+          next: next,
+          limit: limit
+        });
+      })
+  // User.find(function(err,users){
+  //   res.render('index', {
+  //     listItems: users,
+  //     prev: prev,
+  //     current: pageNumber,
+  //     next: next,
+  //     limit: limit
+  //   });
+  // });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
