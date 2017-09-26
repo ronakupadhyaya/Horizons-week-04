@@ -6,7 +6,13 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
-var session = require('cookie-session');
+// var session = require('cookie-session'); // v1: session on browser; server=node; not confidential (atob())
+var session = require('express-session'); // v2: sessions on server; server=mLab; idk if confidential or not
+var mongoose = require('mongoose');
+mongoose.connection.on('connected', function() {console.log("Connected to Mongoose!")});
+mongoose.connect(process.env.MONGODB_URI);
+var MongoStore = require('connect-mongo')(session);
+
 var passwordsPlain = require('./passwords.plain.json');
 
 var app = express();
@@ -16,23 +22,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+// v1: cookie-session
+// app.use(session({
+//   keys: [process.env.SECRET],
+//   maxAge: 1000*60*1,
+// }));
+
+// v2: express-session
+app.use(session({
+  secret: process.env.SECRET,
+  store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
 
 passport.use(new LocalStrategy(
   function(username, password, cb) {
     var user = false;
     passwordsPlain.passwords.forEach(function(item, index) {
-      if (item.username === username && item.password === password) {
-        user = item;
-      }
+      if (item.username === username && item.password === password) {user = item;}
     });
     cb(null, user);
   }
 ));
 
-app.use(session({
-  keys: [process.env.SECRET],
-  maxAge: 1000*60*1,
-}));
 
 app.use(passport.initialize()); // TODO what do these do?
 app.use(passport.session()); // this MUST be run after app.use(session());
@@ -45,9 +56,7 @@ passport.serializeUser(function(user, cb) {cb(null, user._id);});
 passport.deserializeUser(function(id, cb) {
   var user = false;
   passwordsPlain.passwords.forEach(function(item, index) {
-    if (id === item._id) {
-      user = item;
-    }
+    if (id === item._id) {user = item;}
   });
   cb(null, user);
 });
@@ -69,7 +78,7 @@ app.post('/login', passport.authenticate('local', {
 
 app.get('/logout', function(req, res) {
   req.logout();
-  res.redirect();
+  res.redirect('/');
 });
 
 module.exports = app;
