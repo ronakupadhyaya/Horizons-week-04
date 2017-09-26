@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../models/models');
 var User = models.User;
 var Follow = models.Follow;
-var Restaurant = models.Tweet;
+var Tweet = models.Tweet;
 
 // THE WALL - anything routes below this are protected by our passport (user must be logged in to access these routes)!
 router.use(function(req, res, next){
