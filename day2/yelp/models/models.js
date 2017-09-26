@@ -36,11 +36,11 @@ var reviewSchema = mongoose.Schema({
 });
 
 
-var restaurantSchema = mongoose.Schema({
+var tweetSchema = mongoose.Schema({
 
 });
 
-restaurantSchema.methods.getReviews = function (restaurantId, callback){
+tweetSchema.methods.getReviews = function (restaurantId, callback){
 
 }
 
@@ -49,13 +49,13 @@ restaurantSchema.methods.getReviews = function (restaurantId, callback){
 //}
 
 var User = mongoose.model('User', userSchema);
-var Restaurant = mongoose.model('Restaurant', restaurantSchema);
+var Tweet = mongoose.model('Tweet', tweetSchema);
 var Review = mongoose.model('Review', reviewSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
   User: User,
-  Restaurant: Restaurant,
+  Tweet: Tweet,
   Review: Review,
   Follow: Follow
 };
