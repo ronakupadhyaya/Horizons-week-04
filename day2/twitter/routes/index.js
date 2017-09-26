@@ -17,6 +17,21 @@ router.get('/', function(req, res){
   req.user.getFollows(function(response){
     var allFollowers = response.followed;
     var allFollowing = response.follows;
+    var newFollowObj = {}
+    allFollowers.map(function(element, index, array){
+      return {
+        from: element,
+        to: req.user
+      }
+    });
+
+    allFollowing.map(function(element, index, array){
+      return {
+        from: req.user,
+        to: element
+      }
+    });
+    console.log(allFollowers, allFollowing);
     res.render('singleProfile', {user: req.user, followers: allFollowers, followings: allFollowing});
   })
 
@@ -24,7 +39,9 @@ router.get('/', function(req, res){
 router.get('/users/', function(req, res, next) {
 
   // Gets all users
-
+  User.find(function(err, users){
+    res.render('profiles', {users: users, userLength: users.length})
+  })
 });
 
 router.get('/users/:userId', function(req, res, next) {
@@ -42,6 +59,19 @@ router.get('/users/:userId', function(req, res, next) {
           user.getFollows(function(response){
             var allFollowers = response.followed;
             var allFollowing = response.follows;
+            allFollowers.map(function(element, index, array){
+              return {
+                from: element,
+                to: user
+              }
+            });
+
+            allFollowing.map(function(element, index, array){
+              return {
+                from: user,
+                to: element
+              }
+            });
             console.log("following", allFollowing);
             res.render('singleProfile', {user: user, followers: allFollowers, followings: allFollowing, isFollowing: respObj.isFollowing});
           })

@@ -1,1 +1,9 @@
 {{! YOUR CODE HERE }}
+<a href="/"> Back to profile </a>
+<div class="row text-center">
+
+<h3> Users ({{userLength}}) </h3>
+{{#each users}}
+  <p id="{{this.id}}">{{this.displayName}}</p>
+{{/each}}
+<div>
