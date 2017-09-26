@@ -1,7 +1,7 @@
 # Building Twitter!
 
 
-Today we will be building a clone of the popular media webite Twitter, using your knowledge of MongoDB queries, processing, and performance. Yay!
+Today we will be building a clone of the popular media website Twitter, using your knowledge of MongoDB queries, processing, and performance. Yay!
 
 _Note: Make sure you are committing to github **as much as you can**._ If you do this and something happens with your code, you can always go fetch your old version!
 
@@ -45,7 +45,7 @@ Alternatively, you could try structuring the application solely from **The Big P
 
 **Tweets**  
 
-- `Tweet` **Schema properties** - the model that defines a single review on a Restaurant
+- `Tweet` **Schema properties** - the model that defines a single review on a Tweet
   - `content` - A String with the contents of the Tweet
   - `author` - the ID of the User who posted/authored the tweet
 
@@ -60,11 +60,11 @@ Before you start this project, check out the codebase, beginning in **`app.js`**
 
     <details>
     <summary>Hint</summary>
-    
+
     ![](https://preview.ibb.co/dhAxjQ/Screen_Shot_2017_09_25_at_8_43_36_AM.png)
     ![](https://preview.ibb.co/cg8NJk/Screen_Shot_2017_09_25_at_8_43_17_AM.png)
     ![](https://preview.ibb.co/euymB5/Screen_Shot_2017_09_25_at_8_43_03_AM.png)
-    
+
     </details>
 
 2. Next, head into **`routes/index.js`**. and **`routes/auth.js`**. You should notice that the Login, Logout and Registration routes have been provided for you. These already handle storing users on the database and storing the sessions using passport and mongo-connect.
@@ -81,7 +81,7 @@ Now lets try to register a user! We want to make sure that when we register, all
 3. Logging in with the incorrect crednetials does not allow us in  
 4. Logging in with the correct crednetials works  
 5. Once logged in, our `req.user` is now defined  
- 
+
 That’s it! There’s nothing else to code in this part - just make sure to get familiar with your code.
 Now, get ready to dive in and create more models and properties to build out the rest of Twitter!
 
@@ -133,7 +133,7 @@ Make sure that all these fields are defined on the `userSchema` before moving on
 ### Step 2: Single Profile Page - `views/singleProfile.hbs`
 
 Now that we are logged in, let's make a profile page that will display all of our information, tweets, etc. Design this page however you please, but make sure you have the following:  
-  
+
 1. **Profile picture** - A spot to load your profile image, given the image in your `User` model.
 2. **Tweets container** - A container which will hold and display tweets that belong to you _We will be using this later_.
 3. **Followers container** - A container which is hold and display the number of people that follow you _We will be using this later_.
@@ -145,13 +145,13 @@ Now that we are logged in, let's make a profile page that will display all of ou
 * Add a route to a single profile page (`singleProfile.hbs`) based on an ID (as a part of the URL, i.e. `/users/575xxxxxxxxx`) - pass in the relevant details of a User and their populated friends list.
 
 ### Checkpoint
-  
+
 Now lets try to register a user! We want to make sure that when we register, all of the users credentials are stored in our database. So to move on, we should check the following:  
 1. We have updated our register form to include all values in our `User` model  
 2. All of our information appears on our `singleProfile.hbs`  
 
 Great! Now let's make `views/singleProfile.hbs` the page we are redirected to after a successful login. Now, let's get all of the correct information to show up on the page. Once we get the user information from mLab, we can move on.  
-  
+
 If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 ## Part 2: Follows and Unfollows! 👫 - `models/models.js (FollowSchema)`
@@ -198,22 +198,22 @@ userSchema.methods.yourMethodName = function() {
 - `unfollow` - deletes the relationship represented by a `Follow` document where User 1 (the caller of the `unfollow` function) follows User 2 (given by a parameter `idToUnfollow`).
 
 ### Checkpoint  
-  
+
 We should now tie our follow/unfollow method to our `follow` button implemented on our profile page.  
-  
+
 We want our follow button to work as followed:  
 1. If a user is already following another user, the button should read `unfollow` and should unfollow the user if clicked
 2. If a user is not  already following another user, the button should read `follow` and should follow the user if clicked
 3. On click, the button should toggle to either `follow` or `unfollow`   
-  
-We should check in mLab to make sure the `Follows` collection is updating accordingly. 
+
+We should check in mLab to make sure the `Follows` collection is updating accordingly.
 
 ## Part 3: Get Follows  
-  
+
 _Note: Remember that we are using the **Twitter** method for follows (i.e. a user can follow another **without** having them follow them back)_  
-  
-We have made it this far! Now that we are able to follow and unfollow users, we want to be able to display this on our profile, more specifically, in the section that we allocated for our followers in part 1. We should now create methods to help us display the people in which we are ***following*** and the users in which ***follow us***. 
-  
+
+We have made it this far! Now that we are able to follow and unfollow users, we want to be able to display this on our profile, more specifically, in the section that we allocated for our followers in part 1. We should now create methods to help us display the people in which we are ***following*** and the users in which ***follow us***.
+
 - `getFollows` - This method will go through and find all `Follow` documents that correspond to both user relationships where the user's ID (accessible by the caller of the function, `this._id`) is the `follower` and where the user is the `following` of a `Follow` relationship. In other words, you want **both the Users the user follows and the Users the user is being followed by** 'returned' by this function. This should call the callback method with the followers and users you are following with something like `allFollowers` and `allFollowing`.
 
 > **Tip:** When creating your methods for `User`, use _callback functions_ to return data. For example, `getFollows` should be _used_ in a future route like:
@@ -263,7 +263,7 @@ myUser.getFollows(function(followers, following) {
   ```
 
   Notice how the `following` field for `allFollowers` and the `to` field for `allFollowing` for the populated set of data has been transformed from an ID (`ID_OF_FOLLOWER` or `ID_OF_USER_YOU_ARE_FOLLOWING`) to an actual User object. Use Mongoose's [`.populate()`](http://mongoosejs.com/docs/api.html#model_Model.populate) to populate the correct fields and accomplish this.
-  
+
 #### Additional Routes 🌀 - `routes/index.js`
 As aforementioned, we are going to leave many of these design decisions up to you - but here's a few routes that you'll _definitely_ need to have.
 
@@ -285,16 +285,17 @@ As aforementioned, we are going to leave many of these design decisions up to yo
 * A route to render `profiles.hbs` with all the Users registered on your site.
 * Routes to handle a user **following** or **unfollowing** another, and updating that `Follow` relationship accordingly
   * The routes to handle following and unfollowing should check whether or not the relationship exists first using `find`. For example, if User A with ID 1 attempts to follow  User 2 with ID 2 (a user they are already following), a new `Follow` document _should not_ be created, and the response should be "Already followed!"
-  
+
 ## Checkpoint  
-  
+
 Great! Once we have this in place before we move on, we should:
+
 - Populate the area in our `singleProfile.hbs` with our result of `getFollows`, to display all of the users who follow us.     Once we have this populated, we can move onto the next step.
-  
+
 ## Part 4: Is Following
 
 - `isFollowing` - this method will take in another User ID and call true or false on the callback based on whether or not the user calling `isFollowing` (`this`) is following the user represented by the ID passed in. Query for a `Follow` document where `follower` is `this._id` and `following` is the ID passed in, and call a callback function with `true` if the resulting query turns up an existing `Follow` document.  
-  
+
 Again, when first retrieving the correct `Follow` documents relevant to a user, your `allFollowing` arrays will look something like:  
   ```javascript
   allFollowing = [{
@@ -314,11 +315,12 @@ After using `.populate`, your data will look like this (callback with this popul
     }
   }]
   ```  
-  
+
 ## Checkpoint  
 This checkpoint will be very similar to the last. To move on, we should:
-1. Make sure our `following` container on our `singleProfile.hbs` is populated with the correct data of all users following our profile. 
- 
+
+1. Make sure our `following` container on our `singleProfile.hbs` is populated with the correct data of all users following our profile.
+
 ## Part 5: Viewing ALL the Profiles 🏃 - `views/profiles.hbs`
 
 To have a central directory of Users where people can follow others, we will have a template dedicated to displaying all of the Users registered for our site. You want a way to navigate to and from this screen! A good suggestion would be a link to this page from `singleProfile.hbs`, and finally another link going back to `singleProfile.hbs`. The result will look like:
@@ -326,10 +328,9 @@ To have a central directory of Users where people can follow others, we will hav
 <img src="https://preview.ibb.co/kE64Yk/All_Users.png" width="500">
 
 
-
 ## Checkpoint
-  
-We should be able to follow ourselfs, so let's test our button. MongoDB should update accordingly. To unfollow yourself for now, just simply delete the entry manually in mLab.  
+
+We should be able to follow ourselves, so let's test our button. MongoDB should update accordingly. To unfollow yourself for now, just simply delete the entry manually in mLab.  
 
 Display something that looks like the following:    
 
@@ -370,7 +371,7 @@ When creating your Single Profile template, imagine that you are passing in the 
  }    
  ```
 Above, `PERSON` refers to the User profile being rendered currently - this could be your currently logged-in user _or_ any other User on your site!  
-  
+
 If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 ## Halfway Done🏅- `http://localhost:3000`
@@ -379,7 +380,7 @@ Time to step back and take a look at your hard work!
 Now, you should be able to login, view profile pages, view other profiles, and follow other users.
 
 Hooray! You've just built the fundamentals of a social network! Now it's time to take those users and associate more data with them in the form of tweets.  
-  
+
 If you haven't already, make sure you commit your code to github so you don't lose any changes!
 
 
@@ -393,11 +394,11 @@ To start off the basics of the Tweets model, let's create some fundamental prope
     - Should limit this field to be a maximum of 140 characters
     <details>
     <summary>Hint</summary>
-    
+
     [See Mongoose maxlength to do this properly](http://mongoosejs.com/docs/api.html#schema_string_SchemaString-maxlength)
-    
+
     </details>
-  
+
 
 That's all for Tweets for now!
 
@@ -407,18 +408,19 @@ Create a basic form for creating a new tweet with all of its basic information. 
 * The content of the tweet
     <details>
     <summary>Hint</summary>
-    
+
     You should make sure the user DOES NOT enter more than 140 characters per tweet (Twitter has this limitation, so we should as well!)
-    
+
     </details>
 
 
 The end result should look something like:
 
 <img src="https://preview.ibb.co/ch9xm5/newTweet.png" width="500">  
-  
+
 ### Adding the Routes 🌀 - `routes/index.js`
-Looks like your views and models for restaurants are ready to go! Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
+
+Looks like your views and models for Tweets are ready to go! Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
 
 * A route for viewing all tweets, rendering `tweets.hbs`.
   * _What to Pass In_: A context object with a property `tweet` that has an array of all Tweet documents.
@@ -428,7 +430,7 @@ Looks like your views and models for restaurants are ready to go! Time to build 
 
 This is a much simpler checkpoint, but is here just to get you used to sanity checking all of your work!! Before you move on, you should make sure that:
 - Your submitted tweets appear in your mLab.  
-  
+
 That's it! If you see your tweet you can move on!
 
 
@@ -453,7 +455,7 @@ User.findById(req.params.id, function(err, user1) {
 ### Step 4: Browsing your feed 🍻 - `views/feed.hbs`
 
 When viewing all tweets, you should be able to see basic information; content and author are all important here. Don't worry about sorting, searching, or filtering for now.  _Make sure you add links on your feed so that you will be able to navigate to and from your profile and to your twitter feed._  
-  
+
 _Remember_: Your feed should be made up of all tweets authored by users that ***YOU*** follow!
 
 
@@ -465,40 +467,33 @@ The end result will look something like the following:
 
 
 ### Adding the Routes 🌀 - `routes/index.js`
-Looks like your views and models for restaurants are ready to go! Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
+
+Looks like your views and models for your feed is ready to go. Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
 
 * A route for creating new tweet, rendering `newTweet.hbs`
-  * You'll need to have a `POST` route to handle the form from `newTweet.hbs` as well, so that you can save the new Tweet document with the data receieved in `req.body`.
-
-
-## End Result, Step 2🏅- `http://localhost:3000`
-At this point, you should be able to view Restaurants in both a complete listing (with view paging) as well as individual Tweets with their details of content, author, and likes. Make sure to commit your code!
-
+  * You'll need to have a `POST` route to handle the form from `newTweet.hbs` as well, so that you can save the new Tweet document with the data received in `req.body`.
 
 ## Twitter: DONE! ⭐  
-Congrats! You have finished Twitter! You have succesfully implemeneted most of the basic functionality that twitter uses! Make sure you commit your code to github, if you haven't already.  
-  
+Congrats! You have finished Twitter! You have successfully implemented most of the basic functionality that twitter uses! Make sure you commit your code to github, if you haven't already.  
+
 Hungry for more? Check out the below challenges!
 
 ## Twitter Challenge 🏆
 You've made it this far, and early. Why not a challenge?  
-  
+
 These challenges will be a bit more open ended, and you will be free to implement them however you want!  
-  
+
 1. Retweets
     <details>
     <summary>Hint</summary>
-    
+
     You should add another key to our Tweet model. How could we make sure these retweets display on a singleProfile of a user who does not own them?
-    
+
     </details>  
 2. Filter tweets  
-    - Based on user, date posted, etc. 
-3. Enable mentions 
+    - Based on user, date posted, etc.
+3. Enable mentions
    <details>
    <summary>Hint</summary>
-   Extract usernames with the '@' symbol infront in tweets. Maybe add another key to your tweets model, which has a list of all users mentioned in the tweet.
+   Extract usernames with the '@' symbol in front in tweets. Maybe add another key to your tweets model, which has a list of all users mentioned in the tweet.
    </details>
- 
-
-
