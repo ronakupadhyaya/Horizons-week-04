@@ -15,7 +15,7 @@ app.set('view engine', '.hbs');
 var User = require('./user');
 
 // routes
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   var pageNumber = getPageNumber(Number(req.query.page));
   var prev = (pageNumber <= 1 ? 1 : pageNumber - 1);
   var next = pageNumber + 1;
@@ -23,15 +23,21 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
+  User.find()
+    .skip((pageNumber - 1) * limit)
+    .limit(limit)
+    .sort({
+      'name.first': 'asc'
+    })
+    .exec(function (err, users) {
+      res.render('index', {
+        listItems: users,
+        prev: prev,
+        current: pageNumber,
+        next: next,
+        limit: limit
+      });
     });
-  });
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
