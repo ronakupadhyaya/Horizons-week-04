@@ -4,12 +4,12 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-//var passport = require('passport');
-//var LocalStrategy = require('passport-local');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
 var models = require('./models/models')
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-//var MongoStore = require('connect-mongo/es5')(session);
+var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
 var app = express();
 
