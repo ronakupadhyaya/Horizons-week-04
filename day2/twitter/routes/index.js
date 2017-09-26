@@ -43,6 +43,22 @@ router.get('/follow/:userId', function (req, res, next) {
   })
 })
 
+router.get('/unfollow/:userId', function (req, res, next) {
+  User.findById(req.params.userId, function (error, user) {
+    if (error) {
+      console.log(error)
+    } else {
+      req.user.unfollow(user._id, function (error, success) {
+        if (error) {
+          console.log('Couldn\'t unfollow..')
+        } else {
+          console.log('Unfollowed successfully')
+        }
+      })
+    }
+  })
+})
+
 router.get('/tweets/', function (req, res, next) {
 
   // Displays all tweets in the DB

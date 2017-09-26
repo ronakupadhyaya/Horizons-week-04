@@ -31,22 +31,31 @@ var userSchema = mongoose.Schema({
 userSchema.methods.getFollows = function (callback) {
 
 }
+
 userSchema.methods.follow = function (idToFollow, callback) {
-  console.log('Hello!')
-  var Follow = {};
-  Follow.follower = this._id;
-  Follow.following = idToFollow;
-  var newFollow = new Follow(Follow);
-  newFollow.save(function (error) {
+  var newFollow = new Follow({
+    follower: this._id,
+    following: idToFollow
+  });
+  newFollow.save(function (error, result) {
     if (error) {
-      console.log('Follow could not be saved.');
+      callback(error)
     } else
-      console.log('Followed successfully!')
+      callback(null, result)
   })
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback) {
-
+  Follow.findOneAndRemove({
+    follower: this._id,
+    following: idToUnfollow
+  }, function (error, deleted) {
+    if (error) {
+      callback(error);
+    } else {
+      callback(null, deleted)
+    }
+  })
 }
 userSchema.methods.getTweets = function (callback) {
 
@@ -77,7 +86,6 @@ var tweetSchema = mongoose.Schema({
 tweetSchema.methods.numLikes = function (tweetId, callback) {
 
 }
-
 
 var User = mongoose.model('User', userSchema);
 var Tweet = mongoose.model('Tweet', tweetSchema);

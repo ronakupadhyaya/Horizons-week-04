@@ -39,7 +39,7 @@ module.exports = function (passport) {
         res.status(500).redirect('/register');
         return;
       }
-      console.log('Saved user:', giuser);
+      console.log('Saved user:', user);
       res.redirect('/login');
     });
   });
