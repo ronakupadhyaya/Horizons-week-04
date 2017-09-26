@@ -1,6 +1,8 @@
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
+<img src={{user.imgUrl}} alt="Mountain View" style="width:304px;height:228px;">
+
 <h4>Email:</h4>
 <p>{{user.email}}</p>
 
@@ -9,6 +11,9 @@
 
 <h4>Tweets:</h4>
 <p>{{user.tweets}}</p>
+
+<button type="button" name="follow">follow</button>
+
 
 <h4>Following:</h4>
 {{#each followings}}
