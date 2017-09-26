@@ -1,1 +1,0 @@
-export MONGODB_URI='mongodb://skim04:horizonstest123@ds147884.mlab.com:47884/vault_horizons'
