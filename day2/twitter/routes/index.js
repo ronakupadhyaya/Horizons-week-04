@@ -21,13 +21,24 @@ router.get('/users/', function(req, res, next) {
 });
 
 router.get('/users/:userId', function(req, res, next) {
-
   // Gets all information about a single user
-
+  User.findById(req.params.userId, function(err, user) {
+    if(err) {
+      res.status(500).send('mlab failed to look up id');
+    } else {
+      if(!user) {
+        res.status(400).send('No user exists with that id');
+      } else {
+        res.render('singleProfile', {
+          user: user,
+        });
+      }
+    }
+  });
 });
 
 router.get('/tweets/', function(req, res, next) {
-
+  res.render('tweets');
   // Displays all tweets in the DB
 
 });

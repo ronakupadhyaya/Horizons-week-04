@@ -6,3 +6,16 @@ body {
 a {
   color: #00B7FF;
 }
+
+.profilePic {
+  height: 75px;
+  padding: 0 30px;
+}
+
+.coverPhoto {
+  height: 100px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

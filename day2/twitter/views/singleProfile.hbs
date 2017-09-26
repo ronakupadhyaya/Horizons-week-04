@@ -1,11 +1,34 @@
-<h4>Name:</h4>
-<p>{{user.displayName}}</p>
 
-<h4>Email:</h4>
-<p>{{user.email}}</p>
+{{#if user.coverPhoto}}
+  <div style="background-image: url({{user.coverPhoto}})" class="coverPhoto"> </div>
+  {{else}}
+  <div>
+    <form action="" method="post">
+      <input type="submit" value="Add a Cover Photo">
+    </form>
+  </div>
+{{/if}}
+
+
+<h4>Name:</h4>
+<p>{{user.displayName}} <img class="profilePic" src="{{user.imgUrl}}"> </p>
 
 <h4>Biography:</h4>
-<p>{{user.bio}}</p>
+{{#if user.bio}}
+  <p>{{user.bio}}</p>
+  {{else}}
+  <div>
+    <form action="/bio/" method="post">
+      <input type="submit" value="Add a Biography">
+    </form>
+  </div>
+{{/if}}
+
+<div>
+  <form action="/follow/" method="post">
+    <input type="submit" value="Follow">
+  </form>
+</div>
 
 <h4>Tweets:</h4>
 <p>{{user.tweets}}</p>

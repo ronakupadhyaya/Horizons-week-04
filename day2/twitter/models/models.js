@@ -18,6 +18,13 @@ var userSchema = mongoose.Schema({
   },
   bio: {
     type: String,
+  },
+  imgUrl: {
+    type: String,
+    required: true,
+  },
+  coverPhoto: {
+    type: String
   }
   /* Add other fields here */
 });

@@ -37,6 +37,7 @@ module.exports = function(passport) {
           email: req.body.username,
           password: hash,
           displayName: req.body.displayName,
+          imgUrl: req.body.imgUrl,
         });
 
         u.save(function(err, user) {
@@ -60,7 +61,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/users/' + req.user._id);
   });
 
   // GET Logout page
