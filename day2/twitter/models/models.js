@@ -9,11 +9,7 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  imgUrl: {
+  password: { //hashed with bcrypt
     type: String,
     required: true
   },

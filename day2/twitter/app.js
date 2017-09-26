@@ -7,11 +7,30 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var models = require('./models/models')
+// models.User, Tweet, Follow
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
+
 var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+/*    BCRYPT DOCUMENTATION
+  Syntax for hashing: bcrypt.hash(plaintext, saltRounds, function(err, hash) {
+  // async
+  newUser.password = hash;
+});
+
+  Syntax for comparing: bcrypt.compare(plaintextTry, hashedPassword, function(err, match) {
+  if(match) {
+    //login
+  } else {
+    //incorrect password
+  }
+});
+*/
+
 var app = express();
 
 // DB setup
@@ -27,7 +46,7 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser('secretCat'));
+app.use(cookieParser('Horizons Twitter'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -42,16 +61,42 @@ app.use(session({
 // Initialize Passport
 // Passport Serialize
 passport.serializeUser(function(user, done) {
-
+  done(null, user._id);
 });
 // Passport Deserialize
 passport.deserializeUser(function(id, done) {
-
+  models.User.findById(id, function(err, user) {
+    if(err) {
+      done(err, null);
+    } else {
+      if(!user) {
+        done(null, false);
+      } else {
+        done(null, user);
+      }
+    }
+  });
 });
 // Passport Strategy
 passport.use(new LocalStrategy(
   function(username, password, done) {
-
+    models.User.findOne({email: username}, function(err, user) {
+      if(err) {
+        done(err, null);
+      } else {
+        if(!user) {
+          done(null, false, { msg: "No user with that e-mail was found."});
+        } else {
+          bcrypt.compare(password, user.password, function(err, match) {
+            if(match) {
+              done(null, user);
+            } else {
+              done(null, false, { msg: "Incorrect password."});
+            }
+          });
+        }
+      }
+    });
   }
 ));
 
