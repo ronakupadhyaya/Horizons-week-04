@@ -61,7 +61,6 @@ Before you start this project, check out the codebase, beginning in **`app.js`**
     <details>
     <summary>Hint</summary>
 
-    ![](https://preview.ibb.co/dhAxjQ/Screen_Shot_2017_09_25_at_8_43_36_AM.png)
     ![](https://preview.ibb.co/cg8NJk/Screen_Shot_2017_09_25_at_8_43_17_AM.png)
     ![](https://preview.ibb.co/euymB5/Screen_Shot_2017_09_25_at_8_43_03_AM.png)
 
