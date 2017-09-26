@@ -20,7 +20,6 @@ var session = require('express-session'); // confidential
 var MongoStore = require('connect-mongo')(session);
 
 
-
 // Express setup
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
@@ -44,6 +43,7 @@ mongoose.connect(process.env.MONGODB_URI);
 //   keys: ['my super secret password'],
 //   maxAge: 1000*60*2
 // }));
+
 app.use(session({
   secret: process.env.SECRET_BENG,
   store: new MongoStore({mongooseConnection: require('mongoose').connection})
