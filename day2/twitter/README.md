@@ -320,7 +320,7 @@ This checkpoint will be very similar to the last. To move on, we should:
 
 To have a central directory of Users where people can follow others, we will have a template dedicated to displaying all of the Users registered for our site. You want a way to navigate to and from this screen! A good suggestion would be a link to this page from `singleProfile.hbs`, and finally another link going back to `singleProfile.hbs`. The result will look like:
 
-<img src="http://cl.ly/2t3z3p3q1r3X/Yelp%20Lite-3.png" width="500">
+<img src="https://preview.ibb.co/kE64Yk/All_Users.png" width="500">
 
 
 
@@ -330,7 +330,7 @@ We should be able to follow ourselfs, so let's test our button. MongoDB should u
 
 Display something that looks like the following:    
 
-<img src="http://cl.ly/1q1H2F3L0D0z/Yelp%20Lite-2.png" width="500">  
+<img src="https://preview.ibb.co/gktq65/single_Profile.png" width="500">  
 
 When creating your Single Profile template, imagine that you are passing in the following context object into the template (_you are responsible for actually passing this into your template_ when you `.render` your route in the following sections!):    
 
@@ -412,7 +412,7 @@ Create a basic form for creating a new tweet with all of its basic information. 
 
 The end result should look something like:
 
-<img src="http://cl.ly/3F2126010E36/Yelp%20Lite-4.png" width="500">  
+<img src="https://preview.ibb.co/ch9xm5/newTweet.png" width="500">  
   
 ### Adding the Routes 🌀 - `routes/index.js`
 Looks like your views and models for restaurants are ready to go! Time to build out your endpoints to render routes with your data. As before, you will be making the design decisions for your routes, but here are basic guidelines for what they should _do_:
@@ -458,7 +458,7 @@ _Remember_: Your feed should be made up of all tweets authored by users that ***
 
 The end result will look something like the following:
 
-<img src="http://cl.ly/3R1k3u0P390b/Yelp%20Lite-6.png" width="500">
+<img src="https://preview.ibb.co/eZqsKQ/feed.png" width="500">
 
 
 ### Adding the Routes 🌀 - `routes/index.js`
