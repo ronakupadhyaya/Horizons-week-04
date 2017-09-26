@@ -25,9 +25,16 @@
 {{/if}}
 
 <div>
-  <form action="/follow/" method="post">
-    <input type="submit" value="Follow">
-  </form>
+  {{#if isFollowing}}
+    <form action="/unfollow/{{user._id}}" method="post">
+      <input type="submit" value="Unfollow">
+    </form>
+
+    {{else}}
+    <form action="/follow/{{user._id}}" method="post">
+      <input type="submit" value="Follow">
+    </form>
+  {{/if}}
 </div>
 
 <h4>Tweets:</h4>

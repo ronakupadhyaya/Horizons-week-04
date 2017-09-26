@@ -29,10 +29,53 @@ router.get('/users/:userId', function(req, res, next) {
       if(!user) {
         res.status(400).send('No user exists with that id');
       } else {
-        res.render('singleProfile', {
-          user: user,
+        var viewer = req.user;
+        // result has arrays result.followings, result.follows
+        viewer.getFollows(function(err, result) {
+          if(err) {
+            res.status(500).send(err);
+          } else {
+            var isFollowing = false;
+            console.log(result, user._id);
+            result.followees.forEach(function(followerObject) {
+              if(followerObject.followee.equals(user._id)) {
+                isFollowing = true;
+                console.log('match');
+              }
+            });
+            if(isFollowing) {
+              res.render('singleProfile', {
+                user, //fuck es6
+                isFollowing,
+              });
+            } else {
+              res.render('singleProfile', {
+                user,
+              });
+            }
+          }
         });
       }
+    }
+  });
+});
+
+router.post('/follow/:userId', function(req, res) {
+  req.user.follow(req.params.userId, function(err) {
+    if(err) {
+      res.status(400).send(err);
+    } else {
+      res.redirect('/users/'+req.params.userId);
+    }
+  });
+});
+
+router.post('/unfollow/:userId', function(req, res) {
+  req.user.unfollow(req.params.userId, function(err) {
+    if(err) {
+      res.status(400).send(err);
+    } else {
+      res.redirect('/users/'+req.params.userId);
     }
   });
 });

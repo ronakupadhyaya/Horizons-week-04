@@ -31,25 +31,86 @@ var userSchema = mongoose.Schema({
 
 /*
  getFollows(cb)
- Call cb([array of followers and users followed])
+ Call cb(err, {following: [array of people following this user],
+              follows: [array of people this user follows])}
 */
 
 userSchema.methods.getFollows = function (callback){
+  var viewer = this;
 
+  //this is the user object
+  Follow.find({followee: viewer._id}, function(err, followers) {
+    // this user has people in followers following him
+    if(err) {
+      callback(err, null);
+    } else {
+      Follow.find({follower: viewer._id}, function(err, followees) {
+        // this user follows his followees
+        if(err) {
+          callback(err, null);
+        } else {
+          callback(null, {
+            followers: followers,
+            followees: followees,
+          });
+        }
+      });
+    }
+  })
 }
-userSchema.methods.follow = function (idToFollow, callback){
-
+// callback(err)
+userSchema.methods.follow = function (idToFollow, callback) {
+  //this is still the user object
+  if(this._id == idToFollow) {
+    var error = new Error("Don't be a narcissistic person");
+    callback(error);
+  } else {
+    var followerUserId = this._id;
+    Follow.findOne({follower: followerUserId, followee: idToFollow,}, function(err, follow) {
+      if(err) {
+        callback(err);
+      } else {
+        if(!follow) { //that follow doesn't exist yet, good
+          Follow.create({
+            follower: followerUserId,
+            followee: idToFollow,
+          }, function(err) {if(err) {
+            callback(err);
+          } else {
+            callback(null);
+          }});
+        } else { //follow exists already
+          var newError = new Error('That user is already following this user');
+          callback(newError);
+        }
+      }
+    });
+  }
 }
 
 userSchema.methods.unfollow = function (idToUnfollow, callback){
-
+  Follow.remove({
+    follower: this._id,
+    followee: idToFollow,
+  }, function(err) {if(err) {
+                      callback(err);
+                    }});
 }
 userSchema.methods.getTweets = function (callback){
 
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  follower: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  followee: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 
