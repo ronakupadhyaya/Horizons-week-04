@@ -4,6 +4,7 @@ out/
 /*.html
 .idea/
 *.swp
+env.sh
 
 # Node/express stuff
 # Logs
