@@ -6,11 +6,22 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var passport =require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var db = require('./passwords.plain.json');
+var db = require('./passwords.hashed.json');
 var session = require('express-session');
 var mongoose = require('mongoose');
 var MongoStore = require('connect-mongo')(session);
+var crypto = require('crypto');
+
+var User = require('./models/models.js');
+
+function hashPassword(password){
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  return hash.digest('hex');
+}
+
 console.log(db);
+//console.log(hashPassword(db.passwords[0].password));
 //var mongoose = require('mongoose');
 // Express setup
 var app = express();
@@ -47,14 +58,26 @@ app.use(passport.session());
 // PASSPORT LOCALSTRATEGY HERE
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    for(var i = 0; i < db.passwords.length; i++){
-      if(db.passwords[i].username === username && db.passwords[i].password === password){
-        return done(null, db.passwords[i]);
-      } //if(db.passwords[i].username === username && db.passwords[i].password !== password){
+//   function(username, password, done) {
+//     var hp = hashPassword(password);
+//     for(var i = 0; i < db.passwords.length; i++){
+//       if(db.passwords[i].username === username && db.passwords[i].password === hp){
+//         return done(null, db.passwords[i]);
+//       } //if(db.passwords[i].username === username && db.passwords[i].password !== password){
+//   }
+//   return done(null, false);
+// }
+  function(username, password, done){
+    User.findOne({username: username}, function(err, result){
+      if(result.password === hashPassword(password)){
+        console.log('Found user.');
+        done(null, result);
+      }else{
+        console.log('Could not find user.');
+        done(null, false);
+      }
+    });
   }
-  return done(null, false);
-}
 ));
 // PASSPORT SERIALIZE/DESERIALIZE USER HERE HERE
 passport.serializeUser(function(user, done) {
@@ -62,15 +85,22 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  var user = {};
-  var err = true;
-  db.passwords.forEach(function(person){
-    if(person._id === id){
-      user = person;
-      err = null;
+  // var user = {};
+  // var err = true;
+  // db.passwords.forEach(function(person){
+  //   if(person._id === id){
+  //     user = person;
+  //     err = null;
+  //   }
+  // })
+  User.findById(id,function(err, user){
+    if(err){
+      console.log('Error finding the id.');
+      done(null, false);
+    }else{
+      done(null, user);
     }
   })
-    done(err, user);
 });
 // PASSPORT MIDDLEWARE HERE
 
@@ -94,5 +124,34 @@ app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 })
+app.get('/signup', function(req,res){
+  res.render('signup');
+})
+app.post('/signup', function(req,res){
+  User.findOne({
+    username: req.body.username
+  }, function(err, result){
+      if(err){
+        res.send('Username is already taken.');
+      }else if(result === null){
+        var newUser = new User({
+          username: req.body.username,
+          password: hashPassword(req.body.password)
+        });
+        newUser.save(function(error, results){
+          if(error){
+            console.log('New user creation failed');
+          }else{
+            console.log('New user created.');
+            res.redirect('/login');
+          }
+        })
+        console.log('Successful');
+      }else{
+        console.log('User already exists');
+        res.redirect('/login');
+      }
+    })
+  })
 
 module.exports = app;
