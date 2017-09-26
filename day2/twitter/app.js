@@ -23,8 +23,46 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connect(process.env.MONGODB_URI);
+
 
 // Passport stuff here
+app.use(session({
+  secret: process.env.SECRET,
+  name: "Catscookie",
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
+
+passport.use(new LocalStrategy(function(username, password, cb) {
+  models.User.findOne({email: username}, function(err, user) {
+    if (err) {
+      return cb(err);
+    }
+    else if (!user) {
+      return cb(null, false, {message: 'Incorrect username'});
+    }
+    else if (!password) {
+      return cb(null, false, {message: 'Incorrect password'});
+    }
+    return cb(null, user);
+  });
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user._id);
+});
+
+passport.deserializeUser(function(id, cb) {
+  models.User.findById(id, function(err, user) {
+    cb(err, user);
+  });
+});
 
 // Session info here
 
