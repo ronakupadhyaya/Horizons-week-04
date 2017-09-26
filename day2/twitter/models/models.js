@@ -55,7 +55,7 @@ tweetSchema.methods.numLikes = function (tweetId, callback){
 
 
 var User = mongoose.model('User', userSchema);
-var Tweet = mongoose.model('Restaurant', tweetSchema);
+var Tweet = mongoose.model('Tweet', tweetSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {
