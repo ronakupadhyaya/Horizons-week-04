@@ -11,7 +11,14 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
+var bcrypt = require('bcrypt');
 var app = express();
+
+// DB setup
+mongoose.connection.on('connected', function() {
+  console.log('Hooked into Twitter mlab database');
+});
+mongoose.connect(process.env.MONGODB_URI);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,15 +34,29 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport stuff here
 
 // Session info here
+app.use(session({
+  secret: 'Horizons Twitter',
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+}));
 
 // Initialize Passport
-
 // Passport Serialize
+passport.serializeUser(function(user, done) {
 
+});
 // Passport Deserialize
+passport.deserializeUser(function(id, done) {
 
+});
 // Passport Strategy
+passport.use(new LocalStrategy(
+  function(username, password, done) {
 
+  }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use('/', auth(passport));
 app.use('/', routes);
 
