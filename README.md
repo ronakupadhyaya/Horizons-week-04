@@ -4,7 +4,7 @@
     1. The Vault
     1. (Bonus) Blackjack
 1. [Day 2](day2/)
-    1. Yelp!
+    1. Twitter
 1. [Day 3](day3/)
     1. Steal this app
 1. [Day 4](day4/)
