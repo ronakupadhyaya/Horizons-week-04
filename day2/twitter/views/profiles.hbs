@@ -1,1 +1,6 @@
 {{! YOUR CODE HERE }}
+<a href="/tweets">View Tweets</a>
+<h3>Users</h3>
+{{#each users}}
+<a href="/users/{{id}}"><h4>{{displayName}}</h4></a>
+{{/each}}

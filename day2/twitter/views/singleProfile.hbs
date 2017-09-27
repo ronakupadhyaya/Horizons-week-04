@@ -1,3 +1,17 @@
+{{#if isSelf}}
+<h4>Create a new tweet!</h4>
+<form class="" action="/tweets/new" method="post">
+  <input type="text" name="message" value="" placeholder="Twiddly Twiddly Tweet">
+  <input type="submit" name="" value="Tweet!">
+</form>
+{{else}}
+<form class="" method="post">
+  <input type="submit" name="fol" value={{#if follow}}"Unfollow"{{else}}"Follow"{{/if}}>
+</form>
+{{/if}}
+
+<a href="/users">View all Profiles</a>
+
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
@@ -11,15 +25,23 @@
 <p>{{user.tweets}}</p>
 
 <h4>Following:</h4>
+{{#if isSelf}}
 {{#each followings}}
-  <div>{{this.following.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
+<div>{{this.following.displayName}}
+  <form  action="/unfollow/{{following._id}}" method="post">
+    <input style="display: inline;" type="submit" value="Unfollow" name="fol">
   </form>
 </div>
 {{/each}}
+{{else}}
+{{#each followings}}
+<div>
+  {{this.following.displayName}}
+</div>
+{{/each}}
+{{/if}}
 
 <h4>Followers:</h4>
 {{#each followers}}
-  <p>{{this.follower.displayName}}</p>
+<p>{{this.follower.displayName}}</p>
 {{/each}}

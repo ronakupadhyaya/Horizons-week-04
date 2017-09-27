@@ -11,7 +11,16 @@ var routes = require('./routes/index');
 var auth = require('./routes/auth');
 var MongoStore = require('connect-mongo/es5')(session);
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 var app = express();
+
+var User = models.User;
+
+function hashPassword(password) {
+  var hash = crypto.createHash('sha256');
+  hash.update(password);
+  return hash.digest('hex');
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +28,9 @@ app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -27,14 +38,49 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Passport stuff here
 
 // Session info here
+app.use(session({
+  secret: process.env.SECRET,
+  name: 'Catscookie',
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  }),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Passport Serialize
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+})
 
 // Passport Deserialize
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(error, user) {
+    done(error, user);
+  })
+})
 
 // Passport Strategy
+passport.use(new LocalStrategy(
+
+  function(username, password, done) {
+    password = hashPassword(password);
+    User.findOne({
+      email: username
+    }, function(error, user) {
+      if (user && user.password === password) {
+        done(null, user);
+      } else {
+        done(null, false);
+      }
+    })
+  }
+))
 
 app.use('/', auth(passport));
 app.use('/', routes);

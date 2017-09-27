@@ -1,1 +1,8 @@
 {{! YOUR CODE HERE }}
+<a href="/users/">View profiles</a>
+<h3>Tweets</h3>
+{{#each tweets}}
+<div>
+  <strong>{{author.displayName}} </strong> {{content}}
+</div>
+{{/each}}
