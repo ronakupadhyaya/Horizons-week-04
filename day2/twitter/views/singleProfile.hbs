@@ -23,3 +23,15 @@
 {{#each followers}}
   <p>{{this.follower.displayName}}</p>
 {{/each}}
+
+{{#if notOwnAccount}}
+  <form>
+    <div class="form-group">
+      {{#if isAlreadyFollowing}}
+        <button class="btn unfollow" data-button={{buttonData}}>Unfollow</button>
+      {{else}}
+        <button class="btn follow" data-button={{buttonData}}>Follow</button>
+      {{/if}}
+    </div>
+  </form>
+{{/if}}

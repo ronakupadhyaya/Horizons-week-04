@@ -23,12 +23,17 @@ module.exports = function(passport) {
         error: "Passwords don't match."
       });
     }
+    if(req.body.imgUrl === ""){
+      req.body.imgUrl = undefined;
+    }
     var u = new models.User({
       // Note: Calling the email form field 'username' here is intentional,
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      imgUrl: req.body.imgUrl,
+      displayName: req.body.displayName
     });
 
     u.save(function(err, user) {
@@ -49,7 +54,7 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    res.redirect('/users/' + req.user._id);
   });
 
   // GET Logout page

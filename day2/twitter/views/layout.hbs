@@ -21,4 +21,47 @@
     {{{body}}}
   </div>
 </body>
+<script>
+  $('body').on('click','.follow',function(event){
+    event.preventDefault();
+    var data = JSON.parse($(this).attr('data-button'));
+    var button = $(this);
+    $.ajax({
+      url: '/follow',
+      type: 'POST',
+      data: data,
+      success: function(response){
+          if(response==='Success'){
+            button.toggleClass('follow');
+            button.toggleClass('unfollow');
+            button.text('Unfollow');
+          }
+      },
+      error: function(){
+        console.log('Failure following user')
+      }
+    });
+  });
+
+  $('body').on('click','.unfollow',function(event){
+    event.preventDefault();
+    var data = JSON.parse($(this).attr('data-button'));
+    var button = $(this);
+    $.ajax({
+      url: '/unfollow',
+      type: 'POST',
+      data: data,
+      success: function(response){
+          if(response==='Success'){
+            button.toggleClass('follow');
+            button.toggleClass('unfollow');
+            button.text('Follow');
+          }
+      },
+      error: function(){
+        console.log('Failure unfollowing user')
+      }
+    });
+  });
+</script>
 </html>

@@ -23,18 +23,63 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// MONGODB SETUP HERE
+var mongoose = require('mongoose');
+if (! process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI is not in the environmental variables. Try running 'source env.sh'");
+}
+mongoose.connect(process.env.MONGODB_URI);
 
 // Passport stuff here
 
 // Session info here
+app.use(session({
+  secret: process.env.SECRET,
+  name: 'Catscoookie',
+  store: new MongoStore({mongooseConnection: require('mongoose').connection}),
+  proxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 
 // Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Passport Strategy
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    models.User.findOne({email:username},function(err,user){
+      if(err){
+        console.error(err);
+        return done(err);
+      }
+      if(!user){
+        console.log(user);
+        return done(null,false,{message: 'Incorrect username'});
+      }
+      if(user.password !== password){
+        return done(null,false, {message: 'Incorrect password'});
+      }
+      return done(null,user);
+    });
+  }
+));
 
 // Passport Serialize
 
+passport.serializeUser(function(user,done){
+  done(null,user._id);
+});
+
 // Passport Deserialize
 
-// Passport Strategy
+passport.deserializeUser(function(id,done){
+  models.User.findById(id,function(err,user){
+    done(err,user);
+  });
+});
 
 app.use('/', auth(passport));
 app.use('/', routes);
