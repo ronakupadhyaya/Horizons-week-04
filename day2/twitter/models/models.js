@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
   },
   imgUrl: {
     type: String,
-    required: true
+    // required: true
   },
   displayName: {
     type: String,
@@ -25,6 +25,7 @@ var userSchema = mongoose.Schema({
   }
   /* Add other fields here */
 });
+var User = mongoose.model("User", userSchema);
 
 userSchema.methods.getFollows = function (callback){
 

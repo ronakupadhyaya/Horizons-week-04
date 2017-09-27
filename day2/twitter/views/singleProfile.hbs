@@ -1,3 +1,4 @@
+<img src="{{user.imgUrl}}" alt="">
 <h4>Name:</h4>
 <p>{{user.displayName}}</p>
 
@@ -7,19 +8,31 @@
 <h4>Biography:</h4>
 <p>{{user.bio}}</p>
 
-<h4>Tweets:</h4>
-<p>{{user.tweets}}</p>
+<div class="tweetContainer">
+  <h4>Tweets:</h4>
+  <p>{{user.tweets}}</p>
+</div>
 
-<h4>Following:</h4>
-{{#each followings}}
+<div class="followingContainer">
+  <h4>Following:</h4>
+  {{#each followings}}
   <div>{{this.following.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
-    <input style="display: inline;" type="submit" value="Unfollow">
+    <form  action="/unfollow/{{this.to._id}}" method="post">
+      <input style="display: inline;" type="submit" value="Unfollow">
+    </form>
+  </div>
+  {{/each}}
+</div>
+
+<div class="followersContainer">
+  <h4>Followers:</h4>
+  {{#each followers}}
+  <p>{{this.follower.displayName}}</p>
+  {{/each}}
+</div>
+
+<div class="fllowMe">
+  <form class="followMe" action="" method="post">
+    <input type="submit" name="followMe" value="Follow ME">
   </form>
 </div>
-{{/each}}
-
-<h4>Followers:</h4>
-{{#each followers}}
-  <p>{{this.follower.displayName}}</p>
-{{/each}}

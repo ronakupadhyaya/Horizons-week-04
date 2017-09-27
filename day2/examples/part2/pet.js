@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var petSchema = new Schema({
   name: String,
   gender: String,
-  owner: String
+  owner: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 
 var Pet = mongoose.model('Pet', petSchema);

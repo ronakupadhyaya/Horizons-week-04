@@ -27,6 +27,9 @@ module.exports = function(passport) {
       // Note: Calling the email form field 'username' here is intentional,
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
+      displayName: req.body.displayName,
+      bio: req.body.bio,
+      imgUrl: req.body.imgUrl,
       email: req.body.username,
       password: req.body.password
     });
@@ -49,7 +52,8 @@ module.exports = function(passport) {
 
   // POST Login page
   router.post('/login', passport.authenticate('local'), function(req, res) {
-    res.redirect('/');
+    console.log(req.user._id);
+    res.redirect('/users/' + req.user._id);
   });
 
   // GET Logout page

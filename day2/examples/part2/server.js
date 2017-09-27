@@ -18,7 +18,11 @@ var Pet = require('./pet');
 
 //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 app.get('/pets', function(req,res,next) {
-  Pet.find(function(err, pets){
+  Pet
+  .find()
+  .populate('owner')
+  .exec(function(err, pets) {
+    // console.log(pets);
     res.render('pets', {
       pets: pets
     });

@@ -23,18 +23,56 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+var connect = process.env.MONGODB_URI || require('./models/connect');
+mongoose.connect(connect);
 // Passport stuff here
-
+app.use(session({
+  secret: process.env.SECRET,
+  name: 'CatsCoookies',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  preoxy: true,
+  resave: true,
+  saveUninitialized: true
+}));
 // Session info here
-
+app.use(passport.initialize());
+app.use(passport.session());
 // Initialize Passport
 
 // Passport Serialize
-
+passport.serializeUser(function(user, done) {
+  done(null, user._id)
+});
 // Passport Deserialize
-
+passport.deserializeUser(function(id, done) {
+  models.User.findById(id, function(err, user){
+    done(err,user);
+  });
+});
 // Passport Strategy
+passport.use(new LocalStrategy(function(username, password, done){
+  // find the user with the given username
+  models.User.findOne({ email: username }, function (err, user) {
+    // if there's an error, finish trying to authenticate (auth failed)
+    if(err) {
+      console.error(err, 'puppies');
+      return done(err);
+    }
+    // if no user present, auth failed
+    if(!user) {
+      console.log(username, 'hi');
+      console.log(password);
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    // if passwords do not match, auth failed
+    if(user.password !== password) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    // auth has succeeded
+    return done(null, user);
+  })
+}
+))
 
 app.use('/', auth(passport));
 app.use('/', routes);
