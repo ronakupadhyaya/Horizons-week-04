@@ -1,1 +1,9 @@
-{{! YOUR CODE HERE }}
+<div class="">
+  <a href="/users/{{viewer._id}}"> Back to my profile </a> <img class="profilePic" src="{{viewer.imgUrl}}" alt="">
+
+  <ul style="list-style-type: none">
+    {{#each profiles}}
+      <li> <a href="/users/{{this._id}}"> {{this.displayName}} </a> <img class="profilePic" src="{{this.imgUrl}}" alt=""></li>
+    {{/each}}
+  </ul>
+</div>

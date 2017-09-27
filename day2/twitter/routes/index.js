@@ -15,9 +15,17 @@ router.use(function(req, res, next){
 });
 
 router.get('/users/', function(req, res, next) {
-
   // Gets all users
-
+  User.find(function(err, users) {
+    if(err) {
+      res.status(500).send('mlab failed to find users');
+    } else {
+      res.render('profiles', {
+        viewer: req.user,
+        profiles: users,
+      });
+    }
+  })
 });
 
 router.get('/users/:userId', function(req, res, next) {
@@ -36,24 +44,32 @@ router.get('/users/:userId', function(req, res, next) {
             res.status(500).send(err);
           } else {
             var isFollowing = false;
-            console.log(result, user._id);
             result.followees.forEach(function(followerObject) {
               if(followerObject.followee.equals(user._id)) {
                 isFollowing = true;
-                console.log('match');
               }
             });
-            if(isFollowing) {
-              res.render('singleProfile', {
-                user, //fuck es6
-                isFollowing,
-              });
-            } else {
-              res.render('singleProfile', {
-                user,
-              });
-            }
-          }
+            user.getFollows(function(err, userRelationships) {
+              if(err) {
+                res.status(500).send(err);
+              } else {
+                if(isFollowing) {
+                  res.render('singleProfile', {
+                    user, //fuck es6
+                    isFollowing,
+                    followers: userRelationships.followers,
+                    followees: userRelationships.followees,
+                  });
+                } else {
+                  res.render('singleProfile', {
+                    user,
+                    followers: userRelationships.followers,
+                    followees: userRelationships.followees,
+                  });
+                }
+              }
+            });
+          } // end else in getFollows
         });
       }
     }

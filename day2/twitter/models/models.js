@@ -39,12 +39,16 @@ userSchema.methods.getFollows = function (callback){
   var viewer = this;
 
   //this is the user object
-  Follow.find({followee: viewer._id}, function(err, followers) {
+  Follow.find({followee: viewer._id})
+    .populate('follower followee')
+    .exec(function(err, followers) {
     // this user has people in followers following him
     if(err) {
       callback(err, null);
     } else {
-      Follow.find({follower: viewer._id}, function(err, followees) {
+      Follow.find({follower: viewer._id})
+        .populate('follower followee')
+        .exec(function(err, followees) {
         // this user follows his followees
         if(err) {
           callback(err, null);
@@ -56,7 +60,7 @@ userSchema.methods.getFollows = function (callback){
         }
       });
     }
-  })
+  });
 }
 // callback(err)
 userSchema.methods.follow = function (idToFollow, callback) {
@@ -91,10 +95,12 @@ userSchema.methods.follow = function (idToFollow, callback) {
 userSchema.methods.unfollow = function (idToUnfollow, callback){
   Follow.remove({
     follower: this._id,
-    followee: idToFollow,
+    followee: idToUnfollow,
   }, function(err) {if(err) {
-                      callback(err);
-                    }});
+  callback(err);
+} else {
+  callback(null);
+}});
 }
 userSchema.methods.getTweets = function (callback){
 
