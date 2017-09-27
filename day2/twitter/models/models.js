@@ -103,7 +103,16 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
 }});
 }
 userSchema.methods.getTweets = function (callback){
-
+  var viewer = this;
+  Tweet.find({user: viewer._id})
+    .populate('user')
+    .exec(function(err, tweets) {
+      if(err) {
+        callback(err, null);
+      } else {
+        callback(null, tweets);
+      }
+    });
 }
 
 var FollowsSchema = mongoose.Schema({
@@ -121,7 +130,14 @@ var FollowsSchema = mongoose.Schema({
 
 
 var tweetSchema = mongoose.Schema({
-
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  content: {
+    type: String,
+    maxlength: 140,
+  }
 });
 
 tweetSchema.methods.numLikes = function (tweetId, callback){

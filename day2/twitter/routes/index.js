@@ -49,24 +49,32 @@ router.get('/users/:userId', function(req, res, next) {
                 isFollowing = true;
               }
             });
-            user.getFollows(function(err, userRelationships) {
+            user.getTweets(function(err, soloTweet) {
               if(err) {
-                res.status(500).send(err);
+                res.status(500);
               } else {
-                if(isFollowing) {
-                  res.render('singleProfile', {
-                    user, //fuck es6
-                    isFollowing,
-                    followers: userRelationships.followers,
-                    followees: userRelationships.followees,
-                  });
-                } else {
-                  res.render('singleProfile', {
-                    user,
-                    followers: userRelationships.followers,
-                    followees: userRelationships.followees,
-                  });
-                }
+                user.getFollows(function(err, userRelationships) {
+                  if(err) {
+                    res.status(500).send(err);
+                  } else {
+                    if(isFollowing) {
+                      res.render('singleProfile', {
+                        user, //fuck es6
+                        isFollowing,
+                        followers: userRelationships.followers,
+                        followees: userRelationships.followees,
+                        soloTweet,
+                      });
+                    } else {
+                      res.render('singleProfile', {
+                        user,
+                        followers: userRelationships.followers,
+                        followees: userRelationships.followees,
+                        soloTweet,
+                      });
+                    }
+                  }
+                });
               }
             });
           } // end else in getFollows
@@ -97,8 +105,40 @@ router.post('/unfollow/:userId', function(req, res) {
 });
 
 router.get('/tweets/', function(req, res, next) {
-  res.render('tweets');
+  var viewer = req.user;
+  Tweet.find()
+    .populate('user')
+    .exec(function(err, tweets) {
+      if(err) {
+        res.status(500).send('Could not find tweets from db');
+      } else {
+        viewer.getFollows(function(err, results) {
+          var followObjArray = results.followees;
+          var usersToDisplay = []; // all user ids for displayed tweets
+          followObjArray.forEach(function(follow) {
+            usersToDisplay.push(follow.followee);
+          });
+          usersToDisplay.push(viewer);
+          tweets = tweets.filter(function(tweet) {
+            var foundUser = false;
+            for(let i = 0; i < usersToDisplay.length; i++) {
+              if(usersToDisplay[i]._id.equals(tweet.user._id)) {
+                foundUser = true;
+                break;
+              }
+            } //end for
+            return foundUser;
+          }); //end filter
+          res.render('tweets', {tweet: tweets, viewer: req.user});
+        });
+      }
+    });
   // Displays all tweets in the DB
+});
+
+router.get('/tweets/new/', function(req, res, next) {
+  res.render('newTweet', {viewer: req.user});
+  //Display the form to fill out for a new tweet
 
 });
 
@@ -120,17 +160,18 @@ router.post('/tweets/:tweetId/likes', function(req, res, next) {
 
 });
 
-router.get('/tweets/new', function(req, res, next) {
-
-  //Display the form to fill out for a new tweet
-
-});
-
 router.post('/tweets/new', function(req, res, next) {
-
   // Handle submission of new tweet form, should add tweet to DB
-
-
+  Tweet.create({
+    user: req.user,
+    content: req.body.content,
+  }, function(err){
+    if(err) {
+      res.status(500).send('Failed to add Tweet to db');
+    } else {
+      res.redirect('/tweets/');
+    }
+  });
 });
 
 module.exports = router;

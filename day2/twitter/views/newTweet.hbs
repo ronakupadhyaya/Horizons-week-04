@@ -1,1 +1,26 @@
-{{! YOUR CODE HERE }}
+
+
+<div class="">
+  <a href="/users/{{viewer._id}}"> Back to Profile </a>
+  <form class="" action="/tweets/new" method="post">
+    <textarea id="tweetCont" name="content" rows="8" cols="80" placeholder="Tweet contents"></textarea>
+    <span class="charCount"> 140 Characters Left </span>
+    <div class="">
+        <input type="submit" name="" class="btn btn-danger" value="Post Tweet">
+    </div>
+  </form>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#tweetCont').on('keyup', function(evt) {
+      var currentContent = $('#tweetCont').val().length;
+      var remainingChar = 140-currentContent;
+      if(remainingChar > 0) {
+        $('.charCount').text(remainingChar + ' Characters Left');
+      } else {
+        $('.charCount').text('STOOOOOOP');
+      }
+    });
+  });
+</script>

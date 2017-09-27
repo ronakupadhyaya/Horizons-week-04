@@ -1,9 +1,16 @@
-<div class="">
-  <a href="/users/{{viewer._id}}"> Back to my profile </a> <img class="profilePic" src="{{viewer.imgUrl}}" alt="">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="">
+        <a href="/users/{{viewer._id}}"> Back to my profile </a>
+      </div>
 
-  <ul style="list-style-type: none">
-    {{#each profiles}}
-      <li> <a href="/users/{{this._id}}"> {{this.displayName}} </a> <img class="profilePic" src="{{this.imgUrl}}" alt=""></li>
-    {{/each}}
-  </ul>
+
+      <ul style="list-style-type: none">
+        {{#each profiles}}
+          <li> <a href="/users/{{this._id}}"> {{this.displayName}} </a> <img class="profilePic" src="{{this.imgUrl}}" alt=""></li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
 </div>

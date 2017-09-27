@@ -1,1 +1,16 @@
-{{! YOUR CODE HERE }}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-xs-offset-2">
+      <div class="">
+        <a href="/users/{{viewer._id}}"> Back to my profile </a>
+      </div>
+      {{#each tweet}}
+        <div class="tweet">
+          <img class="profilePic" src="{{this.user.imgUrl}}" alt="">
+          <a href="/users/{{this.user._id}}">{{this.user.displayName}} </a>
+          <div class="text-center"> {{this.content}} </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

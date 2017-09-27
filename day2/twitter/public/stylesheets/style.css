@@ -19,3 +19,14 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.tweet {
+  border-style: solid;
+  border-radius: 5px;
+  padding: 20px 30px;
+  margin-top: 25px;
+}
+
+.navbutton {
+  margin: 20px;
+}
