@@ -1,3 +1,5 @@
+"use strict";
+
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -20,6 +22,16 @@ router.use(passport.session());
 
 router.get('/login', function(req, res) {
   res.render('login');
+});
+
+// place 1
+router.use(function (req, res, next) {
+  if (req.user) {
+    next();
+  }
+  else {
+    res.redirect('/login');
+  }
 });
 
 router.get('/logout', function(req, res) {
