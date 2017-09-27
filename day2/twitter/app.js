@@ -9,7 +9,7 @@ var LocalStrategy = require('passport-local');
 var models = require('./models/models')
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
-var MongoStore = require('connect-mongo/es5')(session);
+var MongoStore = require('connect-mongo')(session);
 var mongoose = require('mongoose');
 var app = express();
 
@@ -20,7 +20,6 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
