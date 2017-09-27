@@ -33,6 +33,45 @@ router.get('/users/:userId', function(req, res, next) {
   })
 });
 
+router.post('/followMe/:userid', function(req, res, next) {
+  User.findById(req.params.userid, function(error, user){
+    if(error){
+      res.send(error);
+    } else {
+      Follow.findOne({followers: req.user, following: req.params.userid}, function(error, result){
+        if(result){
+          res.send('You already followed')
+        } else {
+          user.follow(req.params.userid, function(err, results){
+            res.send("you have followed")
+          })
+        }
+      })
+    }
+  })
+})
+
+router.post('/unFollow/:userid', function(req, res, next) {
+  console.log("sanity check");
+  User.findById(req.params.userid, function(error, person){
+    if(error){
+      res.send(error);
+    } else {
+      Follow.findOne({followers: req.user, following: req.params.userid}, function(error, result){
+        if(result){
+          person.unfollow(req.params.userid, function(err, results){
+            res.send("you have unfollowed")
+          })
+        } else{
+          res.send("Matt's a dick");
+        }
+
+
+      })
+    }
+  })
+})
+
 router.get('/tweets/', function(req, res, next) {
 
   // Displays all tweets in the DB

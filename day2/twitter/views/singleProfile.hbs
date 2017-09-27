@@ -31,8 +31,9 @@
   {{/each}}
 </div>
 
-<div class="fllowMe">
-  <form class="followMe" action="" method="post">
-    <input type="submit" name="followMe" value="Follow ME">
-  </form>
+<div>
+  <button class="followMe" type="button" id="{{user._id}}" name="button">Follow Me</button>
+  <button  style="display: none;" class="unfollow" type="button" id="{{user._id}}" name="button">Unfollow</button>
 </div>
+
+<script src="/javascript/ajax.js"></script>

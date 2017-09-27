@@ -25,24 +25,45 @@ var userSchema = mongoose.Schema({
   }
   /* Add other fields here */
 });
-var User = mongoose.model("User", userSchema);
+
 
 userSchema.methods.getFollows = function (callback){
 
 }
-userSchema.methods.follow = function (idToFollow, callback){
+
+userSchema.methods.follow = function(idToFollow, callback){
+  var followEvent =  new Follow({
+    followers:  this._id, // { type: mongoose.Schema.ObjectId, ref: 'User' },
+    following:  idToFollow// { type: mongoose.Schema.ObjectId, ref: 'User' }
+  })
+  followEvent.save(function(error, results){
+    if(error){
+      callback(error, null)
+    } else {
+      callback(null, results)
+    }
+  })
 
 }
 
-userSchema.methods.unfollow = function (idToUnfollow, callback){
+userSchema.methods.unfollow = function(idToUnfollow, callback){
+  Follow.findOne({followers: this._id, following: idToUnfollow}).remove().exec(function(error, results){
+    if(error){
+      callback(error, null)
+    } else {
+      callback(null, results)
+    }
+  })
 
 }
-userSchema.methods.getTweets = function (callback){
+
+userSchema.methods.getTweets = function(callback){
 
 }
 
 var FollowsSchema = mongoose.Schema({
-
+  followers:  { type: mongoose.Schema.ObjectId, ref: 'User' },
+  following:  { type: mongoose.Schema.ObjectId, ref: 'User' }
 });
 
 
