@@ -15,7 +15,6 @@ var userSchema = mongoose.Schema({
   },
   imgUrl: {
     type: String,
-    required: true
   },
   displayName: {
     type: String,

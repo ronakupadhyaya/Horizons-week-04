@@ -11,56 +11,68 @@ router.use(function(req, res, next){
     res.redirect('/login');
   } else {
     return next();
+
   }
 });
 
 router.get('/users/', function(req, res, next) {
 
   // Gets all users
-  
+
 });
 
 router.get('/users/:userId', function(req, res, next) {
-
-  // Gets all information about a single user
-  
+  User.findById(req.params.userId, function(err, user) {
+    if (err) {
+      res.status(500).send('There is no id under that name in our database. Please creating a new user.');
+    } else {
+      if (!user) {
+        res.status(400).send('There is no such user in our database. Try creating one.');
+      } else {
+        res.render('singleProfile', {
+          user: user,
+        });
+      }
+    }
+  });
 });
 
 router.get('/tweets/', function(req, res, next) {
 
   // Displays all tweets in the DB
-  
+
 });
 
 router.get('/tweets/:tweetId', function(req, res, next) {
-  
+
   //Get all information about a single tweet
-  
+
 });
 
 router.get('/tweets/:tweetId/likes', function(req, res, next) {
-  
+
   //Should display all users who like the current tweet
 
 });
 
 router.post('/tweets/:tweetId/likes', function(req, res, next) {
-  
+
   //Should add the current user to the selected tweets like list (a.k.a like the tweet)
-  
+
 });
 
 router.get('/tweets/new', function(req, res, next) {
-  
+
   //Display the form to fill out for a new tweet
-  
+
 });
 
-router.post('/tweets/new', function(req, res, next) {
+router.post('/tweets/new',
+  function(req, res, next){
 
   // Handle submission of new tweet form, should add tweet to DB
 
-  
+
 });
 
 module.exports = router;

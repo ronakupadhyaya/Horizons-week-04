@@ -23,27 +23,67 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser('secretCat'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+var connect = process.env.MONGODB_URI || require('./models/connect');
+mongoose.connect(connect);
 
 // Passport stuff here
 
+app.use(session({
+secret: process.env.SECRET,
+name: 'Catscoookie',
+store: new MongoStore({ mongooseConnection: mongoose.connection }),
+proxy: true,
+resave: true,
+saveUninitialized: true
+}));
+
 // Session info here
 
+
 // Initialize Passport
-
+app.use(passport.initialize());
+app.use(passport.session());
 // Passport Serialize
-
+passport.serializeUser(function(user, done) {
+done(null, user._id);
+});
 // Passport Deserialize
+passport.deserializeUser(function(id, done) {
+   models.User.findById(id, function(err, user) {
+       done(err, user);
+   })
+});
 
 // Passport Strategy
-
+passport.use(new LocalStrategy(function(username, password, done){
+//find the user with the given username
+models.User.findOne({email: username}, function(err, user) {
+  //if error, finish trying to authenticate
+  if (err) {
+    console.error(err);
+    return done(err);
+  }
+  //if no user present auth failed
+  if (!user) {
+    console.log(user);
+    return done(null, false, { message: 'Incorrect username.' });
+  } else if (user.password !== password) {
+    return done(null, false, { message: 'Incorrect password'});
+  } else {
+  // auth has succeeded
+  return done(null, user);
+}
+});
+}
+));
 app.use('/', auth(passport));
 app.use('/', routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+var err = new Error('Not Found');
+err.status = 404;
+next(err);
 });
 
 // error handlers
@@ -51,23 +91,23 @@ app.use(function(req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: err
   });
+});
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+res.status(err.status || 500);
+res.render('error', {
+  message: err.message,
+  error: {}
+});
 });
 
 
