@@ -17,7 +17,19 @@ router.use(function(req, res, next){
 router.get('/users/', function(req, res, next) {
 
   // Gets all users
+  User.find(function(errFindingUsers, foundUsers) {
+    if (errFindingUsers) {res.send("Error finding users");}
+    else {
+      res.render('profiles', {users: foundUsers})
+    }
+  });
+});
 
+router.post('/follow/:userId', function(req, res) {
+  req.user.follow(req.params.userId, function(err, success) {
+    if (err) {res.send(err)}
+    else {res.send(success);}
+  });
 });
 
 router.get('/users/:userId', function(req, res, next) {
@@ -26,9 +38,15 @@ router.get('/users/:userId', function(req, res, next) {
   User.findById(req.params.userId, function(errFindingUser, foundUser) {
     if (errFindingUser) {res.send("Error finding user");}
     else {
-      res.render('singleProfile', {user: foundUser})
+      console.log(foundUser);
+      foundUser.getFollows().populate('follower').exec(function(errGettingFollows, gotFollows) {
+        if (errGettingFollows) {res.send(errGettingFollows);}
+        else {
+          res.render('singleProfile', {user: foundUser, followers: gotFollows});
+        }
+      })
     }
-  })
+  });
 
 });
 

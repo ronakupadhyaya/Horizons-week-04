@@ -1,1 +1,12 @@
 {{! YOUR CODE HERE }}
+<div class="profiles-container">
+  {{#each users}}
+  <div class="profile">
+    <h2>{{this.displayName}}</h2>
+    <h4>>>{{this.email}}</h4>
+    <form action="/follow/{{this._id}}" method="post">
+      <input style="display: inline;" type="submit" value="follow">
+    </form>
+  </div>
+  {{/each}}
+</div>

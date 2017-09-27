@@ -13,7 +13,7 @@
 <h4>Following:</h4>
 {{#each followings}}
   <div>{{this.following.displayName}}
-  <form  action="/unfollow/{{this.to._id}}" method="post">
+  <form action="/unfollow/{{this.to._id}}" method="post">
     <input style="display: inline;" type="submit" value="Unfollow">
   </form>
 </div>
