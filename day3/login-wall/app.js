@@ -19,6 +19,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(require('./passport'));
+app.use(function(req,res,next){
+	if(req.user){
+		next();
+	}
+	else{
+		res.redirect('/login');
+	}
+});
 app.use(require('./routes'));
 
 var port = process.env.PORT || 3000;
