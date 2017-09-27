@@ -28,8 +28,11 @@ module.exports = function(passport) {
       //    passport is expecting a form field specifically named 'username'.
       //    There is a way to change the name it expects, but this is fine.
       email: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      username: req.body.displayName,
     });
+
+
 
     u.save(function(err, user) {
       if (err) {

@@ -3,6 +3,9 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+
+
+
 var userSchema = new Schema({
   name: {
     first: String,
@@ -16,6 +19,16 @@ var userSchema = new Schema({
   }
 });
 
+var ageVirtual=userSchema.virtual('age')
+
+ageVirtual.get(function() {
+  // console.log(birthday)
+  var ageDifMs = Date.now() - this.birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+})
+
 var User = mongoose.model('User', userSchema);
 
+// mongoose.model('User', {})
 module.exports = User;

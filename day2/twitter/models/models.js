@@ -15,7 +15,7 @@ var userSchema = mongoose.Schema({
   },
   imgUrl: {
     type: String,
-    required: true
+    //required: true
   },
   displayName: {
     type: String,
@@ -23,6 +23,10 @@ var userSchema = mongoose.Schema({
   bio: {
     type: String,
   }
+  // friends: {
+  //   type: Schema.ObjectId
+  //   ref:
+  // }
   /* Add other fields here */
 });
 

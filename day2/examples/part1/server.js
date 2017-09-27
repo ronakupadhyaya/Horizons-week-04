@@ -23,15 +23,32 @@ app.get('/', function(req, res) {
 
   //-------------------EDIT ONLY BELOW THIS LINE!----------------------//
 
-  User.find(function(err,users){
-    res.render('index', {
-      listItems: users,
-      prev: prev,
-      current: pageNumber,
-      next: next,
-      limit: limit
+  // User.find(function(err,users){
+  //   res.render('index', {
+  //     listItems: users,
+  //     prev: prev,
+  //     current: pageNumber,
+  //     next: next,
+  //     limit: limit
+  //   });
+  // });
+
+// var perPage = 10, page = Math.max(0, req.param('page'))
+console.log(pageNumber)
+  User.find()
+      .sort({'name.first': 1})
+      .skip((pageNumber-1)*15)
+      .limit(15)
+      .exec(function(err,users){
+        res.render('index', {
+          listItems: users,
+          prev: prev,
+          current: pageNumber,
+          next: next,
+          limit: limit
+        });
     });
-  });
+
 
   //-------------------EDIT ONLY ABOVE THIS LINE!----------------------//
 
