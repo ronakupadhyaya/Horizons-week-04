@@ -1,1 +1,17 @@
-{{! YOUR CODE HERE }}
+<div>
+  <a href="/"> Back to Profile</a>
+</div>
+<div class="container-fluid text-center">
+  <h3> Create a new Tweet</h3>
+  <form action='/tweets/new' method="post">
+    <div class="form-group col-sm-6 col-sm-offset-3">
+      <textarea id="tweet" class="form-control" placeholder="Tweet contents..." rows=8 maxlength="140" name="content"></textarea>
+      <p style="text-align: right;"> <span id="count">140</span> characters left</p>
+    </div>
+    <div class="col-sm-12">
+      <button type="submit" class="btn btn-info">Tweet</button>
+    </div>
+  </form>
+</div>
+
+<script src="/javascript/newTweet.js"></script>

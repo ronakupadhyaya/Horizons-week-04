@@ -4,7 +4,7 @@ var models = require('../models/models');
 var User = models.User;
 var Follow = models.Follow;
 var Tweet = models.Tweet;
-
+var async = require('async');
 // THE WALL - anything routes below this are protected by our passport (user must be logged in to access these routes)!
 router.use(function(req, res, next){
   if (!req.user) {
@@ -14,6 +14,7 @@ router.use(function(req, res, next){
   }
 });
 router.get('/', function(req, res){
+
   req.user.getFollows(function(response){
     var allFollowers = response.followed;
     var allFollowing = response.follows;
@@ -31,8 +32,10 @@ router.get('/', function(req, res){
         to: element
       }
     });
-    console.log(allFollowers, allFollowing);
-    res.render('singleProfile', {user: req.user, followers: allFollowers, followings: allFollowing});
+    req.user.getTweets(function(tweets){
+      res.render('singleProfile', {user: req.user, followers: allFollowers, followings: allFollowing, tweets: tweets});
+    });
+
   })
 
 })
@@ -72,8 +75,10 @@ router.get('/users/:userId', function(req, res, next) {
                 to: element
               }
             });
-            console.log("following", allFollowing);
-            res.render('singleProfile', {user: user, followers: allFollowers, followings: allFollowing, isFollowing: respObj.isFollowing});
+            user.getTweets(function(tweets){
+              res.render('singleProfile', {user: user, followers: allFollowers, followings: allFollowing, isFollowing: respObj.isFollowing, tweets: tweets});
+            })
+
           })
         }
 
@@ -89,7 +94,6 @@ router.get('/followers', function(req, res){
   var userId = req.user.id;
   User.findById(userId, function(err, user){
     user.getFollows(function(resultObj){
-      console.log("RESULT OBJ", resultObj);
       res.json(resultObj);
     })
   })
@@ -99,7 +103,6 @@ router.get('/follow/:userId', function(req, res){
   var idToFollow = req.params.userId;
   User.findById(req.user._id, function(err, user){
     user.follow(idToFollow, function(err, followObj){
-      console.log("FOLLOW OBJ", followObj);
       res.send(followObj);
     })
   });
@@ -109,7 +112,6 @@ router.get('/unfollow/:userId', function(req, res){
   var idToFollow = req.params.userId;
   User.findById(req.user._id, function(err, user){
     user.unfollow(idToFollow, function(err, followObj){
-      console.log("FOLLOW OBJ", followObj);
       res.json(followObj);
     })
   });
@@ -117,7 +119,36 @@ router.get('/unfollow/:userId', function(req, res){
 
 router.get('/tweets/', function(req, res, next) {
 
-  // Displays all tweets in the DB
+  Follow.find({follower: req.user.id}, function(err, follows){
+    var newTweetArray = [];
+    async.each(follows, function(follow, callback){
+      Tweet.find({user: follow.following}).populate('user').exec(function(err, tweets){
+        async.each(tweets, function(tweet, callback2){
+          if(err){
+            callback2("ERROR");
+          } else{
+              newTweetArray.push(tweet);
+
+
+            callback2();
+          }
+        }, function(){
+          callback();
+        })
+
+      })
+    }, function(err){
+      console.log("newTweetArray", newTweetArray);
+      res.render('tweets', {tweets: newTweetArray});
+    })
+  })
+
+
+});
+
+router.get('/tweets/new', function(req, res, next) {
+  //Display the form to fill out for a new tweet
+  res.render('newTweet');
 
 });
 
@@ -139,15 +170,25 @@ router.post('/tweets/:tweetId/likes', function(req, res, next) {
 
 });
 
-router.get('/tweets/new', function(req, res, next) {
-
-  //Display the form to fill out for a new tweet
+router.get('/tweet-feed', function(req, res){
 
 });
 
 router.post('/tweets/new', function(req, res, next) {
 
   // Handle submission of new tweet form, should add tweet to DB
+  var newTweet = new Tweet({
+    user: req.user,
+    content: req.body.content
+  })
+
+  newTweet.save(function(err, tweetObj){
+    if(err){
+      throw err;
+    } else{
+      res.redirect('/');
+    }
+  })
 
 
 });

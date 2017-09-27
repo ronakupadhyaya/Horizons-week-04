@@ -98,8 +98,14 @@ userSchema.methods.unfollow = function (idToUnfollow, callback){
   })
 
 }
-userSchema.methods.getTweets = function (callback){
-
+userSchema.methods.getTweets = function(callback){
+  Tweet.find({user: this._id}).populate('user').exec(function(err, tweets){
+    if(err){
+      throw err;
+    } else {
+      callback(tweets);
+    }
+  })
 }
 
 userSchema.methods.isFollowing = function(user, callback){
@@ -115,6 +121,7 @@ userSchema.methods.isFollowing = function(user, callback){
     }
   })
 }
+
 var FollowsSchema = mongoose.Schema({
   follower:{
     type: mongoose.Schema.ObjectId,
@@ -128,7 +135,14 @@ var FollowsSchema = mongoose.Schema({
 
 
 var tweetSchema = mongoose.Schema({
-
+  user:{
+    type: mongoose.Schema.ObjectId,
+    ref: 'User'
+  },
+  content:{
+    type: String,
+    maxLength:140
+  }
 });
 
 tweetSchema.methods.numLikes = function (tweetId, callback){
@@ -137,7 +151,7 @@ tweetSchema.methods.numLikes = function (tweetId, callback){
 
 
 var User = mongoose.model('User', userSchema);
-var Tweet = mongoose.model('Restaurant', tweetSchema);
+var Tweet = mongoose.model('Tweet', tweetSchema);
 var Follow = mongoose.model('Follow', FollowsSchema);
 
 module.exports = {

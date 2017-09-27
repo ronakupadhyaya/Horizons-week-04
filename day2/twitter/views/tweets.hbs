@@ -1,1 +1,15 @@
-{{! YOUR CODE HERE }}
+<div>
+  <a href="/"> Back to Profile </a>
+</div>
+<div class="row" style="margin-top: 30px;">
+{{#each tweets}}
+<div style="margin-bottom: 40px" class="col-sm-12">
+  <div class="col-sm-1">
+    <img src="{{this.user.imgUrl}}" width="75" height="75">
+  </div>
+  <div class="col-sm-offset-1">
+    <p> {{this.content}} </p>
+  </div>
+</div>
+{{/each}}
+</div

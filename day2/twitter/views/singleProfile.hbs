@@ -1,5 +1,6 @@
-<div>
-  <a href="/users"> See all users </a>
+<div style="margin-bottom: 20px;">
+  <a href="/users" style="margin-right: 20px;"> See all users </a>
+  <a href="/tweets"> View feed </a>
 </div>
 
 
@@ -13,8 +14,13 @@
 <h4>Biography:</h4>
 <p>{{user.bio}}</p>
 
-<h4>Tweets:</h4>
-<p>{{user.tweets}}</p>
+<div>
+  <h4>Tweets:</h4>
+  {{#each tweets}}
+    <p>{{this.content}}</p>
+  {{/each}}
+</div>
+
 <div style="display: inline-block" class="following">
   <h4>Following:</h4>
   {{#each followings}}
@@ -34,11 +40,13 @@
     <div id="{{this.follower.id}}">{{this.follower.displayName}}</div>
   {{/each}}
 </div>
-<div style="display: block">
+<div style="display: block;">
 {{#if isFollowing}}
   <a id="{{user._id}}" class="follow btn btn-primary">Unfollow</a>
 {{else}}
   <a id="{{user._id}}" class="follow btn btn-primary">Follow</a>
 {{/if}}
+  <a href="/tweets/new" style="margin-left: 50px;" id="{{user._id}}" class="newTweet btn btn-warning"> New Tweet </a>
+</div>
+
 <script src="/javascript/singleProfile.js"></script>
-<div>
