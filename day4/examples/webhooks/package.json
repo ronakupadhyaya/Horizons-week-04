@@ -1,0 +1,19 @@
+{
+  "name": "webhooks",
+  "version": "1.0.0",
+  "description": "webhooks",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.0",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.11.13",
+    "twilio": "^3.6.7"
+  }
+}
