@@ -1,0 +1,3 @@
+export MONGODB_URI=mongodb://andros:pass@ds155634.mlab.com:55634/horizons-twilio
+export TWILIO_SID=AC5d3b5a3ff4a1da2f2e1c1e0b5e1f7ec7
+export TWILIO_AUTH_TOKEN=18b8eedcaeb0053c983f678db1571ab3
