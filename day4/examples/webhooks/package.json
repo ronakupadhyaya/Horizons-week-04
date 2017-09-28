@@ -4,6 +4,7 @@
   "description": "The goal of this exercise is to use Twilio webhooks to receive text messages.\r When a message is received we will send an automated reply based on the following rules:\r   1. \"Over the horizons\" if the text message you sent was \"Nihar\" \r   1. or \"I don't understand\" otherwise",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
