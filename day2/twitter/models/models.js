@@ -1,6 +1,14 @@
 var mongoose = require('mongoose');
 
 // Step 0: Remember to add your MongoDB information in one of the following ways!
+<<<<<<< HEAD
+=======
+if (! process.env.MONGODB_URI) {
+  console.log('Error: MONGODB_URI is not set. Did you run source env.sh ?');
+  process.exit(1);
+}
+
+>>>>>>> master
 var connect = process.env.MONGODB_URI;
 mongoose.connect(connect);
 
@@ -17,7 +25,7 @@ var userSchema = mongoose.Schema({
   },
   imgUrl: {
     type: String,
-    required: true
+    default: 'https://horizons-static.s3.amazonaws.com/horizons_h.png'
   },
   displayName: {
     type: String,

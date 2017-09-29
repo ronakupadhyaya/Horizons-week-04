@@ -14,17 +14,20 @@ router.use(function (req, res, next) {
   }
 });
 
+router.get('/', function (req, res) {
+  res.send("Success! You are logged in.");
+});
+
 router.get('/users/', function (req, res, next) {
 
-  // Gets all users
+// Gets all users
+
+});
 
 });
 
 router.get('/users/:userId', function (req, res, next) {
   // Gets all information about a single user
-  User.findById(req.params.userId, function (error, user) {
-    res.render('singleProfile', user)
-  })
 });
 
 router.get('/follow/:userId', function (req, res, next) {
@@ -65,35 +68,55 @@ router.get('/tweets/', function (req, res, next) {
 
 });
 
-router.get('/tweets/:tweetId', function (req, res, next) {
+<<
+<< << < HEAD
+router.get('/tweets/:tweetId', function (req, res, next) { ===
+      === =
+      router.get('/tweets/:tweetId', function (req, res, next) { >>>
+        >>> > master
 
-  //Get all information about a single tweet
+        //Get all information about a single tweet
 
-});
+      });
 
-router.get('/tweets/:tweetId/likes', function (req, res, next) {
+      <<
+      << << < HEAD
+      router.get('/tweets/:tweetId/likes', function (req, res, next) { ===
+            === =
+            router.get('/tweets/:tweetId/likes', function (req, res, next) { >>>
+              >>> > master
 
-  //Should display all users who like the current tweet
+              //Should display all users who like the current tweet
 
-});
+            });
 
-router.post('/tweets/:tweetId/likes', function (req, res, next) {
+            <<
+            << << < HEAD
+            router.post('/tweets/:tweetId/likes', function (req, res, next) { ===
+                  === =
+                  router.post('/tweets/:tweetId/likes', function (req, res, next) { >>>
+                    >>> > master
 
-  //Should add the current user to the selected tweets like list (a.k.a like the tweet)
+                    //Should add the current user to the selected tweets like list (a.k.a like the tweet)
 
-});
+                  });
 
-router.get('/tweets/new', function (req, res, next) {
+                  <<
+                  << << < HEAD
+                  router.get('/tweets/new', function (req, res, next) { ===
+                        === =
+                        router.get('/tweets/new', function (req, res, next) { >>>
+                          >>> > master
 
-  //Display the form to fill out for a new tweet
+                          //Display the form to fill out for a new tweet
 
-});
+                        });
 
-router.post('/tweets/new', function (req, res, next) {
+                        router.post('/tweets/new', function (req, res, next) {
 
-  // Handle submission of new tweet form, should add tweet to DB
+                          // Handle submission of new tweet form, should add tweet to DB
 
 
-});
+                        });
 
-module.exports = router;
+                        module.exports = router;
